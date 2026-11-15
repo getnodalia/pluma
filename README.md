@@ -26,8 +26,8 @@
 </div>
 
 <p align="center">
-  <img src="docs/images/ui-dark.png" width="100%" alt="Pluma in its dark theme with a synthwave poster open: a neon title, a striped sun and a pink perspective grid on the artboard; the tools on the left, the Properties panel on the right, hints and the status bar at the bottom">
-  <br><sub><b>Neon Drive</b> (<a href="examples/neon-drive.pluma">examples/neon-drive.pluma</a>): gradients, glows, type and a perspective grid, drawn and saved in Pluma.</sub>
+  <img src="docs/images/ui-dark.png" width="100%" alt="Pluma in its dark theme with a still life open: a teal vase, a terracotta bowl, a white sphere and an ochre bottle on a table; the tools on the left, the Properties panel on the right, hints and the status bar at the bottom">
+  <br><sub><b>Still life</b> (<a href="examples/still-life.pluma">examples/still-life.pluma</a>): shapes shaded with gradients and soft shadows, drawn and saved in Pluma.</sub>
 </p>
 
 ---
@@ -46,7 +46,7 @@ rounded islands on the window colour, bold icons, and the suite's own window con
 
 <table>
   <tr>
-    <td width="50%"><img src="docs/images/ui-light.png" alt="Pluma in its light theme with the same synthwave poster open, the panels and bars as light islands on a grey window"></td>
+    <td width="50%"><img src="docs/images/ui-light.png" alt="Pluma in its light theme with the same still life open, the panels and bars as light islands on a grey window"></td>
     <td width="50%"><img src="docs/images/art-pathfinder.png" alt="Shapes combined with Pathfinder operations"></td>
   </tr>
   <tr>
@@ -100,7 +100,7 @@ You need Rust 1.95 or later.
 ```bash
 git clone https://github.com/getnodalia/pluma.git
 cd pluma
-cargo run --release -p pluma -- examples/neon-drive.pluma
+cargo run --release -p pluma -- examples/still-life.pluma
 ```
 
 ## Agents and the command line
