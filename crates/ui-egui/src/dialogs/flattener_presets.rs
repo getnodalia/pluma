@@ -197,8 +197,7 @@ fn run(app: &mut PlumaApp, d: &mut Dialog, act: Action, current: &str) -> Result
         }
         Action::Import => {
             // On the web the picked file arrives later and imports through `io::open_bytes`.
-            if let Some(f) = app.services.open_async.as_mut() {
-                f();
+            if crate::picks::open_async(app) {
                 return Ok(());
             }
             let pick = crate::FilePick { filters: vec![crate::FilePick::filter("Flattener presets", PRESET_EXTS)], ..Default::default() };

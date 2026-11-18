@@ -1,8 +1,9 @@
 //! The window's own title bar on Windows and Linux, where the window has no OS decorations
 //! ([`PlumaApp::custom_titlebar`]): empty space in the app bar drags the window and a
-//! double-click there maximizes it, caption buttons at the far right minimize, maximize/restore and
-//! close, and thin invisible zones along the window's edges resize it. On macOS the app bar sits
-//! under the system's transparent title bar and only its [`drag_area`] is used.
+//! double-click there maximizes it, caption buttons at the ends that [`CaptionLayout`] names (all three
+//! at the far right by default) minimize, maximize/restore and close, and thin invisible zones along
+//! the window's edges resize it. On macOS the app bar sits under the system's transparent title bar
+//! and only its [`drag_area`] is used.
 
 use egui::{CursorIcon, Id, LayerId, Order, PointerButton, Rect, ResizeDirection, Sense, Stroke, Ui, ViewportCommand, pos2, vec2};
 use serde_json::json;
@@ -29,15 +30,43 @@ pub fn width(t: &Tokens) -> f32 {
 const EDGE: f32 = 5.0;
 const CORNER: f32 = 12.0;
 
-#[derive(Clone, Copy, PartialEq, Debug)]
-enum Caption {
+/// A caption button.
+#[derive(Clone, Copy, PartialEq, Eq, Debug)]
+pub enum Caption {
     Minimize,
     Maximize,
     Close,
 }
 
-/// Left to right.
+/// The default order, left to right.
 const CAPTIONS: [Caption; 3] = [Caption::Minimize, Caption::Maximize, Caption::Close];
+
+/// Which caption buttons the app bar draws at its left end and at its right end, each list left to
+/// right. The desktop app sets it from the desktop's window-button layout on Linux and the BSDs
+/// ([`PlumaApp::caption_layout`]). The default has Minimize, Maximize and Close at the right.
+#[derive(Clone, PartialEq, Eq, Debug)]
+pub struct CaptionLayout {
+    pub left: Vec<Caption>,
+    pub right: Vec<Caption>,
+}
+
+impl Default for CaptionLayout {
+    fn default() -> Self {
+        Self { left: Vec::new(), right: CAPTIONS.to_vec() }
+    }
+}
+
+impl CaptionLayout {
+    /// The width the buttons at the left end take.
+    pub fn left_width(&self) -> f32 {
+        self.left.len() as f32 * BUTTON_WIDTH
+    }
+
+    /// The width the buttons at the right end take.
+    pub fn right_width(&self) -> f32 {
+        self.right.len() as f32 * BUTTON_WIDTH
+    }
+}
 
 /// Caption button ids (stable, so tests and agents can find them).
 fn caption_id(c: Caption) -> Id {
@@ -81,9 +110,10 @@ fn handed_to_os(ctx: &egui::Context) {
     ctx.input_mut(|i| i.pointer = Default::default());
 }
 
-/// Minimize, Maximize/Restore and Close at the right end of `bar` (the app bar's outer rect), full
-/// bar height down to its bottom border, flush with the window's edge so a maximized window's
-/// corner hits Close. Close runs `app.quit`, which asks about unsaved documents first.
+/// The buttons of [`PlumaApp::caption_layout`] at the left and right ends of `bar` (the app
+/// bar's outer rect), full bar height down to its bottom border, flush with the window's edges so a
+/// maximized window's corner hits the outermost button. Close runs `app.quit`, which asks about
+/// unsaved documents first.
 pub fn caption_buttons(app: &mut PlumaApp, ui: &mut Ui, bar: Rect) {
     let t = Tokens::get(ui.ctx());
     let max = maximized(ui.ctx());

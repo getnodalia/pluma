@@ -4,10 +4,10 @@
 
 use std::sync::Mutex;
 
+use craft_svg::tree::usvg::roxmltree;
 use pluma_doc::{Document, Node};
 use pluma_svg::{Encoding, ExportOptions, ImportOptions, Profile, export, export_full, import, import_with};
 use proptest::prelude::*;
-use usvg::roxmltree;
 
 fn svg(body: &str) -> String {
     format!(r#"<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100" height="100">{body}</svg>"#)

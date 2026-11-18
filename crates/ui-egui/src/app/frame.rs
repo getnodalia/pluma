@@ -1,4 +1,4 @@
-use super::{GeometryStamp, InputGeneration, PlumaApp, canvas};
+use super::{GeometryStamp, InputGeneration, PlumaApp};
 
 impl PlumaApp {
     /// The host iteration count: one increment per `App::logic`/`App::ui` iteration (or a
@@ -9,8 +9,7 @@ impl PlumaApp {
 
     /// The canvas on screen in document coordinates (none before it is laid out).
     pub fn screen_frame(&self) -> Option<pluma_tools::ScreenFrame> {
-        let (rect, view) = (self.canvas_rect?, self.view()?);
-        let xf = canvas::Xf::new(rect, view);
+        let (rect, xf) = (self.canvas_rect?, self.canvas_xf()?);
         let px = |x: f32, y: f32| xf.delta_to_doc(egui::vec2(x, y));
         Some(pluma_tools::ScreenFrame {
             origin: xf.to_doc(rect.left_top()),
