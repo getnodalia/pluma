@@ -890,7 +890,7 @@ mod dialog_tests {
     #[cfg(windows)]
     #[test]
     fn save_dialog_with_several_formats_leaves_the_extension_to_windows() {
-        let filters = vec![FilePick::filter("Pluma", &["vectorcraft"]), FilePick::filter("PDF-compatible .ai", &["ai"])];
+        let filters = vec![FilePick::filter("Pluma", &["pluma"]), FilePick::filter("PDF-compatible .ai", &["ai"])];
         let pick = FilePick { name: "Poster.pluma".into(), filters: filters.clone(), ..Default::default() };
         assert_eq!(dialog_for(Filters::default(), &PickRequest::Save(pick.clone())).1.as_deref(), Some("Poster"));
         assert_eq!(dialog_for(Filters::default(), &PickRequest::Open(pick)).1.as_deref(), Some("Poster.pluma"));
