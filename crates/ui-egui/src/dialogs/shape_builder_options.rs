@@ -14,7 +14,7 @@ use pluma_doc::LAYER_COLORS;
 use serde_json::{Map, Value, json};
 
 use super::tile_edge_color::{checked, resolve};
-use super::{DialogSpec, form, run_and_close};
+use super::{DialogSpec, form, set_tool_options_and_close};
 use crate::state::Dialog;
 use crate::{PlumaApp, widgets};
 
@@ -124,7 +124,7 @@ fn confirm(app: &mut PlumaApp, d: &Dialog) -> Result<Value, String> {
         checked(&d.str("highlightColor"))?;
     }
     let values: Map<String, Value> = KEYS.iter().filter_map(|k| Some((k.to_string(), d.fields.get(*k)?.clone()))).collect();
-    run_and_close(app, "tool.setOption", json!({ "tool": "shapeBuilder", "values": values }))
+    set_tool_options_and_close(app, json!({ "tool": "shapeBuilder", "values": values }))
 }
 
 #[cfg(test)]

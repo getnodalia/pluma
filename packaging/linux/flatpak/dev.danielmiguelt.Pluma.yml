@@ -17,6 +17,8 @@ sdk-extensions:
   - org.freedesktop.Sdk.Extension.rust-stable
 command: pluma
 finish-args:
+  # The shared updater inspects and updates this installation via flatpak-spawn --host.
+  - --talk-name=org.freedesktop.Flatpak
   - --filesystem=xdg-data/Nodalia/versions:ro
   # Keep identical to dev.danielmiguelt.Pluma.bundle.yml (the release bundle); comments there.
   - --share=ipc

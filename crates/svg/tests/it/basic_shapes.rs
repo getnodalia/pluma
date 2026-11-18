@@ -3,6 +3,7 @@
 //! rectangles and ellipses whose dashes would start elsewhere, stays `<path>`; the picture and the
 //! reimported geometry don't change.
 
+use craft_svg::tree::draw::resvg;
 use pluma_color::{Color, Paint};
 use pluma_doc::{Appearance, AppearanceItem, Dash, Document, FillLayer, Node, StrokeLayer};
 use pluma_geom::{Affine, PathData, Point, Rect, SubPath, shapes};

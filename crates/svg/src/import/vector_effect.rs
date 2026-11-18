@@ -6,9 +6,9 @@
 
 use std::collections::HashSet;
 
+use craft_svg::tree::usvg::roxmltree;
 use pluma_doc::TextObject;
 use pluma_geom::Affine;
-use usvg::roxmltree;
 
 use super::css::{Styles, XNode};
 use super::{Edits, href};

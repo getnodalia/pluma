@@ -1,6 +1,7 @@
 //! Dashes fitted to corners export as the canvas's filled outlines (a dash array can't fit them);
 //! exact dashes stay a `stroke-dasharray`. Checked by rendering the exported SVG with resvg.
 
+use craft_svg::tree::draw::resvg;
 use pluma_color::{Color, Paint};
 use pluma_doc::{Appearance, AppearanceItem, Dash, Document, Node, StrokeLayer};
 use pluma_geom::{Rect, shapes};
