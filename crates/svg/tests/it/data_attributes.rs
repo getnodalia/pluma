@@ -1,9 +1,9 @@
 //! Synthetic XML 1.0/SVG round trips: https://www.w3.org/TR/xml/#AVNormalize
 //! https://www.w3.org/TR/xml/#NT-NameChar https://www.w3.org/TR/xml/#charsets
+use craft_svg::tree::usvg::roxmltree;
 use pluma_doc::{Document, Node};
 use pluma_svg::{Encoding, ExportOptions, ObjectIds, Output, Styling, export, export_full, import};
 use std::collections::HashSet;
-use usvg::roxmltree;
 
 fn svg(body: &str) -> String {
     format!(r#"<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100">{body}</svg>"#)
@@ -98,7 +98,7 @@ fn unicode_data_names_survive_each_encoding() {
                 }
                 if encoding == Encoding::Latin1 {
                     assert_eq!(out.encoding, Encoding::Utf8, "XML names cannot use character references");
-                    assert!(!out.warnings.is_empty());
+                    assert!(!out.setting_notes.is_empty());
                     assert!(!out.svg.contains("ISO-8859-1"));
                 } else {
                     assert_eq!(out.encoding, encoding);

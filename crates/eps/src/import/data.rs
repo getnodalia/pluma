@@ -5,7 +5,6 @@ use std::cell::RefCell;
 use std::collections::HashMap;
 use std::rc::Rc;
 
-use hayro_ccitt::{DecodeSettings, Decoder, DecoderContext, EncodingMode};
 use pluma_color::{Color, Paint};
 use pluma_doc::cmyk::{Inks, jpeg_components};
 use pluma_doc::{ImageBlob, ImageObject, Node, NodeId, NodeKind, OpacityMask};

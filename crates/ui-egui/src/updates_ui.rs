@@ -12,6 +12,7 @@ use nodalia_update::egui::Status;
 #[cfg(not(target_arch = "wasm32"))]
 use nodalia_update::egui::{Action, Updater};
 
+#[cfg_attr(target_arch = "wasm32", derive(Default))]
 pub(crate) struct Runtime {
     #[cfg(not(target_arch = "wasm32"))]
     updater: Updater,
@@ -33,6 +34,7 @@ pub(crate) struct Runtime {
     pub(crate) status_message: Option<String>,
 }
 
+#[cfg(not(target_arch = "wasm32"))]
 impl Default for Runtime {
     fn default() -> Self {
         Self {
@@ -40,16 +42,9 @@ impl Default for Runtime {
             updater: Updater::new(crate::UPDATE_APP).with_accent(ACCENT),
             #[cfg(not(target_arch = "wasm32"))]
             startup_check: false,
-            #[cfg(not(target_arch = "wasm32"))]
             check_requested: false,
-            #[cfg(not(target_arch = "wasm32"))]
             repaint: None,
-            #[cfg(not(target_arch = "wasm32"))]
             was_blocking: false,
-            #[cfg(target_arch = "wasm32")]
-            manual_window_open: false,
-            #[cfg(target_arch = "wasm32")]
-            status_message: None,
         }
     }
 }

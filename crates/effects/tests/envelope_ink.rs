@@ -6,20 +6,38 @@
 use std::sync::Arc;
 
 use pluma_doc::{CharStyle, Node, NodeId, NodeKind, TextObject};
-use pluma_geom::{Point, Rect};
+use pluma_geom::{Point, Rect, Shape};
+use pluma_text::test_fonts::{HEIGHT_FAMILY, height_font};
 
 /// The largest distance between the edges of `a` and `b`.
 fn off(a: Rect, b: Rect) -> f64 {
     [a.x0 - b.x0, a.y0 - b.y0, a.x1 - b.x1, a.y1 - b.y1].iter().fold(0.0f64, |m, v| m.max(v.abs()))
 }
 
+/// "Type" at 48 pt in a face the test adds, so its glyphs draw on a machine without craft-fonts or
+/// system fonts.
+fn type_in_test_face() -> TextObject {
+    assert!(pluma_text::FontDb::global().add_font(height_font(true).unwrap()) > 0, "the test face loads");
+    TextObject::point(Point::new(10.0, 60.0), "Type", CharStyle { font_family: HEIGHT_FAMILY.into(), size: 48.0, ..Default::default() })
+}
+
+/// The box of the outlines `t`'s glyphs draw, in document space, measured glyph by glyph.
+fn outline_box(t: &TextObject) -> Rect {
+    let laid = pluma_text::layout(pluma_text::FontDb::global(), t);
+    let outlines: Vec<Rect> = laid.glyphs.iter().filter(|g| !g.outline.elements().is_empty()).map(|g| (t.xf * &g.outline).bounding_box()).collect();
+    assert_eq!(outlines.len(), 4, "every glyph of \"Type\" draws an outline");
+    outlines.into_iter().reduce(|a, b| a.union(b)).unwrap()
+}
+
 #[test]
 fn live_evaluation_measures_type_in_envelopes_by_its_glyphs() {
-    let t = TextObject::point(Point::new(10.0, 60.0), "Type", CharStyle { size: 48.0, ..Default::default() });
+    let t = type_in_test_face();
     let n = Arc::new(Node::new(NodeId(1), NodeKind::Text(Box::new(t.clone()))));
     let laid = n.geometric_bounds().unwrap();
-    let ink = t.xf.transform_rect_bbox(pluma_text::layout(pluma_text::FontDb::global(), &t).ink_bounds().unwrap());
+    let ink = outline_box(&t);
     assert!(laid.height() - ink.height() > 1.0, "the laid-out box {laid:?} reaches past the glyphs {ink:?}");
+    let measured = pluma_text::envelope_ink(&t, t.xf, None).unwrap();
+    assert!(off(measured, ink) < 1e-6, "the envelope measure gives the glyphs' box: {measured:?} vs {ink:?}");
     let before = pluma_doc::live::envelope_content_bounds(std::slice::from_ref(&n)).unwrap();
     assert!(off(before, laid) < 1e-6, "with nothing registered, type keeps its laid-out box: {before:?} vs {laid:?}");
 

@@ -11,3 +11,6 @@ workspace = true
 [dependencies]
 pluma-geom = { workspace = true }
 pluma-pathops = { workspace = true }
+
+[dev-dependencies]
+proptest = { workspace = true }

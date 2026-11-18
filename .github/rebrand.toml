@@ -21,6 +21,10 @@ keep = [
     "(?<=UPSTREAM_REPO: )storytold/vectorcraft",
     # The shared document-format library in getnodalia/foundation keeps its own crate name.
     "craft[-_]vectorcraft[-_]format",
+    # craft-svg depends on upstream's path geometry crates by their own names and repository;
+    # Cargo.toml patches that repository to this one's history at the same commit.
+    "vectorcraft-(geom|pathops)",
+    "github\\.com/storytold/vectorcraft\\.git",
     # Pluma's own extension is `.pluma`; upstream's `.vectorcraft` becomes it like any other name.
     # Files saved under the old extension keep opening (`pluma_format::OLDER_EXTENSIONS`).
     # Where the old extension is named as one Pluma still opens (file associations).
