@@ -6511,3 +6511,81 @@ breakText	Glyphs	Glyphs
 # Align to Pixel Grid
 	Align to Pixel Grid	Uitlijnen op pixelraster
 @msg	side is left or right, not `{s}`	side is left of right, niet `{s}`
+	Add to Custom Dictionary	Toevoegen aan aangepast woordenboek
+	Apply SVG Filter	SVG-filter toepassen
+	Assamese	Assamees
+	Bulgarian	Bulgaars
+	Cancel Opening	Openen annuleren
+	Change in Custom Dictionary	Wijzigen in aangepast woordenboek
+	Check Spelling	Spelling controleren
+	Delete SVG Filter	SVG-filter verwijderen
+	Delete from Custom Dictionary	Verwijderen uit aangepast woordenboek
+	Edit Custom Dictionary	Aangepast woordenboek bewerken
+	Import SVG Filter…	SVG-filter importeren…
+	Move Type Path Handle	Handvat van tekstpad verplaatsen
+	New SVG Filter	Nieuw SVG-filter
+	Nodalia	Nodalia
+	SVG Filter	SVG-filter
+	Sanskrit	Sanskriet
+	Select Symbol Instance Part	Deel van symbool-instantie selecteren
+	Spelling Suggestions	Spellingsuggesties
+	Stroke Weight Down	Dunnere lijndikte
+	Stroke Weight Up	Dikkere lijndikte
+	Edit SVG Filter	SVG-filter bewerken
+	Import SVG Filter	SVG-filter importeren
+	Add to Dictionary	Toevoegen aan woordenboek
+	Apply Gradient Preset	Verloopvoorinstelling toepassen
+	Cancel Image Trace	Afbeelding overtrekken annuleren
+	Caps Lock Cursor State	Cursorstatus Caps Lock
+	Catalan	Catalaans
+	Check for Updates…	Controleren op updates…
+	Chinese	Chinees
+	Configure Shape	Vorm configureren
+	Croatian	Kroatisch
+	Czech	Tsjechisch
+	Danish	Deens
+	Delete Gradient Preset	Verloopvoorinstelling verwijderen
+	Edit Character Style	Tekenstijl bewerken
+	Export All Open Documents	Alle geopende documenten exporteren
+	Finnish	Fins
+	German: Swiss	Duits: Zwitserland
+	Gradient Presets	Verloopvoorinstellingen
+	Ignore All	Alles negeren
+	Move Document	Document verplaatsen
+	No Suggestions	Geen suggesties
+	Norwegian	Noors
+	Polish	Pools
+	Reshape Type Path	Tekstpad hervormen
+	Russian	Russisch
+	Save Gradient Preset	Verloopvoorinstelling opslaan
+	Serbian: Cyrillic	Servisch: Cyrillisch
+	Serbian: Latin	Servisch: Latijn
+	Swedish	Zweeds
+	Turkish	Turks
+	Advanced Character Formats	Geavanceerde tekenopmaak
+	Basic Character Formats	Basistekenopmaak
+	Case	Hoofdletters
+	Character Color	Tekenkleur
+	Drop an SVG, PDF or Pluma file anywhere to open it.	Zet een SVG-, PDF- of Pluma-bestand ergens neer om het te openen.
+	GitHub	GitHub
+	Grid view	Rasterweergave
+	Hide Presets	Voorinstellingen verbergen
+	Horizontal Scale	Horizontale schaal
+	Invalid panel layout; restored the default dock	Ongeldige paneelindeling; de standaarddock is hersteld
+	Learn	Leren
+	List view	Lijstweergave
+	Main Menu	Hoofdmenu
+	On your computer	Op je computer
+	OpenType Features	OpenType-functies
+	Pluma Updates	Pluma-updates
+	Preparing the image…	Afbeelding voorbereiden…
+	Reading the file…	Bestand lezen…
+	Remove from Recent	Verwijderen uit recent
+	Save Gradient Preset…	Verloopvoorinstelling opslaan…
+	Show Presets	Voorinstellingen tonen
+	Stylistic Sets	Stilistische sets
+	Tracing the colors…	Kleuren overtrekken…
+	Vertical Scale	Verticale schaal
+	Website	Website
+	Duplicate Effects	Effecten dupliceren
+	Remove Effects	Effecten verwijderen

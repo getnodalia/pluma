@@ -6538,3 +6538,118 @@ breakText	Glyphs	字形
 	Align to Pixel Grid	对齐像素网格
 @msg	only paths and compound paths can be aligned to the pixel grid	只有路径和复合路径可以对齐像素网格
 @msg	side is left or right, not `{s}`	side 应为 left 或 right，而不是 `{s}`
+	Add to Custom Dictionary	添加到自定义词典
+	Apply SVG Filter	应用 SVG 滤镜
+	Assamese	阿萨姆语
+	Bulgarian	保加利亚语
+	Cancel Opening	取消打开
+	Change in Custom Dictionary	在自定义词典中更改
+	Check Spelling	检查拼写
+	Delete SVG Filter	删除 SVG 滤镜
+	Delete from Custom Dictionary	从自定义词典中删除
+	Edit Custom Dictionary	编辑自定义词典
+	Import SVG Filter…	导入 SVG 滤镜…
+	Move Type Path Handle	移动路径文字手柄
+	New SVG Filter	新建 SVG 滤镜
+	Nodalia	Nodalia
+	SVG Filter	SVG 滤镜
+	Sanskrit	梵语
+	Select Symbol Instance Part	选择符号实例的部分
+	Spelling Suggestions	拼写建议
+	Stroke Weight Down	减小描边粗细
+	Stroke Weight Up	增大描边粗细
+	Edit SVG Filter	编辑 SVG 滤镜
+	Import SVG Filter	导入 SVG 滤镜
+	Add to Dictionary	添加到词典
+	Apply Gradient Preset	应用渐变预设
+	Cancel Image Trace	取消图像描摹
+	Caps Lock Cursor State	大写锁定光标状态
+	Catalan	加泰罗尼亚语
+	Check for Updates…	检查更新…
+	Chinese	中文
+	Configure Shape	配置形状
+	Croatian	克罗地亚语
+	Czech	捷克语
+	Danish	丹麦语
+	Delete Gradient Preset	删除渐变预设
+	Edit Character Style	编辑字符样式
+	Export All Open Documents	导出所有打开的文档
+	Finnish	芬兰语
+	German: Swiss	德语：瑞士
+	Gradient Presets	渐变预设
+	Ignore All	全部忽略
+	Move Document	移动文档
+	No Suggestions	无建议
+	Norwegian	挪威语
+	Polish	波兰语
+	Reshape Type Path	重塑路径文字
+	Russian	俄语
+	Save Gradient Preset	存储渐变预设
+	Serbian: Cyrillic	塞尔维亚语：西里尔文
+	Serbian: Latin	塞尔维亚语：拉丁文
+	Swedish	瑞典语
+	Turkish	土耳其语
+	Drop an SVG, PDF or Pluma file anywhere to open it.	将 SVG、PDF 或 Pluma 文件拖放到任意位置即可打开。
+	GitHub	GitHub
+	Grid view	网格视图
+	Hide Presets	隐藏预设
+	Invalid panel layout; restored the default dock	面板布局无效；已恢复默认停靠
+	Learn	学习
+	List view	列表视图
+	Main Menu	主菜单
+	On your computer	在此电脑上
+	Pluma Updates	Pluma 更新
+	Preparing the image…	正在准备图像…
+	Reading the file…	正在读取文件…
+	Remove from Recent	从最近使用中移除
+	Save Gradient Preset…	存储渐变预设…
+	Show Presets	显示预设
+	Tracing the colors…	正在描摹颜色…
+	Website	网站
+	Duplicate Effects	复制效果
+	Remove Effects	移除效果
+swatch	Amber	琥珀色
+swatch	Aqua	水色
+swatch	Azure	天蓝色
+swatch	Black	黑色
+swatch	Blue	蓝色
+swatch	Bright Blue	亮蓝色
+swatch	Bright Green	亮绿色
+swatch	Bright Red	亮红色
+swatch	Bright Violet	亮紫罗兰色
+swatch	Bright Yellow	亮黄色
+swatch	Brights	亮色
+swatch	Brown	棕色
+swatch	Chocolate	巧克力色
+swatch	Coffee	咖啡色
+swatch	Copper	铜色
+swatch	Cyan	青色
+swatch	Cyan Green	青绿色
+swatch	Emerald	祖母绿
+swatch	Espresso	浓缩咖啡色
+swatch	Grays	灰色
+swatch	Green	绿色
+swatch	Indigo	靛蓝色
+swatch	Lime	酸橙色
+swatch	Magenta	洋红色
+swatch	Ocean	海洋色
+swatch	Orange	橙色
+swatch	Orange Red	橙红色
+swatch	Pink	粉红色
+swatch	Purple	紫色
+swatch	Radial White, Black	径向白色、黑色
+swatch	Red	红色
+swatch	Rose	玫瑰色
+swatch	Rust	锈色
+swatch	Sand	沙色
+swatch	Sunset	日落色
+swatch	Tan	棕褐色
+swatch	Teal	青绿
+swatch	Violet	紫罗兰色
+swatch	Walnut	胡桃色
+swatch	White	白色
+swatch	White, Black	白色、黑色
+swatch	Yellow	黄色
+swatch	Yellow Green	黄绿色
+swatch	[None]	[无]
+swatch	[Registration]	[套准]

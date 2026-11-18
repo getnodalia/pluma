@@ -6656,3 +6656,122 @@ breakText	Glyphs	Glifler
 	Ignore All	Tümünü Yoksay
 	Add to Dictionary	Sözlüğe Ekle
 	No Suggestions	Öneri Yok
+	Add to Custom Dictionary	Özel Sözlüğe Ekle
+	Apply SVG Filter	SVG Filtresini Uygula
+	Assamese	Assamca
+	Bulgarian	Bulgarca
+	Cancel Opening	Açmayı İptal Et
+	Change in Custom Dictionary	Özel Sözlükte Değiştir
+	Check Spelling	Yazımı Denetle
+	Delete SVG Filter	SVG Filtresini Sil
+	Delete from Custom Dictionary	Özel Sözlükten Sil
+	Edit Custom Dictionary	Özel Sözlüğü Düzenle
+	Import SVG Filter…	SVG Filtresini İçe Aktar…
+	Move Type Path Handle	Metin Yolu Tutamacını Taşı
+	New SVG Filter	Yeni SVG Filtresi
+	Nodalia	Nodalia
+	SVG Filter	SVG Filtresi
+	Sanskrit	Sanskritçe
+	Select Symbol Instance Part	Sembol Örneği Parçasını Seç
+	Spelling Suggestions	Yazım Önerileri
+	Stroke Weight Down	Kontur Kalınlığını Azalt
+	Stroke Weight Up	Kontur Kalınlığını Artır
+	Edit SVG Filter	SVG Filtresini Düzenle
+	Import SVG Filter	SVG Filtresini İçe Aktar
+	Apply Gradient Preset	Degrade Ön Ayarını Uygula
+	Cancel Image Trace	Görüntü İzlemeyi İptal Et
+	Caps Lock Cursor State	Caps Lock İmleç Durumu
+	Catalan	Katalanca
+	Check for Updates…	Güncellemeleri Denetle…
+	Chinese	Çince
+	Configure Shape	Şekli Yapılandır
+	Croatian	Hırvatça
+	Czech	Çekçe
+	Danish	Danca
+	Delete Gradient Preset	Degrade Ön Ayarını Sil
+	Edit Character Style	Karakter Stilini Düzenle
+	Export All Open Documents	Açık Tüm Belgeleri Dışa Aktar
+	Finnish	Fince
+	German: Swiss	Almanca: İsviçre
+	Gradient Presets	Degrade Ön Ayarları
+	Move Document	Belgeyi Taşı
+	Norwegian	Norveççe
+	Polish	Lehçe
+	Reshape Type Path	Metin Yolunu Yeniden Şekillendir
+	Russian	Rusça
+	Save Gradient Preset	Degrade Ön Ayarını Kaydet
+	Serbian: Cyrillic	Sırpça: Kiril
+	Serbian: Latin	Sırpça: Latin
+	Swedish	İsveççe
+	Turkish	Türkçe
+	Drop an SVG, PDF or Pluma file anywhere to open it.	Açmak için bir SVG, PDF veya Pluma dosyasını herhangi bir yere bırakın.
+	GitHub	GitHub
+	Grid view	Izgara görünümü
+	Hide Presets	Ön Ayarları Gizle
+	Invalid panel layout; restored the default dock	Panel düzeni geçersiz; varsayılan dok geri yüklendi
+	Learn	Öğren
+	List view	Liste görünümü
+	Main Menu	Ana Menü
+	On your computer	Bilgisayarınızda
+	Pluma Updates	Pluma Güncellemeleri
+	Preparing the image…	Görüntü hazırlanıyor…
+	Reading the file…	Dosya okunuyor…
+	Remove from Recent	Son Kullanılanlardan Kaldır
+	Save Gradient Preset…	Degrade Ön Ayarını Kaydet…
+	Show Presets	Ön Ayarları Göster
+	Tracing the colors…	Renkler izleniyor…
+	Website	Web sitesi
+	Duplicate Effects	Efektleri Çoğalt
+	Remove Effects	Efektleri Kaldır
+swatch	Amber	Kehribar
+swatch	Aqua	Su Yeşili
+swatch	Azure	Gök Mavisi
+swatch	Black	Siyah
+swatch	Blue	Mavi
+swatch	Bright Blue	Parlak Mavi
+swatch	Bright Green	Parlak Yeşil
+swatch	Bright Red	Parlak Kırmızı
+swatch	Bright Violet	Parlak Mor
+swatch	Bright Yellow	Parlak Sarı
+swatch	Brights	Parlaklar
+swatch	Brown	Kahverengi
+swatch	Chocolate	Çikolata
+swatch	Coffee	Kahve
+swatch	Copper	Bakır
+swatch	Cyan	Camgöbeği
+swatch	Cyan Green	Camgöbeği Yeşil
+swatch	Emerald	Zümrüt
+swatch	Espresso	Espresso
+swatch	Grays	Griler
+swatch	Green	Yeşil
+swatch	Indigo	Çivit
+swatch	Lime	Misket Limonu
+swatch	Magenta	Eflatun
+swatch	Ocean	Okyanus
+swatch	Orange	Turuncu
+swatch	Orange Red	Turuncu Kırmızı
+swatch	Pink	Pembe
+swatch	Purple	Mor
+swatch	Radial White, Black	Radyal Beyaz, Siyah
+swatch	Red	Kırmızı
+swatch	Rose	Gül
+swatch	Rust	Pas
+swatch	Sand	Kum
+swatch	Sunset	Gün Batımı
+swatch	Tan	Taba
+swatch	Teal	Deniz Mavisi
+swatch	Violet	Menekşe
+swatch	Walnut	Ceviz
+swatch	White	Beyaz
+swatch	White, Black	Beyaz, Siyah
+swatch	Yellow	Sarı
+swatch	Yellow Green	Sarımsı Yeşil
+swatch	[None]	[Yok]
+swatch	[Registration]	[Çakıştırma]
+	Copies per Sheet (as many as fit, in a grid)	Sayfa Başına Kopya (sığdığı kadar, ızgarada)
+	Lock All	Tümünü Kilitle
+	Lock All Except Selected	Seçili Olanlar Hariç Tümünü Kilitle
+	Lock Artboards	Çalışma Yüzeylerini Kilitle
+	Lock Selected	Seçiliyi Kilitle
+	Unlock Artboards	Çalışma Yüzeylerinin Kilidini Aç
+	Unlock Selected	Seçilinin Kilidini Aç

@@ -6302,3 +6302,116 @@ breakText	Glyphs	Glyph
 	Ignore All	Bỏ qua tất cả
 	Add to Dictionary	Thêm vào từ điển
 	No Suggestions	Không có gợi ý
+	Add to Custom Dictionary	Thêm vào từ điển tùy chỉnh
+	Apply SVG Filter	Áp dụng bộ lọc SVG
+	Assamese	Tiếng Assam
+	Bulgarian	Tiếng Bulgaria
+	Cancel Opening	Hủy mở
+	Change in Custom Dictionary	Thay đổi trong từ điển tùy chỉnh
+	Check Spelling	Kiểm tra chính tả
+	Delete SVG Filter	Xóa bộ lọc SVG
+	Delete from Custom Dictionary	Xóa khỏi từ điển tùy chỉnh
+	Edit Custom Dictionary	Sửa từ điển tùy chỉnh
+	Import SVG Filter…	Nhập bộ lọc SVG…
+	Move Type Path Handle	Di chuyển tay nắm đường dẫn văn bản
+	New SVG Filter	Bộ lọc SVG mới
+	Nodalia	Nodalia
+	SVG Filter	Bộ lọc SVG
+	Sanskrit	Tiếng Phạn
+	Select Symbol Instance Part	Chọn phần của thể hiện biểu tượng
+	Spelling Suggestions	Gợi ý chính tả
+	Stroke Weight Down	Giảm độ dày nét
+	Stroke Weight Up	Tăng độ dày nét
+	Edit SVG Filter	Sửa bộ lọc SVG
+	Import SVG Filter	Nhập bộ lọc SVG
+	Apply Gradient Preset	Áp dụng cài đặt sẵn chuyển màu
+	Cancel Image Trace	Hủy dò ảnh
+	Caps Lock Cursor State	Trạng thái con trỏ Caps Lock
+	Catalan	Tiếng Catalan
+	Check for Updates…	Kiểm tra bản cập nhật…
+	Chinese	Tiếng Trung
+	Configure Shape	Cấu hình hình dạng
+	Croatian	Tiếng Croatia
+	Czech	Tiếng Séc
+	Danish	Tiếng Đan Mạch
+	Delete Gradient Preset	Xóa cài đặt sẵn chuyển màu
+	Edit Character Style	Sửa kiểu ký tự
+	Export All Open Documents	Xuất tất cả tài liệu đang mở
+	Finnish	Tiếng Phần Lan
+	German: Swiss	Tiếng Đức: Thụy Sĩ
+	Gradient Presets	Cài đặt sẵn chuyển màu
+	Move Document	Di chuyển tài liệu
+	Norwegian	Tiếng Na Uy
+	Polish	Tiếng Ba Lan
+	Reshape Type Path	Định hình lại đường dẫn văn bản
+	Russian	Tiếng Nga
+	Save Gradient Preset	Lưu cài đặt sẵn chuyển màu
+	Serbian: Cyrillic	Tiếng Serbia: Kirin
+	Serbian: Latin	Tiếng Serbia: Latinh
+	Swedish	Tiếng Thụy Điển
+	Turkish	Tiếng Thổ Nhĩ Kỳ
+	Drop an SVG, PDF or Pluma file anywhere to open it.	Thả tệp SVG, PDF hoặc Pluma vào bất kỳ đâu để mở.
+	GitHub	GitHub
+	Grid view	Chế độ lưới
+	Hide Presets	Ẩn cài đặt sẵn
+	Invalid panel layout; restored the default dock	Bố cục bảng điều khiển không hợp lệ; đã khôi phục dock mặc định
+	Learn	Tìm hiểu
+	List view	Chế độ danh sách
+	Main Menu	Menu chính
+	On your computer	Trên máy tính của bạn
+	Pluma Updates	Cập nhật Pluma
+	Preparing the image…	Đang chuẩn bị ảnh…
+	Reading the file…	Đang đọc tệp…
+	Remove from Recent	Xóa khỏi danh sách gần đây
+	Save Gradient Preset…	Lưu cài đặt sẵn chuyển màu…
+	Show Presets	Hiện cài đặt sẵn
+	Tracing the colors…	Đang dò màu…
+	Website	Trang web
+	Duplicate Effects	Nhân đôi hiệu ứng
+	Remove Effects	Xóa hiệu ứng
+swatch	Amber	Hổ phách
+swatch	Aqua	Xanh nước
+swatch	Azure	Xanh da trời
+swatch	Black	Đen
+swatch	Blue	Xanh dương
+swatch	Bright Blue	Xanh dương sáng
+swatch	Bright Green	Xanh lá sáng
+swatch	Bright Red	Đỏ sáng
+swatch	Bright Violet	Tím sáng
+swatch	Bright Yellow	Vàng sáng
+swatch	Brights	Màu sáng
+swatch	Brown	Nâu
+swatch	Chocolate	Sô-cô-la
+swatch	Coffee	Cà phê
+swatch	Copper	Đồng
+swatch	Cyan	Lục lam
+swatch	Cyan Green	Lục lam xanh
+swatch	Emerald	Ngọc lục bảo
+swatch	Espresso	Espresso
+swatch	Grays	Xám
+swatch	Green	Xanh lá
+swatch	Indigo	Chàm
+swatch	Lime	Chanh
+swatch	Magenta	Hồng sẫm
+swatch	Ocean	Đại dương
+swatch	Orange	Cam
+swatch	Orange Red	Đỏ cam
+swatch	Pink	Hồng
+swatch	Purple	Tía
+swatch	Radial White, Black	Trắng, đen xuyên tâm
+swatch	Red	Đỏ
+swatch	Rose	Hoa hồng
+swatch	Rust	Gỉ sắt
+swatch	Sand	Cát
+swatch	Sunset	Hoàng hôn
+swatch	Tan	Nâu vàng
+swatch	Teal	Xanh mòng két
+swatch	Violet	Tím violet
+swatch	Walnut	Óc chó
+swatch	White	Trắng
+swatch	White, Black	Trắng, đen
+swatch	Yellow	Vàng
+swatch	Yellow Green	Vàng lục
+swatch	[None]	[Không]
+swatch	[Registration]	[Đăng ký]
+	Points:	Số điểm:

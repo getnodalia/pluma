@@ -6497,3 +6497,139 @@ shape	Open	Otvoren
 # Align to Pixel Grid
 	Align to Pixel Grid	Poravnaj s mrežom piksela
 @msg	side is left or right, not `{s}`	side je left ili right, a ne `{s}`
+	Add to Custom Dictionary	Dodaj u prilagođeni rječnik
+	Apply SVG Filter	Primijeni SVG filter
+	Assamese	Asamski
+	Bulgarian	Bugarski
+	Cancel Opening	Otkaži otvaranje
+	Change in Custom Dictionary	Promijeni u prilagođenom rječniku
+	Check Spelling	Provjeri pravopis
+	Delete SVG Filter	Izbriši SVG filter
+	Delete from Custom Dictionary	Izbriši iz prilagođenog rječnika
+	Edit Custom Dictionary	Uredi prilagođeni rječnik
+	Import SVG Filter…	Uvezi SVG filter…
+	Move Type Path Handle	Pomjeri ručku putanje teksta
+	New SVG Filter	Novi SVG filter
+	Nodalia	Nodalia
+	SVG Filter	SVG filter
+	Sanskrit	Sanskrit
+	Select Symbol Instance Part	Odaberi dio instance simbola
+	Spelling Suggestions	Pravopisni prijedlozi
+	Stroke Weight Down	Tanji potez
+	Stroke Weight Up	Deblji potez
+	Edit SVG Filter	Uredi SVG filter
+	Import SVG Filter	Uvezi SVG filter
+	Add to Dictionary	Dodaj u rječnik
+	Apply Gradient Preset	Primijeni predložak gradijenta
+	Cancel Image Trace	Otkaži praćenje slike
+	Caps Lock Cursor State	Stanje kursora Caps Lock
+	Catalan	Katalonski
+	Chinese	Kineski
+	Configure Shape	Konfiguriši oblik
+	Croatian	Hrvatski
+	Czech	Češki
+	Danish	Danski
+	Delete Gradient Preset	Izbriši predložak gradijenta
+	Edit Character Style	Uredi stil znakova
+	Export All Open Documents	Izvezi sve otvorene dokumente
+	Finnish	Finski
+	German: Swiss	Njemački: Švicarska
+	Gradient Presets	Predlošci gradijenata
+	Ignore All	Ignoriši sve
+	Move Document	Premjesti dokument
+	No Suggestions	Nema prijedloga
+	Norwegian	Norveški
+	Polish	Poljski
+	Reshape Type Path	Preoblikuj putanju teksta
+	Russian	Ruski
+	Save Gradient Preset	Sačuvaj predložak gradijenta
+	Serbian: Cyrillic	Srpski: ćirilica
+	Serbian: Latin	Srpski: latinica
+	Swedish	Švedski
+	Turkish	Turski
+	Advanced Character Formats	Napredni formati znakova
+	Basic Character Formats	Osnovni formati znakova
+	Case	Velika/mala slova
+	Character Color	Boja znakova
+	Drop an SVG, PDF or Pluma file anywhere to open it.	Ispustite SVG, PDF ili Pluma datoteku bilo gdje da je otvorite.
+	GitHub	GitHub
+	Grid view	Prikaz mreže
+	Hide Presets	Sakrij predloške
+	Horizontal Scale	Horizontalna skala
+	Invalid panel layout; restored the default dock	Neispravan raspored panela; vraćeno je zadano usidrenje
+	Learn	Učenje
+	List view	Prikaz liste
+	Main Menu	Glavni meni
+	On your computer	Na vašem računaru
+	OpenType Features	OpenType funkcije
+	Reading the file…	Čitanje datoteke…
+	Remove from Recent	Ukloni iz nedavnih
+	Save Gradient Preset…	Sačuvaj predložak gradijenta…
+	Show Presets	Prikaži predloške
+	Stylistic Sets	Stilski skupovi
+	Vertical Scale	Vertikalna skala
+	Website	Web stranica
+	Duplicate Effects	Dupliraj efekte
+	Remove Effects	Ukloni efekte
+	Break Text	Prekini tekst
+	Break Text into Glyphs	Prekini tekst na glife
+	Break Text into Lines	Prekini tekst na redove
+	Break Text into Paragraphs	Prekini tekst na pasuse
+	Break Text into Words	Prekini tekst na riječi
+	CMYK Images	CMYK slike
+	Close or Join	Zatvori ili spoji
+	Combine Point Text	Spoji tačkaste tekstove
+	Compare with Image	Uporedi sa slikom
+	Convert to Parametric Shape	Pretvori u parametarski oblik
+	Duotone…	Duoton…
+	Edit Parametric Shape	Uredi parametarski oblik
+	Grayscale Images	Slike u nijansama sive
+	Join Point Text	Spoji tačkasti tekst
+	Load All Styles…	Učitaj sve stilove…
+	Load Character Styles…	Učitaj stilove znakova…
+	Load Paragraph Styles…	Učitaj stilove pasusa…
+	Next Segment	Sljedeći segment
+	Objects with Color Effects	Objekti s efektima boja
+	Objects with Spot Colors	Objekti sa spot bojama
+	Parametric Shape	Parametarski oblik
+	Parametric Shape Tool	Alat za parametarski oblik
+	Print Ink Fixes	Ispravke tinte za štampu
+	Print Ink Fixes…	Ispravke tinte za štampu…
+	RGB Images	RGB slike
+	Remove Breaks	Ukloni prekide
+	Remove Line Breaks	Ukloni prekide redova
+	Remove Paragraph Breaks	Ukloni prekide pasusa
+	Replace Missing Fonts…	Zamijeni nedostajuće fontove…
+	Reset Text Transform	Poništi transformaciju teksta
+	Reset Text Transform and Scale	Poništi transformaciju i skaliranje teksta
+	Select by Color Kind	Odaberi po vrsti boje
+	Set Alignment, Keep Position	Postavi poravnanje, zadrži položaj
+	Smart Pen	Pametno pero
+	Smart Pen Panel	Panel pametnog pera
+	Smart Pen Tool	Alat pametno pero
+	Split Text at Cursor	Podijeli tekst na kursoru
+	Straight or Curved Segment	Ravni ili zakrivljeni segment
+	Click to edit	Kliknite za uređivanje
+	Copies per Sheet (as many as fit, in a grid)	Kopija po listu (koliko stane, u mreži)
+	Curve	Kriva
+	Dot Color from Art	Boja tačkice iz crteža
+	Double-click to edit	Dvaput kliknite za uređivanje
+	Inks	Tinte
+	Inner Radius:	Unutrašnji radijus:
+	Level:	Nivo:
+	Open a document to draw parametric shapes.	Otvorite dokument da crtate parametarske oblike.
+	Open a document to draw with the Smart Pen.	Otvorite dokument da crtate pametnim perom.
+	Reset to Inverse	Vrati na inverzno
+	Reset to Linear	Vrati na linearno
+	Select a parametric shape to edit it. With none selected, these set the next shape.	Odaberite parametarski oblik da ga uredite. Ako ništa nije odabrano, ove postavke važe za sljedeći oblik.
+	Skip Objects with Spot Colors	Preskoči objekte sa spot bojama
+	Tone 1	Ton 1
+	Tone 2	Ton 2
+	Tone 3	Ton 3
+	Tone 4	Ton 4
+	Delete Styles	Izbriši stilove
+	Duotone	Duoton
+	Load All Styles	Učitaj sve stilove
+	Load Character Styles	Učitaj stilove znakova
+	Load Paragraph Styles	Učitaj stilove pasusa
+	Replace Missing Fonts	Zamijeni nedostajuće fontove

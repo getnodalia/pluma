@@ -6287,3 +6287,116 @@ breakText	Glyphs	Glyphen
 	Ignore All	Alle ignorieren
 	Add to Dictionary	Zum Wörterbuch hinzufügen
 	No Suggestions	Keine Vorschläge
+	Add to Custom Dictionary	Zum benutzerdefinierten Wörterbuch hinzufügen
+	Apply SVG Filter	SVG-Filter anwenden
+	Assamese	Assamesisch
+	Bulgarian	Bulgarisch
+	Cancel Opening	Öffnen abbrechen
+	Change in Custom Dictionary	Im benutzerdefinierten Wörterbuch ändern
+	Check Spelling	Rechtschreibung prüfen
+	Delete SVG Filter	SVG-Filter löschen
+	Delete from Custom Dictionary	Aus dem benutzerdefinierten Wörterbuch entfernen
+	Edit Custom Dictionary	Benutzerdefiniertes Wörterbuch bearbeiten
+	Import SVG Filter…	SVG-Filter importieren…
+	Move Type Path Handle	Griff des Textpfads verschieben
+	New SVG Filter	Neuer SVG-Filter
+	Nodalia	Nodalia
+	SVG Filter	SVG-Filter
+	Sanskrit	Sanskrit
+	Select Symbol Instance Part	Teil der Symbolinstanz auswählen
+	Spelling Suggestions	Rechtschreibvorschläge
+	Stroke Weight Down	Konturstärke verringern
+	Stroke Weight Up	Konturstärke erhöhen
+	Edit SVG Filter	SVG-Filter bearbeiten
+	Import SVG Filter	SVG-Filter importieren
+	Apply Gradient Preset	Verlaufsvorgabe anwenden
+	Cancel Image Trace	Bildnachzeichnung abbrechen
+	Caps Lock Cursor State	Cursorstatus der Feststelltaste
+	Catalan	Katalanisch
+	Check for Updates…	Nach Updates suchen…
+	Chinese	Chinesisch
+	Configure Shape	Form konfigurieren
+	Croatian	Kroatisch
+	Czech	Tschechisch
+	Danish	Dänisch
+	Delete Gradient Preset	Verlaufsvorgabe löschen
+	Edit Character Style	Zeichenformat bearbeiten
+	Export All Open Documents	Alle geöffneten Dokumente exportieren
+	Finnish	Finnisch
+	German: Swiss	Deutsch: Schweiz
+	Gradient Presets	Verlaufsvorgaben
+	Move Document	Dokument verschieben
+	Norwegian	Norwegisch
+	Polish	Polnisch
+	Reshape Type Path	Textpfad umformen
+	Russian	Russisch
+	Save Gradient Preset	Verlaufsvorgabe speichern
+	Serbian: Cyrillic	Serbisch: Kyrillisch
+	Serbian: Latin	Serbisch: Lateinisch
+	Swedish	Schwedisch
+	Turkish	Türkisch
+	Drop an SVG, PDF or Pluma file anywhere to open it.	SVG-, PDF- oder Pluma-Datei irgendwo ablegen, um sie zu öffnen.
+	GitHub	GitHub
+	Grid view	Rasteransicht
+	Hide Presets	Vorgaben ausblenden
+	Invalid panel layout; restored the default dock	Ungültiges Bedienfeldlayout; das Standard-Dock wurde wiederhergestellt
+	Learn	Lernen
+	List view	Listenansicht
+	Main Menu	Hauptmenü
+	On your computer	Auf diesem Computer
+	Pluma Updates	Pluma-Updates
+	Preparing the image…	Bild wird vorbereitet…
+	Reading the file…	Datei wird gelesen…
+	Remove from Recent	Aus „Zuletzt geöffnet“ entfernen
+	Save Gradient Preset…	Verlaufsvorgabe speichern…
+	Show Presets	Vorgaben einblenden
+	Tracing the colors…	Farben werden nachgezeichnet…
+	Website	Website
+	Duplicate Effects	Effekte duplizieren
+	Remove Effects	Effekte entfernen
+swatch	Amber	Bernstein
+swatch	Aqua	Aquamarin
+swatch	Azure	Azurblau
+swatch	Black	Schwarz
+swatch	Blue	Blau
+swatch	Bright Blue	Leuchtendes Blau
+swatch	Bright Green	Leuchtendes Grün
+swatch	Bright Red	Leuchtendes Rot
+swatch	Bright Violet	Leuchtendes Violett
+swatch	Bright Yellow	Leuchtendes Gelb
+swatch	Brights	Leuchtende Farben
+swatch	Brown	Braun
+swatch	Chocolate	Schokolade
+swatch	Coffee	Kaffee
+swatch	Copper	Kupfer
+swatch	Cyan	Cyan
+swatch	Cyan Green	Cyangrün
+swatch	Emerald	Smaragd
+swatch	Espresso	Espresso
+swatch	Grays	Graustufen
+swatch	Green	Grün
+swatch	Indigo	Indigo
+swatch	Lime	Limette
+swatch	Magenta	Magenta
+swatch	Ocean	Ozean
+swatch	Orange	Orange
+swatch	Orange Red	Orangerot
+swatch	Pink	Rosa
+swatch	Purple	Purpur
+swatch	Radial White, Black	Radial Weiß, Schwarz
+swatch	Red	Rot
+swatch	Rose	Rose
+swatch	Rust	Rost
+swatch	Sand	Sand
+swatch	Sunset	Sonnenuntergang
+swatch	Tan	Hellbraun
+swatch	Teal	Blaugrün
+swatch	Violet	Violett
+swatch	Walnut	Walnuss
+swatch	White	Weiß
+swatch	White, Black	Weiß, Schwarz
+swatch	Yellow	Gelb
+swatch	Yellow Green	Gelbgrün
+swatch	[None]	[Ohne]
+swatch	[Registration]	[Passermarken]
+	Points:	Punkte:

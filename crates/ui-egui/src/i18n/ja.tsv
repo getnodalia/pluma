@@ -6386,3 +6386,67 @@ breakText	Glyphs	字形
 	Ignore All	すべて無視
 	Add to Dictionary	辞書に追加
 	No Suggestions	候補なし
+	Add to Custom Dictionary	カスタム辞書に追加
+	Apply SVG Filter	SVGフィルターを適用
+	Assamese	アッサム語
+	Bulgarian	ブルガリア語
+	Cancel Opening	開く操作をキャンセル
+	Change in Custom Dictionary	カスタム辞書で変更
+	Check Spelling	スペルチェック
+	Delete SVG Filter	SVGフィルターを削除
+	Delete from Custom Dictionary	カスタム辞書から削除
+	Edit Custom Dictionary	カスタム辞書を編集
+	Import SVG Filter…	SVGフィルターを読み込む…
+	Move Type Path Handle	パス上文字のハンドルを移動
+	New SVG Filter	新規SVGフィルター
+	Nodalia	Nodalia
+	SVG Filter	SVGフィルター
+	Sanskrit	サンスクリット語
+	Select Symbol Instance Part	シンボルインスタンスのパーツを選択
+	Spelling Suggestions	スペルの候補
+	Stroke Weight Down	線幅を細く
+	Stroke Weight Up	線幅を太く
+	Edit SVG Filter	SVGフィルターを編集
+	Import SVG Filter	SVGフィルターを読み込む
+	Apply Gradient Preset	グラデーションプリセットを適用
+	Cancel Image Trace	画像トレースをキャンセル
+	Caps Lock Cursor State	Caps Lockのカーソル状態
+	Catalan	カタルーニャ語
+	Chinese	中国語
+	Configure Shape	シェイプを設定
+	Croatian	クロアチア語
+	Czech	チェコ語
+	Danish	デンマーク語
+	Delete Gradient Preset	グラデーションプリセットを削除
+	Edit Character Style	文字スタイルを編集
+	Export All Open Documents	開いているすべてのドキュメントを書き出す
+	Finnish	フィンランド語
+	German: Swiss	ドイツ語：スイス
+	Gradient Presets	グラデーションプリセット
+	Move Document	ドキュメントを移動
+	Norwegian	ノルウェー語
+	Polish	ポーランド語
+	Reshape Type Path	パス上文字を整形
+	Russian	ロシア語
+	Save Gradient Preset	グラデーションプリセットを保存
+	Serbian: Cyrillic	セルビア語：キリル文字
+	Serbian: Latin	セルビア語：ラテン文字
+	Swedish	スウェーデン語
+	Turkish	トルコ語
+	Drop an SVG, PDF or Pluma file anywhere to open it.	SVG、PDF、Plumaファイルをここにドロップして開きます。
+	GitHub	GitHub
+	Grid view	グリッド表示
+	Hide Presets	プリセットを隠す
+	Invalid panel layout; restored the default dock	パネルのレイアウトが無効です。既定のドックに戻しました
+	Learn	学ぶ
+	List view	リスト表示
+	Main Menu	メインメニュー
+	On your computer	このコンピューター
+	Reading the file…	ファイルを読み込み中…
+	Remove from Recent	最近使った項目から削除
+	Save Gradient Preset…	グラデーションプリセットを保存…
+	Show Presets	プリセットを表示
+	Website	ウェブサイト
+	Duplicate Effects	効果を複製
+	Remove Effects	効果を削除
+	Points:	点の数:

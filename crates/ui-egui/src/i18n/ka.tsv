@@ -6761,3 +6761,66 @@ font-script	Japanese	იაპონური
 	Ignore All	ყველას იგნორირება
 	Add to Dictionary	ლექსიკონში დამატება
 	No Suggestions	შემოთავაზებები არ არის
+	Add to Custom Dictionary	პირად ლექსიკონში დამატება
+	Apply SVG Filter	SVG ფილტრის გამოყენება
+	Assamese	ასამური
+	Bulgarian	ბულგარული
+	Cancel Opening	გახსნის გაუქმება
+	Change in Custom Dictionary	პირად ლექსიკონში შეცვლა
+	Check Spelling	მართლწერის შემოწმება
+	Delete SVG Filter	SVG ფილტრის წაშლა
+	Delete from Custom Dictionary	პირადი ლექსიკონიდან წაშლა
+	Edit Custom Dictionary	პირადი ლექსიკონის რედაქტირება
+	Import SVG Filter…	SVG ფილტრის იმპორტი…
+	Move Type Path Handle	ტექსტის ბილიკის სახელურის გადატანა
+	New SVG Filter	ახალი SVG ფილტრი
+	Nodalia	Nodalia
+	SVG Filter	SVG ფილტრი
+	Sanskrit	სანსკრიტი
+	Select Symbol Instance Part	სიმბოლოს ეგზემპლარის ნაწილის არჩევა
+	Spelling Suggestions	მართლწერის შემოთავაზებები
+	Stroke Weight Down	კონტურის სისქის შემცირება
+	Stroke Weight Up	კონტურის სისქის გაზრდა
+	Edit SVG Filter	SVG ფილტრის რედაქტირება
+	Import SVG Filter	SVG ფილტრის იმპორტი
+	Apply Gradient Preset	გრადიენტის წინასწარი პარამეტრის გამოყენება
+	Cancel Image Trace	გამოსახულების ტრასირების გაუქმება
+	Caps Lock Cursor State	Caps Lock-ის კურსორის მდგომარეობა
+	Catalan	კატალონიური
+	Chinese	ჩინური
+	Configure Shape	ფორმის კონფიგურაცია
+	Croatian	ხორვატული
+	Czech	ჩეხური
+	Danish	დანიური
+	Delete Gradient Preset	გრადიენტის წინასწარი პარამეტრის წაშლა
+	Edit Character Style	სიმბოლოს სტილის რედაქტირება
+	Export All Open Documents	ყველა გახსნილი დოკუმენტის ექსპორტი
+	Finnish	ფინური
+	German: Swiss	გერმანული: შვეიცარიული
+	Gradient Presets	გრადიენტის წინასწარი პარამეტრები
+	Move Document	დოკუმენტის გადატანა
+	Norwegian	ნორვეგიული
+	Polish	პოლონური
+	Reshape Type Path	ტექსტის ბილიკის გარდაქმნა
+	Russian	რუსული
+	Save Gradient Preset	გრადიენტის წინასწარი პარამეტრის შენახვა
+	Serbian: Cyrillic	სერბული: კირილიცა
+	Serbian: Latin	სერბული: ლათინური
+	Swedish	შვედური
+	Turkish	თურქული
+	Drop an SVG, PDF or Pluma file anywhere to open it.	გადმოაგდეთ SVG, PDF ან Pluma ფაილი ნებისმიერ ადგილას მის გასახსნელად.
+	GitHub	GitHub
+	Grid view	ბადის ხედი
+	Hide Presets	წინასწარი პარამეტრების დამალვა
+	Learn	სწავლა
+	List view	სიის ხედი
+	Main Menu	მთავარი მენიუ
+	On your computer	თქვენს კომპიუტერში
+	Reading the file…	ფაილის კითხვა…
+	Remove from Recent	ბოლო ფაილებიდან ამოშლა
+	Save Gradient Preset…	გრადიენტის წინასწარი პარამეტრის შენახვა…
+	Show Presets	წინასწარი პარამეტრების ჩვენება
+	Website	ვებგვერდი
+	Duplicate Effects	ეფექტების დუბლირება
+	Remove Effects	ეფექტების ამოშლა
+	Copies per Sheet (as many as fit, in a grid)	ასლები თითო ფურცელზე (რამდენიც დაეტევა, ბადით)

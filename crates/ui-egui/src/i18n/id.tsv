@@ -6460,3 +6460,81 @@ breakText	Glyphs	Glif
 # Align to Pixel Grid
 	Align to Pixel Grid	Sejajarkan ke grid piksel
 @msg	side is left or right, not `{s}`	side adalah left atau right, bukan `{s}`
+	Add to Custom Dictionary	Tambahkan ke Kamus Kustom
+	Apply SVG Filter	Terapkan Filter SVG
+	Assamese	Assam
+	Bulgarian	Bulgaria
+	Cancel Opening	Batalkan Pembukaan
+	Change in Custom Dictionary	Ubah di Kamus Kustom
+	Check Spelling	Periksa Ejaan
+	Delete SVG Filter	Hapus Filter SVG
+	Delete from Custom Dictionary	Hapus dari Kamus Kustom
+	Edit Custom Dictionary	Edit Kamus Kustom
+	Import SVG Filter…	Impor Filter SVG…
+	Move Type Path Handle	Pindahkan Handel Jalur Teks
+	New SVG Filter	Filter SVG Baru
+	Nodalia	Nodalia
+	SVG Filter	Filter SVG
+	Sanskrit	Sanskerta
+	Select Symbol Instance Part	Pilih Bagian Instans Simbol
+	Spelling Suggestions	Saran Ejaan
+	Stroke Weight Down	Perkecil Tebal Goresan
+	Stroke Weight Up	Perbesar Tebal Goresan
+	Edit SVG Filter	Edit Filter SVG
+	Import SVG Filter	Impor Filter SVG
+	Add to Dictionary	Tambahkan ke Kamus
+	Apply Gradient Preset	Terapkan Preset Gradien
+	Cancel Image Trace	Batalkan Penelusuran Gambar
+	Caps Lock Cursor State	Status Kursor Caps Lock
+	Catalan	Katalan
+	Check for Updates…	Periksa Pembaruan…
+	Chinese	Tionghoa
+	Configure Shape	Konfigurasi Bentuk
+	Croatian	Kroasia
+	Czech	Ceko
+	Danish	Denmark
+	Delete Gradient Preset	Hapus Preset Gradien
+	Edit Character Style	Edit Gaya Karakter
+	Export All Open Documents	Ekspor Semua Dokumen yang Terbuka
+	Finnish	Finlandia
+	German: Swiss	Jerman: Swiss
+	Gradient Presets	Preset Gradien
+	Ignore All	Abaikan Semua
+	Move Document	Pindahkan Dokumen
+	No Suggestions	Tidak Ada Saran
+	Norwegian	Norwegia
+	Polish	Polandia
+	Reshape Type Path	Bentuk Ulang Jalur Teks
+	Russian	Rusia
+	Save Gradient Preset	Simpan Preset Gradien
+	Serbian: Cyrillic	Serbia: Sirilik
+	Serbian: Latin	Serbia: Latin
+	Swedish	Swedia
+	Turkish	Turki
+	Advanced Character Formats	Format Karakter Lanjutan
+	Basic Character Formats	Format Karakter Dasar
+	Case	Huruf Besar/Kecil
+	Character Color	Warna Karakter
+	Drop an SVG, PDF or Pluma file anywhere to open it.	Letakkan berkas SVG, PDF, atau Pluma di mana saja untuk membukanya.
+	GitHub	GitHub
+	Grid view	Tampilan kisi
+	Hide Presets	Sembunyikan Preset
+	Horizontal Scale	Skala Horizontal
+	Invalid panel layout; restored the default dock	Tata letak panel tidak valid; dok default dipulihkan
+	Learn	Pelajari
+	List view	Tampilan daftar
+	Main Menu	Menu Utama
+	On your computer	Di komputer Anda
+	OpenType Features	Fitur OpenType
+	Pluma Updates	Pembaruan Pluma
+	Preparing the image…	Menyiapkan gambar…
+	Reading the file…	Membaca berkas…
+	Remove from Recent	Hapus dari Terbaru
+	Save Gradient Preset…	Simpan Preset Gradien…
+	Show Presets	Tampilkan Preset
+	Stylistic Sets	Set Stilistik
+	Tracing the colors…	Menelusuri warna…
+	Vertical Scale	Skala Vertikal
+	Website	Situs web
+	Duplicate Effects	Duplikat Efek
+	Remove Effects	Hapus Efek

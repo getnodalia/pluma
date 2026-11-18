@@ -6700,3 +6700,115 @@ breakText	Glyphs	Glyfy
 	Ignore All	Ignorovat vše
 	Add to Dictionary	Přidat do slovníku
 	No Suggestions	Žádné návrhy
+	Add to Custom Dictionary	Přidat do vlastního slovníku
+	Apply SVG Filter	Použít filtr SVG
+	Assamese	Ásámština
+	Bulgarian	Bulharština
+	Cancel Opening	Zrušit otevírání
+	Change in Custom Dictionary	Změnit ve vlastním slovníku
+	Check Spelling	Zkontrolovat pravopis
+	Delete SVG Filter	Odstranit filtr SVG
+	Delete from Custom Dictionary	Odstranit z vlastního slovníku
+	Edit Custom Dictionary	Upravit vlastní slovník
+	Import SVG Filter…	Importovat filtr SVG…
+	Move Type Path Handle	Přesunout úchyt textové cesty
+	New SVG Filter	Nový filtr SVG
+	Nodalia	Nodalia
+	SVG Filter	Filtr SVG
+	Sanskrit	Sanskrt
+	Select Symbol Instance Part	Vybrat část instance symbolu
+	Spelling Suggestions	Návrhy pravopisu
+	Stroke Weight Down	Tenčí tloušťka tahu
+	Stroke Weight Up	Silnější tloušťka tahu
+	Edit SVG Filter	Upravit filtr SVG
+	Import SVG Filter	Importovat filtr SVG
+	Apply Gradient Preset	Použít předvolbu přechodu
+	Cancel Image Trace	Zrušit vektorizaci obrázku
+	Caps Lock Cursor State	Stav kurzoru Caps Lock
+	Catalan	Katalánština
+	Check for Updates…	Zkontrolovat aktualizace…
+	Chinese	Čínština
+	Configure Shape	Nastavit tvar
+	Croatian	Chorvatština
+	Czech	Čeština
+	Danish	Dánština
+	Delete Gradient Preset	Odstranit předvolbu přechodu
+	Edit Character Style	Upravit styl znaků
+	Export All Open Documents	Exportovat všechny otevřené dokumenty
+	Finnish	Finština
+	German: Swiss	Němčina: Švýcarsko
+	Gradient Presets	Předvolby přechodů
+	Move Document	Přesunout dokument
+	Norwegian	Norština
+	Polish	Polština
+	Reshape Type Path	Změnit tvar textové cesty
+	Russian	Ruština
+	Save Gradient Preset	Uložit předvolbu přechodu
+	Serbian: Cyrillic	Srbština: cyrilice
+	Serbian: Latin	Srbština: latinka
+	Swedish	Švédština
+	Turkish	Turečtina
+	Drop an SVG, PDF or Pluma file anywhere to open it.	Přetažením souboru SVG, PDF nebo Pluma kamkoli jej otevřete.
+	GitHub	GitHub
+	Grid view	Zobrazení mřížky
+	Hide Presets	Skrýt předvolby
+	Invalid panel layout; restored the default dock	Neplatné rozložení panelů; obnoveno výchozí ukotvení
+	Learn	Výuka
+	List view	Zobrazení seznamu
+	Main Menu	Hlavní nabídka
+	On your computer	V tomto počítači
+	Pluma Updates	Aktualizace Pluma
+	Preparing the image…	Příprava obrázku…
+	Reading the file…	Čtení souboru…
+	Remove from Recent	Odebrat z nedávných
+	Save Gradient Preset…	Uložit předvolbu přechodu…
+	Show Presets	Zobrazit předvolby
+	Tracing the colors…	Vektorizace barev…
+	Website	Web
+	Duplicate Effects	Duplikovat efekty
+	Remove Effects	Odebrat efekty
+swatch	Amber	Jantarová
+swatch	Aqua	Akvamarínová
+swatch	Azure	Azurová modř
+swatch	Black	Černá
+swatch	Blue	Modrá
+swatch	Bright Blue	Jasně modrá
+swatch	Bright Green	Jasně zelená
+swatch	Bright Red	Jasně červená
+swatch	Bright Violet	Jasně fialová
+swatch	Bright Yellow	Jasně žlutá
+swatch	Brights	Jasné barvy
+swatch	Brown	Hnědá
+swatch	Chocolate	Čokoládová
+swatch	Coffee	Kávová
+swatch	Copper	Měděná
+swatch	Cyan	Azurová
+swatch	Cyan Green	Azurově zelená
+swatch	Emerald	Smaragdová
+swatch	Espresso	Espresso
+swatch	Grays	Šedé
+swatch	Green	Zelená
+swatch	Indigo	Indigová
+swatch	Lime	Limetková
+swatch	Magenta	Purpurová
+swatch	Ocean	Oceán
+swatch	Orange	Oranžová
+swatch	Orange Red	Oranžově červená
+swatch	Pink	Růžová
+swatch	Purple	Nachová
+swatch	Radial White, Black	Radiální bílá, černá
+swatch	Red	Červená
+swatch	Rose	Růžový odstín
+swatch	Rust	Rezavá
+swatch	Sand	Písková
+swatch	Sunset	Západ slunce
+swatch	Tan	Světle hnědá
+swatch	Teal	Modrozelená
+swatch	Violet	Fialová
+swatch	Walnut	Ořechová
+swatch	White	Bílá
+swatch	White, Black	Bílá, černá
+swatch	Yellow	Žlutá
+swatch	Yellow Green	Žlutozelená
+swatch	[None]	[Žádná]
+swatch	[Registration]	[Pasovací značky]
