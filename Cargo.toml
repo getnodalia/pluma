@@ -208,7 +208,7 @@ egui_demo_lib = { git = "https://github.com/getnodalia/foundation", rev = "6d518
 egui_inspection = { git = "https://github.com/getnodalia/foundation", rev = "6d518fc799681571963842f95b55a6b68431b15a" }
 winit = { git = "https://github.com/getnodalia/foundation", rev = "a517b3846ee8457d84ee4975110bfda6797c44dc" }
 
-# craft-svg's path geometry, served from this repository's own history at the same commit.
+# craft-svg's path geometry, from foundation (vendor/vectorcraft/main) at the same commit.
 [patch."https://github.com/storytold/vectorcraft.git"]
-vectorcraft-geom = { git = "https://github.com/getnodalia/pluma", rev = "6b3a6b8788ebcb420d69449199cbdf323888d27e" }
-vectorcraft-pathops = { git = "https://github.com/getnodalia/pluma", rev = "6b3a6b8788ebcb420d69449199cbdf323888d27e" }
+vectorcraft-geom = { git = "https://github.com/getnodalia/foundation", rev = "6b3a6b8788ebcb420d69449199cbdf323888d27e" }
+vectorcraft-pathops = { git = "https://github.com/getnodalia/foundation", rev = "6b3a6b8788ebcb420d69449199cbdf323888d27e" }
