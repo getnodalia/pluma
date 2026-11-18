@@ -1,9 +1,9 @@
 //! Attributes in other applications' XML namespaces (https://www.w3.org/TR/xml-names/) survive a
 //! round trip through Pluma: kept on import, written back on export with their namespaces
 //! declared on the root.
+use craft_svg::tree::usvg::roxmltree;
 use pluma_doc::{Document, ForeignAttribute, Node, NodeKind};
 use pluma_svg::{ExportOptions, MAX_FOREIGN, MAX_FOREIGN_VALUE, export, export_full, import, import_with_report};
-use usvg::roxmltree;
 
 const PLOTTER: &str = "https://example.org/plotter";
 const CUTTER: &str = "https://example.org/cutter";

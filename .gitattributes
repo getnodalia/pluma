@@ -1,0 +1,2 @@
+# Message catalogs keep the spacing of their translations, trailing spaces included.
+crates/ui-egui/src/i18n/*.tsv -whitespace

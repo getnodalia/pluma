@@ -19,3 +19,4 @@ docs/release-notes/**
 .github/CODEOWNERS
 CONTRIBUTING.md
 .github/ISSUE_TEMPLATE/**
+.gitattributes
