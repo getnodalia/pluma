@@ -1,7 +1,7 @@
 //! The dock area as the user sees it: whole-window frames driven by pointer and key events.
 
-use craft_ui::docking::Hit;
 use egui::{Event, PointerButton, Pos2, Rect, pos2, vec2};
+use nodalia_ui::docking::Hit;
 use pluma_engine::Session;
 
 use super::*;
@@ -137,11 +137,11 @@ fn an_icon_opens_its_flyout_and_open_panel_follows() {
     h.app.run("window.panel", json!({"panel": "brushes"})).unwrap();
     h.frame(vec![]);
     h.frame(vec![]);
-    assert_eq!(craft_ui::docking::flyout::<String>(&h.ctx, area_id()).as_deref(), Some("brushes"));
+    assert_eq!(nodalia_ui::docking::flyout::<String>(&h.ctx, area_id()).as_deref(), Some("brushes"));
     assert_eq!(h.app.ui.open_panel.as_deref(), Some("brushes"));
     h.app.run("window.panel", json!({"panel": "brushes"})).unwrap();
     h.frame(vec![]);
-    assert_eq!(craft_ui::docking::flyout::<String>(&h.ctx, area_id()), None);
+    assert_eq!(nodalia_ui::docking::flyout::<String>(&h.ctx, area_id()), None);
 }
 
 /// #5713: real Glyphs and Artboards bodies must retain a flyout resize through
@@ -184,7 +184,7 @@ fn glyphs_and_artboards_flyouts_keep_user_sizes() {
         assert!((grown.height() - before.height() - 150.0).abs() < 1.0, "{panel}: {before:?} -> {grown:?}");
         assert_eq!(grown.right(), before.right(), "the icon-column edge stays anchored");
         h.click(icon);
-        assert_eq!(craft_ui::docking::flyout::<String>(&h.ctx, area_id()), None);
+        assert_eq!(nodalia_ui::docking::flyout::<String>(&h.ctx, area_id()), None);
         h.click(icon);
         for _ in 0..3 {
             h.frame(vec![]);
@@ -254,7 +254,7 @@ fn an_icon_flyout_grows_upward_from_its_top_edge_and_free_corner() {
     assert_eq!(grown.bottom(), before.bottom());
     assert_eq!(grown.right(), before.right());
     h.click(icon);
-    assert_eq!(craft_ui::docking::flyout::<String>(&h.ctx, area_id()), None);
+    assert_eq!(nodalia_ui::docking::flyout::<String>(&h.ctx, area_id()), None);
     h.click(icon);
     for _ in 0..3 {
         h.frame(vec![]);
@@ -690,8 +690,8 @@ fn edge_panels_are_the_docked_panels_on_each_side_of_the_canvas() {
     assert!(peek::edge_panels(&layout, peek::Edge::Left).is_empty());
     let mirrored = Layout {
         root: Some(Node::Split {
-            axis: craft_ui::layout::SplitAxis::Horizontal,
-            size: craft_ui::layout::SplitSize::FixedFirst(310.0),
+            axis: nodalia_ui::layout::SplitAxis::Horizontal,
+            size: nodalia_ui::layout::SplitSize::FixedFirst(310.0),
             first: Box::new(Node::Tabs { panels: vec!["layers".to_string()], active: 0 }),
             second: Box::new(Node::Tabs { panels: vec![CANVAS.to_string()], active: 0 }),
         }),
@@ -1086,12 +1086,12 @@ fn tools_redock_at_window_edge_above_and_below_canvas() {
         let tabs = |panel: &str| Box::new(Node::Tabs { panels: vec![panel.to_string()], active: 0 });
         h.app.ui.docking = Some(Layout {
             root: Some(Node::Split {
-                axis: craft_ui::layout::SplitAxis::Vertical,
-                size: craft_ui::layout::SplitSize::FixedFirst(180.0),
+                axis: nodalia_ui::layout::SplitAxis::Vertical,
+                size: nodalia_ui::layout::SplitSize::FixedFirst(180.0),
                 first: tabs("layers"),
                 second: Box::new(Node::Split {
-                    axis: craft_ui::layout::SplitAxis::Vertical,
-                    size: craft_ui::layout::SplitSize::FixedSecond(180.0),
+                    axis: nodalia_ui::layout::SplitAxis::Vertical,
+                    size: nodalia_ui::layout::SplitSize::FixedSecond(180.0),
                     first: tabs(CANVAS),
                     second: tabs("properties"),
                 }),
@@ -1272,7 +1272,7 @@ fn column_places_and_icon_count_from_the_icon_column() {
     }
     let width: f32 = end_columns(&layout).iter().map(|c| c.iconic_width.unwrap_or(ICON_WIDTH)).sum();
     if let Some(Node::Split { size, .. }) = layout.root.as_mut() {
-        *size = craft_ui::layout::SplitSize::FixedSecond(width);
+        *size = nodalia_ui::layout::SplitSize::FixedSecond(width);
     }
     assert!(valid(&layout));
     h.app.ui.docking = Some(layout);
@@ -1881,7 +1881,7 @@ fn rail_flyout_collapse_arrow_folds_the_panel_back_without_moving_it() {
     let arrow = collapse_to_icons_button(&h, "swatches").expect("opened rail panels offer collapse to icons");
     h.click(arrow.center());
     assert!(h.app.ui.open_panel.is_none());
-    assert!(craft_ui::docking::flyout::<String>(&h.ctx, area_id()).is_none());
+    assert!(nodalia_ui::docking::flyout::<String>(&h.ctx, area_id()).is_none());
     assert_eq!(h.layout(), before, "folding a flyout leaves the dock layout intact");
     let icon = h.hit(&Hit::Icon("swatches".into())).expect("the rail icon stays available");
     h.click(icon.center());
@@ -1902,7 +1902,7 @@ fn rail_flyout_collapse_arrow_closes_the_opening_icon_after_switching_tabs() {
     let arrow = collapse_to_icons_button(&h, "brushes").expect("the active tab has a collapse arrow");
     h.click(arrow.center());
     assert!(h.app.ui.open_panel.is_none());
-    assert!(craft_ui::docking::flyout::<String>(&h.ctx, area_id()).is_none());
+    assert!(nodalia_ui::docking::flyout::<String>(&h.ctx, area_id()).is_none());
     assert_eq!(h.layout(), before, "all tabs and their active state stay in the rail");
 }
 

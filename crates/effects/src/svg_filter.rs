@@ -8,8 +8,8 @@
 use std::sync::Arc;
 use std::sync::atomic::{AtomicBool, AtomicU64, Ordering};
 
-use craft_svg::tree::draw::{resvg, tiny_skia};
-use craft_svg::tree::usvg;
+use nodalia_svg::tree::draw::{resvg, tiny_skia};
+use nodalia_svg::tree::usvg;
 use pluma_doc::SvgFilter;
 use pluma_geom::{Affine, Rect, Vec2};
 use serde_json::Value;
@@ -625,16 +625,16 @@ fn write_drop_shadow(n: roxmltree::Node, input: &str, result: Option<&str>, name
 /// first bytes whatever its `data:` URL says, of at most [`MAX_IMAGE_PIXELS`] pixels by its header.
 /// `None` for anything else, SVG and compressed SVG included.
 fn raster_image_sized(data: Arc<Vec<u8>>) -> Option<(usvg::ImageKind, u64)> {
-    let format = craft_image_codecs::detect(&data)?;
+    let format = nodalia_image_codecs::detect(&data)?;
     let (w, h) = match format {
-        craft_image_codecs::Format::Png => {
+        nodalia_image_codecs::Format::Png => {
             if data.len() < 24 || &data[..8] != b"\x89PNG\r\n\x1a\n" || &data[12..16] != b"IHDR" {
                 return None;
             }
             (u32::from_be_bytes(data[16..20].try_into().ok()?), u32::from_be_bytes(data[20..24].try_into().ok()?))
         }
-        craft_image_codecs::Format::Jpeg => craft_image_codecs::jpeg_info(&data).map(|j| (j.width, j.height))?,
-        craft_image_codecs::Format::Gif | craft_image_codecs::Format::WebP => craft_image_codecs::probe_size(&data).ok()?,
+        nodalia_image_codecs::Format::Jpeg => nodalia_image_codecs::jpeg_info(&data).map(|j| (j.width, j.height))?,
+        nodalia_image_codecs::Format::Gif | nodalia_image_codecs::Format::WebP => nodalia_image_codecs::probe_size(&data).ok()?,
         _ => return None,
     };
     let pixels = u64::from(w) * u64::from(h);
@@ -642,10 +642,10 @@ fn raster_image_sized(data: Arc<Vec<u8>>) -> Option<(usvg::ImageKind, u64)> {
         return None;
     }
     let kind = match format {
-        craft_image_codecs::Format::Png => usvg::ImageKind::PNG(data),
-        craft_image_codecs::Format::Jpeg => usvg::ImageKind::JPEG(data),
-        craft_image_codecs::Format::Gif => usvg::ImageKind::GIF(data),
-        craft_image_codecs::Format::WebP => usvg::ImageKind::WEBP(data),
+        nodalia_image_codecs::Format::Png => usvg::ImageKind::PNG(data),
+        nodalia_image_codecs::Format::Jpeg => usvg::ImageKind::JPEG(data),
+        nodalia_image_codecs::Format::Gif => usvg::ImageKind::GIF(data),
+        nodalia_image_codecs::Format::WebP => usvg::ImageKind::WEBP(data),
         _ => return None,
     };
     Some((kind, pixels))
@@ -1656,16 +1656,16 @@ fn png_of(data: &[u8], w: usize, x0: usize, y0: usize, x1: usize, y1: usize) -> 
             straight.extend_from_slice(&[un(p[0]), un(p[1]), un(p[2]), p[3]]);
         }
     }
-    let raw = craft_image_codecs::Image::from_raw(
+    let raw = nodalia_image_codecs::Image::from_raw(
         (x1 - x0) as u32,
         (y1 - y0) as u32,
-        craft_image_codecs::ChannelLayout::Rgba,
-        craft_image_codecs::SampleType::U8,
+        nodalia_image_codecs::ChannelLayout::Rgba,
+        nodalia_image_codecs::SampleType::U8,
         straight,
     )
     .ok()?;
-    let opts = craft_image_codecs::EncodeOptions { png_compression: craft_image_codecs::PngCompression::Fast, ..Default::default() };
-    craft_image_codecs::encode(&raw, craft_image_codecs::Format::Png, &opts).ok()
+    let opts = nodalia_image_codecs::EncodeOptions { png_compression: nodalia_image_codecs::PngCompression::Fast, ..Default::default() };
+    nodalia_image_codecs::encode(&raw, nodalia_image_codecs::Format::Png, &opts).ok()
 }
 
 /// `a` as an SVG `matrix(…)`.

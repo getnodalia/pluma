@@ -8,7 +8,7 @@
 
 use kurbo::Point;
 use pluma_doc::CharStyle;
-use pluma_text::{CRAFT_FONTS, FALLBACK_FAMILY, FontDb, TextObject, layout};
+use pluma_text::{FALLBACK_FAMILY, FontDb, NODALIA_FONTS, TextObject, layout};
 
 #[test]
 fn fonts_come_from_the_embedder() {
@@ -20,7 +20,7 @@ fn fonts_come_from_the_embedder() {
         assert!(!families.iter().any(|f| f == bundled), "{bundled} is bundled: {families:?}");
     }
     let t = TextObject::point(Point::ZERO, "Hello", CharStyle { size: 24.0, ..CharStyle::default() });
-    if CRAFT_FONTS.is_empty() {
+    if NODALIA_FONTS.is_empty() {
         assert!(families.is_empty(), "{families:?}");
         assert!(db.face(FALLBACK_FAMILY, "Regular").is_none());
         assert!(layout(&db, &t).glyphs.is_empty(), "no font, no glyphs");
@@ -30,7 +30,7 @@ fn fonts_come_from_the_embedder() {
     let font = |file: &str| std::fs::read(format!("{}/../../assets/fonts/{file}", env!("CARGO_MANIFEST_DIR"))).unwrap();
     assert_eq!(db.add_font(font("Inter-Regular.ttf")), 1);
     assert!(db.families().iter().any(|f| f == "Inter"));
-    if CRAFT_FONTS.is_empty() {
+    if NODALIA_FONTS.is_empty() {
         assert_eq!(db.face("No Such Font", "Regular").unwrap().family, "Inter");
     }
     let l = layout(&db, &t);

@@ -39,17 +39,17 @@ mod tests {
         let out = with_text(png.clone(), &[("Title", "Café".into()), ("Author", "Łukasz".into()), ("bad\u{1}", "x".into())]);
         assert_eq!(text(&out), [("Title".to_string(), "Café".to_string()), ("Author".into(), "Łukasz".into())]);
         // Still a PNG every decoder reads (the CRCs check out).
-        let img = craft_image_codecs::decode(&out)
+        let img = nodalia_image_codecs::decode(&out)
             .map(|__cimg| {
                 let (__w, __h) = __cimg.dimensions();
                 match (__cimg.layout(), __cimg.sample_type()) {
-                    (craft_image_codecs::ChannelLayout::Gray, craft_image_codecs::SampleType::U8) => {
+                    (nodalia_image_codecs::ChannelLayout::Gray, nodalia_image_codecs::SampleType::U8) => {
                         image::DynamicImage::ImageLuma8(image::GrayImage::from_raw(__w, __h, __cimg.into_data()).unwrap())
                     }
-                    (craft_image_codecs::ChannelLayout::GrayA, craft_image_codecs::SampleType::U8) => {
+                    (nodalia_image_codecs::ChannelLayout::GrayA, nodalia_image_codecs::SampleType::U8) => {
                         image::DynamicImage::ImageLumaA8(image::GrayAlphaImage::from_raw(__w, __h, __cimg.into_data()).unwrap())
                     }
-                    (craft_image_codecs::ChannelLayout::Rgb, craft_image_codecs::SampleType::U8) => {
+                    (nodalia_image_codecs::ChannelLayout::Rgb, nodalia_image_codecs::SampleType::U8) => {
                         image::DynamicImage::ImageRgb8(image::RgbImage::from_raw(__w, __h, __cimg.into_data()).unwrap())
                     }
                     _ => image::DynamicImage::ImageRgba8(image::RgbaImage::from_raw(__w, __h, __cimg.to_rgba8()).unwrap()),

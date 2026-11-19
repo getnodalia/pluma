@@ -80,17 +80,17 @@ fn png_options_draw_and_export_with_the_chosen_options() {
     assert_eq!(png[28], 1, "interlaced");
     let phys = png.windows(4).position(|w| w == b"pHYs").unwrap();
     assert_eq!(&png[phys + 4..phys + 8], ((200.0f64 / 0.0254).round() as u32).to_be_bytes());
-    let img = craft_image_codecs::decode(&png)
+    let img = nodalia_image_codecs::decode(&png)
         .map(|__cimg| {
             let (__w, __h) = __cimg.dimensions();
             match (__cimg.layout(), __cimg.sample_type()) {
-                (craft_image_codecs::ChannelLayout::Gray, craft_image_codecs::SampleType::U8) => {
+                (nodalia_image_codecs::ChannelLayout::Gray, nodalia_image_codecs::SampleType::U8) => {
                     image::DynamicImage::ImageLuma8(image::GrayImage::from_raw(__w, __h, __cimg.into_data()).unwrap())
                 }
-                (craft_image_codecs::ChannelLayout::GrayA, craft_image_codecs::SampleType::U8) => {
+                (nodalia_image_codecs::ChannelLayout::GrayA, nodalia_image_codecs::SampleType::U8) => {
                     image::DynamicImage::ImageLumaA8(image::GrayAlphaImage::from_raw(__w, __h, __cimg.into_data()).unwrap())
                 }
-                (craft_image_codecs::ChannelLayout::Rgb, craft_image_codecs::SampleType::U8) => {
+                (nodalia_image_codecs::ChannelLayout::Rgb, nodalia_image_codecs::SampleType::U8) => {
                     image::DynamicImage::ImageRgb8(image::RgbImage::from_raw(__w, __h, __cimg.into_data()).unwrap())
                 }
                 _ => image::DynamicImage::ImageRgba8(image::RgbaImage::from_raw(__w, __h, __cimg.to_rgba8()).unwrap()),
@@ -130,17 +130,17 @@ fn export_as_png_exports_the_active_artboard() {
     let (mut app, written) = app(2);
     // The ellipse is on the first artboard; the second is empty.
     let opaque = |bytes: &[u8]| {
-        craft_image_codecs::decode(bytes)
+        nodalia_image_codecs::decode(bytes)
             .map(|__cimg| {
                 let (__w, __h) = __cimg.dimensions();
                 match (__cimg.layout(), __cimg.sample_type()) {
-                    (craft_image_codecs::ChannelLayout::Gray, craft_image_codecs::SampleType::U8) => {
+                    (nodalia_image_codecs::ChannelLayout::Gray, nodalia_image_codecs::SampleType::U8) => {
                         image::DynamicImage::ImageLuma8(image::GrayImage::from_raw(__w, __h, __cimg.into_data()).unwrap())
                     }
-                    (craft_image_codecs::ChannelLayout::GrayA, craft_image_codecs::SampleType::U8) => {
+                    (nodalia_image_codecs::ChannelLayout::GrayA, nodalia_image_codecs::SampleType::U8) => {
                         image::DynamicImage::ImageLumaA8(image::GrayAlphaImage::from_raw(__w, __h, __cimg.into_data()).unwrap())
                     }
-                    (craft_image_codecs::ChannelLayout::Rgb, craft_image_codecs::SampleType::U8) => {
+                    (nodalia_image_codecs::ChannelLayout::Rgb, nodalia_image_codecs::SampleType::U8) => {
                         image::DynamicImage::ImageRgb8(image::RgbImage::from_raw(__w, __h, __cimg.into_data()).unwrap())
                     }
                     _ => image::DynamicImage::ImageRgba8(image::RgbaImage::from_raw(__w, __h, __cimg.to_rgba8()).unwrap()),
@@ -203,17 +203,17 @@ fn export_as_with_a_range_then_png_options_writes_one_file_per_artboard() {
     assert_eq!(names(&written), ["/out/Untitled-1-Artboard-1.png", "/out/Untitled-1-Artboard-3.png"]);
     let png = &written.borrow()[0].1;
     assert_eq!(png[28], 1, "interlaced");
-    let img = craft_image_codecs::decode(png)
+    let img = nodalia_image_codecs::decode(png)
         .map(|__cimg| {
             let (__w, __h) = __cimg.dimensions();
             match (__cimg.layout(), __cimg.sample_type()) {
-                (craft_image_codecs::ChannelLayout::Gray, craft_image_codecs::SampleType::U8) => {
+                (nodalia_image_codecs::ChannelLayout::Gray, nodalia_image_codecs::SampleType::U8) => {
                     image::DynamicImage::ImageLuma8(image::GrayImage::from_raw(__w, __h, __cimg.into_data()).unwrap())
                 }
-                (craft_image_codecs::ChannelLayout::GrayA, craft_image_codecs::SampleType::U8) => {
+                (nodalia_image_codecs::ChannelLayout::GrayA, nodalia_image_codecs::SampleType::U8) => {
                     image::DynamicImage::ImageLumaA8(image::GrayAlphaImage::from_raw(__w, __h, __cimg.into_data()).unwrap())
                 }
-                (craft_image_codecs::ChannelLayout::Rgb, craft_image_codecs::SampleType::U8) => {
+                (nodalia_image_codecs::ChannelLayout::Rgb, nodalia_image_codecs::SampleType::U8) => {
                     image::DynamicImage::ImageRgb8(image::RgbImage::from_raw(__w, __h, __cimg.into_data()).unwrap())
                 }
                 _ => image::DynamicImage::ImageRgba8(image::RgbaImage::from_raw(__w, __h, __cimg.to_rgba8()).unwrap()),
@@ -311,17 +311,17 @@ fn jpeg_and_webp_options_draw_and_export() {
     set(&mut app, "quality", json!(70));
     frame(&mut app);
     assert_eq!(confirm(&mut app).unwrap()["path"], "/out/Untitled-1.jpg");
-    let img = craft_image_codecs::decode(&written.borrow()[0].1)
+    let img = nodalia_image_codecs::decode(&written.borrow()[0].1)
         .map(|__cimg| {
             let (__w, __h) = __cimg.dimensions();
             match (__cimg.layout(), __cimg.sample_type()) {
-                (craft_image_codecs::ChannelLayout::Gray, craft_image_codecs::SampleType::U8) => {
+                (nodalia_image_codecs::ChannelLayout::Gray, nodalia_image_codecs::SampleType::U8) => {
                     image::DynamicImage::ImageLuma8(image::GrayImage::from_raw(__w, __h, __cimg.into_data()).unwrap())
                 }
-                (craft_image_codecs::ChannelLayout::GrayA, craft_image_codecs::SampleType::U8) => {
+                (nodalia_image_codecs::ChannelLayout::GrayA, nodalia_image_codecs::SampleType::U8) => {
                     image::DynamicImage::ImageLumaA8(image::GrayAlphaImage::from_raw(__w, __h, __cimg.into_data()).unwrap())
                 }
-                (craft_image_codecs::ChannelLayout::Rgb, craft_image_codecs::SampleType::U8) => {
+                (nodalia_image_codecs::ChannelLayout::Rgb, nodalia_image_codecs::SampleType::U8) => {
                     image::DynamicImage::ImageRgb8(image::RgbImage::from_raw(__w, __h, __cimg.into_data()).unwrap())
                 }
                 _ => image::DynamicImage::ImageRgba8(image::RgbaImage::from_raw(__w, __h, __cimg.to_rgba8()).unwrap()),
@@ -344,17 +344,17 @@ fn jpeg_and_webp_options_draw_and_export() {
     let (path, bytes) = written.borrow().last().cloned().unwrap();
     assert_eq!(path, "/out/Untitled-1.webp", "one artboard is one file, named as picked");
     assert_eq!(
-        craft_image_codecs::decode(&bytes)
+        nodalia_image_codecs::decode(&bytes)
             .map(|__cimg| {
                 let (__w, __h) = __cimg.dimensions();
                 match (__cimg.layout(), __cimg.sample_type()) {
-                    (craft_image_codecs::ChannelLayout::Gray, craft_image_codecs::SampleType::U8) => {
+                    (nodalia_image_codecs::ChannelLayout::Gray, nodalia_image_codecs::SampleType::U8) => {
                         image::DynamicImage::ImageLuma8(image::GrayImage::from_raw(__w, __h, __cimg.into_data()).unwrap())
                     }
-                    (craft_image_codecs::ChannelLayout::GrayA, craft_image_codecs::SampleType::U8) => {
+                    (nodalia_image_codecs::ChannelLayout::GrayA, nodalia_image_codecs::SampleType::U8) => {
                         image::DynamicImage::ImageLumaA8(image::GrayAlphaImage::from_raw(__w, __h, __cimg.into_data()).unwrap())
                     }
-                    (craft_image_codecs::ChannelLayout::Rgb, craft_image_codecs::SampleType::U8) => {
+                    (nodalia_image_codecs::ChannelLayout::Rgb, nodalia_image_codecs::SampleType::U8) => {
                         image::DynamicImage::ImageRgb8(image::RgbImage::from_raw(__w, __h, __cimg.into_data()).unwrap())
                     }
                     _ => image::DynamicImage::ImageRgba8(image::RgbaImage::from_raw(__w, __h, __cimg.to_rgba8()).unwrap()),

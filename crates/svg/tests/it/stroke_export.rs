@@ -2,7 +2,7 @@
 //! written as the canvas's filled outlines or art, aligned strokes are clipped or masked, and open
 //! paths stroke centred. Checked by rendering the exported SVG with resvg.
 
-use craft_svg::tree::draw::resvg;
+use nodalia_svg::tree::draw::resvg;
 use pluma_color::{Color, Paint};
 use pluma_doc::{Appearance, AppearanceItem, Arrowhead, Dash, Document, LineCap, LineJoin, Node, StrokeAlign, StrokeLayer, WidthProfile};
 use pluma_geom::{PathData, Point, SubPath, shapes};

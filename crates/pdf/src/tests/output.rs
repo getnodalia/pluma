@@ -3,8 +3,8 @@
 
 use std::sync::Arc;
 
-use craft_pdf::syntax::Pdf;
-use craft_pdf::syntax::object::{Array, Dict, Name, ObjectIdentifier, Stream};
+use nodalia_pdf::syntax::Pdf;
+use nodalia_pdf::syntax::object::{Array, Dict, Name, ObjectIdentifier, Stream};
 use pluma_color::cms::{self, Cms, ColorSettings, DEVICE_CMYK, GENERIC_CMYK, SRGB};
 use pluma_color::{Color, Gradient, GradientKind, GradientMethod, GradientPaint, GradientStop, Paint, Swatch};
 use pluma_doc::{Appearance, ColorMode, Document, ImageBlob, ImageObject, Node, NodeKind};
@@ -428,9 +428,10 @@ fn tagged_cmyk_documents_blend_in_the_cmyk_profile_space() {
 
 /// A 4 × 4 PNG of one colour.
 fn png(rgb: [u8; 3]) -> Vec<u8> {
-    let img = craft_image_codecs::Image::from_raw(4, 4, craft_image_codecs::ChannelLayout::Rgb, craft_image_codecs::SampleType::U8, rgb.repeat(16))
-        .unwrap();
-    craft_image_codecs::encode(&img, craft_image_codecs::Format::Png, &craft_image_codecs::EncodeOptions::default()).unwrap()
+    let img =
+        nodalia_image_codecs::Image::from_raw(4, 4, nodalia_image_codecs::ChannelLayout::Rgb, nodalia_image_codecs::SampleType::U8, rgb.repeat(16))
+            .unwrap();
+    nodalia_image_codecs::encode(&img, nodalia_image_codecs::Format::Png, &nodalia_image_codecs::EncodeOptions::default()).unwrap()
 }
 
 fn image_doc(bytes: Vec<u8>) -> Document {
@@ -448,17 +449,17 @@ fn image_doc(bytes: Vec<u8>) -> Document {
 fn first_pixel(bytes: &[u8]) -> [u8; 3] {
     let back = import(bytes).unwrap();
     let blob = back.images.values().next().unwrap();
-    craft_image_codecs::decode(&blob.bytes)
+    nodalia_image_codecs::decode(&blob.bytes)
         .map(|__cimg| {
             let (__w, __h) = __cimg.dimensions();
             match (__cimg.layout(), __cimg.sample_type()) {
-                (craft_image_codecs::ChannelLayout::Gray, craft_image_codecs::SampleType::U8) => {
+                (nodalia_image_codecs::ChannelLayout::Gray, nodalia_image_codecs::SampleType::U8) => {
                     image::DynamicImage::ImageLuma8(image::GrayImage::from_raw(__w, __h, __cimg.into_data()).unwrap())
                 }
-                (craft_image_codecs::ChannelLayout::GrayA, craft_image_codecs::SampleType::U8) => {
+                (nodalia_image_codecs::ChannelLayout::GrayA, nodalia_image_codecs::SampleType::U8) => {
                     image::DynamicImage::ImageLumaA8(image::GrayAlphaImage::from_raw(__w, __h, __cimg.into_data()).unwrap())
                 }
-                (craft_image_codecs::ChannelLayout::Rgb, craft_image_codecs::SampleType::U8) => {
+                (nodalia_image_codecs::ChannelLayout::Rgb, nodalia_image_codecs::SampleType::U8) => {
                     image::DynamicImage::ImageRgb8(image::RgbImage::from_raw(__w, __h, __cimg.into_data()).unwrap())
                 }
                 _ => image::DynamicImage::ImageRgba8(image::RgbaImage::from_raw(__w, __h, __cimg.to_rgba8()).unwrap()),
@@ -525,7 +526,7 @@ fn the_output_intent_embeds_its_profile_and_trapped_is_written() {
         assert!(r.warnings.is_empty(), "{:?}", r.warnings);
         output_intent(&r.bytes, password, |oi| {
             assert_eq!(oi.get::<Name<'_>>(b"S").unwrap().as_ref(), b"GTS_PDFX");
-            let text = |k: &[u8]| oi.get::<craft_pdf::syntax::object::String<'_>>(k).map(|s| s.as_bytes().to_vec());
+            let text = |k: &[u8]| oi.get::<nodalia_pdf::syntax::object::String<'_>>(k).map(|s| s.as_bytes().to_vec());
             assert_eq!(text(b"OutputCondition").unwrap(), b"Coated (press)");
             assert_eq!(text(b"RegistryName").unwrap(), b"http://example.com");
             // Non-ASCII text is UTF-16 with its byte order mark.

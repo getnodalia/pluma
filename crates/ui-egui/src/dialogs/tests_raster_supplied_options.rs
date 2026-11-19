@@ -23,7 +23,7 @@ fn raster_options_preserve_supplied_values_through_the_png_command() {
         assert_eq!(png[28], 1);
         let physical = png.windows(4).position(|w| w == b"pHYs").unwrap();
         assert_eq!(&png[physical + 4..physical + 8], ((300.0f64 / 0.0254).round() as u32).to_be_bytes());
-        let decoded = craft_image_codecs::decode(png).unwrap();
+        let decoded = nodalia_image_codecs::decode(png).unwrap();
         assert_eq!(decoded.dimensions(), (250, 167));
         assert_eq!(&decoded.to_rgba8()[..4], &[0x20, 0x40, 0x80, 255]);
     }

@@ -649,7 +649,7 @@ pub(crate) fn show_thumbnails(app: &mut PlumaApp, r: &Value, asks: bool) {
         .flatten()
         .filter_map(|f| {
             let png = pluma_format::base64_decode(f["thumbnailBase64"].as_str()?)?;
-            let img = craft_image_codecs::decode_as(craft_image_codecs::Format::Png, &png).ok()?;
+            let img = nodalia_image_codecs::decode_as(nodalia_image_codecs::Format::Png, &png).ok()?;
             let color = egui::ColorImage::from_rgba_unmultiplied([img.width() as usize, img.height() as usize], &img.to_rgba8());
             Some((f["name"].as_str()?.to_string(), Thumb { image: std::sync::Arc::new(color), tex: None }))
         })

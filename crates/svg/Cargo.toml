@@ -9,10 +9,10 @@ description = "Pluma SVG import and export"
 workspace = true
 
 [dependencies]
-craft-svg = { workspace = true }
-craft-mime = { workspace = true }
+nodalia-svg = { workspace = true }
+nodalia-mime = { workspace = true }
 # Which paths stored in documents may be opened.
-craft-docpath = { workspace = true }
+nodalia-docpath = { workspace = true }
 pluma-geom = { workspace = true }
 pluma-color = { workspace = true }
 pluma-doc = { workspace = true }
@@ -30,7 +30,7 @@ serde_json = { workspace = true }
 # SVGZ (gzip, pure-Rust backend: builds for wasm).
 flate2 = { workspace = true }
 image = { workspace = true }
-craft-image-codecs = { workspace = true }
+nodalia-image-codecs = { workspace = true }
 # Image data URLs decoded as usvg decodes them, within a byte limit (MIT OR Apache-2.0; already used by usvg).
 data-url = "0.3.2"
 # Colour / transform / length parsing for the <text> fallback (MIT OR Apache-2.0; already used by usvg).
@@ -44,7 +44,7 @@ unicode-bidi = "0.3.18"
 skrifa = { workspace = true }
 # A variable font built in code (no font file is committed).
 pluma-text = { workspace = true, features = ["test-fonts"] }
-craft-svg = { workspace = true, features = ["tree-render", "tree-text"] }
+nodalia-svg = { workspace = true, features = ["tree-render", "tree-text"] }
 pluma-testkit = { workspace = true }
 proptest = { workspace = true }
 # How many times the symbol list is read to find symbols by name.

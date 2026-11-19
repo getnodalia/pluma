@@ -5,7 +5,7 @@
 /// Whether the references to the entities `svg` declares expand to more than the limit
 /// bytes in all. False for a file that declares none.
 pub(crate) fn expansion_too_large(svg: &str) -> bool {
-    craft_svg::guard::entities_expand_past(svg, craft_svg::guard::MAX_ENTITY_EXPANSION)
+    nodalia_svg::guard::entities_expand_past(svg, nodalia_svg::guard::MAX_ENTITY_EXPANSION)
 }
 
 #[cfg(test)]

@@ -52,9 +52,10 @@ impl Rgba {
 
     /// As PNG bytes.
     pub fn to_png(&self) -> Result<Vec<u8>, String> {
-        let img = craft_image_codecs::Image::from_u8(self.width, self.height, craft_image_codecs::ChannelLayout::Rgba, self.pixels.clone())
+        let img = nodalia_image_codecs::Image::from_u8(self.width, self.height, nodalia_image_codecs::ChannelLayout::Rgba, self.pixels.clone())
             .map_err(|_| "the image's pixels don't match its size")?;
-        craft_image_codecs::encode(&img, craft_image_codecs::Format::Png, &craft_image_codecs::EncodeOptions::default()).map_err(|e| e.to_string())
+        nodalia_image_codecs::encode(&img, nodalia_image_codecs::Format::Png, &nodalia_image_codecs::EncodeOptions::default())
+            .map_err(|e| e.to_string())
     }
 }
 

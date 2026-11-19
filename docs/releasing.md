@@ -81,9 +81,9 @@ the host Flatpak interface, and read-only access to the shared version choices.
 
 `pluma --version` and `pluma-cli --version` print the version from `Cargo.toml`.
 
-**Fonts.** Every build job checks out [craft-fonts](https://github.com/storytold/craft-fonts) at a
-pinned commit (the `ref:` of its craft-fonts checkout step) and builds with `CRAFT_FONTS_DIR` and
-`CRAFT_FONTS_REQUIRED=1`, so releases embed its Japanese fonts and fail rather than ship without
+**Fonts.** Every build job checks out [nodalia-fonts](https://github.com/getnodalia/foundation) at a
+pinned commit (the `ref:` of its nodalia-fonts checkout step) and builds with `NODALIA_FONTS_DIR` and
+`NODALIA_FONTS_REQUIRED=1`, so releases embed its Japanese fonts and fail rather than ship without
 them (the web build embeds only the UI font, BIZ UDPGothic Regular, to stay small). The packages carry each embedded font's licence as `OFL-<family>.txt`
 (`copy_font_licences` in `packaging/env.sh`). Bump the pins deliberately, in every job at once.
 The build option is in

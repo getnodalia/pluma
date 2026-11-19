@@ -3,7 +3,7 @@
 
 use std::collections::BTreeMap;
 
-use craft_keymap::import::namematch::Candidate;
+use nodalia_keymap::import::namematch::Candidate;
 use pluma_engine::Session;
 use serde_json::{Value, json};
 
@@ -527,7 +527,7 @@ fn a_later_row_takes_a_shortcut_that_reads_the_same() {
     let rows = [("Acme Copy", "Menus", "edit.copy", "Cmd+Alt+Shift+F10"), ("Acme Undo", "Menus", "edit.undo", "Ctrl+Alt+Shift+F10")];
     let (out, ov) = apply_rows(&mut app, "defaults", &rows);
     assert_eq!(ov["edit.undo"], "Ctrl+Alt+Shift+F10");
-    if craft_keymap::Platform::current() == craft_keymap::Platform::Mac {
+    if nodalia_keymap::Platform::current() == nodalia_keymap::Platform::Mac {
         assert_eq!((out["applied"].clone(), ov["edit.copy"].clone()), (json!(2), json!("Cmd+Alt+Shift+F10")));
     } else {
         assert_eq!(out["applied"], 1);

@@ -117,7 +117,7 @@ pub fn dropdown_with_named(
     })
 }
 
-/// The id [`craft_ui::ComboBox::from_id_salt`] gives its button in this `Ui`: `from_id_salt`
+/// The id [`nodalia_ui::ComboBox::from_id_salt`] gives its button in this `Ui`: `from_id_salt`
 /// stores `IdSalt::new(salt)` and hashes it once more with the scope, so the app must hash `id`
 /// the same way to read the button's focus and open state before it is drawn.
 pub(super) fn combo_button_id(ui: &Ui, id: &impl std::hash::Hash) -> egui::Id {
@@ -159,8 +159,8 @@ fn combo_atoms_named<'a, R>(
         .corner_radius(t.field_radius())
         .show(ui, |ui| {
             let button_id = combo_button_id(ui, &id);
-            let enter_for_combo = ui.memory(|m| m.has_focus(button_id)) || craft_ui::ComboBox::is_open(ui.ctx(), button_id);
-            let response = craft_ui::ComboBox::from_id_salt(HashOnly(&id))
+            let enter_for_combo = ui.memory(|m| m.has_focus(button_id)) || nodalia_ui::ComboBox::is_open(ui.ctx(), button_id);
+            let response = nodalia_ui::ComboBox::from_id_salt(HashOnly(&id))
                 .selected_text(current)
                 .width(width - 4.0)
                 .height(ui.spacing().combo_height)
@@ -185,7 +185,7 @@ fn combo_atoms_named<'a, R>(
 
 /// The recessed combo box of [`dropdown`] showing `current`, whose menu keeps a search field and
 /// filters in place over a list that scrolls (the font menu and the shortcut import's target
-/// picker, #555). `menu` shows the menu with one of [`craft_ui::combo::Menu`]'s header forms and
+/// picker, #555). `menu` shows the menu with one of [`nodalia_ui::combo::Menu`]'s header forms and
 /// returns what it returned (`None` while the menu is closed). A click inside the menu keeps it
 /// open: it closes itself when an option is chosen. A click outside closes it. Armed with id salt
 /// `id` ([`arm_field_focus`]), the menu opens and no widget keeps the keyboard focus, so the
@@ -195,7 +195,7 @@ pub(crate) fn combo_menu<R>(
     id: impl std::hash::Hash,
     current: &str,
     width: f32,
-    menu: impl FnOnce(craft_ui::combo::Menu<'_>) -> Option<R>,
+    menu: impl FnOnce(nodalia_ui::combo::Menu<'_>) -> Option<R>,
 ) -> Option<R> {
     combo_menu_field(ui, id, current, width, menu).1
 }
@@ -207,7 +207,7 @@ pub(crate) fn combo_menu_field<R>(
     id: impl std::hash::Hash,
     current: &str,
     width: f32,
-    menu: impl FnOnce(craft_ui::combo::Menu<'_>) -> Option<R>,
+    menu: impl FnOnce(nodalia_ui::combo::Menu<'_>) -> Option<R>,
 ) -> (Response, Option<R>) {
     combo_menu_field_named(ui, id, None, current, width, menu)
 }
@@ -219,7 +219,7 @@ pub(crate) fn combo_menu_field_named<R>(
     name: Option<&str>,
     current: &str,
     width: f32,
-    menu: impl FnOnce(craft_ui::combo::Menu<'_>) -> Option<R>,
+    menu: impl FnOnce(nodalia_ui::combo::Menu<'_>) -> Option<R>,
 ) -> (Response, Option<R>) {
     let t = Tokens::get(ui.ctx());
     let label = take_previous_label(ui);
@@ -234,7 +234,7 @@ pub(crate) fn combo_menu_field_named<R>(
                 egui::Popup::open_id(ui.ctx(), egui::Popup::default_response_id(&resp));
                 ui.memory_mut(|m| m.stop_text_input());
             }
-            let shown = menu(craft_ui::combo::Menu::new(ui, &resp).close_behavior(egui::PopupCloseBehavior::CloseOnClickOutside));
+            let shown = menu(nodalia_ui::combo::Menu::new(ui, &resp).close_behavior(egui::PopupCloseBehavior::CloseOnClickOutside));
             (resp, shown)
         })
         .inner

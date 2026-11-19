@@ -84,15 +84,15 @@ impl LoadedTexture {
     /// Its [`TEXTURE_IMAGE`] value: the gray levels as a grayscale PNG, base64; `None` when the
     /// PNG can't be written.
     pub fn to_stored(&self) -> Option<String> {
-        let img = craft_image_codecs::Image::from_raw(
+        let img = nodalia_image_codecs::Image::from_raw(
             self.width,
             self.height,
-            craft_image_codecs::ChannelLayout::Gray,
-            craft_image_codecs::SampleType::U8,
+            nodalia_image_codecs::ChannelLayout::Gray,
+            nodalia_image_codecs::SampleType::U8,
             self.gray.clone(),
         )
         .ok()?;
-        let png = craft_image_codecs::encode(&img, craft_image_codecs::Format::Png, &craft_image_codecs::EncodeOptions::default()).ok()?;
+        let png = nodalia_image_codecs::encode(&img, nodalia_image_codecs::Format::Png, &nodalia_image_codecs::EncodeOptions::default()).ok()?;
         Some(base64_encode(&png))
     }
 
@@ -105,18 +105,18 @@ impl LoadedTexture {
         if LIVE.load(Ordering::Relaxed).saturating_add(gray) > MAX_LIVE {
             return None;
         }
-        let mut opts = craft_image_codecs::DecodeOptions::default();
+        let mut opts = nodalia_image_codecs::DecodeOptions::default();
         opts.limits.max_alloc = pluma_doc::MAX_RASTER_ALLOC;
         // The codec default caps each side at 2^18; a stored texture can be longer than that and
         // still fit the live and allocation budgets.
         opts.limits.max_width = u32::MAX;
         opts.limits.max_height = u32::MAX;
-        let img = craft_image_codecs::decode_as_with(craft_image_codecs::Format::Png, png, &opts).ok()?;
+        let img = nodalia_image_codecs::decode_as_with(nodalia_image_codecs::Format::Png, png, &opts).ok()?;
         let (width, height) = img.dimensions();
         if width == 0 || height == 0 {
             return None;
         }
-        use craft_image_codecs::{ChannelLayout as L, SampleType as S};
+        use nodalia_image_codecs::{ChannelLayout as L, SampleType as S};
         let luma = match (img.layout(), img.sample_type()) {
             (L::Gray, S::U8) => img.into_data(),
             _ => image::RgbaImage::from_raw(width, height, img.to_rgba8()).map(image::DynamicImage::ImageRgba8)?.into_luma8().into_raw(),

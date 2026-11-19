@@ -479,14 +479,14 @@ pub(crate) fn absolute_path(path: &str) -> String {
 /// The file to open for `stored`, a path or `file:` URL stored in a document (a linked file, an
 /// SVG image's href), or why it is not followed. `document` is the path of the document it is
 /// stored in, when it has one: a relative path is taken from its folder. Only files on this
-/// computer, or on the network share the document is on, are followed (see `craft_docpath`); a
+/// computer, or on the network share the document is on, are followed (see `nodalia_docpath`); a
 /// path that is still relative (no document) is refused, as the working directory isn't the
 /// document's choice. On Windows, a document on a mapped drive is on the share behind the drive
 /// ([`share_path`]): a path refused as on another computer is checked again against the
 /// document's path on that share. A path on a drive mapped to a network share other than the
 /// document's ([`drive_share_path`]) is refused as on another computer. Every stored path
 /// reaches the file system through this.
-pub(crate) fn document_path(stored: &str, document: Option<&str>) -> std::result::Result<String, craft_docpath::Refused> {
+pub(crate) fn document_path(stored: &str, document: Option<&str>) -> std::result::Result<String, nodalia_docpath::Refused> {
     document_path_on(stored, document, share_path, drive_share_path)
 }
 
@@ -495,10 +495,10 @@ pub(crate) fn document_path_with(
     stored: &str,
     document: Option<&str>,
     share: impl FnOnce(&str) -> Option<String>,
-) -> std::result::Result<String, craft_docpath::Refused> {
-    use craft_docpath::Refused;
+) -> std::result::Result<String, nodalia_docpath::Refused> {
+    use nodalia_docpath::Refused;
     let document = document.map(absolute_path);
-    let resolve = |document: Option<&str>| craft_docpath::resolve_absolute(stored, document.map(std::path::Path::new));
+    let resolve = |document: Option<&str>| nodalia_docpath::resolve_absolute(stored, document.map(std::path::Path::new));
     let path = match resolve(document.as_deref()) {
         Err(Refused::Network) => {
             let share = document.as_deref().and_then(share).ok_or(Refused::Network)?;
@@ -511,7 +511,7 @@ pub(crate) fn document_path_with(
 
 /// [`document_path_with`], also refusing a path on a drive that is mapped to a network share other
 /// than the document's (or, for a document on this computer or without a path, to any share) as
-/// [`craft_docpath::Refused::Network`]. `drive_share` gives a path's path on the share behind its
+/// [`nodalia_docpath::Refused::Network`]. `drive_share` gives a path's path on the share behind its
 /// drive (`Y:\art\x.png` on `\\server\other\art\x.png`), or `None` for a path on this computer. A
 /// path on the document's own drive is not looked up. A document written `\\?\Z:\…` is looked up
 /// on its share as `Z:\…` is.
@@ -520,7 +520,7 @@ pub(crate) fn document_path_on(
     document: Option<&str>,
     share: impl Fn(&str) -> Option<String>,
     drive_share: impl FnOnce(&str) -> Option<String>,
-) -> std::result::Result<String, craft_docpath::Refused> {
+) -> std::result::Result<String, nodalia_docpath::Refused> {
     let share = |d: &str| share(d.strip_prefix(r"\\?\").filter(|d| drive_letter(d).is_some()).unwrap_or(d));
     let path = document_path_with(stored, document, share)?;
     let document = document.map(absolute_path);
@@ -530,7 +530,7 @@ pub(crate) fn document_path_on(
     }
     let Some(on_share) = drive_share(&path) else { return Ok(path) };
     let home = document.map(|d| share(&d).unwrap_or(d));
-    craft_docpath::resolve(&on_share, home.as_deref().map(std::path::Path::new))?;
+    nodalia_docpath::resolve(&on_share, home.as_deref().map(std::path::Path::new))?;
     Ok(path)
 }
 

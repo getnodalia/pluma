@@ -55,9 +55,9 @@ pub struct Workspace {
     pub floating_panels: Vec<FloatingPanels>,
     /// The workspace's own panel layout; none: the default layout from its flags.
     #[serde(default, skip_serializing_if = "Option::is_none")]
-    pub docking: Option<craft_ui::docking::Layout<String>>,
+    pub docking: Option<nodalia_ui::docking::Layout<String>>,
     #[serde(default, skip_serializing_if = "std::collections::BTreeMap::is_empty")]
-    pub docking_hidden: std::collections::BTreeMap<String, craft_ui::docking::Location<String>>,
+    pub docking_hidden: std::collections::BTreeMap<String, nodalia_ui::docking::Location<String>>,
     /// Tabs closed together by a panel shortcut.
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub docking_hidden_groups: Vec<Vec<String>>,
@@ -656,8 +656,8 @@ mod tests {
         ui.control_bar = true;
         ui.dock_tab = DockTab::Layers;
         let mut layout = crate::panel_docking::default_layout(&ui);
-        if let Some(craft_ui::docking::Node::Split { second, .. }) = layout.root.as_mut()
-            && let craft_ui::docking::Node::Dock { columns, .. } = second.as_mut()
+        if let Some(nodalia_ui::docking::Node::Split { second, .. }) = layout.root.as_mut()
+            && let nodalia_ui::docking::Node::Dock { columns, .. } = second.as_mut()
         {
             columns[0].groups[0].minimized = true;
         }

@@ -36,7 +36,7 @@ pub(crate) fn adapter_summary(info: &eframe::wgpu::AdapterInfo) -> String {
 /// draw Nodalia's round controls (`pluma_ui_egui::titlebar`).
 ///
 /// Used on macOS and Windows (where Pluma keeps today's frame regardless of the
-/// `craft-window` probe) and by the tests; Linux and the BSDs take the decision from the probe.
+/// `nodalia-window` probe) and by the tests; Linux and the BSDs take the decision from the probe.
 #[cfg_attr(not(any(target_os = "macos", target_os = "windows")), allow(dead_code))]
 pub(crate) const CUSTOM_TITLEBAR: bool = false;
 
@@ -57,7 +57,7 @@ pub(crate) fn opted_into_app_title_bar(saved: Option<&pluma_ui_egui::UiState>) -
 }
 
 /// Whether the app draws the frame on this start, before the System Title Bar preference is
-/// applied ([`custom_titlebar_from`]). `probed_app` is the `craft-window` probe's answer and
+/// applied ([`custom_titlebar_from`]). `probed_app` is the `nodalia-window` probe's answer and
 /// `overridden` its `PLUMA_TITLEBAR` override. In order: the override decides when the
 /// variable is set to `app`, `system` or `desktop`; Pluma Title Bar on Every Desktop (`opted_into_app`) gives the app frame; a window
 /// that opens through XWayland (`forced_to_x11`) gets the desktop frame; otherwise the probe
@@ -73,28 +73,33 @@ pub(crate) fn app_draws_frame(probed_app: bool, overridden: Option<bool>, forced
 /// ([`custom_titlebar_from`]): [`app_draws_frame`] applied to the frame the probe chose. An app frame
 /// the desktop left to the app (no `PLUMA_TITLEBAR` override, not forced onto XWayland) keeps
 /// its window-button layout. An app frame turned on by `PLUMA_TITLEBAR=app` or by Pluma
-/// Title Bar on Every Desktop gets the default layout: on those desktops the `button-layout` key that `craft-window` reads can
+/// Title Bar on Every Desktop gets the default layout: on those desktops the `button-layout` key that `nodalia-window` reads can
 /// hold its schema default (`appmenu:close`) rather than the desktop's own buttons.
-pub(crate) fn start_frame(probed: craft_window::Frame, overridden: Option<bool>, forced_to_x11: bool, opted_into_app: bool) -> craft_window::Frame {
-    let probed_app = matches!(probed, craft_window::Frame::App(_));
+pub(crate) fn start_frame(
+    probed: nodalia_window::Frame,
+    overridden: Option<bool>,
+    forced_to_x11: bool,
+    opted_into_app: bool,
+) -> nodalia_window::Frame {
+    let probed_app = matches!(probed, nodalia_window::Frame::App(_));
     match (app_draws_frame(probed_app, overridden, forced_to_x11, opted_into_app), probed) {
-        (true, frame @ craft_window::Frame::App(_)) if overridden.is_none() && !forced_to_x11 => frame,
-        (true, _) => craft_window::Frame::App(craft_window::Layout::default()),
-        (false, _) => craft_window::Frame::Desktop,
+        (true, frame @ nodalia_window::Frame::App(_)) if overridden.is_none() && !forced_to_x11 => frame,
+        (true, _) => nodalia_window::Frame::App(nodalia_window::Layout::default()),
+        (false, _) => nodalia_window::Frame::Desktop,
     }
 }
 
 /// Where the app bar puts its caption buttons for `frame`: on Linux and the BSDs, the window-button
-/// layout of an app frame, which `craft-window` reads from the desktop (the `button-layout` key of
+/// layout of an app frame, which `nodalia-window` reads from the desktop (the `button-layout` key of
 /// `org.gnome.desktop.wm.preferences`); otherwise all three at the right. Each list is copied in the
 /// key's order, first item leftmost, so `close,minimize,maximize:` puts Close at the left edge.
 #[cfg(not(any(target_os = "macos", target_os = "windows")))]
-pub(crate) fn caption_layout_from(frame: &craft_window::Frame) -> pluma_ui_egui::titlebar::CaptionLayout {
+pub(crate) fn caption_layout_from(frame: &nodalia_window::Frame) -> pluma_ui_egui::titlebar::CaptionLayout {
     use pluma_ui_egui::titlebar::{Caption, CaptionLayout};
-    let caption = |b: &craft_window::Button| match b {
-        craft_window::Button::Minimize => Caption::Minimize,
-        craft_window::Button::Maximize => Caption::Maximize,
-        craft_window::Button::Close => Caption::Close,
+    let caption = |b: &nodalia_window::Button| match b {
+        nodalia_window::Button::Minimize => Caption::Minimize,
+        nodalia_window::Button::Maximize => Caption::Maximize,
+        nodalia_window::Button::Close => Caption::Close,
     };
     match frame.layout() {
         Some(layout) => CaptionLayout { left: layout.left.iter().map(caption).collect(), right: layout.right.iter().map(caption).collect() },
@@ -105,15 +110,15 @@ pub(crate) fn caption_layout_from(frame: &craft_window::Frame) -> pluma_ui_egui:
 /// macOS and Windows: all three caption buttons at the right, whatever the probe says (see
 /// [`custom_titlebar_from`]).
 #[cfg(any(target_os = "macos", target_os = "windows"))]
-pub(crate) fn caption_layout_from(_frame: &craft_window::Frame) -> pluma_ui_egui::titlebar::CaptionLayout {
+pub(crate) fn caption_layout_from(_frame: &nodalia_window::Frame) -> pluma_ui_egui::titlebar::CaptionLayout {
     pluma_ui_egui::titlebar::CaptionLayout::default()
 }
 
-/// The `craft-window` probe's answer for this process (its override variable is
+/// The `nodalia-window` probe's answer for this process (its override variable is
 /// `PLUMA_TITLEBAR`). The probe runs once; on a Wayland session it opens a connection.
-fn probed_choice() -> &'static craft_window::Choice {
-    static CHOICE: std::sync::OnceLock<craft_window::Choice> = std::sync::OnceLock::new();
-    CHOICE.get_or_init(|| craft_window::Choice::probe(craft_window::Prefix::new("PLUMA")))
+fn probed_choice() -> &'static nodalia_window::Choice {
+    static CHOICE: std::sync::OnceLock<nodalia_window::Choice> = std::sync::OnceLock::new();
+    CHOICE.get_or_init(|| nodalia_window::Choice::probe(nodalia_window::Prefix::new("PLUMA")))
 }
 
 /// Whether `PLUMA_TITLEBAR` chose this window's frame (Linux and the BSDs), so Preferences ›
@@ -130,35 +135,35 @@ pub(crate) fn system_title_bar_applies(opted_into_system: bool, from_env: bool) 
     opted_into_system && !from_env
 }
 
-/// Whether this start draws its own title bar, given the frame the shared `craft-window` crate
+/// Whether this start draws its own title bar, given the frame the shared `nodalia-window` crate
 /// decided and the user's System Title Bar preference.
 ///
-/// The suite-wide rule (`craft_window::Choice`) is: the desktop draws the frame
-/// ([`craft_window::Frame::Desktop`]) on macOS, Windows, X11 and any Wayland compositor with
+/// The suite-wide rule (`nodalia_window::Choice`) is: the desktop draws the frame
+/// ([`nodalia_window::Frame::Desktop`]) on macOS, Windows, X11 and any Wayland compositor with
 /// server-side decorations (KDE, Sway, Hyprland, COSMIC); the app draws it
-/// ([`craft_window::Frame::App`]) only where the compositor leaves it to the app (GNOME's Mutter),
+/// ([`nodalia_window::Frame::App`]) only where the compositor leaves it to the app (GNOME's Mutter),
 /// or when `PLUMA_TITLEBAR` set to `app`, `system` or `desktop` overrides the probe. Pluma draws its own title bar exactly
-/// when `craft-window` says the app owns the frame **and** the user has not opted into the system
+/// when `nodalia-window` says the app owns the frame **and** the user has not opted into the system
 /// title bar; the preference forces the native frame back on unless `PLUMA_TITLEBAR` is set
 /// to one of those values ([`system_title_bar_applies`]).
 ///
 /// macOS and Windows keep today's behavior and are decided by [`CUSTOM_TITLEBAR`] rather than the
-/// probe: `craft-window` returns `Frame::Desktop` for both, and Nodalia Design keeps the native
+/// probe: `nodalia-window` returns `Frame::Desktop` for both, and Nodalia Design keeps the native
 /// window controls there. Only Linux and the BSDs take the decision from the probe.
 #[cfg(not(any(target_os = "macos", target_os = "windows")))]
-pub(crate) fn custom_titlebar_from(frame: &craft_window::Frame, opted_into_system: bool) -> bool {
-    matches!(frame, craft_window::Frame::App(_)) && !opted_into_system
+pub(crate) fn custom_titlebar_from(frame: &nodalia_window::Frame, opted_into_system: bool) -> bool {
+    matches!(frame, nodalia_window::Frame::App(_)) && !opted_into_system
 }
 
-/// macOS and Windows: today's behavior, independent of the `craft-window` probe (see
+/// macOS and Windows: today's behavior, independent of the `nodalia-window` probe (see
 /// [`custom_titlebar_from`]). Neither draws its own frame (`CUSTOM_TITLEBAR` is `false`).
 #[cfg(any(target_os = "macos", target_os = "windows"))]
-pub(crate) fn custom_titlebar_from(_frame: &craft_window::Frame, opted_into_system: bool) -> bool {
+pub(crate) fn custom_titlebar_from(_frame: &nodalia_window::Frame, opted_into_system: bool) -> bool {
     CUSTOM_TITLEBAR && !opted_into_system
 }
 
 /// Whether this start draws its own title bar, and where its caption buttons go
-/// ([`caption_layout_from`]). Probes the shared `craft-window` crate once (its
+/// ([`caption_layout_from`]). Probes the shared `nodalia-window` crate once (its
 /// override variable is `PLUMA_TITLEBAR`) and combines its decision with the saved System
 /// Title Bar preference, which does not apply while the variable is set to `app`, `system` or
 /// `desktop`. Call once at startup,
@@ -193,12 +198,12 @@ pub(crate) fn custom_titlebar(saved: Option<&pluma_ui_egui::UiState>) -> (bool, 
 /// Whether the desktop would draw this window's frame with System Title Bar on or off while
 /// Pluma Title Bar on Every Desktop is off: `PLUMA_TITLEBAR` is not set to `app`,
 /// `system` or `desktop` (`overridden` is `None`), and the probe chose
-/// [`craft_window::Frame::Desktop`] or the window opens through XWayland (`forced_to_x11`)
+/// [`nodalia_window::Frame::Desktop`] or the window opens through XWayland (`forced_to_x11`)
 /// ([`app_draws_frame`]). The saved Pluma Title Bar on Every Desktop is left out, so the value
 /// stays `true` on such a desktop while that preference gives the app the frame. Always `false` on
 /// macOS and Windows, where System Title Bar decides the frame by itself.
-pub(crate) fn desktop_keeps_frame_from(probed: &craft_window::Frame, overridden: Option<bool>, forced_to_x11: bool) -> bool {
-    let probed_app = matches!(probed, craft_window::Frame::App(_));
+pub(crate) fn desktop_keeps_frame_from(probed: &nodalia_window::Frame, overridden: Option<bool>, forced_to_x11: bool) -> bool {
+    let probed_app = matches!(probed, nodalia_window::Frame::App(_));
     cfg!(not(any(target_os = "macos", target_os = "windows"))) && overridden.is_none() && !app_draws_frame(probed_app, None, forced_to_x11, false)
 }
 

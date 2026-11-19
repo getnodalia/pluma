@@ -221,7 +221,7 @@ fn optical_pair_after_separate_combining_mark_uses_base_outline() {
 #[test]
 fn optical_pair_after_rtl_separate_mark_uses_base_outline() {
     if db().face("Noto Sans Arabic", "Regular").is_none_or(|f| f.family != "Noto Sans Arabic") {
-        eprintln!("skipped: built without craft-fonts (set CRAFT_FONTS_DIR to a craft-fonts checkout to run it)");
+        eprintln!("skipped: built without nodalia-fonts (set NODALIA_FONTS_DIR to a nodalia-fonts checkout to run it)");
         return;
     }
     let st = CharStyle { font_family: "Noto Sans Arabic".into(), size: 100.0, optical_kerning: true, ..CharStyle::default() };
@@ -1635,9 +1635,9 @@ fn vertical_align_with_top_to_top_leading() {
     t.para.leading_model = LeadingModel::EmBoxTop;
     let top = layout(db(), &t);
     assert_eq!(top.lines.len(), 3);
-    // The em box top sits 0.88 em above the baseline in the craft-fonts CJK faces; a system
-    // fallback (no craft-fonts) has its own metrics, which the relative checks below don't need.
-    if !crate::CRAFT_FONTS.is_empty() {
+    // The em box top sits 0.88 em above the baseline in the nodalia-fonts CJK faces; a system
+    // fallback (no nodalia-fonts) has its own metrics, which the relative checks below don't need.
+    if !crate::NODALIA_FONTS.is_empty() {
         assert!((top.lines[0].baseline - 0.88 * 40.0).abs() < 0.01, "first em box at the top: {}", top.lines[0].baseline);
     }
     let gaps = |l: &TextLayout| l.lines.windows(2).map(|w| w[1].baseline - w[0].baseline).collect::<Vec<_>>();
@@ -1951,13 +1951,13 @@ fn layout_10k_area_text_is_fast() {
 /// widths (`palt`), and Japanese composition takes nothing more off the punctuation `palt`
 /// re-spaced (the flush bracket at a paragraph's start, consecutive punctuation, half width at a
 /// line's end); punctuation it leaves full width is trimmed as before (vertical type: see
-/// `tests_vertical`). Needs craft-fonts' Shippori Mincho, whose `palt` covers kana and most brackets but not
+/// `tests_vertical`). Needs nodalia-fonts' Shippori Mincho, whose `palt` covers kana and most brackets but not
 /// 〘〙 (skipped without it).
 #[test]
 fn proportional_metrics_set_full_width_glyphs_on_their_proportional_widths() {
     use pluma_doc::Mojikumi;
     if db().face("Shippori Mincho", "Regular").is_none_or(|f| f.family != "Shippori Mincho") {
-        eprintln!("skipped: built without craft-fonts (set CRAFT_FONTS_DIR to a craft-fonts checkout to run it)");
+        eprintln!("skipped: built without nodalia-fonts (set NODALIA_FONTS_DIR to a nodalia-fonts checkout to run it)");
         return;
     }
     let st = |on: bool| CharStyle { size: 20.0, font_family: "Shippori Mincho".into(), proportional_metrics: on, ..CharStyle::default() };
@@ -1993,7 +1993,7 @@ fn proportional_metrics_set_full_width_glyphs_on_their_proportional_widths() {
 fn mojikumi_trim_keeps_a_rotated_opening_bracket_on_its_line() {
     use pluma_doc::Mojikumi;
     if db().face("Shippori Mincho", "Regular").is_none_or(|f| f.family != "Shippori Mincho") {
-        eprintln!("skipped: Shippori Mincho is not in CRAFT_FONTS_DIR");
+        eprintln!("skipped: Shippori Mincho is not in NODALIA_FONTS_DIR");
         return;
     }
     let lay = |rotation, mojikumi| {
@@ -2115,7 +2115,7 @@ fn soft_return_breaks_line_even_inside_no_break() {
 
 /// An East Asian glyph form (the Glyphs panel menu's Traditional Forms, JIS 78 Forms, …) draws
 /// the characters with the font's glyphs of that form, and Default with its default glyphs. Needs
-/// craft-fonts' BIZ UDMincho, which has traditional, expert, JIS 78, 83 and 90, full-width and
+/// nodalia-fonts' BIZ UDMincho, which has traditional, expert, JIS 78, 83 and 90, full-width and
 /// half-width forms and no JIS 04 forms (skipped without it). A form on one character of a run
 /// changes that character only.
 #[test]
@@ -2123,7 +2123,7 @@ fn glyph_forms_draw_the_fonts_east_asian_forms() {
     use pluma_doc::GlyphForm;
     const FAMILY: &str = "BIZ UDMincho";
     if db().face(FAMILY, "Regular").is_none_or(|f| f.family != FAMILY) {
-        eprintln!("skipped: built without craft-fonts (set CRAFT_FONTS_DIR to a craft-fonts checkout to run it)");
+        eprintln!("skipped: built without nodalia-fonts (set NODALIA_FONTS_DIR to a nodalia-fonts checkout to run it)");
         return;
     }
     let st = |form| CharStyle { size: 20.0, font_family: FAMILY.into(), glyph_form: form, ..CharStyle::default() };

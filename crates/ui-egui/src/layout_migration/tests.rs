@@ -1,5 +1,5 @@
 use super::*;
-use craft_ui::docking::Side;
+use nodalia_ui::docking::Side;
 use serde_json::json;
 
 /// `ui.json` as Pluma 0.16 (8bf090b25) saved it after: Swatches moved below Layers;
@@ -189,7 +189,7 @@ fn a_file_from_before_the_shared_dock_converts_and_remembered_changes_too() {
     }))
     .ui;
     let set = &ui.docking.as_ref().unwrap().floating[0];
-    let Node::Split { size: craft_ui::layout::SplitSize::Ratio(ratio), .. } = set.root else { panic!("{set:?}") };
+    let Node::Split { size: nodalia_ui::layout::SplitSize::Ratio(ratio), .. } = set.root else { panic!("{set:?}") };
     assert!((ratio - 0.25).abs() < 1e-4, "{ratio}");
     assert_eq!(set.rect[3], 600.0);
 

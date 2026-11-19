@@ -1114,7 +1114,7 @@ fn is_cjk(c: char) -> bool {
     matches!(c as u32, 0x1100..=0x11FF | 0x3000..=0x9FFF | 0xAC00..=0xD7AF | 0xF900..=0xFAFF | 0xFF00..=0xFFEF | 0x20000..=0x2FFFF)
 }
 
-/// Georgian letters (Mkhedruli, Mtavruli, Asomtavruli): only craft-fonts' Noto Sans Georgian has them.
+/// Georgian letters (Mkhedruli, Mtavruli, Asomtavruli): only nodalia-fonts' Noto Sans Georgian has them.
 #[cfg(feature = "interface-fonts")]
 fn is_georgian(c: char) -> bool {
     matches!(c as u32, 0x10A0..=0x10FF | 0x1C90..=0x1CBF | 0x2D00..=0x2D2F)
@@ -1132,18 +1132,18 @@ fn is_gujarati(c: char) -> bool {
 
 /// The UI fonts draw every character the catalogs use, in every family the UI draws text with
 /// (the web build has no system fonts to fall back to). Chinese and Japanese characters come from
-/// the craft-fonts build input, which is optional: without it they are left to the installed
+/// the nodalia-fonts build input, which is optional: without it they are left to the installed
 /// fonts, and with it the Japanese catalog is checked against BIZ UDPGothic (the Traditional
-/// Chinese one waits for a Traditional Chinese UI font in craft-fonts). Georgian letters are the
-/// same: checked against Noto Sans Georgian when craft-fonts has it. It needs the interface's own
+/// Chinese one waits for a Traditional Chinese UI font in nodalia-fonts). Georgian letters are the
+/// same: checked against Noto Sans Georgian when nodalia-fonts has it. It needs the interface's own
 /// faces (`interface-fonts`): egui's built-in fonts lack some of the catalogs' symbols.
 #[cfg(feature = "interface-fonts")]
 #[test]
 fn bundled_fonts_cover_the_catalogs() {
-    let japanese_ui_font = pluma_text::CRAFT_FONTS.iter().any(|f| f.is_japanese());
-    let georgian_ui_font = pluma_text::CRAFT_FONTS.iter().any(|f| f.is_georgian());
-    let devanagari_ui_font = pluma_text::CRAFT_FONTS.iter().any(|f| f.scripts.contains(&"Deva"));
-    let gujarati_ui_font = pluma_text::CRAFT_FONTS.iter().any(|f| f.scripts.contains(&"Gujr"));
+    let japanese_ui_font = pluma_text::NODALIA_FONTS.iter().any(|f| f.is_japanese());
+    let georgian_ui_font = pluma_text::NODALIA_FONTS.iter().any(|f| f.is_georgian());
+    let devanagari_ui_font = pluma_text::NODALIA_FONTS.iter().any(|f| f.scripts.contains(&"Deva"));
+    let gujarati_ui_font = pluma_text::NODALIA_FONTS.iter().any(|f| f.scripts.contains(&"Gujr"));
     let ctx = egui::Context::default();
     crate::theme::install_fonts(&ctx);
     let mut output = ctx.run_ui(egui::RawInput::default(), |_| {});
@@ -1184,13 +1184,13 @@ fn bundled_fonts_cover_the_catalogs() {
 
 /// The faces the web build fetches on demand (`web-fonts.txt`: NanumGothic for Korean, Noto Sans
 /// Devanagari for Hindi) cover every character of their scripts that a catalog or a language name
-/// uses. Checked where the craft-fonts checkout has them (the desktop build embeds every face).
+/// uses. Checked where the nodalia-fonts checkout has them (the desktop build embeds every face).
 #[test]
 fn web_demand_fonts_cover_the_catalogs() {
-    use pluma_text::craft_fonts::demand_script;
+    use pluma_text::nodalia_fonts::demand_script;
     let demand: Vec<_> = pluma_text::WEB_FONTS.iter().filter(|w| w.demand).collect();
     if demand.is_empty() {
-        eprintln!("skipped: built without craft-fonts, or one without NanumGothic and Noto Sans Devanagari");
+        eprintln!("skipped: built without nodalia-fonts, or one without NanumGothic and Noto Sans Devanagari");
         return;
     }
     let mut chars: std::collections::BTreeSet<char> = LANGUAGES.iter().flat_map(|l| l.name.chars()).collect();
@@ -1200,10 +1200,10 @@ fn web_demand_fonts_cover_the_catalogs() {
     }
     let mut missing = std::collections::BTreeMap::new();
     for w in demand {
-        let Some(f) = pluma_text::CRAFT_FONTS.iter().find(|f| f.family == w.family && f.style == w.style) else { continue };
+        let Some(f) = pluma_text::NODALIA_FONTS.iter().find(|f| f.family == w.family && f.style == w.style) else { continue };
         let db = pluma_text::FontDb::with_font_dirs(vec![]);
         db.add_font(f.bytes.to_vec());
-        let face = db.face(f.family, f.style).expect("the craft-fonts face loads");
+        let face = db.face(f.family, f.style).expect("the nodalia-fonts face loads");
         let gone: String = chars.iter().filter(|c| demand_script(**c).is_some_and(|s| w.scripts.contains(&s)) && !face.covers(**c)).collect();
         if !gone.is_empty() {
             missing.insert(w.family, gone);
@@ -5022,34 +5022,34 @@ fn the_keep_colors_trace_warnings_are_translated() {
         let __dyn: image::DynamicImage = img.into();
         let (__w, __h) = (__dyn.width(), __dyn.height());
         let (__layout, __sample, __raw) = match __dyn {
-            image::DynamicImage::ImageLuma8(b) => (craft_image_codecs::ChannelLayout::Gray, craft_image_codecs::SampleType::U8, b.into_raw()),
-            image::DynamicImage::ImageLumaA8(b) => (craft_image_codecs::ChannelLayout::GrayA, craft_image_codecs::SampleType::U8, b.into_raw()),
-            image::DynamicImage::ImageRgb8(b) => (craft_image_codecs::ChannelLayout::Rgb, craft_image_codecs::SampleType::U8, b.into_raw()),
-            image::DynamicImage::ImageRgba8(b) => (craft_image_codecs::ChannelLayout::Rgba, craft_image_codecs::SampleType::U8, b.into_raw()),
+            image::DynamicImage::ImageLuma8(b) => (nodalia_image_codecs::ChannelLayout::Gray, nodalia_image_codecs::SampleType::U8, b.into_raw()),
+            image::DynamicImage::ImageLumaA8(b) => (nodalia_image_codecs::ChannelLayout::GrayA, nodalia_image_codecs::SampleType::U8, b.into_raw()),
+            image::DynamicImage::ImageRgb8(b) => (nodalia_image_codecs::ChannelLayout::Rgb, nodalia_image_codecs::SampleType::U8, b.into_raw()),
+            image::DynamicImage::ImageRgba8(b) => (nodalia_image_codecs::ChannelLayout::Rgba, nodalia_image_codecs::SampleType::U8, b.into_raw()),
             image::DynamicImage::ImageLuma16(b) => (
-                craft_image_codecs::ChannelLayout::Gray,
-                craft_image_codecs::SampleType::U16,
+                nodalia_image_codecs::ChannelLayout::Gray,
+                nodalia_image_codecs::SampleType::U16,
                 b.into_raw().into_iter().flat_map(|s| s.to_ne_bytes()).collect(),
             ),
             image::DynamicImage::ImageLumaA16(b) => (
-                craft_image_codecs::ChannelLayout::GrayA,
-                craft_image_codecs::SampleType::U16,
+                nodalia_image_codecs::ChannelLayout::GrayA,
+                nodalia_image_codecs::SampleType::U16,
                 b.into_raw().into_iter().flat_map(|s| s.to_ne_bytes()).collect(),
             ),
             image::DynamicImage::ImageRgb16(b) => (
-                craft_image_codecs::ChannelLayout::Rgb,
-                craft_image_codecs::SampleType::U16,
+                nodalia_image_codecs::ChannelLayout::Rgb,
+                nodalia_image_codecs::SampleType::U16,
                 b.into_raw().into_iter().flat_map(|s| s.to_ne_bytes()).collect(),
             ),
             image::DynamicImage::ImageRgba16(b) => (
-                craft_image_codecs::ChannelLayout::Rgba,
-                craft_image_codecs::SampleType::U16,
+                nodalia_image_codecs::ChannelLayout::Rgba,
+                nodalia_image_codecs::SampleType::U16,
                 b.into_raw().into_iter().flat_map(|s| s.to_ne_bytes()).collect(),
             ),
-            other => (craft_image_codecs::ChannelLayout::Rgba, craft_image_codecs::SampleType::U8, other.into_rgba8().into_raw()),
+            other => (nodalia_image_codecs::ChannelLayout::Rgba, nodalia_image_codecs::SampleType::U8, other.into_rgba8().into_raw()),
         };
-        let __cimg = craft_image_codecs::Image::from_raw(__w, __h, __layout, __sample, __raw).unwrap();
-        craft_image_codecs::encode(&__cimg, craft_image_codecs::Format::Png, &craft_image_codecs::EncodeOptions::default())
+        let __cimg = nodalia_image_codecs::Image::from_raw(__w, __h, __layout, __sample, __raw).unwrap();
+        nodalia_image_codecs::encode(&__cimg, nodalia_image_codecs::Format::Png, &nodalia_image_codecs::EncodeOptions::default())
             .map(|__b| png.extend_from_slice(&__b))
     }
     .unwrap();

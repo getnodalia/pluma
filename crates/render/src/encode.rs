@@ -190,20 +190,20 @@ pub fn on_white(p: &[u8; 4]) -> [u8; 3] {
 /// WebP: lossless (`VP8L`) when `lossy_quality` is `None`, else lossy (`VP8 `, with an `ALPH`
 /// chunk when some pixels are not opaque) at that quality 0–100.
 pub(crate) fn webp(img: &Rendered, lossy_quality: Option<u8>) -> Result<Vec<u8>, String> {
-    let src = craft_image_codecs::Image::from_raw(
+    let src = nodalia_image_codecs::Image::from_raw(
         img.width,
         img.height,
-        craft_image_codecs::ChannelLayout::Rgba,
-        craft_image_codecs::SampleType::U8,
+        nodalia_image_codecs::ChannelLayout::Rgba,
+        nodalia_image_codecs::SampleType::U8,
         img.to_straight(),
     )
     .map_err(|e| format!("WebP encoding failed: {e}"))?;
-    let opts = craft_image_codecs::EncodeOptions {
+    let opts = nodalia_image_codecs::EncodeOptions {
         webp_lossless: lossy_quality.is_none(),
         webp_quality: lossy_quality.unwrap_or(100).min(100),
-        ..craft_image_codecs::EncodeOptions::default()
+        ..nodalia_image_codecs::EncodeOptions::default()
     };
-    let file = craft_image_codecs::encode(&src, craft_image_codecs::Format::WebP, &opts).map_err(|e| format!("WebP encoding failed: {e}"))?;
+    let file = nodalia_image_codecs::encode(&src, nodalia_image_codecs::Format::WebP, &opts).map_err(|e| format!("WebP encoding failed: {e}"))?;
     if lossy_quality.is_some() && vp8_partition_at_limit(&file) {
         return Err("WebP encoding failed: the image is too large for lossy WebP: lower the resolution or choose Lossless".into());
     }

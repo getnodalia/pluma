@@ -460,7 +460,7 @@ mod tests {
             Some(NodeKind::Image(i)) => Some(i.key.clone()),
             _ => None,
         });
-        let decoded = craft_image_codecs::decode(&st.doc.images[&key.expect("the rectangle became an image")].bytes).unwrap();
+        let decoded = nodalia_image_codecs::decode(&st.doc.images[&key.expect("the rectangle became an image")].bytes).unwrap();
         let img = image::RgbaImage::from_raw(decoded.width(), decoded.height(), decoded.to_rgba8()).unwrap();
         let p = img.get_pixel(img.width() / 2, img.height() / 2).0;
         assert!(p[0] == p[1] && p[1] == p[2] && p[0] < 128, "red in grayscale: {p:?}");
@@ -921,7 +921,7 @@ mod tests {
                 Some(NodeKind::Image(i)) => Some(i.key.clone()),
                 _ => None,
             });
-            let decoded = craft_image_codecs::decode(&st.doc.images[&key.expect("the ellipse became an image")].bytes).unwrap();
+            let decoded = nodalia_image_codecs::decode(&st.doc.images[&key.expect("the ellipse became an image")].bytes).unwrap();
             image::RgbaImage::from_raw(decoded.width(), decoded.height(), decoded.to_rgba8()).unwrap().get_pixel(0, 0).0
         };
         let mut app = PlumaApp::new(Session::new(), Default::default());

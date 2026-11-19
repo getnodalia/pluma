@@ -331,15 +331,15 @@ fn hidden_and_guides_omitted() {
 
 #[test]
 fn image_roundtrip() {
-    let img = craft_image_codecs::Image::from_raw(
+    let img = nodalia_image_codecs::Image::from_raw(
         4,
         2,
-        craft_image_codecs::ChannelLayout::Rgba,
-        craft_image_codecs::SampleType::U8,
+        nodalia_image_codecs::ChannelLayout::Rgba,
+        nodalia_image_codecs::SampleType::U8,
         [255u8, 0, 0, 255].repeat(8),
     )
     .unwrap();
-    let png = craft_image_codecs::encode(&img, craft_image_codecs::Format::Png, &craft_image_codecs::EncodeOptions::default()).unwrap();
+    let png = nodalia_image_codecs::encode(&img, nodalia_image_codecs::Format::Png, &nodalia_image_codecs::EncodeOptions::default()).unwrap();
     let mut d = Document::new(200.0, 200.0);
     let id = d.alloc_id();
     let n = Node::new(

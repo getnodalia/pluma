@@ -9,7 +9,7 @@ const ICON_PNG: &[u8] = include_bytes!("../../../assets/app-icon/hicolor/128x128
 
 /// The icon's pixels (one transparent pixel if it couldn't be decoded, which a test rules out).
 fn decode() -> egui::ColorImage {
-    match craft_image_codecs::decode_as(craft_image_codecs::Format::Png, ICON_PNG) {
+    match nodalia_image_codecs::decode_as(nodalia_image_codecs::Format::Png, ICON_PNG) {
         Ok(img) => egui::ColorImage::from_rgba_unmultiplied([img.width() as usize, img.height() as usize], &img.to_rgba8()),
         Err(_) => egui::ColorImage::filled([1, 1], Color32::TRANSPARENT),
     }

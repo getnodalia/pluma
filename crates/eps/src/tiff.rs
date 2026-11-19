@@ -46,15 +46,15 @@ pub(crate) fn encode(img: &Raster, bw: bool, alpha: bool) -> Result<Vec<u8>, Str
 
 /// `img` as a PNG.
 pub(crate) fn png(img: &Raster) -> Result<Vec<u8>, String> {
-    let raw = craft_image_codecs::Image::from_raw(
+    let raw = nodalia_image_codecs::Image::from_raw(
         img.width,
         img.height,
-        craft_image_codecs::ChannelLayout::Rgba,
-        craft_image_codecs::SampleType::U8,
+        nodalia_image_codecs::ChannelLayout::Rgba,
+        nodalia_image_codecs::SampleType::U8,
         img.rgba.clone(),
     )
     .map_err(|_| "the thumbnail image is malformed".to_string())?;
-    craft_image_codecs::encode(&raw, craft_image_codecs::Format::Png, &craft_image_codecs::EncodeOptions::default()).map_err(|e| e.to_string())
+    nodalia_image_codecs::encode(&raw, nodalia_image_codecs::Format::Png, &nodalia_image_codecs::EncodeOptions::default()).map_err(|e| e.to_string())
 }
 
 /// Most pixels a palette preview may have.

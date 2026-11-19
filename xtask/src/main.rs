@@ -49,8 +49,8 @@ commands:
                   and built-in tests its interpreter supports and the String, Number, RegExp
                   and Date built-ins tests, printing the counts; then fetch json2.js into
                   corpus/json2 (sha256 verified) and run it
-  web-fonts       copy the craft-fonts faces in crates/text/web-fonts.txt into the web site (the Trunk
-                  post_build hook; a no-op without CRAFT_FONTS_DIR)
+  web-fonts       copy the nodalia-fonts faces in crates/text/web-fonts.txt into the web site (the Trunk
+                  post_build hook; a no-op without NODALIA_FONTS_DIR)
 ";
 
 fn main() -> ExitCode {
@@ -205,7 +205,7 @@ fn cmd_layers() -> Result<(), String> {
 
 /// Workspace packages that must build for wasm32: all L0–L5 crates, the egui
 /// shell, and the web app (its wasm-only code is compiled by nothing else). Each comes with its
-/// package id, which `-p` takes where the name would be ambiguous: craft-libs builds against this
+/// package id, which `-p` takes where the name would be ambiguous: nodalia-libs builds against this
 /// repo's geom and pathops by git, so the graph can hold a second, older copy of a workspace crate.
 fn wasm_set() -> Result<Vec<(String, String)>, String> {
     let meta = metadata()?;

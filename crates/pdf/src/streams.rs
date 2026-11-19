@@ -7,9 +7,9 @@ use std::borrow::Cow;
 use std::collections::BTreeMap;
 use std::io::Read;
 
-use craft_pdf::syntax::content::TypedIter;
-use craft_pdf::syntax::content::ops::TypedInstruction;
-use craft_pdf::syntax::object::{Array, Dict, FromBytes, MaybeRef, Name, Object, Stream};
+use nodalia_pdf::syntax::content::TypedIter;
+use nodalia_pdf::syntax::content::ops::TypedInstruction;
+use nodalia_pdf::syntax::object::{Array, Dict, FromBytes, MaybeRef, Name, Object, Stream};
 
 /// The most a stream may decode to: 256 MB, the pixels of the largest image the app reads (64
 /// million, 4 bytes each).
@@ -86,9 +86,9 @@ fn inflate(data: &[u8], max: usize) -> Option<Vec<u8>> {
 /// `data` decoded from LZW, up to `max`. `early`: the code length grows one code
 /// early (`EarlyChange`, 1 by default).
 fn lzw(data: &[u8], early: bool, max: usize) -> Option<Vec<u8>> {
-    match craft_stream_codecs::lzw::decode(data, early, max) {
+    match nodalia_stream_codecs::lzw::decode(data, early, max) {
         Ok(out) => Some(out),
-        Err(f) if matches!(f.error, craft_stream_codecs::CodecError::LimitExceeded(_)) => Some(vec![0u8; max.saturating_add(1)]),
+        Err(f) if matches!(f.error, nodalia_stream_codecs::CodecError::LimitExceeded(_)) => Some(vec![0u8; max.saturating_add(1)]),
         Err(_) => None,
     }
 }

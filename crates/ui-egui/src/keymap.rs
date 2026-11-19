@@ -1,4 +1,4 @@
-//! Pluma's keymap on [`craft_keymap`]: the catalogue of everything a shortcut can run, the
+//! Pluma's keymap on [`nodalia_keymap`]: the catalogue of everything a shortcut can run, the
 //! bridge between Pluma's chord spellings and the crate's, and the stored form of the
 //! user's overrides.
 //!
@@ -11,7 +11,7 @@
 
 use std::sync::{Arc, Mutex, RwLock};
 
-use craft_keymap::{Bindable, Binding, Chord, CommandRef, Key, Keymap, Kind, Lookup, Mods, Overrides, Platform, Scope, Scopes};
+use nodalia_keymap::{Bindable, Binding, Chord, CommandRef, Key, Keymap, Kind, Lookup, Mods, Overrides, Platform, Scope, Scopes};
 use serde_json::{Value, json};
 
 use crate::shortcut_editor::{self, EffectItem, Entry, Snapshot};
@@ -259,7 +259,7 @@ pub fn platform() -> Platform {
 /// Records the operating system egui reports, which the web build reads from the browser.
 pub fn note_os(ctx: &egui::Context) {
     if cfg!(target_arch = "wasm32") {
-        let p = craft_keymap::egui::platform(ctx);
+        let p = nodalia_keymap::egui::platform(ctx);
         if let Ok(mut web) = WEB_PLATFORM.write()
             && *web != Some(p)
         {
@@ -301,7 +301,7 @@ pub(crate) fn template_for(snapshot: &Snapshot) -> Arc<Keymap> {
 /// The default keymap of `p` with the entries of `snapshot`. The chords the operating system
 /// takes can't be assigned.
 pub(crate) fn keymap_for(p: Platform, snapshot: &Snapshot) -> Keymap {
-    Keymap::new(catalogue(snapshot, p), Scopes::new(), p).with_reserved(craft_keymap::reserved::system(p))
+    Keymap::new(catalogue(snapshot, p), Scopes::new(), p).with_reserved(nodalia_keymap::reserved::system(p))
 }
 
 /// The keymap with `overrides` applied.
@@ -344,7 +344,7 @@ pub(crate) fn edit_alias_overrides(overrides: &Overrides, p: Platform) -> Overri
 
 /// The command a chord runs, the first for tools sharing it.
 pub fn lookup(km: &Keymap, chord: &Chord) -> Option<CommandRef> {
-    match km.lookup(chord, false, &craft_keymap::Active::NONE) {
+    match km.lookup(chord, false, &nodalia_keymap::Active::NONE) {
         Lookup::None => None,
         Lookup::Run(c) => Some(c),
         Lookup::Cycle(v) => v.into_iter().next(),
@@ -407,7 +407,7 @@ pub fn has_override(overrides: &Overrides, key: &str) -> bool {
 /// spellings. Loading never fails: what cannot be used is dropped or kept for
 /// `Keymap::problems`, and only an entry's first text is kept.
 pub mod stored {
-    use craft_keymap::Overrides;
+    use nodalia_keymap::Overrides;
     use serde::{Deserialize, Deserializer, Serialize, Serializer};
     use serde_json::{Map, Value};
 

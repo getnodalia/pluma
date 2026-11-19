@@ -24,34 +24,34 @@ fn png(img: DynamicImage) -> Vec<u8> {
         let __dyn: image::DynamicImage = img;
         let (__w, __h) = (__dyn.width(), __dyn.height());
         let (__layout, __sample, __raw) = match __dyn {
-            image::DynamicImage::ImageLuma8(b) => (craft_image_codecs::ChannelLayout::Gray, craft_image_codecs::SampleType::U8, b.into_raw()),
-            image::DynamicImage::ImageLumaA8(b) => (craft_image_codecs::ChannelLayout::GrayA, craft_image_codecs::SampleType::U8, b.into_raw()),
-            image::DynamicImage::ImageRgb8(b) => (craft_image_codecs::ChannelLayout::Rgb, craft_image_codecs::SampleType::U8, b.into_raw()),
-            image::DynamicImage::ImageRgba8(b) => (craft_image_codecs::ChannelLayout::Rgba, craft_image_codecs::SampleType::U8, b.into_raw()),
+            image::DynamicImage::ImageLuma8(b) => (nodalia_image_codecs::ChannelLayout::Gray, nodalia_image_codecs::SampleType::U8, b.into_raw()),
+            image::DynamicImage::ImageLumaA8(b) => (nodalia_image_codecs::ChannelLayout::GrayA, nodalia_image_codecs::SampleType::U8, b.into_raw()),
+            image::DynamicImage::ImageRgb8(b) => (nodalia_image_codecs::ChannelLayout::Rgb, nodalia_image_codecs::SampleType::U8, b.into_raw()),
+            image::DynamicImage::ImageRgba8(b) => (nodalia_image_codecs::ChannelLayout::Rgba, nodalia_image_codecs::SampleType::U8, b.into_raw()),
             image::DynamicImage::ImageLuma16(b) => (
-                craft_image_codecs::ChannelLayout::Gray,
-                craft_image_codecs::SampleType::U16,
+                nodalia_image_codecs::ChannelLayout::Gray,
+                nodalia_image_codecs::SampleType::U16,
                 b.into_raw().into_iter().flat_map(|s| s.to_ne_bytes()).collect(),
             ),
             image::DynamicImage::ImageLumaA16(b) => (
-                craft_image_codecs::ChannelLayout::GrayA,
-                craft_image_codecs::SampleType::U16,
+                nodalia_image_codecs::ChannelLayout::GrayA,
+                nodalia_image_codecs::SampleType::U16,
                 b.into_raw().into_iter().flat_map(|s| s.to_ne_bytes()).collect(),
             ),
             image::DynamicImage::ImageRgb16(b) => (
-                craft_image_codecs::ChannelLayout::Rgb,
-                craft_image_codecs::SampleType::U16,
+                nodalia_image_codecs::ChannelLayout::Rgb,
+                nodalia_image_codecs::SampleType::U16,
                 b.into_raw().into_iter().flat_map(|s| s.to_ne_bytes()).collect(),
             ),
             image::DynamicImage::ImageRgba16(b) => (
-                craft_image_codecs::ChannelLayout::Rgba,
-                craft_image_codecs::SampleType::U16,
+                nodalia_image_codecs::ChannelLayout::Rgba,
+                nodalia_image_codecs::SampleType::U16,
                 b.into_raw().into_iter().flat_map(|s| s.to_ne_bytes()).collect(),
             ),
-            other => (craft_image_codecs::ChannelLayout::Rgba, craft_image_codecs::SampleType::U8, other.into_rgba8().into_raw()),
+            other => (nodalia_image_codecs::ChannelLayout::Rgba, nodalia_image_codecs::SampleType::U8, other.into_rgba8().into_raw()),
         };
-        let __cimg = craft_image_codecs::Image::from_raw(__w, __h, __layout, __sample, __raw).unwrap();
-        craft_image_codecs::encode(&__cimg, craft_image_codecs::Format::Png, &craft_image_codecs::EncodeOptions::default())
+        let __cimg = nodalia_image_codecs::Image::from_raw(__w, __h, __layout, __sample, __raw).unwrap();
+        nodalia_image_codecs::encode(&__cimg, nodalia_image_codecs::Format::Png, &nodalia_image_codecs::EncodeOptions::default())
             .map(|__b| out.extend_from_slice(&__b))
     }
     .unwrap();
@@ -86,25 +86,25 @@ fn bytes_of(s: &Session, id: NodeId) -> Arc<Vec<u8>> {
 }
 
 fn pixels(s: &Session, id: NodeId) -> DynamicImage {
-    craft_image_codecs::decode(&bytes_of(s, id))
+    nodalia_image_codecs::decode(&bytes_of(s, id))
         .map(|__cimg| {
             let (__w, __h) = __cimg.dimensions();
             match (__cimg.layout(), __cimg.sample_type()) {
-                (craft_image_codecs::ChannelLayout::Gray, craft_image_codecs::SampleType::U8) => {
+                (nodalia_image_codecs::ChannelLayout::Gray, nodalia_image_codecs::SampleType::U8) => {
                     image::DynamicImage::ImageLuma8(image::GrayImage::from_raw(__w, __h, __cimg.into_data()).unwrap())
                 }
-                (craft_image_codecs::ChannelLayout::GrayA, craft_image_codecs::SampleType::U8) => {
+                (nodalia_image_codecs::ChannelLayout::GrayA, nodalia_image_codecs::SampleType::U8) => {
                     image::DynamicImage::ImageLumaA8(image::GrayAlphaImage::from_raw(__w, __h, __cimg.into_data()).unwrap())
                 }
-                (craft_image_codecs::ChannelLayout::Rgb, craft_image_codecs::SampleType::U8) => {
+                (nodalia_image_codecs::ChannelLayout::Rgb, nodalia_image_codecs::SampleType::U8) => {
                     image::DynamicImage::ImageRgb8(image::RgbImage::from_raw(__w, __h, __cimg.into_data()).unwrap())
                 }
-                (layout, craft_image_codecs::SampleType::U16) => {
+                (layout, nodalia_image_codecs::SampleType::U16) => {
                     let v = __cimg.to_u16_samples().unwrap();
                     match layout {
-                        craft_image_codecs::ChannelLayout::Gray => image::DynamicImage::ImageLuma16(ImageBuffer::from_raw(__w, __h, v).unwrap()),
-                        craft_image_codecs::ChannelLayout::GrayA => image::DynamicImage::ImageLumaA16(ImageBuffer::from_raw(__w, __h, v).unwrap()),
-                        craft_image_codecs::ChannelLayout::Rgb => image::DynamicImage::ImageRgb16(ImageBuffer::from_raw(__w, __h, v).unwrap()),
+                        nodalia_image_codecs::ChannelLayout::Gray => image::DynamicImage::ImageLuma16(ImageBuffer::from_raw(__w, __h, v).unwrap()),
+                        nodalia_image_codecs::ChannelLayout::GrayA => image::DynamicImage::ImageLumaA16(ImageBuffer::from_raw(__w, __h, v).unwrap()),
+                        nodalia_image_codecs::ChannelLayout::Rgb => image::DynamicImage::ImageRgb16(ImageBuffer::from_raw(__w, __h, v).unwrap()),
                         _ => image::DynamicImage::ImageRgba16(ImageBuffer::from_raw(__w, __h, v).unwrap()),
                     }
                 }
@@ -226,9 +226,9 @@ fn reused_pixels_keep_their_depth_gray_and_profile() {
     let gray16 = ImageBuffer::from_fn(8, 8, |x, y| Luma([if (2..6).contains(&x) && (2..6).contains(&y) { 7_000u16 } else { 61_000 }]));
     let raw: Vec<u8> = gray16.into_raw().into_iter().flat_map(|s| s.to_ne_bytes()).collect();
     let mut cimg =
-        craft_image_codecs::Image::from_raw(8, 8, craft_image_codecs::ChannelLayout::Gray, craft_image_codecs::SampleType::U16, raw).unwrap();
+        nodalia_image_codecs::Image::from_raw(8, 8, nodalia_image_codecs::ChannelLayout::Gray, nodalia_image_codecs::SampleType::U16, raw).unwrap();
     cimg.icc = Some(icc.clone());
-    let bytes = craft_image_codecs::encode(&cimg, craft_image_codecs::Format::Png, &craft_image_codecs::EncodeOptions::default()).unwrap();
+    let bytes = nodalia_image_codecs::encode(&cimg, nodalia_image_codecs::Format::Png, &nodalia_image_codecs::EncodeOptions::default()).unwrap();
     let decodes = || super::DECODES.with(std::cell::Cell::get);
     let (mut s, id) = open(&bytes);
     let start = decodes();
@@ -242,7 +242,7 @@ fn reused_pixels_keep_their_depth_gray_and_profile() {
     let DynamicImage::ImageLumaA16(out) = pixels(&s, id) else { panic!("16-bit gray with alpha") };
     assert_eq!((out.get_pixel(0, 0).0, out.get_pixel(3, 3).0), ([61_000, 0], [7_000, 65_535]));
     let result = bytes_of(&s, id);
-    let decoded = craft_image_codecs::decode_as(craft_image_codecs::Format::Png, result.as_slice()).unwrap();
+    let decoded = nodalia_image_codecs::decode_as(nodalia_image_codecs::Format::Png, result.as_slice()).unwrap();
     assert_eq!(decoded.icc, Some(icc));
 }
 
@@ -445,19 +445,19 @@ fn a_gray_image_colorized_with_a_process_color_is_refused() {
 fn the_color_profile_is_kept() {
     let icc = b"a profile's bytes".to_vec();
     let f = framed();
-    let mut cimg = craft_image_codecs::Image::from_raw(
+    let mut cimg = nodalia_image_codecs::Image::from_raw(
         f.width(),
         f.height(),
-        craft_image_codecs::ChannelLayout::Rgba,
-        craft_image_codecs::SampleType::U8,
+        nodalia_image_codecs::ChannelLayout::Rgba,
+        nodalia_image_codecs::SampleType::U8,
         f.into_raw(),
     )
     .unwrap();
     cimg.icc = Some(icc.clone());
-    let bytes = craft_image_codecs::encode(&cimg, craft_image_codecs::Format::Png, &craft_image_codecs::EncodeOptions::default()).unwrap();
+    let bytes = nodalia_image_codecs::encode(&cimg, nodalia_image_codecs::Format::Png, &nodalia_image_codecs::EncodeOptions::default()).unwrap();
     let blob = ImageBlob::png(bytes);
     let out = super::clear(&blob, &settings(Background::Edges), None, super::C).unwrap().unwrap();
-    let decoded = craft_image_codecs::decode_as(craft_image_codecs::Format::Png, out.blob.bytes.as_slice()).unwrap();
+    let decoded = nodalia_image_codecs::decode_as(nodalia_image_codecs::Format::Png, out.blob.bytes.as_slice()).unwrap();
     assert_eq!(decoded.icc, Some(icc));
 }
 

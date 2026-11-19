@@ -2,7 +2,7 @@
 //! defaults in `data-pluma-mask`, and import restores them and the original mask art (without
 //! the backdrop rectangle and inverting filter that draw the options in SVG).
 
-use craft_svg::tree::draw::resvg;
+use nodalia_svg::tree::draw::resvg;
 use pluma_color::{Color, Paint};
 use pluma_doc::{Appearance, Document, Node, OpacityMask};
 use pluma_geom::{Rect, shapes};

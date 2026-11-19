@@ -506,9 +506,10 @@ fn scaled_down_pictures_keep_the_color_beside_clear_pixels() {
                     data.extend_from_slice(&if x % 2 == 0 { [200, 30, 30, 255] } else { [0, 0, 0, 0] });
                 }
             }
-            let raw = craft_image_codecs::Image::from_raw(64, 4, craft_image_codecs::ChannelLayout::Rgba, craft_image_codecs::SampleType::U8, data)
-                .unwrap();
-            let png = craft_image_codecs::encode(&raw, craft_image_codecs::Format::Png, &craft_image_codecs::EncodeOptions::default()).unwrap();
+            let raw =
+                nodalia_image_codecs::Image::from_raw(64, 4, nodalia_image_codecs::ChannelLayout::Rgba, nodalia_image_codecs::SampleType::U8, data)
+                    .unwrap();
+            let png = nodalia_image_codecs::encode(&raw, nodalia_image_codecs::Format::Png, &nodalia_image_codecs::EncodeOptions::default()).unwrap();
             let png = pluma_format::base64_encode(&png);
             Ok(match method {
                 "document.inspect" => json!({"artboards": [{"width": 64, "height": 4}]}),
@@ -529,7 +530,7 @@ fn scaled_down_pictures_keep_the_color_beside_clear_pixels() {
         let r = call(&mut s, id, tool, args);
         let data =
             r["content"].as_array().unwrap().iter().find(|c| c["type"] == "image").unwrap_or_else(|| panic!("{tool}: {r}"))["data"].as_str().unwrap();
-        let decoded = craft_image_codecs::decode(&pluma_format::base64_decode(data).unwrap()).unwrap();
+        let decoded = nodalia_image_codecs::decode(&pluma_format::base64_decode(data).unwrap()).unwrap();
         let img = image::RgbaImage::from_raw(decoded.width(), decoded.height(), decoded.to_rgba8()).unwrap();
         assert_eq!(img.dimensions(), (16, 1), "{tool}");
         assert!(img.pixels().all(|p| p.0 == [200, 30, 30, 128]), "{tool}: {:?}", img.get_pixel(0, 0));
@@ -551,9 +552,13 @@ fn screenshot_and_render_preview_draw_the_trace_view_with_trace_views() {
             rgb.extend_from_slice(&if dx * dx + dy * dy <= 900.0 { [0, 0, 0] } else { [170, 210, 255] });
         }
     }
-    let raw = craft_image_codecs::Image::from_raw(100, 100, craft_image_codecs::ChannelLayout::Rgb, craft_image_codecs::SampleType::U8, rgb).unwrap();
-    std::fs::write(&png, craft_image_codecs::encode(&raw, craft_image_codecs::Format::Png, &craft_image_codecs::EncodeOptions::default()).unwrap())
-        .unwrap();
+    let raw =
+        nodalia_image_codecs::Image::from_raw(100, 100, nodalia_image_codecs::ChannelLayout::Rgb, nodalia_image_codecs::SampleType::U8, rgb).unwrap();
+    std::fs::write(
+        &png,
+        nodalia_image_codecs::encode(&raw, nodalia_image_codecs::Format::Png, &nodalia_image_codecs::EncodeOptions::default()).unwrap(),
+    )
+    .unwrap();
     let ok = |s: &mut Server, id: u64, name: &str, args: Value| {
         let r = call(s, id, name, args);
         assert_eq!(r["isError"], false, "{name}: {r}");
@@ -564,7 +569,7 @@ fn screenshot_and_render_preview_draw_the_trace_view_with_trace_views() {
     ok(&mut s, 3, "run_command", json!({"command": "imageTrace.make", "params": {"params": {"ignoreWhite": true}}}));
     let pixels = |r: &Value| {
         let data = r["content"].as_array().unwrap().iter().find(|c| c["type"] == "image").unwrap()["data"].as_str().unwrap();
-        let decoded = craft_image_codecs::decode(&pluma_format::base64_decode(data).unwrap()).unwrap();
+        let decoded = nodalia_image_codecs::decode(&pluma_format::base64_decode(data).unwrap()).unwrap();
         image::RgbaImage::from_raw(decoded.width(), decoded.height(), decoded.to_rgba8()).unwrap()
     };
     let dark = |p: &image::Rgba<u8>| p[0] < 60 && p[1] < 60 && p[2] < 60;

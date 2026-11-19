@@ -1,6 +1,6 @@
 //! Colorized gray and bilevel image export, checked as pixels as well as markup.
 
-use craft_svg::tree::draw::resvg;
+use nodalia_svg::tree::draw::resvg;
 use pluma_color::{Color, Paint, Swatch};
 use pluma_doc::{Document, ImageBlob, ImageObject, LinkInfo, Node, NodeKind};
 use pluma_geom::Affine;
@@ -133,7 +133,7 @@ fn bilevel_process_and_spot_use_coverage_in_embed_link_and_tiny() {
             assert_eq!(linked.linked.len(), 1);
             let file = &linked.linked[0];
             assert!(linked.svg.contains(&file.name));
-            let decoded = craft_image_codecs::decode(&file.bytes).unwrap();
+            let decoded = nodalia_image_codecs::decode(&file.bytes).unwrap();
             let rgba = image::RgbaImage::from_raw(decoded.width(), decoded.height(), decoded.to_rgba8()).unwrap();
             assert_eq!((rgba.get_pixel(0, 0).0[3], rgba.get_pixel(1, 0).0[3]), (255, 0));
             let inlined = linked.svg.replace(&file.name, &format!("data:image/png;base64,{}", base64_encode(&file.bytes)));

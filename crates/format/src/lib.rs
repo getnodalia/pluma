@@ -49,7 +49,7 @@ use std::fmt;
 use std::io::Write;
 use std::sync::Arc;
 
-use craft_vectorcraft_format::{Contents, Head, Image, ReadError, Tail};
+use nodalia_pluma_format::{Contents, Head, Image, ReadError, Tail};
 use pluma_brush::stored_art::StoredArt;
 use pluma_doc::{Document, ImageBlob};
 use serde::de::{DeserializeSeed, IgnoredAny, MapAccess, SeqAccess, Visitor};
@@ -57,10 +57,10 @@ use serde::{Deserializer, Serialize};
 
 #[cfg(not(target_arch = "wasm32"))]
 pub use atomic::{read_only_location, sync_file, write_atomic, write_atomic_with, write_new_with};
-use craft_gzip::Gz;
-pub use craft_vectorcraft_format::base64::{decode as base64_decode, decoded_len as base64_decoded_len, encode as base64_encode};
-use craft_vectorcraft_format::stream::{FileHeader, Indent, KeyScan, write_file_json};
-pub use craft_vectorcraft_format::{
+use nodalia_gzip::Gz;
+pub use nodalia_pluma_format::base64::{decode as base64_decode, decoded_len as base64_decoded_len, encode as base64_encode};
+use nodalia_pluma_format::stream::{FileHeader, Indent, KeyScan, write_file_json};
+pub use nodalia_pluma_format::{
     BLOB_MAGIC, COMPRESSED_SINCE, ICC_MIME, INLINE_MAX, LEGACY_EXTENSION, MIN_VERSION, PREVIEW_MAX, VERSION, is_compressed, json_part, sniff,
 };
 use stream::Out;
@@ -73,7 +73,7 @@ use stream::Out;
 pub const MAX_JSON: u64 = if cfg!(target_arch = "wasm32") { 256 << 20 } else { 1 << 30 };
 /// Most bytes one entry of the data after the JSON (an image, a placed document, the PDF, a
 /// profile) may have in a compressed file.
-pub const MAX_BLOB: u64 = craft_vectorcraft_format::MAX_ENTRY;
+pub const MAX_BLOB: u64 = nodalia_pluma_format::MAX_ENTRY;
 /// Most bytes the entries after the JSON may have together in a compressed file: 1 GiB in the web
 /// build, whose 4 GiB address space also holds the JSON, the document and the app, so 4 GiB of
 /// entries failed to allocate rather than being refused.
@@ -86,7 +86,7 @@ const MAX_UNPACKED: u64 = 512 << 20;
 pub const EXTENSION: &str = "pluma";
 /// The `"format"` a document's header names. It is the file's signature, so it outlived the
 /// extension: every file written since version 3 carries it, and readers check it.
-pub const FORMAT_ID: &str = craft_vectorcraft_format::EXTENSION;
+pub const FORMAT_ID: &str = nodalia_pluma_format::EXTENSION;
 /// Extensions of documents saved before Pluma had its own (`.pluma`, `.drawcraft`). They
 /// open like any other; Save As offers [`EXTENSION`].
 pub const OLDER_EXTENSIONS: [&str; 2] = [FORMAT_ID, LEGACY_EXTENSION];
@@ -121,11 +121,11 @@ pub enum FormatError {
     Encode(String),
 }
 
-impl From<craft_vectorcraft_format::Error> for FormatError {
-    fn from(e: craft_vectorcraft_format::Error) -> Self {
+impl From<nodalia_pluma_format::Error> for FormatError {
+    fn from(e: nodalia_pluma_format::Error) -> Self {
         match e {
-            craft_vectorcraft_format::Error::Format(format) => FormatError::NotPluma(format!("format is `{format}`")),
-            craft_vectorcraft_format::Error::TooNew(version) => FormatError::TooNew(version),
+            nodalia_pluma_format::Error::Format(format) => FormatError::NotPluma(format!("format is `{format}`")),
+            nodalia_pluma_format::Error::TooNew(version) => FormatError::TooNew(version),
             // The crate's other errors (`TooBig`: entries past the data after the JSON) keep their message.
             e => FormatError::NotPluma(e.to_string()),
         }
@@ -1034,12 +1034,12 @@ mod tests {
     /// An envelope error other than the format and version keeps the crate's message.
     #[test]
     fn envelope_errors_keep_their_message() {
-        let e = FormatError::from(craft_vectorcraft_format::Error::TooBig);
+        let e = FormatError::from(nodalia_pluma_format::Error::TooBig);
         assert!(matches!(e, FormatError::NotPluma(_)), "{e}");
-        assert!(e.to_string().contains(&craft_vectorcraft_format::Error::TooBig.to_string()), "{e}");
-        let e = FormatError::from(craft_vectorcraft_format::Error::Format("x".into()));
+        assert!(e.to_string().contains(&nodalia_pluma_format::Error::TooBig.to_string()), "{e}");
+        let e = FormatError::from(nodalia_pluma_format::Error::Format("x".into()));
         assert_eq!(e.to_string(), "not a Pluma file: format is `x`");
-        assert!(matches!(FormatError::from(craft_vectorcraft_format::Error::TooNew(9)), FormatError::TooNew(9)));
+        assert!(matches!(FormatError::from(nodalia_pluma_format::Error::TooNew(9)), FormatError::TooNew(9)));
     }
 
     /// `save_to` writes the file member by member and streams the document in. For every version
@@ -1092,7 +1092,7 @@ mod tests {
                 for pretty in [false, true] {
                     let o = SaveOptions { version, pretty, ..members.clone() };
                     let b = body(&d, &o).unwrap();
-                    let mut file = craft_vectorcraft_format::File::new(Written(&b));
+                    let mut file = nodalia_pluma_format::File::new(Written(&b));
                     file.format = if version < 3 { LEGACY_EXTENSION } else { FORMAT_ID }.into();
                     file.version = version;
                     file.generator = Some(format!("Pluma {}", env!("CARGO_PKG_VERSION")));

@@ -1,20 +1,20 @@
 //! Attribute uniqueness checks missing from the pinned shared XML reader's strict mode.
 //!
-//! Temporary consumer guard: parsing remains in craft-xml. Move this invariant into the
+//! Temporary consumer guard: parsing remains in nodalia-xml. Move this invariant into the
 //! shared strict reader and remove this second event pass when that dependency is updated.
 
 /// Check names before canonical/local-name rewriting can collapse distinct attributes.
 /// The event reader and namespace scope use the same caller-supplied resource caps.
-pub(super) fn validate(xml: &[u8], limits: craft_xml::Limits) -> Result<(), String> {
+pub(super) fn validate(xml: &[u8], limits: nodalia_xml::Limits) -> Result<(), String> {
     use std::collections::BTreeSet;
 
-    let opts = craft_xml::Options { limits, doctype: craft_xml::Doctype::Reject, ..Default::default() }.strict();
+    let opts = nodalia_xml::Options { limits, doctype: nodalia_xml::Doctype::Reject, ..Default::default() }.strict();
     let mut events = opts.events(xml);
     let mut bindings: Vec<(String, String)> = Vec::new();
     let mut scopes = Vec::new();
     while let Some(event) = events.next().map_err(|e| e.to_string())? {
         match event {
-            craft_xml::Event::Start { attrs, .. } => {
+            nodalia_xml::Event::Start { attrs, .. } => {
                 scopes.push(bindings.len());
                 let mut raw = BTreeSet::new();
                 for (key, value) in &attrs {
@@ -47,7 +47,7 @@ pub(super) fn validate(xml: &[u8], limits: craft_xml::Limits) -> Result<(), Stri
                     }
                 }
             }
-            craft_xml::Event::End { .. } => bindings.truncate(scopes.pop().unwrap_or(0)),
+            nodalia_xml::Event::End { .. } => bindings.truncate(scopes.pop().unwrap_or(0)),
             _ => {}
         }
     }

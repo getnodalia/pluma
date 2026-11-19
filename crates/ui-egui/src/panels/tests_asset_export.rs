@@ -734,17 +734,17 @@ fn tiff_dropdown_exports_only_the_selected_asset_and_shares_settings() {
         let [(name, bytes)] = log.as_slice() else { panic!("expected only the selected asset") };
         assert_eq!(name, "Badge@2x.tif");
         assert_eq!(&bytes[..4], b"MM\0*", "the saved TIFF byte order reaches asset export");
-        let img = craft_image_codecs::decode_as(craft_image_codecs::Format::Tiff, bytes)
+        let img = nodalia_image_codecs::decode_as(nodalia_image_codecs::Format::Tiff, bytes)
             .map(|__cimg| {
                 let (__w, __h) = __cimg.dimensions();
                 match (__cimg.layout(), __cimg.sample_type()) {
-                    (craft_image_codecs::ChannelLayout::Gray, craft_image_codecs::SampleType::U8) => {
+                    (nodalia_image_codecs::ChannelLayout::Gray, nodalia_image_codecs::SampleType::U8) => {
                         image::DynamicImage::ImageLuma8(image::GrayImage::from_raw(__w, __h, __cimg.into_data()).unwrap())
                     }
-                    (craft_image_codecs::ChannelLayout::GrayA, craft_image_codecs::SampleType::U8) => {
+                    (nodalia_image_codecs::ChannelLayout::GrayA, nodalia_image_codecs::SampleType::U8) => {
                         image::DynamicImage::ImageLumaA8(image::GrayAlphaImage::from_raw(__w, __h, __cimg.into_data()).unwrap())
                     }
-                    (craft_image_codecs::ChannelLayout::Rgb, craft_image_codecs::SampleType::U8) => {
+                    (nodalia_image_codecs::ChannelLayout::Rgb, nodalia_image_codecs::SampleType::U8) => {
                         image::DynamicImage::ImageRgb8(image::RgbImage::from_raw(__w, __h, __cimg.into_data()).unwrap())
                     }
                     _ => image::DynamicImage::ImageRgba8(image::RgbaImage::from_raw(__w, __h, __cimg.to_rgba8()).unwrap()),
@@ -883,17 +883,17 @@ fn tiff_panel_preserves_shared_antialias_and_explicit_overrides() {
             let log = log.borrow();
             let [(name, bytes)] = log.as_slice() else { panic!("expected one TIFF: format={format_aa:?}, row={row_aa:?}") };
             assert_eq!(name, "Edge.tif");
-            let img = craft_image_codecs::decode_as(craft_image_codecs::Format::Tiff, bytes)
+            let img = nodalia_image_codecs::decode_as(nodalia_image_codecs::Format::Tiff, bytes)
                 .map(|__cimg| {
                     let (__w, __h) = __cimg.dimensions();
                     match (__cimg.layout(), __cimg.sample_type()) {
-                        (craft_image_codecs::ChannelLayout::Gray, craft_image_codecs::SampleType::U8) => {
+                        (nodalia_image_codecs::ChannelLayout::Gray, nodalia_image_codecs::SampleType::U8) => {
                             image::DynamicImage::ImageLuma8(image::GrayImage::from_raw(__w, __h, __cimg.into_data()).unwrap())
                         }
-                        (craft_image_codecs::ChannelLayout::GrayA, craft_image_codecs::SampleType::U8) => {
+                        (nodalia_image_codecs::ChannelLayout::GrayA, nodalia_image_codecs::SampleType::U8) => {
                             image::DynamicImage::ImageLumaA8(image::GrayAlphaImage::from_raw(__w, __h, __cimg.into_data()).unwrap())
                         }
-                        (craft_image_codecs::ChannelLayout::Rgb, craft_image_codecs::SampleType::U8) => {
+                        (nodalia_image_codecs::ChannelLayout::Rgb, nodalia_image_codecs::SampleType::U8) => {
                             image::DynamicImage::ImageRgb8(image::RgbImage::from_raw(__w, __h, __cimg.into_data()).unwrap())
                         }
                         _ => image::DynamicImage::ImageRgba8(image::RgbaImage::from_raw(__w, __h, __cimg.to_rgba8()).unwrap()),
@@ -951,17 +951,17 @@ fn tiff_saved_aliases_use_document_defaults_and_explicit_rgb() {
         let bytes = std::fs::read(folder.join("Badge@2x.tif")).unwrap();
         assert_eq!(tiff_photometric(&bytes), if rgb_override { 2 } else { 5 }, "saved alias {alias}, explicit RGB={rgb_override}");
         if rgb_override {
-            let img = craft_image_codecs::decode_as(craft_image_codecs::Format::Tiff, &bytes)
+            let img = nodalia_image_codecs::decode_as(nodalia_image_codecs::Format::Tiff, &bytes)
                 .map(|__cimg| {
                     let (__w, __h) = __cimg.dimensions();
                     match (__cimg.layout(), __cimg.sample_type()) {
-                        (craft_image_codecs::ChannelLayout::Gray, craft_image_codecs::SampleType::U8) => {
+                        (nodalia_image_codecs::ChannelLayout::Gray, nodalia_image_codecs::SampleType::U8) => {
                             image::DynamicImage::ImageLuma8(image::GrayImage::from_raw(__w, __h, __cimg.into_data()).unwrap())
                         }
-                        (craft_image_codecs::ChannelLayout::GrayA, craft_image_codecs::SampleType::U8) => {
+                        (nodalia_image_codecs::ChannelLayout::GrayA, nodalia_image_codecs::SampleType::U8) => {
                             image::DynamicImage::ImageLumaA8(image::GrayAlphaImage::from_raw(__w, __h, __cimg.into_data()).unwrap())
                         }
-                        (craft_image_codecs::ChannelLayout::Rgb, craft_image_codecs::SampleType::U8) => {
+                        (nodalia_image_codecs::ChannelLayout::Rgb, nodalia_image_codecs::SampleType::U8) => {
                             image::DynamicImage::ImageRgb8(image::RgbImage::from_raw(__w, __h, __cimg.into_data()).unwrap())
                         }
                         _ => image::DynamicImage::ImageRgba8(image::RgbaImage::from_raw(__w, __h, __cimg.to_rgba8()).unwrap()),
@@ -972,17 +972,17 @@ fn tiff_saved_aliases_use_document_defaults_and_explicit_rgb() {
         }
         if mixed {
             let png = std::fs::read(folder.join("Badge.png")).unwrap();
-            let img = craft_image_codecs::decode_as(craft_image_codecs::Format::Png, &png)
+            let img = nodalia_image_codecs::decode_as(nodalia_image_codecs::Format::Png, &png)
                 .map(|__cimg| {
                     let (__w, __h) = __cimg.dimensions();
                     match (__cimg.layout(), __cimg.sample_type()) {
-                        (craft_image_codecs::ChannelLayout::Gray, craft_image_codecs::SampleType::U8) => {
+                        (nodalia_image_codecs::ChannelLayout::Gray, nodalia_image_codecs::SampleType::U8) => {
                             image::DynamicImage::ImageLuma8(image::GrayImage::from_raw(__w, __h, __cimg.into_data()).unwrap())
                         }
-                        (craft_image_codecs::ChannelLayout::GrayA, craft_image_codecs::SampleType::U8) => {
+                        (nodalia_image_codecs::ChannelLayout::GrayA, nodalia_image_codecs::SampleType::U8) => {
                             image::DynamicImage::ImageLumaA8(image::GrayAlphaImage::from_raw(__w, __h, __cimg.into_data()).unwrap())
                         }
-                        (craft_image_codecs::ChannelLayout::Rgb, craft_image_codecs::SampleType::U8) => {
+                        (nodalia_image_codecs::ChannelLayout::Rgb, nodalia_image_codecs::SampleType::U8) => {
                             image::DynamicImage::ImageRgb8(image::RgbImage::from_raw(__w, __h, __cimg.into_data()).unwrap())
                         }
                         _ => image::DynamicImage::ImageRgba8(image::RgbaImage::from_raw(__w, __h, __cimg.to_rgba8()).unwrap()),

@@ -16,6 +16,6 @@ pub fn encode(img: &Indexed, interlaced: bool) -> Result<Vec<u8>, String> {
     {
         return Err("GIF encoding failed: the palette image is malformed".into());
     }
-    craft_gif::write::encode_indexed(img.width, img.height, &img.palette, &img.indices, img.transparent, interlaced)
+    nodalia_gif::write::encode_indexed(img.width, img.height, &img.palette, &img.indices, img.transparent, interlaced)
         .map_err(|e| format!("GIF encoding failed: {e}"))
 }

@@ -1,6 +1,6 @@
 # Control protocol
 
-> **Last updated:** 2026-11-15 · **Change:** completed the `ui.resize` and `ui.focus` entries and removed a duplicate `ui.render` row; previously: text style commands take a feature with a value (`"features": ["salt=2"]`), the font's alternate number, and shape runs that differ only in features as one piece of text; previously: Confining file access refuses a `:` in a name after the drive on Windows, an NTFS alternate data stream such as `x.svg:evil` (#3604); previously: Object → Expand… dimmed while the selection has an appearance Expand Appearance expands (`object.expand.info`'s `appearance`, #3089); previously: brush library panels (`window.brushLibrary`, `window.brushLibrary.other`, `ui.saveBrushLibrary`); previously: Transform Each opens on the values it was last confirmed with; its Copy button confirms with `copy: true` (#1732); previously: panel docking on craft-ui's layout: `ui.docking`, the parameters of `window.panel.float` and `window.panel.dock`; previously: `ui.screenshot`'s 64 MiB inline-PNG cap and its path-plus-data downgrade; symbol library panels (`window.symbolLibrary`, `window.symbolLibrary.other`, `ui.saveSymbolLibrary`); synthetic input budgets (#1709); bounded transport waits (#1726).
+> **Last updated:** 2026-11-15 · **Change:** completed the `ui.resize` and `ui.focus` entries and removed a duplicate `ui.render` row; previously: text style commands take a feature with a value (`"features": ["salt=2"]`), the font's alternate number, and shape runs that differ only in features as one piece of text; previously: Confining file access refuses a `:` in a name after the drive on Windows, an NTFS alternate data stream such as `x.svg:evil` (#3604); previously: Object → Expand… dimmed while the selection has an appearance Expand Appearance expands (`object.expand.info`'s `appearance`, #3089); previously: brush library panels (`window.brushLibrary`, `window.brushLibrary.other`, `ui.saveBrushLibrary`); previously: Transform Each opens on the values it was last confirmed with; its Copy button confirms with `copy: true` (#1732); previously: panel docking on nodalia-ui's layout: `ui.docking`, the parameters of `window.panel.float` and `window.panel.dock`; previously: `ui.screenshot`'s 64 MiB inline-PNG cap and its path-plus-data downgrade; symbol library panels (`window.symbolLibrary`, `window.symbolLibrary.other`, `ui.saveSymbolLibrary`); synthetic input budgets (#1709); bounded transport waits (#1726).
 
 `pluma --control <port>` listens on `127.0.0.1:<port>` (loopback only). The port must be a number
 from 1 to 65535 (`--control=<port>` works too), given once; otherwise the app prints an error and exits
@@ -498,7 +498,7 @@ and can't be picked, moved or deleted, and no guide goes onto a locked layer; Du
 Selected and Flatten Artwork keep them on the merged layer (Flatten discards a hidden layer's). Guides in files saved
 before guides had layers go on the top visible, unlocked layer when the document opens.
 
-Floating panels: the window's panels and the canvas are one craft-ui docking layout (see Shared panel docking
+Floating panels: the window's panels and the canvas are one nodalia-ui docking layout (see Shared panel docking
 below). Dragging a tab, a group's drag bar or an icon out of the dock and dropping it on the canvas or on no target
 floats it; dropping it on a group's tabs, on a group's upper or lower edge or beside a column docks it there. On
 the desktop each floating window is an OS window of its own; on the web and on Wayland it floats inside the app
@@ -1085,7 +1085,7 @@ features over its own characters, so one letter of an Arabic word with `salt=2` 
 
 ## Shared panel docking
 
-The canvas and the panels form one craft-ui docking layout: the protected `canvas` panel beside a dock at the
+The canvas and the panels form one nodalia-ui docking layout: the protected `canvas` panel beside a dock at the
 window's right edge. The dock's columns, from the window edge inwards, are the Properties | Layers | Libraries
 column, the icon column (one group per row of icon panels) and any columns the user adds. Floating windows hold
 groups stacked top to bottom or split side by side. Workspaces save the layout (`ui.docking` in `ui.inspect`;
@@ -1104,7 +1104,7 @@ Commands (`panel` and every panel parameter take a panel id in any case or its d
 | `window.panel.collapse` | `{panel, collapsed?}` | `window.panel.minimize`; returns `{panel, collapsed, layout}` |
 | `window.panel.cycleOptions` | `{panel}` | shows the panel at its next display size (its Show/Hide Options states, largest first), as the double triangle on its tab strip does; a panel without sizes is an error; returns `{panel, size, sizes}` |
 | `window.panel.iconic` | `{panel, iconic?}` | collapses the panel's dock column to icons, or expands it |
-| `window.panel.layout`, `ui.dock` | `{action}` | one craft-ui `Action`, externally tagged, e.g. `{"MoveFloating":{"panel":"swatches","rect":[44,66,360,450]}}` or `{"ResizeSplit":{"path":[],"size":{"Ratio":0.35}}}`; `ui.dock` also takes craft-ui's `{operation, …}` |
+| `window.panel.layout`, `ui.dock` | `{action}` | one nodalia-ui `Action`, externally tagged, e.g. `{"MoveFloating":{"panel":"swatches","rect":[44,66,360,450]}}` or `{"ResizeSplit":{"path":[],"size":{"Ratio":0.35}}}`; `ui.dock` also takes nodalia-ui's `{operation, …}` |
 
 Parameters from Pluma's own docking, on `window.panel.float` and `window.panel.dock`:
 
@@ -1131,7 +1131,7 @@ geometry or destinations, and stale split paths return an error and leave the la
   hides the panels.
 - `hitRects`: `[{hit, rect}]`, every docking control the main window drew last frame (tabs, drag bars, borders,
   column bars, » buttons, icons, icon grips, floating title bars and close buttons, resize edges, dividers) as a
-  craft-ui `Hit`, e.g. `{"Tab":"layers"}`, with `[x, y, width, height]` in window points. Groups, columns and
+  nodalia-ui `Hit`, e.g. `{"Tab":"layers"}`, with `[x, y, width, height]` in window points. Groups, columns and
   windows are named by their first panel.
 
 Floating windows in OS windows of their own (the desktop): `hitRects` leaves out their controls, and `ui.pointer`,
@@ -1173,7 +1173,7 @@ app:
 Errors reject with an `Error` carrying the method's message. Requests run on the UI's next frame, so a
 hidden tab (whose frames the browser pauses) answers when it is shown again.
 
-`request`, `execute`, `commands`, `docInspect`, `uiInspect` and `screenshot` come from [`craft-web-api`](https://github.com/storytold/craft-libs/tree/main/crates/web-api) (storytold/craft-libs#413), the same shape in every Nodalia app. A call the app does not answer within 30 seconds rejects, and the app drops it unrun if it had not started it. `openFile`, `captureDownloads`, `files`, `readFile` and `inspect` are Pluma's own.
+`request`, `execute`, `commands`, `docInspect`, `uiInspect` and `screenshot` come from [`nodalia-web-api`](https://github.com/storytold/craft-libs/tree/main/crates/web-api) (storytold/craft-libs#413), the same shape in every Nodalia app. A call the app does not answer within 30 seconds rejects, and the app drops it unrun if it had not started it. `openFile`, `captureDownloads`, `files`, `readFile` and `inspect` are Pluma's own.
 
 ## Revision history
 
@@ -1182,7 +1182,7 @@ hidden tab (whose frames the browser pauses) answers when it is shown again.
 | 2026-11-15 | minor | Completed the `ui.resize` defaults and `ui.focus` contract; kept one `ui.render` entry, including `traceViews`. Documentation only. |
 | 2026-11-07 | minor | Documented OpenType feature values in text commands (`"salt=2"`, the font's alternate number) and that runs differing only in features shape as one piece of text. |
 | 2026-10-31 | minor | Confining file access: on Windows a `:` in a name after the drive (an NTFS alternate data stream) is refused with the device names (#3604). |
-| 2026-10-25 | minor | Panel docking on craft-ui's layout: `ui.docking`, the floating and dock parameters, native floating windows. |
+| 2026-10-25 | minor | Panel docking on nodalia-ui's layout: `ui.docking`, the floating and dock parameters, native floating windows. |
 | 2026-10-25 | minor | Documented that Object → Expand… is dimmed, and `ui.expandDialog` refuses, while the selection has an appearance Expand Appearance expands (`object.expand.info`'s `appearance`, #3089). |
 | 2026-10-25 | minor | Documented that Transform Each opens on the values it was last confirmed with and that its Copy button confirms with `copy: true` (#1732). |
 | 2026-10-24 | minor | Documented the brush library panel commands (`window.brushLibrary`, `.other`, `ui.saveBrushLibrary`, `window.userBrushLibrary1`…`10`). |

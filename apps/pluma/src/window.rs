@@ -137,9 +137,9 @@ pub fn dock_monitors(window: &winit::window::Window, zoom: f32) -> Vec<DockMonit
 /// The list for floating panels, empty when `monitors` have different scales and `shared_points` is
 /// false. macOS has one desktop of points. Elsewhere a new window multiplies its saved position by the
 /// scale of the monitor it is created on, which can put a window saved on another scale off every
-/// monitor. With an empty list craft-ui opens the window on the main window's monitor.
+/// monitor. With an empty list nodalia-ui opens the window on the main window's monitor.
 ///
-/// A name that two monitors share is left out, so craft-ui finds those monitors by their rects: macOS
+/// A name that two monitors share is left out, so nodalia-ui finds those monitors by their rects: macOS
 /// can give two displays of one model the same name.
 fn docking_list(monitors: &[(Monitor, Option<String>)], zoom: f32, shared_points: bool) -> Vec<DockMonitor> {
     if !shared_points && monitors.windows(2).any(|pair| pair[0].0.scale != pair[1].0.scale) {

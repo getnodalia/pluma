@@ -4,11 +4,11 @@ use pluma_doc::{CharStyle, Effect, NodeId, TextObject};
 use pluma_geom::{Point, Rect, Shape, shapes};
 use serde_json::json;
 
-/// Type tests need glyph outlines, which only the optional craft-fonts build input provides.
-fn skip_without_craft_fonts() -> bool {
-    let skip = pluma_text::CRAFT_FONTS.is_empty();
+/// Type tests need glyph outlines, which only the optional nodalia-fonts build input provides.
+fn skip_without_nodalia_fonts() -> bool {
+    let skip = pluma_text::NODALIA_FONTS.is_empty();
     if skip {
-        eprintln!("skipped: built without craft-fonts (set CRAFT_FONTS_DIR to a craft-fonts checkout to run it)");
+        eprintln!("skipped: built without nodalia-fonts (set NODALIA_FONTS_DIR to a nodalia-fonts checkout to run it)");
     }
     skip
 }
@@ -721,7 +721,7 @@ fn type_group(effects: Vec<Effect>) -> Node {
 
 #[test]
 fn type_moved_or_copied_by_a_groups_transform_effect_stays_type() {
-    if skip_without_craft_fonts() {
+    if skip_without_nodalia_fonts() {
         return;
     }
     for (params, origins, square) in [
@@ -755,7 +755,7 @@ fn type_moved_or_copied_by_a_groups_transform_effect_stays_type() {
 
 #[test]
 fn hidden_type_in_a_group_that_keeps_its_type_stays_hidden() {
-    if skip_without_craft_fonts() {
+    if skip_without_nodalia_fonts() {
         return;
     }
     let mut g = type_group(vec![fx("distort.transform", json!({"moveH": 200, "copies": 1}))]);
@@ -769,7 +769,7 @@ fn hidden_type_in_a_group_that_keeps_its_type_stays_hidden() {
 
 #[test]
 fn type_outlined_next_to_type_that_stays_type_keeps_its_look() {
-    if skip_without_craft_fonts() {
+    if skip_without_nodalia_fonts() {
         return;
     }
     let mut g = type_group(vec![fx("distort.transform", json!({"moveH": 200, "copies": 1}))]);
@@ -797,7 +797,7 @@ fn type_outlined_next_to_type_that_stays_type_keeps_its_look() {
 
 #[test]
 fn type_in_a_clipping_group_with_a_fill_of_its_own_keeps_its_effect() {
-    if skip_without_craft_fonts() {
+    if skip_without_nodalia_fonts() {
         return;
     }
     let mut g = type_group(vec![fx("distort.transform", json!({"moveH": 200, "copies": 1}))]);
@@ -818,7 +818,7 @@ fn type_in_a_clipping_group_with_a_fill_of_its_own_keeps_its_effect() {
 
 #[test]
 fn clipping_type_whose_fill_has_a_geometry_effect_clips_by_its_plain_outlines() {
-    if skip_without_craft_fonts() {
+    if skip_without_nodalia_fonts() {
         return;
     }
     let near = |a: Rect, b: Rect, tol: f64| [a.x0 - b.x0, a.y0 - b.y0, a.x1 - b.x1, a.y1 - b.y1].iter().all(|v| v.abs() < tol);
@@ -868,7 +868,7 @@ fn clipping_type_whose_fill_has_a_geometry_effect_clips_by_its_plain_outlines() 
 
 #[test]
 fn type_with_its_own_transform_effect_copies_stays_type() {
-    if skip_without_craft_fonts() {
+    if skip_without_nodalia_fonts() {
         return;
     }
     let mut n = type_node(50);
@@ -917,7 +917,7 @@ fn type_under_other_geometry_effects_is_still_outlined() {
 
 #[test]
 fn type_whose_copies_paint_over_each_other_is_still_outlined() {
-    if skip_without_craft_fonts() {
+    if skip_without_nodalia_fonts() {
         return;
     }
     let moves = vec![fx("distort.transform", json!({"moveV": 40, "copies": 1}))];
@@ -935,7 +935,7 @@ fn type_whose_copies_paint_over_each_other_is_still_outlined() {
 
 #[test]
 fn type_with_a_look_of_its_own_in_a_moved_group_is_still_outlined() {
-    if skip_without_craft_fonts() {
+    if skip_without_nodalia_fonts() {
         return;
     }
     let moves = vec![fx("distort.transform", json!({"moveV": 40, "copies": 1}))];
@@ -1010,7 +1010,7 @@ fn type_in_a_moved_group_inside_a_moved_group_is_still_outlined() {
 
 #[test]
 fn type_whose_copies_hold_too_much_is_still_outlined() {
-    if skip_without_craft_fonts() {
+    if skip_without_nodalia_fonts() {
         return;
     }
     let spaced = |spaces: usize| {
@@ -1050,7 +1050,7 @@ fn copies_are_apart_when_their_boxes_only_touch() {
 
 #[test]
 fn type_in_a_pathfinder_group_inside_a_moved_group_is_still_outlined() {
-    if skip_without_craft_fonts() {
+    if skip_without_nodalia_fonts() {
         return;
     }
     let mut inner = type_group(vec![fx("pathfinder.add", json!({}))]);

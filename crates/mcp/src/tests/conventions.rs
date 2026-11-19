@@ -145,7 +145,7 @@ fn conventions_commands_batch_and_bounded_preview() {
     let r = call(&mut s, "render_preview", json!({"max_side":64}));
     assert_eq!(r["isError"], false, "{r}");
     let png = pluma_format::base64_decode(r["content"][0]["data"].as_str().unwrap()).unwrap();
-    let img = craft_image_codecs::decode(&png).unwrap();
+    let img = nodalia_image_codecs::decode(&png).unwrap();
     assert!(img.width() <= 64 && img.height() <= 64);
     assert_eq!(before, call(&mut s, "doc_inspect", json!({})));
     for max in [json!(0), json!(4097), json!("64")] {
@@ -157,7 +157,7 @@ fn conventions_commands_batch_and_bounded_preview() {
     let r = call(&mut s, "render_preview", json!({"max_side":60,"artboard":1}));
     assert_eq!(r["isError"], false, "{r}");
     let png = pluma_format::base64_decode(r["content"][0]["data"].as_str().unwrap()).unwrap();
-    let img = craft_image_codecs::decode(&png).unwrap();
+    let img = nodalia_image_codecs::decode(&png).unwrap();
     assert_eq!((img.width(), img.height()), (60, 20));
     for board in [json!(2), json!(-1), json!("1")] {
         assert_eq!(call(&mut s, "render_preview", json!({"artboard":board}))["isError"], true, "{board}");
@@ -181,7 +181,7 @@ fn render_preview_and_screenshot_match_a_png_export_on_white() {
     let r = call(&mut s, "draw_path", json!({"points":[[10,75],[110,5],[115,30]],"closed":true,"fill":"#30a050"}));
     assert_eq!(r["isError"], false, "{r}");
     let pixels = |b64: &str| {
-        let decoded = craft_image_codecs::decode(&pluma_format::base64_decode(b64).unwrap()).unwrap();
+        let decoded = nodalia_image_codecs::decode(&pluma_format::base64_decode(b64).unwrap()).unwrap();
         image::RgbaImage::from_raw(decoded.width(), decoded.height(), decoded.to_rgba8()).unwrap()
     };
     let export = payload(&call(&mut s, "run_command", json!({"command":"document.export","params":{"format":"png","background":"white"}})));
@@ -285,9 +285,9 @@ fn window_captures_take_max_side() {
             data.extend_from_slice(&[(x % 256) as u8, (y % 256) as u8, 90, 255]);
         }
     }
-    let raw =
-        craft_image_codecs::Image::from_raw(1200, 800, craft_image_codecs::ChannelLayout::Rgba, craft_image_codecs::SampleType::U8, data).unwrap();
-    let capture = craft_image_codecs::encode(&raw, craft_image_codecs::Format::Png, &craft_image_codecs::EncodeOptions::default()).unwrap();
+    let raw = nodalia_image_codecs::Image::from_raw(1200, 800, nodalia_image_codecs::ChannelLayout::Rgba, nodalia_image_codecs::SampleType::U8, data)
+        .unwrap();
+    let capture = nodalia_image_codecs::encode(&raw, nodalia_image_codecs::Format::Png, &nodalia_image_codecs::EncodeOptions::default()).unwrap();
     let mut s = Server::new(Box::new(Window(capture.clone())));
     let image_of = |r: &Value| pluma_format::base64_decode(r["content"][0]["data"].as_str().unwrap()).unwrap();
     let info = |r: &Value| -> Value { serde_json::from_str(r["content"][1]["text"].as_str().unwrap()).unwrap() };
@@ -299,7 +299,7 @@ fn window_captures_take_max_side() {
         args["max_side"] = json!(300);
         let r = call(&mut s, name, args.clone());
         assert_eq!(r["isError"], false, "{name}: {r}");
-        let img = craft_image_codecs::decode(&image_of(&r)).unwrap();
+        let img = nodalia_image_codecs::decode(&image_of(&r)).unwrap();
         assert_eq!((img.width(), img.height()), (300, 200), "{name}");
         let i = info(&r);
         assert_eq!((i["width"].clone(), i["height"].clone()), (json!(300), json!(200)), "{name}: {i}");

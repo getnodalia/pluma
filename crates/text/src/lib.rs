@@ -14,7 +14,6 @@ mod bitmap;
 mod colr;
 mod composer;
 mod context_alternates;
-pub mod craft_fonts;
 pub mod edit;
 pub mod embed;
 mod features;
@@ -26,6 +25,7 @@ mod justify;
 mod kashida;
 mod kept;
 mod layout;
+pub mod nodalia_fonts;
 mod shape;
 #[cfg(not(target_arch = "wasm32"))]
 mod suitcase;
@@ -36,7 +36,6 @@ pub mod thread;
 
 pub use bitmap::GlyphImage;
 pub use context_alternates::{ContextAlternate, ContextAlternates, alternate_changes, alternates_in_context, is_alternate_feature};
-pub use craft_fonts::{CRAFT_FONTS, CraftFont, WEB_FONTS, WebFont};
 pub use features::{
     EXTRA_FEATURES, LIGATURE_TRACKING_LIMITS, MAX_FEATURE_VALUE, MAX_STYLE_FEATURES, OtFeatures, explicit_ligatures, ligatures_suppressed_by,
 };
@@ -48,6 +47,7 @@ pub use fontdb::{
 };
 pub use hyphen::{hyphenation_exceptions, set_hyphenation_exceptions};
 pub use layout::{envelope_ink, layout_inputs, register_envelope_ink};
+pub use nodalia_fonts::{NODALIA_FONTS, NodaliaFont, WEB_FONTS, WebFont};
 use std::sync::Arc;
 pub use svg_glyph::{SvgGlyphReader, set_svg_glyph_reader};
 

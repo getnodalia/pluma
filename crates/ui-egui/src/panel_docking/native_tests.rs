@@ -259,7 +259,7 @@ impl Harness {
     fn viewport(&self, panel: &str) -> ViewportId {
         let layout = layout_of(&self.app.ui);
         let window = floating_window(&layout, panel).expect("the panel floats");
-        craft_ui::docking::DockArea::<String>::window_viewport(area_id(), window.id)
+        nodalia_ui::docking::DockArea::<String>::window_viewport(area_id(), window.id)
     }
 
     /// Float `panel` into a native window and give that window the keyboard.
@@ -332,9 +332,9 @@ fn a_floated_panel_opens_its_own_os_window_where_the_backend_has_viewports() {
         });
         full.textures_delta.clear();
     }
-    let tab = craft_ui::docking::DockArea::<String>::hit_rects(&ctx, area_id())
+    let tab = nodalia_ui::docking::DockArea::<String>::hit_rects(&ctx, area_id())
         .into_iter()
-        .any(|(hit, _)| hit == craft_ui::docking::Hit::Tab("swatches".into()));
+        .any(|(hit, _)| hit == nodalia_ui::docking::Hit::Tab("swatches".into()));
     assert!(tab, "its tab is drawn in the app window");
 }
 
@@ -516,7 +516,7 @@ fn assert_submenu_reaches_its_end(h: &mut Harness, panel: &str, height: f32, row
 
 /// A new launch on a desktop of `monitors`, with `saved` as the panel layout: where the window of
 /// the floating Swatches panel opens.
-fn reopened(saved: &craft_ui::docking::Layout<String>, monitors: &[crate::DockMonitor]) -> Rect {
+fn reopened(saved: &nodalia_ui::docking::Layout<String>, monitors: &[crate::DockMonitor]) -> Rect {
     let mut h = Harness::new();
     h.host.borrow_mut().monitor_size = Some(vec2(1920.0, 1080.0));
     h.app.services.dock_monitors = monitors.to_vec();
@@ -540,7 +540,7 @@ fn a_floating_panel_reopens_on_the_monitor_where_it_was_left() {
     let size = h.host.borrow().windows[&viewport].rect.size();
     let placed_at = pos2(2400.0, 300.0);
     h.host.borrow_mut().windows.get_mut(&viewport).unwrap().rect = Rect::from_min_size(placed_at, size);
-    // The layout follows the window after craft-ui's wait for a move to settle, half a second.
+    // The layout follows the window after nodalia-ui's wait for a move to settle, half a second.
     h.frames(30);
 
     let layout = layout_of(&h.app.ui);
@@ -548,7 +548,7 @@ fn a_floating_panel_reopens_on_the_monitor_where_it_was_left() {
     assert_eq!(window.native.map(|[x, y, ..]| pos2(x, y)), Some(placed_at));
     assert_eq!(window.monitor.as_ref(), Some(&right), "the window stores the monitor it is on");
     // The preferences keep the layout as JSON.
-    let saved: craft_ui::docking::Layout<String> = serde_json::from_str(&serde_json::to_string(&layout).unwrap()).unwrap();
+    let saved: nodalia_ui::docking::Layout<String> = serde_json::from_str(&serde_json::to_string(&layout).unwrap()).unwrap();
 
     assert_eq!(reopened(&saved, &both).min, placed_at, "the monitor is connected: the saved place");
 

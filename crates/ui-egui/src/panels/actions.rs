@@ -194,7 +194,7 @@ impl FunctionKey {
     }
 
     /// The chord the key is pressed as; none when `key` is not 1 to [`FUNCTION_KEYS`].
-    pub fn chord(self) -> Option<craft_keymap::Chord> {
+    pub fn chord(self) -> Option<nodalia_keymap::Chord> {
         (1..=FUNCTION_KEYS).contains(&self.key).then(|| crate::keymap::vc_chord(&self.shortcut())).flatten()
     }
 
@@ -1793,10 +1793,10 @@ pub fn move_step(app: &mut PlumaApp, p: &Value) -> Result<Value, String> {
 
 /// The command that `chord` runs under `km`, pressed once or pressed twice.
 #[cfg(test)]
-fn command_on(km: &craft_keymap::Keymap, chord: &craft_keymap::Chord) -> Option<craft_keymap::CommandRef> {
-    crate::keymap::lookup(km, chord).or_else(|| match km.lookup(chord, true, &craft_keymap::Active::NONE) {
-        craft_keymap::Lookup::Run(c) => Some(c),
-        craft_keymap::Lookup::Cycle(v) => v.into_iter().next(),
+fn command_on(km: &nodalia_keymap::Keymap, chord: &nodalia_keymap::Chord) -> Option<nodalia_keymap::CommandRef> {
+    crate::keymap::lookup(km, chord).or_else(|| match km.lookup(chord, true, &nodalia_keymap::Active::NONE) {
+        nodalia_keymap::Lookup::Run(c) => Some(c),
+        nodalia_keymap::Lookup::Cycle(v) => v.into_iter().next(),
         _ => None,
     })
 }
@@ -1804,7 +1804,7 @@ fn command_on(km: &craft_keymap::Keymap, chord: &craft_keymap::Chord) -> Option<
 /// The function returns an error message if the function key is invalid or reserved on this platform.
 pub fn key_error(key: FunctionKey) -> Option<String> {
     let Some(chord) = key.chord() else { return Some("no such function key".into()) };
-    if crate::keymap::platform() == craft_keymap::Platform::Windows && (key.key == 1 || key.cmd && !key.shift && matches!(key.key, 4 | 6)) {
+    if crate::keymap::platform() == nodalia_keymap::Platform::Windows && (key.key == 1 || key.cmd && !key.shift && matches!(key.key, 4 | 6)) {
         return Some(format!("{} cannot be used on Windows", key.text()));
     }
     if crate::keymap::template().is_reserved(&chord) {
@@ -1813,7 +1813,7 @@ pub fn key_error(key: FunctionKey) -> Option<String> {
     None
 }
 
-fn playable_chord(key: FunctionKey) -> Option<craft_keymap::Chord> {
+fn playable_chord(key: FunctionKey) -> Option<nodalia_keymap::Chord> {
     key_error(key).is_none().then(|| key.chord()).flatten()
 }
 
@@ -1922,11 +1922,11 @@ fn follow_recorded(app: &mut PlumaApp, (set, at, id): (usize, usize, u64), from:
     }
 }
 
-crate::shortcut_editor::ui_mirror!(fn function_key_chords() -> Vec<craft_keymap::Chord>);
+crate::shortcut_editor::ui_mirror!(fn function_key_chords() -> Vec<nodalia_keymap::Chord>);
 
 /// Mirrors the actions' function keys for code without app access (cheap when unchanged).
 pub fn sync_function_keys(ui: &crate::UiState) {
-    let chords: Vec<craft_keymap::Chord> = ui.action_sets.iter().flat_map(|s| s.actions.iter().filter_map(|a| playable_chord(a.key?))).collect();
+    let chords: Vec<nodalia_keymap::Chord> = ui.action_sets.iter().flat_map(|s| s.actions.iter().filter_map(|a| playable_chord(a.key?))).collect();
     if function_key_chords().read().is_ok_and(|v| *v != chords)
         && let Ok(mut v) = function_key_chords().write()
     {
@@ -1935,7 +1935,7 @@ pub fn sync_function_keys(ui: &crate::UiState) {
 }
 
 /// Whether `chord` plays an action, by the function keys [`sync_function_keys`] last mirrored.
-pub(crate) fn plays_an_action(chord: &craft_keymap::Chord) -> bool {
+pub(crate) fn plays_an_action(chord: &nodalia_keymap::Chord) -> bool {
     let platform = crate::keymap::platform();
     let chord = chord.effective(platform);
     function_key_chords().read().is_ok_and(|v| v.iter().any(|c| c.effective(platform) == chord))
@@ -1945,7 +1945,7 @@ pub(crate) fn plays_an_action(chord: &craft_keymap::Chord) -> bool {
 /// before any command with the same shortcut, and takes those key presses. The frame's other
 /// events stay for the command, panel and tool shortcuts.
 pub fn play_function_key(app: &mut PlumaApp, ctx: &egui::Context) {
-    let keys: Vec<(craft_keymap::Chord, (usize, usize))> = app
+    let keys: Vec<(nodalia_keymap::Chord, (usize, usize))> = app
         .ui
         .action_sets
         .iter()
@@ -1960,8 +1960,8 @@ pub fn play_function_key(app: &mut PlumaApp, ctx: &egui::Context) {
         let mut hits = Vec::new();
         i.events.retain(|e| {
             let hit = match e {
-                egui::Event::Key { key, pressed: true, modifiers, .. } => craft_keymap::Key::from_egui(*key)
-                    .map(|k| craft_keymap::Chord::new(craft_keymap::Mods::from_egui(modifiers, platform), k))
+                egui::Event::Key { key, pressed: true, modifiers, .. } => nodalia_keymap::Key::from_egui(*key)
+                    .map(|k| nodalia_keymap::Chord::new(nodalia_keymap::Mods::from_egui(modifiers, platform), k))
                     .and_then(|c| keys.iter().find(|(k, _)| *k == c).map(|(_, at)| *at)),
                 _ => None,
             };
@@ -5038,7 +5038,7 @@ mod tests {
         ] {
             assert_eq!(app.run(NEW_ACTION, p.clone()).unwrap_err(), want, "{p}");
         }
-        if crate::keymap::platform() == craft_keymap::Platform::Windows {
+        if crate::keymap::platform() == nodalia_keymap::Platform::Windows {
             for (key, cmd) in [(1, false), (1, true), (4, true), (6, true)] {
                 let want = format!("{} cannot be used on Windows", FunctionKey { key, cmd, shift: false }.text());
                 assert_eq!(app.run(NEW_ACTION, json!({"set": 1, "name": "A", "key": key, "cmd": cmd})).unwrap_err(), want);
@@ -5472,7 +5472,7 @@ mod tests {
         let keys = |set: usize| ui.action_sets[set].actions.iter().map(|a| a.key).collect::<Vec<_>>();
         let f13 = FunctionKey { key: 13, cmd: false, shift: false };
         assert_eq!(keys(1), [Some(f13), Some(f13)]);
-        let windows = crate::keymap::platform() == craft_keymap::Platform::Windows;
+        let windows = crate::keymap::platform() == nodalia_keymap::Platform::Windows;
         let f1 = FunctionKey { key: 1, cmd: false, shift: false };
         let ctrl_f4 = FunctionKey { key: 4, cmd: true, shift: false };
         let shift_f12 = FunctionKey { key: 12, cmd: false, shift: true };
@@ -7048,10 +7048,15 @@ mod tests {
     #[test]
     fn place_cursor_exec_checks_recording_step_limit_on_completion() {
         let steps = "the action already has 10,000 steps";
-        let raw =
-            craft_image_codecs::Image::from_raw(8, 8, craft_image_codecs::ChannelLayout::Rgb, craft_image_codecs::SampleType::U8, vec![0; 8 * 8 * 3])
-                .unwrap();
-        let png = craft_image_codecs::encode(&raw, craft_image_codecs::Format::Png, &craft_image_codecs::EncodeOptions::default()).unwrap();
+        let raw = nodalia_image_codecs::Image::from_raw(
+            8,
+            8,
+            nodalia_image_codecs::ChannelLayout::Rgb,
+            nodalia_image_codecs::SampleType::U8,
+            vec![0; 8 * 8 * 3],
+        )
+        .unwrap();
+        let png = nodalia_image_codecs::encode(&raw, nodalia_image_codecs::Format::Png, &nodalia_image_codecs::EncodeOptions::default()).unwrap();
         let placed = |app: &PlumaApp| {
             let st = app.session.active().unwrap();
             st.doc.layers.iter().flat_map(|l| l.children().into_iter().flatten()).filter(|n| n.name.as_deref() == Some("a.png")).count()

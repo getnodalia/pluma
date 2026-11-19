@@ -999,359 +999,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "craft-affinity"
-version = "0.1.0"
-source = "git+https://github.com/getnodalia/foundation?rev=64b181977a0488e4d1e167bc5cc8cfededc2ed4b#64b181977a0488e4d1e167bc5cc8cfededc2ed4b"
-dependencies = [
- "crc32fast",
- "flate2",
- "image",
- "ruzstd",
-]
-
-[[package]]
-name = "craft-codepage"
-version = "0.1.0"
-source = "git+https://github.com/getnodalia/foundation?rev=64b181977a0488e4d1e167bc5cc8cfededc2ed4b#64b181977a0488e4d1e167bc5cc8cfededc2ed4b"
-
-[[package]]
-name = "craft-dds"
-version = "0.1.0"
-source = "git+https://github.com/getnodalia/foundation?rev=64b181977a0488e4d1e167bc5cc8cfededc2ed4b#64b181977a0488e4d1e167bc5cc8cfededc2ed4b"
-dependencies = [
- "rayon",
-]
-
-[[package]]
-name = "craft-docpath"
-version = "0.1.0"
-source = "git+https://github.com/getnodalia/foundation?rev=64b181977a0488e4d1e167bc5cc8cfededc2ed4b#64b181977a0488e4d1e167bc5cc8cfededc2ed4b"
-
-[[package]]
-name = "craft-dxf"
-version = "0.1.0"
-source = "git+https://github.com/getnodalia/foundation?rev=64b181977a0488e4d1e167bc5cc8cfededc2ed4b#64b181977a0488e4d1e167bc5cc8cfededc2ed4b"
-dependencies = [
- "craft-codepage",
- "encoding_rs",
- "kurbo 0.13.1",
- "log",
- "thiserror 2.0.21",
-]
-
-[[package]]
-name = "craft-eps"
-version = "0.1.0"
-source = "git+https://github.com/getnodalia/foundation?rev=64b181977a0488e4d1e167bc5cc8cfededc2ed4b#64b181977a0488e4d1e167bc5cc8cfededc2ed4b"
-
-[[package]]
-name = "craft-fonts-build"
-version = "0.1.0"
-source = "git+https://github.com/getnodalia/foundation?rev=64b181977a0488e4d1e167bc5cc8cfededc2ed4b#64b181977a0488e4d1e167bc5cc8cfededc2ed4b"
-
-[[package]]
-name = "craft-gif"
-version = "0.1.0"
-source = "git+https://github.com/getnodalia/foundation?rev=64b181977a0488e4d1e167bc5cc8cfededc2ed4b#64b181977a0488e4d1e167bc5cc8cfededc2ed4b"
-dependencies = [
- "gif",
-]
-
-[[package]]
-name = "craft-gzip"
-version = "0.1.0"
-source = "git+https://github.com/getnodalia/foundation?rev=64b181977a0488e4d1e167bc5cc8cfededc2ed4b#64b181977a0488e4d1e167bc5cc8cfededc2ed4b"
-dependencies = [
- "flate2",
-]
-
-[[package]]
-name = "craft-i18n"
-version = "0.1.0"
-source = "git+https://github.com/getnodalia/foundation?rev=64b181977a0488e4d1e167bc5cc8cfededc2ed4b#64b181977a0488e4d1e167bc5cc8cfededc2ed4b"
-dependencies = [
- "fixed_decimal",
- "icu_decimal",
- "icu_locale_core",
- "icu_locale_fallback",
- "icu_normalizer",
- "icu_plurals",
- "icu_properties",
- "icu_provider",
- "icu_provider_adapters",
- "icu_provider_blob",
- "log",
- "objc2-foundation 0.3.2",
- "sys-locale",
- "unicode-bidi",
- "windows-registry",
- "writeable",
-]
-
-[[package]]
-name = "craft-image-codecs"
-version = "0.1.0"
-source = "git+https://github.com/getnodalia/foundation?rev=64b181977a0488e4d1e167bc5cc8cfededc2ed4b#64b181977a0488e4d1e167bc5cc8cfededc2ed4b"
-dependencies = [
- "craft-dds",
- "craft-jpeg",
- "craft-metadata",
- "craft-tiff",
- "crc32fast",
- "exr",
- "flate2",
- "half",
- "hayro-jpeg2000",
- "image",
- "image-webp",
- "jpeg-encoder",
- "png 0.18.1",
- "rayon",
- "serde_json",
- "thiserror 2.0.21",
- "tiff",
- "zune-core",
- "zune-jpeg",
- "zune-jpegxl",
-]
-
-[[package]]
-name = "craft-jpeg"
-version = "0.1.0"
-source = "git+https://github.com/getnodalia/foundation?rev=64b181977a0488e4d1e167bc5cc8cfededc2ed4b#64b181977a0488e4d1e167bc5cc8cfededc2ed4b"
-dependencies = [
- "thiserror 2.0.21",
-]
-
-[[package]]
-name = "craft-jxl"
-version = "0.1.0"
-source = "git+https://github.com/getnodalia/foundation?rev=64b181977a0488e4d1e167bc5cc8cfededc2ed4b#64b181977a0488e4d1e167bc5cc8cfededc2ed4b"
-dependencies = [
- "jixel",
- "jxl-oxide",
- "thiserror 2.0.21",
-]
-
-[[package]]
-name = "craft-keymap"
-version = "0.1.0"
-source = "git+https://github.com/getnodalia/foundation?rev=64b181977a0488e4d1e167bc5cc8cfededc2ed4b#64b181977a0488e4d1e167bc5cc8cfededc2ed4b"
-dependencies = [
- "egui",
- "serde",
- "serde_json",
-]
-
-[[package]]
-name = "craft-metadata"
-version = "0.1.0"
-source = "git+https://github.com/getnodalia/foundation?rev=64b181977a0488e4d1e167bc5cc8cfededc2ed4b#64b181977a0488e4d1e167bc5cc8cfededc2ed4b"
-dependencies = [
- "brotli-decompressor 6.3.2",
- "chrono",
- "craft-tiff",
- "quick-xml",
- "serde",
-]
-
-[[package]]
-name = "craft-metafile"
-version = "0.1.0"
-source = "git+https://github.com/getnodalia/foundation?rev=64b181977a0488e4d1e167bc5cc8cfededc2ed4b#64b181977a0488e4d1e167bc5cc8cfededc2ed4b"
-dependencies = [
- "encoding_rs",
- "image",
- "kurbo 0.13.1",
- "thiserror 2.0.21",
-]
-
-[[package]]
-name = "craft-mime"
-version = "0.1.0"
-source = "git+https://github.com/getnodalia/foundation?rev=64b181977a0488e4d1e167bc5cc8cfededc2ed4b#64b181977a0488e4d1e167bc5cc8cfededc2ed4b"
-dependencies = [
- "chrono",
- "craft-codepage",
- "encoding_rs",
-]
-
-[[package]]
-name = "craft-pdf"
-version = "0.1.0"
-source = "git+https://github.com/getnodalia/foundation?rev=64b181977a0488e4d1e167bc5cc8cfededc2ed4b#64b181977a0488e4d1e167bc5cc8cfededc2ed4b"
-dependencies = [
- "hayro-interpret",
- "hayro-syntax",
- "krilla",
- "thiserror 2.0.21",
-]
-
-[[package]]
-name = "craft-plotter"
-version = "0.1.0"
-source = "git+https://github.com/getnodalia/foundation?rev=a7fb55eaf9a15c21e8ce0b13cf605dc54fd15f57#a7fb55eaf9a15c21e8ce0b13cf605dc54fd15f57"
-dependencies = [
- "thiserror 2.0.21",
-]
-
-[[package]]
-name = "craft-print"
-version = "0.1.0"
-source = "git+https://github.com/getnodalia/foundation?rev=64b181977a0488e4d1e167bc5cc8cfededc2ed4b#64b181977a0488e4d1e167bc5cc8cfededc2ed4b"
-dependencies = [
- "craft-winprint-gdi",
- "log",
- "miniz_oxide 0.9.1",
- "roxmltree 0.21.2",
- "tempfile",
- "winprint",
- "winsafe",
-]
-
-[[package]]
-name = "craft-proof"
-version = "0.1.0"
-source = "git+https://github.com/getnodalia/foundation?rev=64b181977a0488e4d1e167bc5cc8cfededc2ed4b#64b181977a0488e4d1e167bc5cc8cfededc2ed4b"
-dependencies = [
- "log",
- "miniz_oxide 0.9.1",
- "toml",
- "unicode-normalization",
-]
-
-[[package]]
-name = "craft-ps"
-version = "0.1.0"
-source = "git+https://github.com/getnodalia/foundation?rev=64b181977a0488e4d1e167bc5cc8cfededc2ed4b#64b181977a0488e4d1e167bc5cc8cfededc2ed4b"
-dependencies = [
- "flate2",
- "kurbo 0.13.1",
-]
-
-[[package]]
-name = "craft-psd"
-version = "0.1.0"
-source = "git+https://github.com/getnodalia/foundation?rev=64b181977a0488e4d1e167bc5cc8cfededc2ed4b#64b181977a0488e4d1e167bc5cc8cfededc2ed4b"
-dependencies = [
- "encoding_rs",
- "flate2",
- "rayon",
- "thiserror 2.0.21",
-]
-
-[[package]]
-name = "craft-stream-codecs"
-version = "0.1.0"
-source = "git+https://github.com/getnodalia/foundation?rev=64b181977a0488e4d1e167bc5cc8cfededc2ed4b#64b181977a0488e4d1e167bc5cc8cfededc2ed4b"
-dependencies = [
- "fax",
- "hayro-ccitt",
- "hayro-jbig2",
- "thiserror 2.0.21",
-]
-
-[[package]]
-name = "craft-svg"
-version = "0.1.0"
-source = "git+https://github.com/getnodalia/foundation?rev=64b181977a0488e4d1e167bc5cc8cfededc2ed4b#64b181977a0488e4d1e167bc5cc8cfededc2ed4b"
-dependencies = [
- "craft-image-codecs",
- "craft-xml",
- "data-url",
- "flate2",
- "kurbo 0.13.1",
- "quick-xml",
- "resvg 0.48.1",
- "roxmltree 0.21.2",
- "thiserror 2.0.21",
- "usvg 0.48.1",
- "vectorcraft-geom",
- "vectorcraft-pathops",
-]
-
-[[package]]
-name = "craft-tiff"
-version = "0.1.0"
-source = "git+https://github.com/getnodalia/foundation?rev=64b181977a0488e4d1e167bc5cc8cfededc2ed4b#64b181977a0488e4d1e167bc5cc8cfededc2ed4b"
-dependencies = [
- "serde",
- "thiserror 2.0.21",
-]
-
-[[package]]
-name = "craft-ui"
-version = "0.1.0"
-source = "git+https://github.com/getnodalia/foundation?rev=64b181977a0488e4d1e167bc5cc8cfededc2ed4b#64b181977a0488e4d1e167bc5cc8cfededc2ed4b"
-dependencies = [
- "craft-fonts-build",
- "craft-i18n",
- "egui",
- "epaint",
- "js-sys",
- "log",
- "objc2 0.6.5",
- "objc2-app-kit 0.3.2",
- "objc2-foundation 0.3.2",
- "serde",
- "skrifa 0.44.0",
- "wasm-bindgen",
- "wasm-bindgen-futures",
- "web-sys",
-]
-
-[[package]]
-name = "craft-vectorcraft-format"
-version = "0.1.0"
-source = "git+https://github.com/getnodalia/foundation?rev=64b181977a0488e4d1e167bc5cc8cfededc2ed4b#64b181977a0488e4d1e167bc5cc8cfededc2ed4b"
-dependencies = [
- "flate2",
- "serde",
- "serde_json",
- "thiserror 2.0.21",
-]
-
-[[package]]
-name = "craft-web-api"
-version = "0.1.0"
-source = "git+https://github.com/getnodalia/foundation?rev=64b181977a0488e4d1e167bc5cc8cfededc2ed4b#64b181977a0488e4d1e167bc5cc8cfededc2ed4b"
-dependencies = [
- "js-sys",
- "serde_json",
- "wasm-bindgen",
- "wasm-bindgen-futures",
-]
-
-[[package]]
-name = "craft-window"
-version = "0.1.0"
-source = "git+https://github.com/getnodalia/foundation?rev=64b181977a0488e4d1e167bc5cc8cfededc2ed4b#64b181977a0488e4d1e167bc5cc8cfededc2ed4b"
-dependencies = [
- "egui",
- "objc2 0.6.5",
- "objc2-app-kit 0.3.2",
- "wayland-client",
-]
-
-[[package]]
-name = "craft-winprint-gdi"
-version = "0.1.0"
-source = "git+https://github.com/storytold/winprint.rs?rev=64e7afd4d1483512385012c340ecaaaf0f3beb7f#64e7afd4d1483512385012c340ecaaaf0f3beb7f"
-dependencies = [
- "windows-sys 0.61.2",
-]
-
-[[package]]
-name = "craft-xml"
-version = "0.1.0"
-source = "git+https://github.com/getnodalia/foundation?rev=64b181977a0488e4d1e167bc5cc8cfededc2ed4b#64b181977a0488e4d1e167bc5cc8cfededc2ed4b"
-dependencies = [
- "quick-xml",
- "serde",
- "thiserror 2.0.21",
-]
-
-[[package]]
 name = "crc32fast"
 version = "1.5.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2445,7 +2092,7 @@ checksum = "9f4d0e94ddd48749f06bbe4e5389fb9799a0c45bcaf00495042076ef05e3241a"
 [[package]]
 name = "hayro-cmap"
 version = "0.1.0"
-source = "git+https://github.com/getnodalia/foundation?rev=64b181977a0488e4d1e167bc5cc8cfededc2ed4b#64b181977a0488e4d1e167bc5cc8cfededc2ed4b"
+source = "git+https://github.com/getnodalia/foundation?rev=91ab24c9fe626e44641f8ba42b2557728b114446#91ab24c9fe626e44641f8ba42b2557728b114446"
 dependencies = [
  "brotli",
  "hayro-postscript",
@@ -2454,7 +2101,7 @@ dependencies = [
 [[package]]
 name = "hayro-interpret"
 version = "0.7.0"
-source = "git+https://github.com/getnodalia/foundation?rev=64b181977a0488e4d1e167bc5cc8cfededc2ed4b#64b181977a0488e4d1e167bc5cc8cfededc2ed4b"
+source = "git+https://github.com/getnodalia/foundation?rev=91ab24c9fe626e44641f8ba42b2557728b114446#91ab24c9fe626e44641f8ba42b2557728b114446"
 dependencies = [
  "bitflags 2.13.2",
  "hayro-cmap",
@@ -2472,7 +2119,7 @@ dependencies = [
 [[package]]
 name = "hayro-jbig2"
 version = "0.3.0"
-source = "git+https://github.com/getnodalia/foundation?rev=64b181977a0488e4d1e167bc5cc8cfededc2ed4b#64b181977a0488e4d1e167bc5cc8cfededc2ed4b"
+source = "git+https://github.com/getnodalia/foundation?rev=91ab24c9fe626e44641f8ba42b2557728b114446#91ab24c9fe626e44641f8ba42b2557728b114446"
 dependencies = [
  "fearless_simd",
  "hayro-ccitt",
@@ -2490,12 +2137,12 @@ dependencies = [
 [[package]]
 name = "hayro-postscript"
 version = "0.1.0"
-source = "git+https://github.com/getnodalia/foundation?rev=64b181977a0488e4d1e167bc5cc8cfededc2ed4b#64b181977a0488e4d1e167bc5cc8cfededc2ed4b"
+source = "git+https://github.com/getnodalia/foundation?rev=91ab24c9fe626e44641f8ba42b2557728b114446#91ab24c9fe626e44641f8ba42b2557728b114446"
 
 [[package]]
 name = "hayro-syntax"
 version = "0.7.2"
-source = "git+https://github.com/getnodalia/foundation?rev=64b181977a0488e4d1e167bc5cc8cfededc2ed4b#64b181977a0488e4d1e167bc5cc8cfededc2ed4b"
+source = "git+https://github.com/getnodalia/foundation?rev=91ab24c9fe626e44641f8ba42b2557728b114446#91ab24c9fe626e44641f8ba42b2557728b114446"
 dependencies = [
  "flate2",
  "hayro-ccitt",
@@ -3295,7 +2942,7 @@ dependencies = [
 [[package]]
 name = "krilla"
 version = "0.8.2"
-source = "git+https://github.com/getnodalia/foundation?rev=64b181977a0488e4d1e167bc5cc8cfededc2ed4b#64b181977a0488e4d1e167bc5cc8cfededc2ed4b"
+source = "git+https://github.com/getnodalia/foundation?rev=91ab24c9fe626e44641f8ba42b2557728b114446#91ab24c9fe626e44641f8ba42b2557728b114446"
 dependencies = [
  "base64 0.22.1",
  "bumpalo",
@@ -3404,7 +3051,7 @@ checksum = "d4a5ff6bcca6c4867b1c4fd4ef63e4db7436ef363e0ad7531d1558856bae64f4"
 [[package]]
 name = "linesweeper"
 version = "0.5.0"
-source = "git+https://github.com/getnodalia/foundation?rev=64b181977a0488e4d1e167bc5cc8cfededc2ed4b#64b181977a0488e4d1e167bc5cc8cfededc2ed4b"
+source = "git+https://github.com/getnodalia/foundation?rev=91ab24c9fe626e44641f8ba42b2557728b114446#91ab24c9fe626e44641f8ba42b2557728b114446"
 dependencies = [
  "arrayvec",
  "kurbo 0.13.1",
@@ -3657,11 +3304,324 @@ dependencies = [
 ]
 
 [[package]]
+name = "nodalia-affinity"
+version = "0.1.0"
+source = "git+https://github.com/getnodalia/foundation?rev=91ab24c9fe626e44641f8ba42b2557728b114446#91ab24c9fe626e44641f8ba42b2557728b114446"
+dependencies = [
+ "crc32fast",
+ "flate2",
+ "image",
+ "ruzstd",
+]
+
+[[package]]
+name = "nodalia-codepage"
+version = "0.1.0"
+source = "git+https://github.com/getnodalia/foundation?rev=91ab24c9fe626e44641f8ba42b2557728b114446#91ab24c9fe626e44641f8ba42b2557728b114446"
+
+[[package]]
+name = "nodalia-dds"
+version = "0.1.0"
+source = "git+https://github.com/getnodalia/foundation?rev=91ab24c9fe626e44641f8ba42b2557728b114446#91ab24c9fe626e44641f8ba42b2557728b114446"
+dependencies = [
+ "rayon",
+]
+
+[[package]]
+name = "nodalia-docpath"
+version = "0.1.0"
+source = "git+https://github.com/getnodalia/foundation?rev=91ab24c9fe626e44641f8ba42b2557728b114446#91ab24c9fe626e44641f8ba42b2557728b114446"
+
+[[package]]
+name = "nodalia-dxf"
+version = "0.1.0"
+source = "git+https://github.com/getnodalia/foundation?rev=91ab24c9fe626e44641f8ba42b2557728b114446#91ab24c9fe626e44641f8ba42b2557728b114446"
+dependencies = [
+ "encoding_rs",
+ "kurbo 0.13.1",
+ "log",
+ "nodalia-codepage",
+ "thiserror 2.0.21",
+]
+
+[[package]]
+name = "nodalia-eps"
+version = "0.1.0"
+source = "git+https://github.com/getnodalia/foundation?rev=91ab24c9fe626e44641f8ba42b2557728b114446#91ab24c9fe626e44641f8ba42b2557728b114446"
+
+[[package]]
+name = "nodalia-fonts-build"
+version = "0.1.0"
+source = "git+https://github.com/getnodalia/foundation?rev=91ab24c9fe626e44641f8ba42b2557728b114446#91ab24c9fe626e44641f8ba42b2557728b114446"
+
+[[package]]
+name = "nodalia-gif"
+version = "0.1.0"
+source = "git+https://github.com/getnodalia/foundation?rev=91ab24c9fe626e44641f8ba42b2557728b114446#91ab24c9fe626e44641f8ba42b2557728b114446"
+dependencies = [
+ "gif",
+]
+
+[[package]]
+name = "nodalia-gzip"
+version = "0.1.0"
+source = "git+https://github.com/getnodalia/foundation?rev=91ab24c9fe626e44641f8ba42b2557728b114446#91ab24c9fe626e44641f8ba42b2557728b114446"
+dependencies = [
+ "flate2",
+]
+
+[[package]]
+name = "nodalia-i18n"
+version = "0.1.0"
+source = "git+https://github.com/getnodalia/foundation?rev=91ab24c9fe626e44641f8ba42b2557728b114446#91ab24c9fe626e44641f8ba42b2557728b114446"
+dependencies = [
+ "fixed_decimal",
+ "icu_decimal",
+ "icu_locale_core",
+ "icu_locale_fallback",
+ "icu_normalizer",
+ "icu_plurals",
+ "icu_properties",
+ "icu_provider",
+ "icu_provider_adapters",
+ "icu_provider_blob",
+ "log",
+ "objc2-foundation 0.3.2",
+ "sys-locale",
+ "unicode-bidi",
+ "windows-registry",
+ "writeable",
+]
+
+[[package]]
+name = "nodalia-image-codecs"
+version = "0.1.0"
+source = "git+https://github.com/getnodalia/foundation?rev=91ab24c9fe626e44641f8ba42b2557728b114446#91ab24c9fe626e44641f8ba42b2557728b114446"
+dependencies = [
+ "crc32fast",
+ "exr",
+ "flate2",
+ "half",
+ "hayro-jpeg2000",
+ "image",
+ "image-webp",
+ "jpeg-encoder",
+ "nodalia-dds",
+ "nodalia-jpeg",
+ "nodalia-metadata",
+ "nodalia-tiff",
+ "png 0.18.1",
+ "rayon",
+ "serde_json",
+ "thiserror 2.0.21",
+ "tiff",
+ "zune-core",
+ "zune-jpeg",
+ "zune-jpegxl",
+]
+
+[[package]]
+name = "nodalia-jpeg"
+version = "0.1.0"
+source = "git+https://github.com/getnodalia/foundation?rev=91ab24c9fe626e44641f8ba42b2557728b114446#91ab24c9fe626e44641f8ba42b2557728b114446"
+dependencies = [
+ "thiserror 2.0.21",
+]
+
+[[package]]
+name = "nodalia-jxl"
+version = "0.1.0"
+source = "git+https://github.com/getnodalia/foundation?rev=91ab24c9fe626e44641f8ba42b2557728b114446#91ab24c9fe626e44641f8ba42b2557728b114446"
+dependencies = [
+ "jixel",
+ "jxl-oxide",
+ "thiserror 2.0.21",
+]
+
+[[package]]
+name = "nodalia-keymap"
+version = "0.1.0"
+source = "git+https://github.com/getnodalia/foundation?rev=91ab24c9fe626e44641f8ba42b2557728b114446#91ab24c9fe626e44641f8ba42b2557728b114446"
+dependencies = [
+ "egui",
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "nodalia-metadata"
+version = "0.1.0"
+source = "git+https://github.com/getnodalia/foundation?rev=91ab24c9fe626e44641f8ba42b2557728b114446#91ab24c9fe626e44641f8ba42b2557728b114446"
+dependencies = [
+ "brotli-decompressor 6.3.2",
+ "chrono",
+ "nodalia-tiff",
+ "quick-xml",
+ "serde",
+]
+
+[[package]]
+name = "nodalia-metafile"
+version = "0.1.0"
+source = "git+https://github.com/getnodalia/foundation?rev=91ab24c9fe626e44641f8ba42b2557728b114446#91ab24c9fe626e44641f8ba42b2557728b114446"
+dependencies = [
+ "encoding_rs",
+ "image",
+ "kurbo 0.13.1",
+ "thiserror 2.0.21",
+]
+
+[[package]]
+name = "nodalia-mime"
+version = "0.1.0"
+source = "git+https://github.com/getnodalia/foundation?rev=91ab24c9fe626e44641f8ba42b2557728b114446#91ab24c9fe626e44641f8ba42b2557728b114446"
+dependencies = [
+ "chrono",
+ "encoding_rs",
+ "nodalia-codepage",
+]
+
+[[package]]
+name = "nodalia-pdf"
+version = "0.1.0"
+source = "git+https://github.com/getnodalia/foundation?rev=91ab24c9fe626e44641f8ba42b2557728b114446#91ab24c9fe626e44641f8ba42b2557728b114446"
+dependencies = [
+ "hayro-interpret",
+ "hayro-syntax",
+ "krilla",
+ "thiserror 2.0.21",
+]
+
+[[package]]
+name = "nodalia-plotter"
+version = "0.1.0"
+source = "git+https://github.com/getnodalia/foundation?rev=803e422f91ad08ec2c3a58b932c1b94f061725a8#803e422f91ad08ec2c3a58b932c1b94f061725a8"
+dependencies = [
+ "thiserror 2.0.21",
+]
+
+[[package]]
+name = "nodalia-pluma-format"
+version = "0.1.0"
+source = "git+https://github.com/getnodalia/foundation?rev=91ab24c9fe626e44641f8ba42b2557728b114446#91ab24c9fe626e44641f8ba42b2557728b114446"
+dependencies = [
+ "flate2",
+ "serde",
+ "serde_json",
+ "thiserror 2.0.21",
+]
+
+[[package]]
+name = "nodalia-print"
+version = "0.1.0"
+source = "git+https://github.com/getnodalia/foundation?rev=91ab24c9fe626e44641f8ba42b2557728b114446#91ab24c9fe626e44641f8ba42b2557728b114446"
+dependencies = [
+ "log",
+ "miniz_oxide 0.9.1",
+ "nodalia-winprint-gdi",
+ "roxmltree 0.21.2",
+ "tempfile",
+ "winprint",
+ "winsafe",
+]
+
+[[package]]
+name = "nodalia-proof"
+version = "0.1.0"
+source = "git+https://github.com/getnodalia/foundation?rev=91ab24c9fe626e44641f8ba42b2557728b114446#91ab24c9fe626e44641f8ba42b2557728b114446"
+dependencies = [
+ "log",
+ "miniz_oxide 0.9.1",
+ "toml",
+ "unicode-normalization",
+]
+
+[[package]]
+name = "nodalia-ps"
+version = "0.1.0"
+source = "git+https://github.com/getnodalia/foundation?rev=91ab24c9fe626e44641f8ba42b2557728b114446#91ab24c9fe626e44641f8ba42b2557728b114446"
+dependencies = [
+ "flate2",
+ "kurbo 0.13.1",
+]
+
+[[package]]
+name = "nodalia-psd"
+version = "0.1.0"
+source = "git+https://github.com/getnodalia/foundation?rev=91ab24c9fe626e44641f8ba42b2557728b114446#91ab24c9fe626e44641f8ba42b2557728b114446"
+dependencies = [
+ "encoding_rs",
+ "flate2",
+ "rayon",
+ "thiserror 2.0.21",
+]
+
+[[package]]
+name = "nodalia-stream-codecs"
+version = "0.1.0"
+source = "git+https://github.com/getnodalia/foundation?rev=91ab24c9fe626e44641f8ba42b2557728b114446#91ab24c9fe626e44641f8ba42b2557728b114446"
+dependencies = [
+ "fax",
+ "hayro-ccitt",
+ "hayro-jbig2",
+ "thiserror 2.0.21",
+]
+
+[[package]]
+name = "nodalia-svg"
+version = "0.1.0"
+source = "git+https://github.com/getnodalia/foundation?rev=91ab24c9fe626e44641f8ba42b2557728b114446#91ab24c9fe626e44641f8ba42b2557728b114446"
+dependencies = [
+ "data-url",
+ "flate2",
+ "kurbo 0.13.1",
+ "nodalia-image-codecs",
+ "nodalia-xml",
+ "quick-xml",
+ "resvg 0.48.1",
+ "roxmltree 0.21.2",
+ "thiserror 2.0.21",
+ "usvg 0.48.1",
+ "vectorcraft-geom",
+ "vectorcraft-pathops",
+]
+
+[[package]]
 name = "nodalia-theme"
 version = "0.1.0-alpha.1"
 source = "git+https://github.com/danielmigueltejedor/nodalia-design?rev=6d94e9c17c1767260bcb020f00c71eddd105561f#6d94e9c17c1767260bcb020f00c71eddd105561f"
 dependencies = [
  "egui",
+]
+
+[[package]]
+name = "nodalia-tiff"
+version = "0.1.0"
+source = "git+https://github.com/getnodalia/foundation?rev=91ab24c9fe626e44641f8ba42b2557728b114446#91ab24c9fe626e44641f8ba42b2557728b114446"
+dependencies = [
+ "serde",
+ "thiserror 2.0.21",
+]
+
+[[package]]
+name = "nodalia-ui"
+version = "0.1.0"
+source = "git+https://github.com/getnodalia/foundation?rev=91ab24c9fe626e44641f8ba42b2557728b114446#91ab24c9fe626e44641f8ba42b2557728b114446"
+dependencies = [
+ "egui",
+ "epaint",
+ "js-sys",
+ "log",
+ "nodalia-fonts-build",
+ "nodalia-i18n",
+ "objc2 0.6.5",
+ "objc2-app-kit 0.3.2",
+ "objc2-foundation 0.3.2",
+ "serde",
+ "skrifa 0.44.0",
+ "wasm-bindgen",
+ "wasm-bindgen-futures",
+ "web-sys",
 ]
 
 [[package]]
@@ -3673,6 +3633,46 @@ dependencies = [
  "serde_json",
  "sha2",
  "ureq",
+]
+
+[[package]]
+name = "nodalia-web-api"
+version = "0.1.0"
+source = "git+https://github.com/getnodalia/foundation?rev=91ab24c9fe626e44641f8ba42b2557728b114446#91ab24c9fe626e44641f8ba42b2557728b114446"
+dependencies = [
+ "js-sys",
+ "serde_json",
+ "wasm-bindgen",
+ "wasm-bindgen-futures",
+]
+
+[[package]]
+name = "nodalia-window"
+version = "0.1.0"
+source = "git+https://github.com/getnodalia/foundation?rev=91ab24c9fe626e44641f8ba42b2557728b114446#91ab24c9fe626e44641f8ba42b2557728b114446"
+dependencies = [
+ "egui",
+ "objc2 0.6.5",
+ "objc2-app-kit 0.3.2",
+ "wayland-client",
+]
+
+[[package]]
+name = "nodalia-winprint-gdi"
+version = "0.1.0"
+source = "git+https://github.com/getnodalia/foundation?rev=5a9c69b611f181d50655758b6eb1fb49fb3737e8#5a9c69b611f181d50655758b6eb1fb49fb3737e8"
+dependencies = [
+ "windows-sys 0.61.2",
+]
+
+[[package]]
+name = "nodalia-xml"
+version = "0.1.0"
+source = "git+https://github.com/getnodalia/foundation?rev=91ab24c9fe626e44641f8ba42b2557728b114446#91ab24c9fe626e44641f8ba42b2557728b114446"
+dependencies = [
+ "quick-xml",
+ "serde",
+ "thiserror 2.0.21",
 ]
 
 [[package]]
@@ -4351,14 +4351,14 @@ dependencies = [
  "block2 0.6.2",
  "chrono",
  "clipboard-win",
- "craft-print",
- "craft-window",
  "eframe",
  "egui",
  "futures-lite",
  "image",
  "log",
  "muda",
+ "nodalia-print",
+ "nodalia-window",
  "objc2 0.6.5",
  "objc2-app-kit 0.3.2",
  "objc2-core-foundation",
@@ -4395,9 +4395,9 @@ dependencies = [
 name = "pluma-affinity"
 version = "0.1.2"
 dependencies = [
- "craft-affinity",
- "craft-image-codecs",
  "crc32fast",
+ "nodalia-affinity",
+ "nodalia-image-codecs",
  "proptest",
 ]
 
@@ -4424,11 +4424,11 @@ dependencies = [
 name = "pluma-cad"
 version = "0.1.2"
 dependencies = [
- "craft-dxf",
- "craft-image-codecs",
- "craft-plotter",
  "image",
  "kurbo 0.13.1",
+ "nodalia-dxf",
+ "nodalia-image-codecs",
+ "nodalia-plotter",
  "pluma-brush",
  "pluma-color",
  "pluma-doc",
@@ -4479,12 +4479,12 @@ name = "pluma-doc"
 version = "0.1.2"
 dependencies = [
  "chrono",
- "craft-image-codecs",
- "craft-stream-codecs",
  "flate2",
  "image",
  "jpeg-encoder",
  "kurbo 0.13.1",
+ "nodalia-image-codecs",
+ "nodalia-stream-codecs",
  "pluma-color",
  "pluma-geom",
  "proptest",
@@ -4499,10 +4499,10 @@ dependencies = [
 name = "pluma-effects"
 version = "0.1.2"
 dependencies = [
- "craft-image-codecs",
- "craft-svg",
  "image",
  "kurbo 0.13.1",
+ "nodalia-image-codecs",
+ "nodalia-svg",
  "pluma-color",
  "pluma-doc",
  "pluma-geom",
@@ -4522,12 +4522,6 @@ version = "0.1.2"
 dependencies = [
  "cfb",
  "chrono",
- "craft-docpath",
- "craft-image-codecs",
- "craft-jxl",
- "craft-proof",
- "craft-stream-codecs",
- "craft-xml",
  "crc32fast",
  "encoding_rs",
  "flate2",
@@ -4539,6 +4533,12 @@ dependencies = [
  "jxl-oxide",
  "kurbo 0.13.1",
  "log",
+ "nodalia-docpath",
+ "nodalia-image-codecs",
+ "nodalia-jxl",
+ "nodalia-proof",
+ "nodalia-stream-codecs",
+ "nodalia-xml",
  "pluma-affinity",
  "pluma-apischema",
  "pluma-brush",
@@ -4580,17 +4580,17 @@ dependencies = [
 name = "pluma-eps"
 version = "0.1.2"
 dependencies = [
- "craft-eps",
- "craft-image-codecs",
- "craft-pdf",
- "craft-ps",
- "craft-stream-codecs",
  "encoding_rs",
  "fax",
  "flate2",
  "image",
  "kurbo 0.13.1",
  "memchr",
+ "nodalia-eps",
+ "nodalia-image-codecs",
+ "nodalia-pdf",
+ "nodalia-ps",
+ "nodalia-stream-codecs",
  "pluma-brush",
  "pluma-color",
  "pluma-doc",
@@ -4611,9 +4611,9 @@ dependencies = [
 name = "pluma-format"
 version = "0.1.2"
 dependencies = [
- "craft-gzip",
- "craft-vectorcraft-format",
  "flate2",
+ "nodalia-gzip",
+ "nodalia-pluma-format",
  "pluma-brush",
  "pluma-doc",
  "pluma-geom",
@@ -4651,9 +4651,9 @@ dependencies = [
 name = "pluma-mcp"
 version = "0.1.2"
 dependencies = [
- "craft-image-codecs",
  "image",
  "log",
+ "nodalia-image-codecs",
  "pluma-doc",
  "pluma-engine",
  "pluma-format",
@@ -4671,10 +4671,10 @@ dependencies = [
 name = "pluma-metafile"
 version = "0.1.2"
 dependencies = [
- "craft-image-codecs",
- "craft-metafile",
  "image",
  "kurbo 0.13.1",
+ "nodalia-image-codecs",
+ "nodalia-metafile",
  "pluma-brush",
  "pluma-color",
  "pluma-doc",
@@ -4701,10 +4701,6 @@ version = "0.1.2"
 dependencies = [
  "aes",
  "chrono",
- "craft-image-codecs",
- "craft-pdf",
- "craft-stream-codecs",
- "craft-xml",
  "flate2",
  "getrandom 0.4.3",
  "image",
@@ -4713,6 +4709,10 @@ dependencies = [
  "kurbo 0.13.1",
  "log",
  "md-5",
+ "nodalia-image-codecs",
+ "nodalia-pdf",
+ "nodalia-stream-codecs",
+ "nodalia-xml",
  "objc2-core-foundation",
  "objc2-core-graphics",
  "pluma-brush",
@@ -4735,9 +4735,9 @@ dependencies = [
 name = "pluma-plugins"
 version = "0.1.2"
 dependencies = [
- "craft-image-codecs",
- "craft-vectorcraft-format",
  "log",
+ "nodalia-image-codecs",
+ "nodalia-pluma-format",
  "pluma-color",
  "pluma-doc",
  "pluma-geom",
@@ -4754,15 +4754,15 @@ dependencies = [
 name = "pluma-render"
 version = "0.1.2"
 dependencies = [
- "craft-gif",
- "craft-image-codecs",
- "craft-psd",
- "craft-stream-codecs",
- "craft-tiff",
  "flate2",
  "image",
  "jpeg-encoder",
  "log",
+ "nodalia-gif",
+ "nodalia-image-codecs",
+ "nodalia-psd",
+ "nodalia-stream-codecs",
+ "nodalia-tiff",
  "pluma-brush",
  "pluma-color",
  "pluma-doc",
@@ -4793,14 +4793,14 @@ dependencies = [
 name = "pluma-svg"
 version = "0.1.2"
 dependencies = [
- "craft-docpath",
- "craft-image-codecs",
- "craft-mime",
- "craft-svg",
  "data-url",
  "flate2",
  "image",
  "kurbo 0.13.1",
+ "nodalia-docpath",
+ "nodalia-image-codecs",
+ "nodalia-mime",
+ "nodalia-svg",
  "pluma-brush",
  "pluma-color",
  "pluma-doc",
@@ -4824,9 +4824,9 @@ dependencies = [
 name = "pluma-testkit"
 version = "0.1.2"
 dependencies = [
- "craft-image-codecs",
  "fax",
  "kurbo 0.13.1",
+ "nodalia-image-codecs",
  "pluma-color",
  "pluma-doc",
  "pluma-engine",
@@ -4842,11 +4842,11 @@ dependencies = [
 name = "pluma-text"
 version = "0.1.2"
 dependencies = [
- "craft-proof",
  "harfrust 0.13.3",
  "icu_segmenter",
  "kurbo 0.13.1",
  "log",
+ "nodalia-proof",
  "pluma-doc",
  "pluma-geom",
  "skrifa 0.47.0",
@@ -4874,8 +4874,8 @@ dependencies = [
 name = "pluma-tools"
 version = "0.1.2"
 dependencies = [
- "craft-image-codecs",
  "kurbo 0.13.1",
+ "nodalia-image-codecs",
  "pluma-brush",
  "pluma-color",
  "pluma-doc",
@@ -4891,9 +4891,9 @@ dependencies = [
 name = "pluma-trace"
 version = "0.1.2"
 dependencies = [
- "craft-image-codecs",
  "image",
  "kurbo 0.13.1",
+ "nodalia-image-codecs",
  "pluma-geom",
  "serde",
  "serde_json",
@@ -4906,15 +4906,15 @@ version = "0.1.2"
 dependencies = [
  "bytemuck",
  "chrono",
- "craft-image-codecs",
- "craft-keymap",
- "craft-ui",
  "egui",
  "egui_extras",
  "egui_kittest",
  "image",
  "log",
+ "nodalia-image-codecs",
+ "nodalia-keymap",
  "nodalia-theme",
+ "nodalia-ui",
  "nodalia-update",
  "pluma-apischema",
  "pluma-brush",
@@ -4946,11 +4946,11 @@ dependencies = [
 name = "pluma-web"
 version = "0.1.2"
 dependencies = [
- "craft-web-api",
  "eframe",
  "egui",
  "js-sys",
  "log",
+ "nodalia-web-api",
  "pluma-engine",
  "pluma-format",
  "pluma-text",
@@ -8020,7 +8020,7 @@ dependencies = [
 [[package]]
 name = "winprint"
 version = "0.2.1"
-source = "git+https://github.com/storytold/winprint.rs?rev=8ae097ef941b432b0e7671b1ec3a506800e65e57#8ae097ef941b432b0e7671b1ec3a506800e65e57"
+source = "git+https://github.com/getnodalia/foundation?rev=3cfce9594f720c499514c9d8a7a96c98af187f2d#3cfce9594f720c499514c9d8a7a96c98af187f2d"
 dependencies = [
  "flate2",
  "fmt-derive",

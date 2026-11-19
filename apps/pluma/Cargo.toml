@@ -25,8 +25,8 @@ pluma-engine = { workspace = true, features = ["bundled-fonts", "heif"] }
 pluma-ui-egui = { workspace = true }
 pluma-text = { workspace = true }
 # Shared across the Craft suite: decides who draws the window frame per desktop (compositor vs app)
-# so Pluma matches the rest on Linux. `egui` adds `craft_window::decorate`. See #217.
-craft-window = { workspace = true }
+# so Pluma matches the rest on Linux. `egui` adds `nodalia_window::decorate`. See #217.
+nodalia-window = { workspace = true }
 eframe = { workspace = true, features = ["clipboard", "default_fonts", "wayland", "x11"] }
 egui = { workspace = true }
 serde = { workspace = true }
@@ -42,7 +42,7 @@ image = { workspace = true }
 webbrowser = { workspace = true }
 # The window's monitors, size and position (the same winit eframe runs on).
 winit = { version = "0.30", default-features = false }
-craft-print = { workspace = true }
+nodalia-print = { workspace = true }
 
 [target.'cfg(windows)'.dependencies]
 clipboard-win = { workspace = true }

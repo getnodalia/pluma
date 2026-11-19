@@ -20,8 +20,8 @@ bundled-fonts = ["pluma-engine/bundled-fonts"]
 interface-fonts = []
 
 [dependencies]
-craft-ui = { workspace = true }
-craft-keymap = { workspace = true, features = ["egui"] }
+nodalia-ui = { workspace = true }
+nodalia-keymap = { workspace = true, features = ["egui"] }
 nodalia-theme = { workspace = true, features = ["creator"] }
 pluma-geom = { workspace = true }
 pluma-color = { workspace = true }
@@ -47,14 +47,14 @@ egui = { workspace = true, features = ["bytemuck", "default_fonts", "monochrome_
 bytemuck = { version = "1", features = ["extern_crate_alloc"] }
 egui_extras = { workspace = true }
 image = { workspace = true }
-craft-image-codecs = { workspace = true }
+nodalia-image-codecs = { workspace = true }
 serde = { workspace = true }
 serde_json = { workspace = true }
 log = { workspace = true }
 
 # Floating panels open in OS windows of their own on the desktop; on the web they stay in the page.
 [target.'cfg(not(target_arch = "wasm32"))'.dependencies]
-craft-ui = { workspace = true, features = ["native-windows"] }
+nodalia-ui = { workspace = true, features = ["native-windows"] }
 nodalia-update = { workspace = true }
 # The local date and time the status bar's Date and Time readout shows (`chrono::Local`). Already in
 # Cargo.lock with the time-zone crates `clock` uses.

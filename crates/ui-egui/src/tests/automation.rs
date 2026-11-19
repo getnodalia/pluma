@@ -457,17 +457,17 @@ fn control_render_matches_a_png_export_on_white() {
     let r = request(&mut app, &tx, "app.open", json!({"path": s(base.join("in/edges.svg"))}));
     assert_eq!(r["ok"], true, "{r}");
     let pixels = |v: &Value| {
-        craft_image_codecs::decode(&pluma_format::base64_decode(v.as_str().unwrap()).unwrap())
+        nodalia_image_codecs::decode(&pluma_format::base64_decode(v.as_str().unwrap()).unwrap())
             .map(|__cimg| {
                 let (__w, __h) = __cimg.dimensions();
                 match (__cimg.layout(), __cimg.sample_type()) {
-                    (craft_image_codecs::ChannelLayout::Gray, craft_image_codecs::SampleType::U8) => {
+                    (nodalia_image_codecs::ChannelLayout::Gray, nodalia_image_codecs::SampleType::U8) => {
                         image::DynamicImage::ImageLuma8(image::GrayImage::from_raw(__w, __h, __cimg.into_data()).unwrap())
                     }
-                    (craft_image_codecs::ChannelLayout::GrayA, craft_image_codecs::SampleType::U8) => {
+                    (nodalia_image_codecs::ChannelLayout::GrayA, nodalia_image_codecs::SampleType::U8) => {
                         image::DynamicImage::ImageLumaA8(image::GrayAlphaImage::from_raw(__w, __h, __cimg.into_data()).unwrap())
                     }
-                    (craft_image_codecs::ChannelLayout::Rgb, craft_image_codecs::SampleType::U8) => {
+                    (nodalia_image_codecs::ChannelLayout::Rgb, nodalia_image_codecs::SampleType::U8) => {
                         image::DynamicImage::ImageRgb8(image::RgbImage::from_raw(__w, __h, __cimg.into_data()).unwrap())
                     }
                     _ => image::DynamicImage::ImageRgba8(image::RgbaImage::from_raw(__w, __h, __cimg.to_rgba8()).unwrap()),
@@ -505,17 +505,17 @@ fn control_render_draws_the_trace_view_with_trace_views() {
     app.run("imageTrace.make", json!({"params": {"ignoreWhite": true}})).unwrap();
     app.run("imageTrace.setView", json!({"view": "sourceImage"})).unwrap();
     let pixels = |v: &Value| {
-        craft_image_codecs::decode(&pluma_format::base64_decode(v.as_str().unwrap()).unwrap())
+        nodalia_image_codecs::decode(&pluma_format::base64_decode(v.as_str().unwrap()).unwrap())
             .map(|__cimg| {
                 let (__w, __h) = __cimg.dimensions();
                 match (__cimg.layout(), __cimg.sample_type()) {
-                    (craft_image_codecs::ChannelLayout::Gray, craft_image_codecs::SampleType::U8) => {
+                    (nodalia_image_codecs::ChannelLayout::Gray, nodalia_image_codecs::SampleType::U8) => {
                         image::DynamicImage::ImageLuma8(image::GrayImage::from_raw(__w, __h, __cimg.into_data()).unwrap())
                     }
-                    (craft_image_codecs::ChannelLayout::GrayA, craft_image_codecs::SampleType::U8) => {
+                    (nodalia_image_codecs::ChannelLayout::GrayA, nodalia_image_codecs::SampleType::U8) => {
                         image::DynamicImage::ImageLumaA8(image::GrayAlphaImage::from_raw(__w, __h, __cimg.into_data()).unwrap())
                     }
-                    (craft_image_codecs::ChannelLayout::Rgb, craft_image_codecs::SampleType::U8) => {
+                    (nodalia_image_codecs::ChannelLayout::Rgb, nodalia_image_codecs::SampleType::U8) => {
                         image::DynamicImage::ImageRgb8(image::RgbImage::from_raw(__w, __h, __cimg.into_data()).unwrap())
                     }
                     _ => image::DynamicImage::ImageRgba8(image::RgbaImage::from_raw(__w, __h, __cimg.to_rgba8()).unwrap()),
@@ -1177,7 +1177,7 @@ fn a_library_panel_command_answers_with_a_hidden_librarys_shown_id() {
 }
 
 /// A closed panel's former place, as `ui.docking_hidden` keeps it.
-fn hidden_place() -> craft_ui::docking::Location<String> {
+fn hidden_place() -> nodalia_ui::docking::Location<String> {
     serde_json::from_value(json!({"floating": null, "anchor": null, "placement": {"Tab": {"before": null}}, "size": null, "stack": null})).unwrap()
 }
 

@@ -38,7 +38,7 @@
 
 use std::collections::HashMap;
 
-use craft_xml::{Canonical, Doctype, El, Limits, Names, Options};
+use nodalia_xml::{Canonical, Doctype, El, Limits, Names, Options};
 use pluma_doc::text::Kashida;
 use pluma_doc::{CharPosition, CharStyle, Justify, ParaDirection, ParaStyle, ScriptMetrics, TextRun};
 
@@ -168,7 +168,7 @@ fn parse(xml: &str, name: &str, cmd: &str) -> Result<El> {
     }
     .strict();
     let doc = opts.parse(xml.as_bytes()).map_err(|e| match e {
-        craft_xml::Error::TooDeep(_) => bad(cmd, format!("`{name}` in the Word document nests elements more than {MAX_NESTING} deep")),
+        nodalia_xml::Error::TooDeep(_) => bad(cmd, format!("`{name}` in the Word document nests elements more than {MAX_NESTING} deep")),
         _ => bad(cmd, format!("`{name}` in the Word document is not well-formed XML: {e}")),
     })?;
     crate::cmd::xmlattrs::validate(xml.as_bytes(), opts.limits)

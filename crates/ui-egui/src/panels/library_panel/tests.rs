@@ -342,7 +342,7 @@ fn swatch_exchange_files_without_a_path_open_in_the_library_panel() {
     assert_eq!(app.session.documents().len(), 1, "not opened as a document");
 }
 
-fn docking(app: &PlumaApp) -> &craft_ui::docking::Layout<String> {
+fn docking(app: &PlumaApp) -> &nodalia_ui::docking::Layout<String> {
     app.ui.docking.as_ref().expect("library panels live in the shared layout")
 }
 
@@ -376,7 +376,7 @@ fn each_library_opens_in_a_panel_of_its_own() {
     app.run("window.panel.move", json!({"panel": brights, "anchor": pastels})).unwrap();
     assert!(groups(&app).contains(&vec![pastels.clone(), brights.clone()]), "{:?}", groups(&app));
     app.run("window.panel.dock", json!({"panel": styles})).unwrap();
-    assert!(craft_ui::docking::Layout { root: docking(&app).root.clone(), floating: vec![] }.contains(&styles));
+    assert!(nodalia_ui::docking::Layout { root: docking(&app).root.clone(), floating: vec![] }.contains(&styles));
     app.run("window.panel.close", json!({"panel": brights})).unwrap();
     assert!(!is_open(&app.ui, &brights) && is_open(&app.ui, &pastels));
     app.run("window.panel", json!({"panel": brights})).unwrap();

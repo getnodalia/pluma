@@ -4,9 +4,9 @@
 
 use std::sync::OnceLock;
 
-use craft_ui::icons::{SvgIconSet, SvgStyle};
 use egui::{Color32, ImageSource, Rect, Ui, Vec2};
 use nodalia_theme::icons as ndl;
+use nodalia_ui::icons::{SvgIconSet, SvgStyle};
 
 /// Every icon name Pluma uses, sorted, and the NDL icon that draws it.
 pub(crate) static NAMES: &[(&str, &str)] = &[

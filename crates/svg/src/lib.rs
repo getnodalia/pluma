@@ -101,7 +101,7 @@
 //! rotation and style names).
 #![forbid(unsafe_code)]
 
-use craft_svg::tree::usvg;
+use nodalia_svg::tree::usvg;
 mod css;
 mod entities;
 mod export;
@@ -467,17 +467,17 @@ pub(crate) fn body_hash(parts: &[&str]) -> String {
 
 /// Does `bytes` start like gzip data (an SVGZ file)?
 pub fn is_svgz(bytes: &[u8]) -> bool {
-    craft_svg::sniff::is_svgz(bytes)
+    nodalia_svg::sniff::is_svgz(bytes)
 }
 
 /// Compress SVG text as SVGZ (gzip).
 pub fn compress(svg: &str) -> Vec<u8> {
-    craft_svg::svgz::compress(svg.as_bytes())
+    nodalia_svg::svgz::compress(svg.as_bytes())
 }
 
 /// Compress an SVG file (in any encoding, see [`Output::bytes`]) as SVGZ (gzip).
 pub fn compress_bytes(svg: &[u8]) -> Vec<u8> {
-    craft_svg::svgz::compress(svg)
+    nodalia_svg::svgz::compress(svg)
 }
 
 /// Most bytes an SVGZ file may unpack to (a guard against decompression bombs).
@@ -494,17 +494,17 @@ pub fn text_of(bytes: &[u8]) -> Result<std::borrow::Cow<'_, str>, SvgError> {
 pub(crate) fn text_within<'a>(bytes: &'a [u8], unpacked: &std::sync::atomic::AtomicU64) -> Result<std::borrow::Cow<'a, str>, SvgError> {
     use std::sync::atomic::Ordering;
     if !is_svgz(bytes) {
-        return craft_svg::svgz::decode(bytes).map_err(|_| not_utf8());
+        return nodalia_svg::svgz::decode(bytes).map_err(|_| not_utf8());
     }
     let most = usize::try_from(MAX_SVGZ.saturating_sub(unpacked.load(Ordering::Relaxed))).unwrap_or(usize::MAX);
-    match craft_svg::svgz::inflate(bytes, most) {
+    match nodalia_svg::svgz::inflate(bytes, most) {
         Ok(raw) => {
             unpacked.fetch_add(raw.len() as u64, Ordering::Relaxed);
-            craft_svg::svgz::decode(&raw).map(|t| std::borrow::Cow::Owned(t.into_owned())).map_err(|_| not_utf8())
+            nodalia_svg::svgz::decode(&raw).map(|t| std::borrow::Cow::Owned(t.into_owned())).map_err(|_| not_utf8())
         }
-        Err(craft_svg::svgz::Error::TooLarge(_)) => Err(SvgError::TooBig(format!("the SVGZ file unpacks to more than {} MB", most >> 20))),
-        Err(craft_svg::svgz::Error::Corrupt(e)) => Err(SvgError::Parse(format!("not a valid SVGZ file: {e}"))),
-        Err(craft_svg::svgz::Error::Encoding) => Err(not_utf8()),
+        Err(nodalia_svg::svgz::Error::TooLarge(_)) => Err(SvgError::TooBig(format!("the SVGZ file unpacks to more than {} MB", most >> 20))),
+        Err(nodalia_svg::svgz::Error::Corrupt(e)) => Err(SvgError::Parse(format!("not a valid SVGZ file: {e}"))),
+        Err(nodalia_svg::svgz::Error::Encoding) => Err(not_utf8()),
         Err(e) => Err(SvgError::Parse(e.to_string())),
     }
 }
@@ -593,7 +593,7 @@ fn fnv1a_from(h: u64, bytes: &[u8]) -> u64 {
 /// Standard base64 (RFC 4648, with padding).
 pub fn base64_encode(data: &[u8]) -> String {
     // SVG data URLs need one unwrapped line, not MIME's folded base64_lines variant.
-    craft_mime::transfer::base64(data)
+    nodalia_mime::transfer::base64(data)
 }
 
 /// Escape text for XML content and attribute values.

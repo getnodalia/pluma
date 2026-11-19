@@ -76,7 +76,7 @@ pub struct DocState {
     /// View Opacity Mask (Alt-click the mask thumbnail): the masked object whose mask the canvas
     /// shows alone, in greyscale, while that mask is edited (see [`DocState::shown_mask`]).
     pub mask_view: Option<NodeId>,
-    /// Check Spelling's Ignore All: the words (as craft-proof keys them, lower case) a spelling
+    /// Check Spelling's Ignore All: the words (as nodalia-proof keys them, lower case) a spelling
     /// check of this document skips. Kept while the document is open: not saved, not undoable.
     pub spelling_ignored: std::collections::BTreeSet<String>,
     /// View → Show Transparency Grid, per document (saved view state, not undoable).

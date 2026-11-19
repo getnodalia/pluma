@@ -200,7 +200,7 @@ pub fn missing_placeholder() -> Option<Vec<u8>> {
 /// `bytes` decoded and shrunk to fit [`PROXY_SIZE`] as a PNG; `None` when small enough already or
 /// undecodable.
 fn proxy_png(bytes: &[u8]) -> Option<Vec<u8>> {
-    let format = craft_image_codecs::detect(bytes)?;
+    let format = nodalia_image_codecs::detect(bytes)?;
     let (w, h, _) = crate::decode::decoded_layout(bytes, format)?;
     if w.max(h) <= PROXY_SIZE {
         return None;
@@ -754,7 +754,7 @@ mod tests {
 
     /// A header-only 23,170 × 23,170 1-bit gray PNG is within the 2 GiB RGBA allowance, so Place
     /// decodes it and must refuse it (no pixel rows). 23,171 × 23,170 is past the allowance and is
-    /// kept unread, not refused. craft-image-codecs reports the cut-short file as LimitExceeded
+    /// kept unread, not refused. nodalia-image-codecs reports the cut-short file as LimitExceeded
     /// (its decompression-bomb guard); that is still "pixels can't be read", not "past the allowance".
     #[test]
     fn a_gray_header_within_the_allowance_is_unreadable() {

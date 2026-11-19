@@ -1,5 +1,5 @@
 //! pluma-doc's Group 3 TIFF reader (`cmyk::group3_tiff_rgba`) reads CCITT data through
-//! craft-stream-codecs; this keeps the reader it had on hayro-ccitt as the reference it matches.
+//! nodalia-stream-codecs; this keeps the reader it had on hayro-ccitt as the reference it matches.
 
 use pluma_doc::cmyk::{Group3Error, group3_tiff_rgba};
 use pluma_testkit::tiff::{Group3, group3};
@@ -8,11 +8,11 @@ use pluma_testkit::tiff::{Group3, group3};
 #[derive(Debug, PartialEq)]
 enum Refused {
     TooLarge,
-    Damaged(craft_stream_codecs::CcittErrorKind),
+    Damaged(nodalia_stream_codecs::CcittErrorKind),
 }
 
-fn kind_of(e: hayro_ccitt::DecodeError) -> craft_stream_codecs::CcittErrorKind {
-    use craft_stream_codecs::CcittErrorKind as K;
+fn kind_of(e: hayro_ccitt::DecodeError) -> nodalia_stream_codecs::CcittErrorKind {
+    use nodalia_stream_codecs::CcittErrorKind as K;
     match e {
         hayro_ccitt::DecodeError::UnexpectedEof => K::UnexpectedEof,
         hayro_ccitt::DecodeError::Overflow => K::Overflow,
@@ -20,7 +20,7 @@ fn kind_of(e: hayro_ccitt::DecodeError) -> craft_stream_codecs::CcittErrorKind {
     }
 }
 
-/// `group3_tiff_rgba` as it read before craft-stream-codecs.
+/// `group3_tiff_rgba` as it read before nodalia-stream-codecs.
 fn reference(bytes: &[u8]) -> Option<Result<image::RgbaImage, Refused>> {
     use hayro_ccitt::{DecodeError, DecodeSettings, DecoderContext, EncodingMode};
     use tiff::tags::Tag;
@@ -191,12 +191,12 @@ fn samples() -> Vec<Vec<u8>> {
 
 /// Every sample, and every sample cut short or with bytes changed, reads to the same pixels or is
 /// refused for the same reason as with the reference; strips or tiles wider than
-/// `craft_stream_codecs::MAX_CCITT_COLUMNS` (2^20) are refused as an overflow where the reference
+/// `nodalia_stream_codecs::MAX_CCITT_COLUMNS` (2^20) are refused as an overflow where the reference
 /// gave another reason.
 #[test]
 fn group3_tiffs_read_as_the_hayro_reader_read_them() {
     let files = samples();
-    use craft_stream_codecs::CcittErrorKind::Overflow;
+    use nodalia_stream_codecs::CcittErrorKind::Overflow;
     let (mut same, mut refused, mut checked, mut wider) = (0, 0, 0, 0);
     for (n, file) in files.iter().enumerate() {
         let theirs = reference(file);
@@ -220,7 +220,7 @@ fn group3_tiffs_read_as_the_hayro_reader_read_them() {
                 }
                 _ => {
                     let (ours, theirs) = (ours.map(|r| r.err()), theirs.map(|r| r.err()));
-                    // A strip or tile wider than craft-stream-codecs reads (MAX_CCITT_COLUMNS)
+                    // A strip or tile wider than nodalia-stream-codecs reads (MAX_CCITT_COLUMNS)
                     // is refused as an overflow before decoding; hayro-ccitt ran out of data or
                     // found a bad code in it instead.
                     let wide = matches!((&ours, &theirs), (Some(Some(Refused::Damaged(Overflow))), Some(Some(Refused::Damaged(_)))));

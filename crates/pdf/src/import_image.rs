@@ -13,9 +13,9 @@
 //! Separation, or a DeviceN of one colorant) keeps it: its tints are read as a grayscale image
 //! ([`tint_gray`]) that the ink colorizes. Every other image is read as RGB by the interpreter.
 
-use craft_pdf::syntax::object::stream::{ImageColorSpace, ImageDecodeParams};
-use craft_pdf::syntax::object::{Array, Dict, Name, Stream};
-use craft_pdf::syntax::{Filter, Pdf};
+use nodalia_pdf::syntax::object::stream::{ImageColorSpace, ImageDecodeParams};
+use nodalia_pdf::syntax::object::{Array, Dict, Name, Stream};
+use nodalia_pdf::syntax::{Filter, Pdf};
 use pluma_doc::ImageBlob;
 use pluma_doc::cmyk::{Inks, MAX_CMYK_PIXELS, jpeg_components, jpeg_with_icc};
 

@@ -115,7 +115,7 @@ mod services;
 pub use app::MAX_RECENT_FONTS;
 pub use caches::{CacheKey, CanvasCache, LivePaintGapsCache, Perf, PlacedKey, PrintTilingCache, SliceCache};
 pub use clock::{now_ms, now_secs};
-pub use craft_ui::docking::Monitor as DockMonitor;
+pub use nodalia_ui::docking::Monitor as DockMonitor;
 #[cfg(test)]
 pub(crate) use services::browsable_url;
 pub use services::{
@@ -276,7 +276,7 @@ pub struct PlumaApp {
     /// Keyboard pastes of something other than text (see [`shortcuts::PasteChord`]).
     pub(crate) paste_chord: shortcuts::PasteChord,
     /// Runs the frame's key presses against the keymap ([`shortcuts::handle`]).
-    pub(crate) dispatcher: craft_keymap::egui::Dispatcher,
+    pub(crate) dispatcher: nodalia_keymap::egui::Dispatcher,
     /// Saves and exports running in the background (Preferences → File Handling).
     pub background: background::Background,
     /// Documents being read off the UI thread ([`opening`]).

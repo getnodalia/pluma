@@ -474,15 +474,15 @@ fn render_preview(b: &mut dyn Backend, a: &Args) -> Result<ToolResult, String> {
     let img = super::handlers::decode_png(&png, 8192).map_err(|e| format!("read preview: {e}"))?;
     let img = if img.width() > max || img.height() > max { fitted(img, max, max, Resample::Average) } else { img };
     let rgba = img.to_rgba8();
-    let raw = craft_image_codecs::Image::from_raw(
+    let raw = nodalia_image_codecs::Image::from_raw(
         rgba.width(),
         rgba.height(),
-        craft_image_codecs::ChannelLayout::Rgba,
-        craft_image_codecs::SampleType::U8,
+        nodalia_image_codecs::ChannelLayout::Rgba,
+        nodalia_image_codecs::SampleType::U8,
         rgba.into_raw(),
     )
     .map_err(|e| format!("encode preview: {e}"))?;
-    let out = craft_image_codecs::encode(&raw, craft_image_codecs::Format::Png, &craft_image_codecs::EncodeOptions::default())
+    let out = nodalia_image_codecs::encode(&raw, nodalia_image_codecs::Format::Png, &nodalia_image_codecs::EncodeOptions::default())
         .map_err(|e| format!("encode preview: {e}"))?;
     Ok(image_result(&out, json!({"width":img.width(),"height":img.height()})))
 }

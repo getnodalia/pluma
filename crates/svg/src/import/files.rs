@@ -265,13 +265,13 @@ fn percent_decoded(s: &str) -> String {
 /// Where href `h` points: the path its link keeps, and the file to read when it may be read (a
 /// local file, or one on the network share the SVG is on). A relative path is taken from
 /// `folder`, the SVG's own, made absolute against the working directory when it isn't; without
-/// a folder, only absolute paths are read (see `craft_docpath`). The link keeps the path as
+/// a folder, only absolute paths are read (see `nodalia_docpath`). The link keeps the path as
 /// written (decoded) when the folder does not change the path it resolves to, and the path found
 /// when it does (a relative path, or on Windows a path rooted without a drive); the link of a
 /// `file:` URL keeps the path it names.
 fn target(h: &str, folder: Option<&str>) -> (String, Option<String>) {
     let h = h.trim();
-    // `craft_docpath` decodes a `file:` URL itself; any other href is decoded here, once.
+    // `nodalia_docpath` decodes a `file:` URL itself; any other href is decoded here, once.
     let file_url = h.get(..5).is_some_and(|s| s.eq_ignore_ascii_case("file:"));
     let stored = if file_url { h.to_string() } else { percent_decoded(h) };
     if !file_url && stored.contains("://") {
@@ -282,10 +282,10 @@ fn target(h: &str, folder: Option<&str>) -> (String, Option<String>) {
         let f = Path::new(f);
         if f.is_absolute() { f.to_path_buf() } else { std::path::absolute(f).unwrap_or_else(|_| f.to_path_buf()) }.join("-")
     });
-    match craft_docpath::resolve(&stored, document.as_deref()) {
+    match nodalia_docpath::resolve(&stored, document.as_deref()) {
         Ok(path) => {
-            let file = craft_docpath::resolve_absolute(&stored, document.as_deref()).ok().map(|p| p.to_string_lossy().into_owned());
-            let as_written = !file_url && craft_docpath::resolve(&stored, None).as_ref() == Ok(&path);
+            let file = nodalia_docpath::resolve_absolute(&stored, document.as_deref()).ok().map(|p| p.to_string_lossy().into_owned());
+            let as_written = !file_url && nodalia_docpath::resolve(&stored, None).as_ref() == Ok(&path);
             let link = if as_written { stored } else { path.to_string_lossy().into_owned() };
             (link, file)
         }
@@ -939,7 +939,8 @@ fn png_takes_icc(img: &image::DynamicImage, icc: &[u8]) -> bool {
 /// can't be.
 fn decoded(bytes: &[u8], format: image::ImageFormat) -> Option<(image::DynamicImage, Option<Vec<u8>>)> {
     let max = pluma_doc::MAX_RASTER_ALLOC;
-    let kind = craft_image_codecs::detect(bytes).or_else(|| format.extensions_str().iter().find_map(|e| craft_image_codecs::from_extension(e)))?;
+    let kind =
+        nodalia_image_codecs::detect(bytes).or_else(|| format.extensions_str().iter().find_map(|e| nodalia_image_codecs::from_extension(e)))?;
     let (w, h, per_pixel) = pluma_doc::decode::decoded_layout(bytes, kind)?;
     let pixels = u64::from(w) * u64::from(h);
     if pixels.saturating_mul(per_pixel) > max || pixels * 4 > max {
@@ -947,7 +948,7 @@ fn decoded(bytes: &[u8], format: image::ImageFormat) -> Option<(image::DynamicIm
     }
     let (img, icc) = pluma_doc::decode::decode_image(kind, bytes, max).ok()?;
     // A TIFF's profile is read by the TIFF reader, as before.
-    let icc = if kind == craft_image_codecs::Format::Tiff { pluma_doc::cmyk::tiff_icc_profile(bytes) } else { icc };
+    let icc = if kind == nodalia_image_codecs::Format::Tiff { pluma_doc::cmyk::tiff_icc_profile(bytes) } else { icc };
     Some((img, icc))
 }
 
@@ -1008,7 +1009,7 @@ mod tests {
     }
 
     /// Without a folder, a link keeps its path as the href spells it, on every system; with one, a
-    /// drive path keeps it too. The file to read is the absolute path that `craft_docpath`
+    /// drive path keeps it too. The file to read is the absolute path that `nodalia_docpath`
     /// resolves on the running system.
     #[test]
     fn links_keep_hrefs_as_written() {
@@ -1499,7 +1500,7 @@ mod tests {
         );
     }
 
-    /// SVG import's pixels through craft-image-codecs (#778) are those the image crate decoded:
+    /// SVG import's pixels through nodalia-image-codecs (#778) are those the image crate decoded:
     /// the same layout and samples for PNG, GIF, WebP, TIFF and BMP at each depth the image
     /// crate writes, and JPEG samples within two steps.
     #[test]

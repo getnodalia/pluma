@@ -1096,13 +1096,13 @@ impl Pict {
 
     /// A JPEG stream's pixels, taken from the file's pixel budget.
     fn jpeg(&mut self, data: &[u8]) -> Result<Rgba, &'static str> {
-        let mut opts = craft_image_codecs::DecodeOptions::default();
+        let mut opts = nodalia_image_codecs::DecodeOptions::default();
         opts.limits.max_width = dib::MAX_READ_SIDE;
         opts.limits.max_height = dib::MAX_READ_SIDE;
         opts.limits.max_pixels = dib::MAX_READ_PIXELS.min(self.p.pixels_left);
-        let img = match craft_image_codecs::decode_as_with(craft_image_codecs::Format::Jpeg, data, &opts) {
+        let img = match nodalia_image_codecs::decode_as_with(nodalia_image_codecs::Format::Jpeg, data, &opts) {
             Ok(img) => img,
-            Err(craft_image_codecs::CodecError::LimitExceeded(_)) => return Err(TOO_MANY_PIXELS),
+            Err(nodalia_image_codecs::CodecError::LimitExceeded(_)) => return Err(TOO_MANY_PIXELS),
             Err(_) => return Err(BAD_IMAGE),
         };
         let (w, h) = img.dimensions();

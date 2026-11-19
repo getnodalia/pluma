@@ -456,8 +456,9 @@ fn png(w: u32, h: u32) -> Vec<u8> {
             data.extend_from_slice(&[(x * 100) as u8, (y * 7) as u8, 30, 128]);
         }
     }
-    let img = craft_image_codecs::Image::from_raw(w, h, craft_image_codecs::ChannelLayout::Rgba, craft_image_codecs::SampleType::U8, data).unwrap();
-    craft_image_codecs::encode(&img, craft_image_codecs::Format::Png, &craft_image_codecs::EncodeOptions::default()).unwrap()
+    let img =
+        nodalia_image_codecs::Image::from_raw(w, h, nodalia_image_codecs::ChannelLayout::Rgba, nodalia_image_codecs::SampleType::U8, data).unwrap();
+    nodalia_image_codecs::encode(&img, nodalia_image_codecs::Format::Png, &nodalia_image_codecs::EncodeOptions::default()).unwrap()
 }
 
 /// An image object `w` × `h` pixels showing blob `key`, linked to `link`.
@@ -572,7 +573,7 @@ fn declared_embedded_and_linked_images_have_distinct_metadata_and_pixel_omission
     let e = encode_read_only(&d, d.node(embedded).unwrap()).unwrap();
     assert_eq!((&e["type"], &e["pixelSize"], &e["colorMode"]), (&json!("image"), &json!([2, 1]), &json!("rgb")));
     assert_eq!((&e["linked"], &e["pixelsOmitted"], &e["transform"]), (&json!(false), &json!(false), &json!([2.0, 0.0, 0.0, 2.0, 40.0, 60.0])));
-    let pixels = craft_vectorcraft_format::base64::decode(e["pixelsBase64"].as_str().unwrap()).unwrap();
+    let pixels = nodalia_pluma_format::base64::decode(e["pixelsBase64"].as_str().unwrap()).unwrap();
     assert_eq!(pixels, [0, 0, 30, 128, 100, 0, 30, 128], "straight RGBA, row by row");
     let l = encode_read_only(&d, d.node(linked).unwrap()).unwrap();
     assert_eq!((&l["linked"], &l["pixelsOmitted"], &l["pixelSize"]), (&json!(true), &json!(true), &json!([4, 4])));
@@ -594,10 +595,11 @@ fn declared_embedded_and_linked_images_have_distinct_metadata_and_pixel_omission
     let id = d.insert(Some(layer), usize::MAX, n).unwrap();
     assert_eq!(encode_read_only(&d, d.node(id).unwrap()).unwrap()["pixelsOmitted"], json!(true), "too large to count");
     // Gray pixels, and data that isn't an image.
-    let gray = craft_image_codecs::encode(
-        &craft_image_codecs::Image::from_raw(2, 2, craft_image_codecs::ChannelLayout::Gray, craft_image_codecs::SampleType::U8, vec![90; 4]).unwrap(),
-        craft_image_codecs::Format::Png,
-        &craft_image_codecs::EncodeOptions::default(),
+    let gray = nodalia_image_codecs::encode(
+        &nodalia_image_codecs::Image::from_raw(2, 2, nodalia_image_codecs::ChannelLayout::Gray, nodalia_image_codecs::SampleType::U8, vec![90; 4])
+            .unwrap(),
+        nodalia_image_codecs::Format::Png,
+        &nodalia_image_codecs::EncodeOptions::default(),
     )
     .unwrap();
     for (blob, mode) in [(ImageBlob::png(gray), "gray"), (ImageBlob::png(b"not an image".to_vec()), "unknown")] {
@@ -620,7 +622,7 @@ fn cmyk_image_pixels_go_through_the_working_cmyk_profile() {
     let id = d.insert(Some(layer), usize::MAX, n).unwrap();
     let o = encode_read_only(&d, d.node(id).unwrap()).unwrap();
     assert_eq!((&o["colorMode"], &o["pixelsOmitted"]), (&json!("cmyk"), &json!(false)));
-    let pixels = craft_vectorcraft_format::base64::decode(o["pixelsBase64"].as_str().unwrap()).unwrap();
+    let pixels = nodalia_pluma_format::base64::decode(o["pixelsBase64"].as_str().unwrap()).unwrap();
     let shown = |c: [f32; 4]| lab::xyz_to_srgb(lab::lab_to_xyz(cms::active().cmyk_display_lab(c))).map(|v| (v.clamp(0.0, 1.0) * 255.0).round() as u8);
     let ([r, g, b], [r2, g2, b2]) = (shown([0.0, 0.0, 0.0, 1.0]), shown([0.0; 4]));
     assert_eq!(pixels, [r, g, b, 255, r2, g2, b2, 255]);

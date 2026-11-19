@@ -211,7 +211,7 @@ pub struct Services {
     /// their own store the monitor they are on and reopen on it. The rects are in the points egui
     /// reports for a window on that monitor. Empty on the web, and where the host cannot place a
     /// window by these points, which sends floating panels to the main window's monitor.
-    pub dock_monitors: Vec<craft_ui::docking::Monitor>,
+    pub dock_monitors: Vec<nodalia_ui::docking::Monitor>,
     /// The text Help › Copy Troubleshooting Info copies (desktop: the platform, the graphics
     /// processor, recent commands and frame times, and the hang reports of this session and the
     /// one before). Without it the command copies the version only ([`crate::troubleshooting`]).

@@ -154,7 +154,7 @@ fn cmyk_psd_depth_and_compression_preserve_exact_samples() {
                 let img = raster_image(&bytes).unwrap();
                 assert!(img.blob.is_cmyk(), "version {version}, depth {depth}, compression {method}");
                 assert_eq!(img.blob.is_cmyk16(), depth == 16);
-                let decoded = craft_image_codecs::decode(&img.blob.bytes).unwrap();
+                let decoded = nodalia_image_codecs::decode(&img.blob.bytes).unwrap();
                 let expected: Vec<u8> =
                     values.iter().flat_map(|v| if depth == 8 { vec![255 - *v as u8] } else { (65535 - v).to_ne_bytes().to_vec() }).collect();
                 assert_eq!(decoded.data(), expected);
@@ -169,7 +169,7 @@ fn cmyk_psd_depth_and_compression_preserve_exact_samples() {
     let alpha = psd(1, 5, (1, 1), 8, 4, &[], &[], &layer_count(-1, false), &raw(&planes));
     let img = raster_image(&alpha).unwrap();
     assert!(!img.blob.is_cmyk());
-    assert_eq!(craft_image_codecs::decode(&img.blob.bytes).unwrap().to_rgba8()[3], 128);
+    assert_eq!(nodalia_image_codecs::decode(&img.blob.bytes).unwrap().to_rgba8()[3], 128);
 }
 
 #[test]
@@ -341,17 +341,17 @@ fn exported(s: &mut Session, p: Value) -> Vec<u8> {
 #[test]
 fn psd_exports_open_and_place_again() {
     let mut s = art();
-    let png = craft_image_codecs::decode(&exported(&mut s, json!({"format": "png"})))
+    let png = nodalia_image_codecs::decode(&exported(&mut s, json!({"format": "png"})))
         .map(|__cimg| {
             let (__w, __h) = __cimg.dimensions();
             match (__cimg.layout(), __cimg.sample_type()) {
-                (craft_image_codecs::ChannelLayout::Gray, craft_image_codecs::SampleType::U8) => {
+                (nodalia_image_codecs::ChannelLayout::Gray, nodalia_image_codecs::SampleType::U8) => {
                     image::DynamicImage::ImageLuma8(image::GrayImage::from_raw(__w, __h, __cimg.into_data()).unwrap())
                 }
-                (craft_image_codecs::ChannelLayout::GrayA, craft_image_codecs::SampleType::U8) => {
+                (nodalia_image_codecs::ChannelLayout::GrayA, nodalia_image_codecs::SampleType::U8) => {
                     image::DynamicImage::ImageLumaA8(image::GrayAlphaImage::from_raw(__w, __h, __cimg.into_data()).unwrap())
                 }
-                (craft_image_codecs::ChannelLayout::Rgb, craft_image_codecs::SampleType::U8) => {
+                (nodalia_image_codecs::ChannelLayout::Rgb, nodalia_image_codecs::SampleType::U8) => {
                     image::DynamicImage::ImageRgb8(image::RgbImage::from_raw(__w, __h, __cimg.into_data()).unwrap())
                 }
                 _ => image::DynamicImage::ImageRgba8(image::RgbaImage::from_raw(__w, __h, __cimg.to_rgba8()).unwrap()),

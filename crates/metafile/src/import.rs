@@ -1,4 +1,4 @@
-//! The metafile readers. EMF (with its EMF+ records) and WMF files are read by `craft_metafile`,
+//! The metafile readers. EMF (with its EMF+ records) and WMF files are read by `nodalia_metafile`,
 //! and `picture` turns what they draw into document objects. QuickDraw pictures (`pict`) play their
 //! opcodes on a [`Player`], a small model of the drawing state (pen, brush, font, the clip), which
 //! turns what they draw into document objects.

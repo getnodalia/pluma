@@ -16,7 +16,7 @@ use std::borrow::Cow;
 use std::collections::HashMap;
 use std::collections::hash_map::Entry;
 
-use craft_svg::tree::usvg::roxmltree;
+use nodalia_svg::tree::usvg::roxmltree;
 
 use super::css::{Styles, XNode, parse_decls};
 

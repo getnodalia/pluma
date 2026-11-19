@@ -78,7 +78,7 @@ impl PlumaApp {
         }
         self.screenshot_reserved = self.screenshot_reserved.saturating_sub(previous).saturating_add(bytes);
         let viewport = ctx.viewport_id();
-        let (slot, callback) = craft_ui::capture::CaptureSlot::new(ctx, viewport, MAX_SCREENSHOT_BYTES);
+        let (slot, callback) = nodalia_ui::capture::CaptureSlot::new(ctx, viewport, MAX_SCREENSHOT_BYTES);
         {
             let pending = &mut self.pending_screenshots[index];
             pending.reserved_bytes = bytes;
@@ -115,7 +115,7 @@ impl PlumaApp {
         if self.pending_screenshots.is_empty() {
             return;
         }
-        let mut completed: Vec<(usize, Result<Arc<egui::ColorImage>, craft_ui::capture::CaptureError>)> = vec![];
+        let mut completed: Vec<(usize, Result<Arc<egui::ColorImage>, nodalia_ui::capture::CaptureError>)> = vec![];
         for (index, pending) in self.pending_screenshots.iter().enumerate() {
             if let Some(slot) = &pending.slot
                 && let Some(result) = slot.take()

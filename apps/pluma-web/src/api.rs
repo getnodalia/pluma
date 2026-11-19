@@ -1,7 +1,7 @@
 //! `window.pluma`: the control channel for the page, as promises.
 //!
 //! `request`, `execute`, `commands`, `docInspect`, `uiInspect` and `screenshot` come from
-//! `craft-web-api` (storytold/craft-libs#413), the same in every Craft app; Pluma adds its own
+//! `nodalia-web-api` (storytold/craft-libs#413), the same in every Craft app; Pluma adds its own
 //! functions on the same object.
 //!
 //! The same JSON methods as the desktop control server (`docs/control-protocol.md`), so an agent
@@ -26,8 +26,8 @@ use std::pin::Pin;
 use std::rc::Rc;
 use std::sync::mpsc::{Receiver, Sender, TryRecvError};
 
-use craft_web_api::methods::Methods;
-use craft_web_api::page::{PageApi, Request};
+use nodalia_web_api::methods::Methods;
+use nodalia_web_api::page::{PageApi, Request};
 use pluma_ui_egui::{ControlRequest, ControlTicket as Ticket};
 use serde_json::{Value, json};
 use wasm_bindgen::prelude::*;

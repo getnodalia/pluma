@@ -23,20 +23,20 @@ fn rgba_within(bytes: &[u8], max: u64) -> Option<image::RgbaImage> {
     Some(crate::decode::decode_within(bytes, max).ok()??.0.into_rgba8())
 }
 
-/// An image file's stored size in pixels, read from its header by craft-image-codecs without
+/// An image file's stored size in pixels, read from its header by nodalia-image-codecs without
 /// decoding any pixels: PNG's IHDR, a JPEG's frame, a TIFF's first full-resolution page, a
-/// still or animated WebP's canvas, BMP's header ([`craft_image_codecs::probe_allocation_size`],
+/// still or animated WebP's canvas, BMP's header ([`nodalia_image_codecs::probe_allocation_size`],
 /// with no size limit), and a GIF's logical screen and the other formats' headers
-/// ([`craft_image_codecs::probe_size`]). Not turned by an EXIF orientation. `None` when no header
+/// ([`nodalia_image_codecs::probe_size`]). Not turned by an EXIF orientation. `None` when no header
 /// gives a size.
 pub fn header_size(bytes: &[u8]) -> Option<(u32, u32)> {
-    if craft_image_codecs::detect(bytes) == Some(craft_image_codecs::Format::Gif) {
+    if nodalia_image_codecs::detect(bytes) == Some(nodalia_image_codecs::Format::Gif) {
         // A GIF frame may be larger than the logical screen the image crate gave as its size.
-        return craft_image_codecs::probe_size(bytes).ok();
+        return nodalia_image_codecs::probe_size(bytes).ok();
     }
-    craft_image_codecs::probe_allocation_size(bytes)
+    nodalia_image_codecs::probe_allocation_size(bytes)
         .ok()
-        .or_else(|| craft_image_codecs::probe_size(bytes).ok())
+        .or_else(|| nodalia_image_codecs::probe_size(bytes).ok())
         // A BMP whose pixel data does not match its header (a truncated file, or a header that
         // declares more pixels than the file holds) is refused by the image crate decoder the
         // probes use. The BITMAPINFOHEADER still names the size, which Place, Paste and Open
@@ -439,7 +439,7 @@ mod tests {
 
     /// The pixels are decoded within the allowance, not within the decoder's own 512 MB: an RGBA
     /// image of 11,586 × 11,586 pixels (536,941,584 bytes) is recolored and sampled. A PNG, not a
-    /// sparse GIF: craft-image-codecs refuses a GIF whose unbacked logical screen is past 256 MiB.
+    /// sparse GIF: nodalia-image-codecs refuses a GIF whose unbacked logical screen is past 256 MiB.
     #[test]
     fn pixels_past_the_decoders_own_limit_are_decoded_within_the_allowance() {
         let (w, h) = (11_586, 11_586);
@@ -596,7 +596,7 @@ mod tests {
         assert_eq!(ImageBlob::png(vec![1, 2, 3]).coverage(), None);
     }
 
-    /// Embedded-image pixels through craft-image-codecs (#778) are those the image crate decoded:
+    /// Embedded-image pixels through nodalia-image-codecs (#778) are those the image crate decoded:
     /// the same layout and samples for PNG, GIF, WebP, TIFF and BMP at each depth the image
     /// crate writes, and JPEG samples within two steps.
     #[test]
@@ -656,7 +656,7 @@ mod tests {
         bmp[18..22].copy_from_slice(&30_000i32.to_le_bytes());
         bmp[22..26].copy_from_slice(&30_000i32.to_le_bytes());
         assert_eq!(header_size(&bmp), Some((30_000, 30_000)));
-        let (w, h, _) = crate::decode::decoded_layout(&bmp, craft_image_codecs::Format::Bmp).expect("layout from the header");
+        let (w, h, _) = crate::decode::decoded_layout(&bmp, nodalia_image_codecs::Format::Bmp).expect("layout from the header");
         assert_eq!((w, h), (30_000, 30_000));
     }
 }

@@ -115,17 +115,17 @@ fn tiff_predicted_4_bit_images_open_from_eps_and_postscript_ai_files() {
         let mut grays = vec![];
         d.walk(|n| {
             if let pluma_doc::NodeKind::Image(im) = &n.kind {
-                grays = craft_image_codecs::decode(&d.images[&im.key].bytes)
+                grays = nodalia_image_codecs::decode(&d.images[&im.key].bytes)
                     .map(|__cimg| {
                         let (__w, __h) = __cimg.dimensions();
                         match (__cimg.layout(), __cimg.sample_type()) {
-                            (craft_image_codecs::ChannelLayout::Gray, craft_image_codecs::SampleType::U8) => {
+                            (nodalia_image_codecs::ChannelLayout::Gray, nodalia_image_codecs::SampleType::U8) => {
                                 image::DynamicImage::ImageLuma8(image::GrayImage::from_raw(__w, __h, __cimg.into_data()).unwrap())
                             }
-                            (craft_image_codecs::ChannelLayout::GrayA, craft_image_codecs::SampleType::U8) => {
+                            (nodalia_image_codecs::ChannelLayout::GrayA, nodalia_image_codecs::SampleType::U8) => {
                                 image::DynamicImage::ImageLumaA8(image::GrayAlphaImage::from_raw(__w, __h, __cimg.into_data()).unwrap())
                             }
-                            (craft_image_codecs::ChannelLayout::Rgb, craft_image_codecs::SampleType::U8) => {
+                            (nodalia_image_codecs::ChannelLayout::Rgb, nodalia_image_codecs::SampleType::U8) => {
                                 image::DynamicImage::ImageRgb8(image::RgbImage::from_raw(__w, __h, __cimg.into_data()).unwrap())
                             }
                             _ => image::DynamicImage::ImageRgba8(image::RgbaImage::from_raw(__w, __h, __cimg.to_rgba8()).unwrap()),

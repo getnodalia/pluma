@@ -10,9 +10,9 @@
 use std::collections::{HashMap, HashSet};
 use std::io::Read;
 
-use craft_pdf::write::backend as krilla;
 use krilla::geom::PathBuilder;
 use krilla::graphic::Graphic;
+use nodalia_pdf::write::backend as krilla;
 use std::sync::Arc;
 
 use pluma_doc::{Document, Node, NodeKind};

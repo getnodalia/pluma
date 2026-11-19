@@ -100,7 +100,7 @@ fn intra_layer_allowed(from: &str, to: &str) -> bool {
 
 /// External crates that constitute a UI toolkit / windowing dependency.
 /// Entries ending in `*` are prefixes.
-pub const UI_CRATES: &[&str] = &["egui", "eframe", "winit", "egui_kittest", "craft-ui", "craft-keymap", "rfd", "bevy*"];
+pub const UI_CRATES: &[&str] = &["egui", "eframe", "winit", "egui_kittest", "nodalia-ui", "nodalia-keymap", "rfd", "bevy*"];
 
 /// First layer allowed to use UI crates.
 pub const UI_MIN_LAYER: u8 = 6;
@@ -313,12 +313,12 @@ mod tests {
 
     #[test]
     fn ui_crates_below_l6_flagged() {
-        for dep in ["egui", "eframe", "winit", "egui_kittest", "craft-ui", "rfd", "bevy_ecs", "bevy"] {
+        for dep in ["egui", "eframe", "winit", "egui_kittest", "nodalia-ui", "rfd", "bevy_ecs", "bevy"] {
             let v = check(&[c("pluma-engine", &[(dep, Normal, false)])]);
             assert!(matches!(v[..], [Violation::UiBelowL6 { layer: 5, .. }]), "{dep}");
         }
         assert!(check(&[c("pluma-engine", &[("egui_extras_not", Normal, false)])]).is_empty());
-        assert!(check(&[c("pluma-ui-egui", &[("craft-ui", Normal, false)])]).is_empty());
+        assert!(check(&[c("pluma-ui-egui", &[("nodalia-ui", Normal, false)])]).is_empty());
         assert!(check(&[c("pluma-mcp", &[("winit", Normal, false)])]).is_empty());
     }
 
