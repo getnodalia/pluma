@@ -2573,8 +2573,8 @@ antiAlias	Sharp	शार्प
 	JavaScript Files	जावास्क्रिप्ट फ़ाइलें
 	JavaScript:	जावास्क्रिप्ट:
 	Join	जोड़ें
-	Join Point Text	पॉइंट टेक्स्ट में शामिल हों
-	Join the lines of each paragraph	प्रत्येक पैराग्राफ की लाइनों में शामिल हों
+	Join Point Text	पॉइंट टेक्स्ट जोड़ें
+	Join the lines of each paragraph	प्रत्येक पैराग्राफ की लाइनें जोड़ें
 	Join our Discord	हमारे डिसकॉर्ड में शामिल हों
 	Join Our Discord	हमारे डिसकॉर्ड में शामिल हों
 	Join the Nodalia community on Discord (discord.gg/artcraft)	Discord (discord.gg/artcraft) पर Nodalia समुदाय में शामिल हों
@@ -9723,3 +9723,54 @@ theme	Appearance	अपीयरेंस
 @msg	Other blanks not shown: {count}	दूसरे ब्लैंक नहीं दिखाए गए: {count}
 @msg	A joint does not close by {gap} pt.	एक जोड़ {gap} pt से बंद नहीं होता।
 @msg	Two panels pass through each other.	दो पैनल एक-दूसरे के आर-पार जाते हैं।
+	Add to Custom Dictionary	कस्टम शब्दकोश में जोड़ें
+	Apply SVG Filter	SVG फ़िल्टर लागू करें
+	Bulgarian	बुल्गारियाई
+	Cancel Opening	खोलना रद्द करें
+	Change in Custom Dictionary	कस्टम शब्दकोश में बदलें
+	Check Spelling	वर्तनी जाँचें
+	Delete SVG Filter	SVG फ़िल्टर हटाएँ
+	Delete from Custom Dictionary	कस्टम शब्दकोश से हटाएँ
+	Import SVG Filter…	SVG फ़िल्टर आयात करें…
+	Move Type Path Handle	टेक्स्ट पाथ का हैंडल खिसकाएँ
+	New SVG Filter	नया SVG फ़िल्टर
+	Nodalia	Nodalia
+	SVG Filter	SVG फ़िल्टर
+	Select Symbol Instance Part	सिंबल इंस्टेंस का भाग चुनें
+	Spelling Suggestions	वर्तनी सुझाव
+	Stroke Weight Down	स्ट्रोक मोटाई घटाएँ
+	Stroke Weight Up	स्ट्रोक मोटाई बढ़ाएँ
+	Edit SVG Filter	SVG फ़िल्टर संपादित करें
+	Import SVG Filter	SVG फ़िल्टर आयात करें
+	Drop an SVG, PDF or Pluma file anywhere to open it.	खोलने के लिए SVG, PDF या Pluma फ़ाइल कहीं भी छोड़ें।
+	GitHub	GitHub
+	Grid view	ग्रिड दृश्य
+	List view	सूची दृश्य
+	Main Menu	मुख्य मेनू
+	On your computer	आपके कंप्यूटर पर
+	Reading the file…	फ़ाइल पढ़ी जा रही है…
+	Remove from Recent	हाल की सूची से हटाएँ
+	Website	वेबसाइट
+	Compare with Image	छवि से तुलना करें
+	Load All Styles…	सभी शैलियाँ लोड करें…
+	Load Character Styles…	अक्षर शैलियाँ लोड करें…
+	Load Paragraph Styles…	अनुच्छेद शैलियाँ लोड करें…
+	Copies per Sheet (as many as fit, in a grid)	प्रति शीट प्रतियाँ (ग्रिड में जितनी समाएँ)
+	Level:	स्तर:
+	Load All Styles	सभी शैलियाँ लोड करें
+	Load Character Styles	अक्षर शैलियाँ लोड करें
+	Load Paragraph Styles	अनुच्छेद शैलियाँ लोड करें
+	Bullets and Numbering…	बुलेट और क्रमांकन…
+	Keep Tools Beside the Canvas	टूल कैनवास के बगल में रखें
+	Scroll Sideways with Cmd/Ctrl + Wheel	Cmd/Ctrl + व्हील से बग़ल में स्क्रॉल करें
+	Bullet Character:	बुलेट वर्ण:
+	Each data set saves over the same file, which keeps only the last data set.	हर डेटा सेट उसी फ़ाइल में लिखा जाता है, जिसमें केवल अंतिम डेटा सेट रहता है।
+	Find In	इसमें खोजें
+	First Line Indent:	पहली पंक्ति का इंडेंट:
+	Kinsoku Shori Type	किन्सोकु शोरी प्रकार
+	Left Indent:	बायाँ इंडेंट:
+	Number Style:	संख्या शैली:
+	Numbers	संख्याएँ
+	Push In First	पहले अंदर धकेलें
+	Push Out First	पहले बाहर धकेलें
+	Push Out Only	केवल बाहर धकेलें

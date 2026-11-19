@@ -1607,7 +1607,7 @@ mod tests {
         let native_home = |id: &str| native.get(id).map(|(path, _)| path.as_str());
         assert_eq!(native_home("edit.preferences"), Some("Pluma › Settings"));
         assert_eq!(native_home("help.about"), Some("Pluma"));
-        assert_eq!(native_home("help.discord"), Some("Help"));
+        assert_eq!(native_home("help.website"), Some("Help"));
         let c = catalog(Lang::EN, false);
         let of = |id: &str| c.list.iter().find(|e| e.id == id).and_then(|e| e.home.clone());
         assert_eq!(of("effect:stylize.roundCorners").as_deref(), Some("Effect › Stylize"));

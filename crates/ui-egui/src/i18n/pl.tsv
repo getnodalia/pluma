@@ -9972,3 +9972,111 @@ breakText	Glyphs	Glify
 @msg	Other blanks not shown: {count}	Inne wykroje nie są pokazane: {count}
 @msg	A joint does not close by {gap} pt.	Połączenie nie domyka się o {gap} pt.
 @msg	Two panels pass through each other.	Dwa panele przechodzą przez siebie.
+	Add to Custom Dictionary	Dodaj do słownika użytkownika
+	Apply SVG Filter	Zastosuj filtr SVG
+	Bulgarian	Bułgarski
+	Cancel Opening	Anuluj otwieranie
+	Change in Custom Dictionary	Zmień w słowniku użytkownika
+	Check Spelling	Sprawdź pisownię
+	Delete SVG Filter	Usuń filtr SVG
+	Delete from Custom Dictionary	Usuń ze słownika użytkownika
+	Import SVG Filter…	Importuj filtr SVG…
+	Move Type Path Handle	Przesuń uchwyt ścieżki tekstu
+	New SVG Filter	Nowy filtr SVG
+	Nodalia	Nodalia
+	SVG Filter	Filtr SVG
+	Select Symbol Instance Part	Zaznacz część instancji symbolu
+	Spelling Suggestions	Propozycje pisowni
+	Stroke Weight Down	Cieńszy obrys
+	Stroke Weight Up	Grubszy obrys
+	Edit SVG Filter	Edytuj filtr SVG
+	Import SVG Filter	Importuj filtr SVG
+	Apply Gradient Preset	Zastosuj ustawienie wstępne gradientu
+	Cancel Image Trace	Anuluj trasowanie obrazu
+	Caps Lock Cursor State	Stan kursora Caps Lock
+	Catalan	Kataloński
+	Check for Updates…	Sprawdź aktualizacje…
+	Chinese	Chiński
+	Configure Shape	Skonfiguruj kształt
+	Croatian	Chorwacki
+	Czech	Czeski
+	Danish	Duński
+	Delete Gradient Preset	Usuń ustawienie wstępne gradientu
+	Edit Character Style	Edytuj styl znaku
+	Export All Open Documents	Eksportuj wszystkie otwarte dokumenty
+	Finnish	Fiński
+	German: Swiss	Niemiecki: Szwajcaria
+	Gradient Presets	Ustawienia wstępne gradientów
+	Move Document	Przenieś dokument
+	Norwegian	Norweski
+	Polish	Polski
+	Reshape Type Path	Zmień kształt ścieżki tekstu
+	Russian	Rosyjski
+	Save Gradient Preset	Zapisz ustawienie wstępne gradientu
+	Serbian: Cyrillic	Serbski: cyrylica
+	Serbian: Latin	Serbski: łacinka
+	Swedish	Szwedzki
+	Drop an SVG, PDF or Pluma file anywhere to open it.	Upuść plik SVG, PDF lub Pluma w dowolnym miejscu, aby go otworzyć.
+	GitHub	GitHub
+	Grid view	Widok siatki
+	Hide Presets	Ukryj ustawienia wstępne
+	Invalid panel layout; restored the default dock	Nieprawidłowy układ paneli; przywrócono domyślny dok
+	List view	Widok listy
+	Main Menu	Menu główne
+	On your computer	Na tym komputerze
+	Pluma Updates	Aktualizacje Pluma
+	Preparing the image…	Przygotowywanie obrazu…
+	Reading the file…	Odczytywanie pliku…
+	Remove from Recent	Usuń z ostatnich
+	Save Gradient Preset…	Zapisz ustawienie wstępne gradientu…
+	Show Presets	Pokaż ustawienia wstępne
+	Tracing the colors…	Trasowanie kolorów…
+	Website	Strona internetowa
+	Duplicate Effects	Duplikuj efekty
+	Remove Effects	Usuń efekty
+swatch	Amber	Bursztynowy
+swatch	Aqua	Morski
+swatch	Azure	Lazurowy
+swatch	Black	Czarny
+swatch	Blue	Niebieski
+swatch	Bright Blue	Jasnoniebieski
+swatch	Bright Green	Jasnozielony
+swatch	Bright Red	Jasnoczerwony
+swatch	Bright Violet	Jasnofioletowy
+swatch	Bright Yellow	Jasnożółty
+swatch	Brights	Jasne
+swatch	Brown	Brązowy
+swatch	Chocolate	Czekoladowy
+swatch	Coffee	Kawowy
+swatch	Copper	Miedziany
+swatch	Cyan	Cyjan
+swatch	Cyan Green	Cyjanowozielony
+swatch	Emerald	Szmaragdowy
+swatch	Espresso	Espresso
+swatch	Grays	Szarości
+swatch	Green	Zielony
+swatch	Indigo	Indygo
+swatch	Lime	Limonkowy
+swatch	Magenta	Magenta
+swatch	Ocean	Oceaniczny
+swatch	Orange	Pomarańczowy
+swatch	Orange Red	Pomarańczowoczerwony
+swatch	Pink	Różowy
+swatch	Purple	Purpurowy
+swatch	Radial White, Black	Promienisty biały, czarny
+swatch	Red	Czerwony
+swatch	Rose	Różany
+swatch	Rust	Rdzawy
+swatch	Sand	Piaskowy
+swatch	Sunset	Zachód słońca
+swatch	Tan	Płowy
+swatch	Teal	Zielononiebieski
+swatch	Violet	Fiołkowy
+swatch	Walnut	Orzechowy
+swatch	White	Biały
+swatch	White, Black	Biały, czarny
+swatch	Yellow	Żółty
+swatch	Yellow Green	Żółtozielony
+swatch	[None]	[Brak]
+swatch	[Registration]	[Pasowanie]
+	Points:	Punkty:

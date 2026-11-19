@@ -10200,3 +10200,60 @@ shape	Open	Открытый
 @msg	Two panels pass through each other.	Две панели проходят друг сквозь друга.
 @msg	{w} × {h} pixels is too large for PSD (at most {MAX_SIDE} pixels a side): lower the resolution	{w} × {h} пикселей — слишком большой размер для PSD (не более {MAX_SIDE} пикселей по стороне): уменьшите разрешение
 @msg	composer must be "singleLine", "everyLine", "standardSingleLine" or "standardEveryLine"	composer должен быть "singleLine", "everyLine", "standardSingleLine" или "standardEveryLine"
+	Add to Custom Dictionary	Добавить в личный словарь
+	Apply SVG Filter	Применить фильтр SVG
+	Bulgarian	Болгарский
+	Cancel Opening	Отменить открытие
+	Change in Custom Dictionary	Изменить в личном словаре
+	Check Spelling	Проверка орфографии
+	Delete SVG Filter	Удалить фильтр SVG
+	Delete from Custom Dictionary	Удалить из личного словаря
+	Import SVG Filter…	Импортировать фильтр SVG…
+	Move Type Path Handle	Переместить маркер текстового контура
+	New SVG Filter	Новый фильтр SVG
+	Nodalia	Nodalia
+	SVG Filter	Фильтр SVG
+	Select Symbol Instance Part	Выбрать часть экземпляра символа
+	Spelling Suggestions	Варианты исправления
+	Stroke Weight Down	Уменьшить толщину обводки
+	Stroke Weight Up	Увеличить толщину обводки
+	Edit SVG Filter	Изменить фильтр SVG
+	Import SVG Filter	Импортировать фильтр SVG
+	Apply Gradient Preset	Применить набор градиента
+	Cancel Image Trace	Отменить трассировку изображения
+	Caps Lock Cursor State	Состояние курсора при включённом Caps Lock
+	Catalan	Каталанский
+	Chinese	Китайский
+	Configure Shape	Настроить фигуру
+	Croatian	Хорватский
+	Czech	Чешский
+	Danish	Датский
+	Delete Gradient Preset	Удалить набор градиента
+	Edit Character Style	Изменить стиль символа
+	Export All Open Documents	Экспортировать все открытые документы
+	Finnish	Финский
+	German: Swiss	Немецкий: швейцарский
+	Gradient Presets	Наборы градиентов
+	Move Document	Переместить документ
+	Norwegian	Норвежский
+	Polish	Польский
+	Reshape Type Path	Изменить форму текстового контура
+	Russian	Русский
+	Save Gradient Preset	Сохранить набор градиента
+	Serbian: Cyrillic	Сербский: кириллица
+	Serbian: Latin	Сербский: латиница
+	Swedish	Шведский
+	Drop an SVG, PDF or Pluma file anywhere to open it.	Перетащите файл SVG, PDF или Pluma в любое место окна, чтобы открыть его.
+	GitHub	GitHub
+	Grid view	Сетка
+	Hide Presets	Скрыть наборы
+	List view	Список
+	Main Menu	Главное меню
+	On your computer	На вашем компьютере
+	Reading the file…	Чтение файла…
+	Remove from Recent	Удалить из недавних
+	Save Gradient Preset…	Сохранить набор градиента…
+	Show Presets	Показать наборы
+	Website	Сайт
+	Duplicate Effects	Дублировать эффекты
+	Remove Effects	Удалить эффекты

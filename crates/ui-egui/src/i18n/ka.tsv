@@ -10455,3 +10455,12 @@ font-script	Japanese	იაპონური
 @msg	A joint does not close by {gap} pt.	შეერთება არ იხურება {gap} pt-ით.
 @msg	Two panels pass through each other.	ორი პანელი ერთმანეთში გადის.
 @msg	composer must be "singleLine", "everyLine", "standardSingleLine" or "standardEveryLine"	composer უნდა იყოს "singleLine", "everyLine", "standardSingleLine" ან "standardEveryLine"
+	Nodalia	Nodalia
+	Drop an SVG, PDF or Pluma file anywhere to open it.	გადმოაგდეთ SVG, PDF ან Pluma ფაილი ნებისმიერ ადგილას მის გასახსნელად.
+	GitHub	GitHub
+	Grid view	ბადის ხედი
+	List view	სიის ხედი
+	Main Menu	მთავარი მენიუ
+	On your computer	თქვენს კომპიუტერში
+	Remove from Recent	ბოლო ფაილებიდან ამოშლა
+	Website	ვებგვერდი

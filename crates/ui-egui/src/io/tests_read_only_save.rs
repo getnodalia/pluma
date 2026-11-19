@@ -35,7 +35,9 @@ fn write(files: &Mutex<Files>, path: &str) -> pluma_engine::Result<()> {
 }
 
 fn app(format: &str, kind: ErrorKind) -> (PlumaApp, Arc<Mutex<Files>>) {
-    let files = Arc::new(Mutex::new(Files { original: format!("/locked/Poster.{format}"), kind: Some(kind), ..Default::default() }));
+    // The native format's id is the file signature `vectorcraft`; its files are `.pluma`.
+    let extension = if format == "vectorcraft" { "pluma" } else { format };
+    let files = Arc::new(Mutex::new(Files { original: format!("/locked/Poster.{extension}"), kind: Some(kind), ..Default::default() }));
     let typed = files.clone();
     let ordinary = files.clone();
     let services = Services {

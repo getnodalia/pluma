@@ -9751,3 +9751,111 @@ breakText	Glyphs	Glifi
 @msg	Other blanks not shown: {count}	Altri fustellati non mostrati: {count}
 @msg	A joint does not close by {gap} pt.	Una giunzione non si chiude di {gap} pt.
 @msg	Two panels pass through each other.	Due pannelli si attraversano.
+	Add to Custom Dictionary	Aggiungi al dizionario personalizzato
+	Apply SVG Filter	Applica filtro SVG
+	Bulgarian	Bulgaro
+	Cancel Opening	Annulla apertura
+	Change in Custom Dictionary	Modifica nel dizionario personalizzato
+	Check Spelling	Controlla ortografia
+	Delete SVG Filter	Elimina filtro SVG
+	Delete from Custom Dictionary	Elimina dal dizionario personalizzato
+	Import SVG Filter…	Importa filtro SVG…
+	Move Type Path Handle	Sposta maniglia del tracciato di testo
+	New SVG Filter	Nuovo filtro SVG
+	Nodalia	Nodalia
+	SVG Filter	Filtro SVG
+	Select Symbol Instance Part	Seleziona parte dell’istanza del simbolo
+	Spelling Suggestions	Suggerimenti ortografici
+	Stroke Weight Down	Riduci spessore del contorno
+	Stroke Weight Up	Aumenta spessore del contorno
+	Edit SVG Filter	Modifica filtro SVG
+	Import SVG Filter	Importa filtro SVG
+	Apply Gradient Preset	Applica preset di sfumatura
+	Cancel Image Trace	Annulla vettorizzazione immagine
+	Caps Lock Cursor State	Stato del cursore con Blocco maiuscole
+	Catalan	Catalano
+	Check for Updates…	Verifica aggiornamenti…
+	Chinese	Cinese
+	Configure Shape	Configura forma
+	Croatian	Croato
+	Czech	Ceco
+	Danish	Danese
+	Delete Gradient Preset	Elimina preset di sfumatura
+	Edit Character Style	Modifica stile carattere
+	Export All Open Documents	Esporta tutti i documenti aperti
+	Finnish	Finlandese
+	German: Swiss	Tedesco: svizzero
+	Gradient Presets	Preset di sfumatura
+	Move Document	Sposta documento
+	Norwegian	Norvegese
+	Polish	Polacco
+	Reshape Type Path	Rimodella tracciato di testo
+	Russian	Russo
+	Save Gradient Preset	Salva preset di sfumatura
+	Serbian: Cyrillic	Serbo: cirillico
+	Serbian: Latin	Serbo: latino
+	Swedish	Svedese
+	Drop an SVG, PDF or Pluma file anywhere to open it.	Trascina un file SVG, PDF o Pluma in un punto qualsiasi per aprirlo.
+	GitHub	GitHub
+	Grid view	Vista a griglia
+	Hide Presets	Nascondi preset
+	Invalid panel layout; restored the default dock	Layout dei pannelli non valido; ripristinato il dock predefinito
+	List view	Vista a elenco
+	Main Menu	Menu principale
+	On your computer	Sul tuo computer
+	Pluma Updates	Aggiornamenti di Pluma
+	Preparing the image…	Preparazione dell’immagine…
+	Reading the file…	Lettura del file…
+	Remove from Recent	Rimuovi dai recenti
+	Save Gradient Preset…	Salva preset di sfumatura…
+	Show Presets	Mostra preset
+	Tracing the colors…	Vettorizzazione dei colori…
+	Website	Sito web
+	Duplicate Effects	Duplica effetti
+	Remove Effects	Rimuovi effetti
+swatch	Amber	Ambra
+swatch	Aqua	Acquamarina
+swatch	Azure	Azzurro
+swatch	Black	Nero
+swatch	Blue	Blu
+swatch	Bright Blue	Blu vivo
+swatch	Bright Green	Verde vivo
+swatch	Bright Red	Rosso vivo
+swatch	Bright Violet	Viola vivo
+swatch	Bright Yellow	Giallo vivo
+swatch	Brights	Colori vivaci
+swatch	Brown	Marrone
+swatch	Chocolate	Cioccolato
+swatch	Coffee	Caffè
+swatch	Copper	Rame
+swatch	Cyan	Ciano
+swatch	Cyan Green	Verde ciano
+swatch	Emerald	Smeraldo
+swatch	Espresso	Espresso
+swatch	Grays	Grigi
+swatch	Green	Verde
+swatch	Indigo	Indaco
+swatch	Lime	Lime
+swatch	Magenta	Magenta
+swatch	Ocean	Oceano
+swatch	Orange	Arancione
+swatch	Orange Red	Rosso arancio
+swatch	Pink	Rosa
+swatch	Purple	Porpora
+swatch	Radial White, Black	Radiale bianco, nero
+swatch	Red	Rosso
+swatch	Rose	Rosa antico
+swatch	Rust	Ruggine
+swatch	Sand	Sabbia
+swatch	Sunset	Tramonto
+swatch	Tan	Fulvo
+swatch	Teal	Verde acqua
+swatch	Violet	Viola
+swatch	Walnut	Noce
+swatch	White	Bianco
+swatch	White, Black	Bianco, nero
+swatch	Yellow	Giallo
+swatch	Yellow Green	Giallo verde
+swatch	[None]	[Nessuno]
+swatch	[Registration]	[Registro]
+	Points:	Punti:

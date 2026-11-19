@@ -8318,3 +8318,93 @@ breakText	Glyphs	Glifs
 @msg	Two panels pass through each other.	Dos panells es travessen l’un a l’altre.
 @msg	composer must be "singleLine", "everyLine", "standardSingleLine" or "standardEveryLine"	composer ha de ser "singleLine", "everyLine", "standardSingleLine" o "standardEveryLine"
 @msg	text.{key} `{v}`: use "{_1}" or "{_2}"	text.{key} `{v}`: utilitzeu "{_1}" o "{_2}"
+	Add to Custom Dictionary	Afegeix al diccionari personalitzat
+	Apply SVG Filter	Aplica el filtre SVG
+	Bulgarian	Búlgar
+	Cancel Opening	Cancel·la l'obertura
+	Change in Custom Dictionary	Canvia al diccionari personalitzat
+	Check Spelling	Revisa l'ortografia
+	Delete SVG Filter	Suprimeix el filtre SVG
+	Delete from Custom Dictionary	Suprimeix del diccionari personalitzat
+	Import SVG Filter…	Importa un filtre SVG…
+	Move Type Path Handle	Mou el tirador del traçat de text
+	New SVG Filter	Filtre SVG nou
+	Nodalia	Nodalia
+	SVG Filter	Filtre SVG
+	Select Symbol Instance Part	Selecciona una part de la instància de símbol
+	Spelling Suggestions	Suggeriments d'ortografia
+	Stroke Weight Down	Redueix el gruix del traç
+	Stroke Weight Up	Augmenta el gruix del traç
+	Edit SVG Filter	Edita el filtre SVG
+	Import SVG Filter	Importa un filtre SVG
+	Apply Gradient Preset	Aplica el valor predefinit de degradat
+	Cancel Image Trace	Cancel·la el traçat d'imatge
+	Caps Lock Cursor State	Estat del cursor amb Bloq Maj
+	Catalan	Català
+	Check for Updates…	Cerca actualitzacions…
+	Chinese	Xinès
+	Configure Shape	Configura la forma
+	Croatian	Croat
+	Czech	Txec
+	Danish	Danès
+	Delete Gradient Preset	Suprimeix el valor predefinit de degradat
+	Edit Character Style	Edita l'estil de caràcter
+	Export All Open Documents	Exporta tots els documents oberts
+	Finnish	Finès
+	German: Swiss	Alemany: Suïssa
+	Gradient Presets	Valors predefinits de degradat
+	Move Document	Mou el document
+	Norwegian	Noruec
+	Polish	Polonès
+	Reshape Type Path	Remodela el traçat de text
+	Russian	Rus
+	Save Gradient Preset	Desa el valor predefinit de degradat
+	Serbian: Cyrillic	Serbi: ciríl·lic
+	Serbian: Latin	Serbi: llatí
+	Swedish	Suec
+	Drop an SVG, PDF or Pluma file anywhere to open it.	Deixeu anar un fitxer SVG, PDF o Pluma en qualsevol lloc per obrir-lo.
+	GitHub	GitHub
+	Grid view	Vista de quadrícula
+	Hide Presets	Amaga els valors predefinits
+	Invalid panel layout; restored the default dock	La disposició dels panells no és vàlida; s'ha restaurat l'ancoratge per defecte
+	List view	Vista de llista
+	Main Menu	Menú principal
+	On your computer	Al vostre ordinador
+	Pluma Updates	Actualitzacions de Pluma
+	Preparing the image…	Preparant la imatge…
+	Reading the file…	Llegint el fitxer…
+	Remove from Recent	Elimina de recents
+	Save Gradient Preset…	Desa el valor predefinit de degradat…
+	Show Presets	Mostra els valors predefinits
+	Tracing the colors…	Traçant els colors…
+	Website	Lloc web
+	Duplicate Effects	Duplica els efectes
+	Remove Effects	Elimina els efectes
+	Load All Styles…	Carrega tots els estils…
+	Load Character Styles…	Carrega estils de caràcter…
+	Load Paragraph Styles…	Carrega estils de paràgraf…
+	Click to edit	Feu clic per editar
+	Copies per Sheet (as many as fit, in a grid)	Còpies per full (tantes com càpiguen, en quadrícula)
+	Double-click to edit	Feu doble clic per editar
+	Level:	Nivell:
+	Load All Styles	Carrega tots els estils
+	Load Character Styles	Carrega estils de caràcter
+	Load Paragraph Styles	Carrega estils de paràgraf
+	Auto-Smooth	Suavitzat automàtic
+	Highlight Font Name	Ressalta el nom de la tipografia
+	Highlight Kerning	Ressalta l'interlletratge
+	Highlight Tracking	Ressalta l'espaiat
+	New Character Style…	Estil de caràcter nou…
+	New Paragraph Style…	Estil de paràgraf nou…
+	Next Document	Document següent
+	Previous Document	Document anterior
+	Remove from Shaper Group	Elimina del grup de Shaper
+	Smooth…	Suavitza…
+	Switch Units	Canvia d'unitats
+	Toggle Line Composer	Commuta el compositor de línies
+	Unselected Artwork	Il·lustració no seleccionada
+	Auto-Between	Automàtic entre
+	Auto-Centered	Automàtic centrat
+	Auto-Overlap	Automàtic superposat
+	Auto-Sliced	Automàticament dividit
+	Expand Appearance first (Object › Expand Appearance)	Expandiu primer l'aparença (Objecte › Expandeix l'aparença)

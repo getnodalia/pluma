@@ -10100,3 +10100,110 @@ breakText	Glyphs	Glifák
 @msg	Other blanks not shown: {count}	További kiterítékek nincsenek megjelenítve: {count}
 @msg	A joint does not close by {gap} pt.	Egy illesztés {gap} pt-tal nem záródik.
 @msg	Two panels pass through each other.	Két panel áthatol egymáson.
+	Add to Custom Dictionary	Hozzáadás az egyéni szótárhoz
+	Apply SVG Filter	SVG-szűrő alkalmazása
+	Bulgarian	Bolgár
+	Cancel Opening	Megnyitás megszakítása
+	Change in Custom Dictionary	Módosítás az egyéni szótárban
+	Check Spelling	Helyesírás-ellenőrzés
+	Delete SVG Filter	SVG-szűrő törlése
+	Delete from Custom Dictionary	Törlés az egyéni szótárból
+	Import SVG Filter…	SVG-szűrő importálása…
+	Move Type Path Handle	Szövegútvonal fogópontjának mozgatása
+	New SVG Filter	Új SVG-szűrő
+	Nodalia	Nodalia
+	SVG Filter	SVG-szűrő
+	Select Symbol Instance Part	Szimbólumpéldány részének kijelölése
+	Spelling Suggestions	Helyesírási javaslatok
+	Stroke Weight Down	Vékonyabb körvonalvastagság
+	Stroke Weight Up	Vastagabb körvonalvastagság
+	Edit SVG Filter	SVG-szűrő szerkesztése
+	Import SVG Filter	SVG-szűrő importálása
+	Apply Gradient Preset	Színátmenet-előbeállítás alkalmazása
+	Cancel Image Trace	Képkövetés megszakítása
+	Caps Lock Cursor State	Caps Lock kurzorállapot
+	Catalan	Katalán
+	Check for Updates…	Frissítések keresése…
+	Chinese	Kínai
+	Configure Shape	Alakzat beállítása
+	Croatian	Horvát
+	Czech	Cseh
+	Danish	Dán
+	Delete Gradient Preset	Színátmenet-előbeállítás törlése
+	Edit Character Style	Karakterstílus szerkesztése
+	Export All Open Documents	Az összes megnyitott dokumentum exportálása
+	Finnish	Finn
+	German: Swiss	Német: svájci
+	Gradient Presets	Színátmenet-előbeállítások
+	Move Document	Dokumentum áthelyezése
+	Norwegian	Norvég
+	Polish	Lengyel
+	Reshape Type Path	Szövegútvonal átformálása
+	Russian	Orosz
+	Save Gradient Preset	Színátmenet-előbeállítás mentése
+	Serbian: Cyrillic	Szerb: cirill
+	Serbian: Latin	Szerb: latin
+	Swedish	Svéd
+	Drop an SVG, PDF or Pluma file anywhere to open it.	Húzzon egy SVG-, PDF- vagy Pluma-fájlt bárhová a megnyitásához.
+	GitHub	GitHub
+	Grid view	Rácsnézet
+	Hide Presets	Előbeállítások elrejtése
+	Invalid panel layout; restored the default dock	Érvénytelen panelelrendezés; az alapértelmezett dokkolás visszaállítva
+	List view	Listanézet
+	Main Menu	Főmenü
+	On your computer	A számítógépen
+	Pluma Updates	Pluma-frissítések
+	Preparing the image…	Kép előkészítése…
+	Reading the file…	Fájl olvasása…
+	Remove from Recent	Eltávolítás a legutóbbiak közül
+	Save Gradient Preset…	Színátmenet-előbeállítás mentése…
+	Show Presets	Előbeállítások megjelenítése
+	Tracing the colors…	Színek követése…
+	Website	Weboldal
+	Duplicate Effects	Effektusok kettőzése
+	Remove Effects	Effektusok eltávolítása
+swatch	Amber	Borostyán
+swatch	Aqua	Vízkék
+swatch	Azure	Azúrkék
+swatch	Black	Fekete
+swatch	Blue	Kék
+swatch	Bright Blue	Élénk kék
+swatch	Bright Green	Élénk zöld
+swatch	Bright Red	Élénk piros
+swatch	Bright Violet	Élénk ibolya
+swatch	Bright Yellow	Élénk sárga
+swatch	Brights	Élénk színek
+swatch	Brown	Barna
+swatch	Chocolate	Csokoládé
+swatch	Coffee	Kávé
+swatch	Copper	Réz
+swatch	Cyan	Ciánkék
+swatch	Cyan Green	Ciánzöld
+swatch	Emerald	Smaragd
+swatch	Espresso	Eszpresszó
+swatch	Grays	Szürkék
+swatch	Green	Zöld
+swatch	Indigo	Indigó
+swatch	Lime	Lime
+swatch	Magenta	Bíbor
+swatch	Ocean	Óceán
+swatch	Orange	Narancs
+swatch	Orange Red	Narancsvörös
+swatch	Pink	Rózsaszín
+swatch	Purple	Lila
+swatch	Radial White, Black	Sugaras fehér, fekete
+swatch	Red	Piros
+swatch	Rose	Rózsa
+swatch	Rust	Rozsda
+swatch	Sand	Homok
+swatch	Sunset	Naplemente
+swatch	Tan	Cserszín
+swatch	Teal	Pávakék
+swatch	Violet	Ibolya
+swatch	Walnut	Dió
+swatch	White	Fehér
+swatch	White, Black	Fehér, fekete
+swatch	Yellow	Sárga
+swatch	Yellow Green	Sárgászöld
+swatch	[None]	[Nincs]
+swatch	[Registration]	[Illesztés]

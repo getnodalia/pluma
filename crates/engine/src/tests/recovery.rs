@@ -951,7 +951,7 @@ fn copies_left_behind_go_when_their_document_is_saved_reverted_or_closed() {
     let _ = std::fs::remove_dir_all(&base);
     let dir = base.join("recovery");
     let path = base.join("doc.pluma").to_string_lossy().to_string();
-    let left = |area: &str| std::fs::read_dir(dir.join(area)).unwrap().flatten().any(|e| e.path().extension().is_some_and(|x| x == "vectorcraft"));
+    let left = |area: &str| std::fs::read_dir(dir.join(area)).unwrap().flatten().any(|e| e.path().extension().is_some_and(|x| x == "pluma"));
     for how in ["save", "revert", "close", "quit"] {
         let (mut a, _) = saved_in(&dir);
         a.execute("document.save", &json!({"path": path})).unwrap();
