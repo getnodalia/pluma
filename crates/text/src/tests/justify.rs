@@ -809,8 +809,8 @@ fn justified_point_type_with_a_tab_keeps_its_width() {
     assert!((end(&l, 10) - end(&natural, 10)).abs() < 1e-6, "{} {}", end(&l, 10), end(&natural, 10));
 }
 
-/// An OpenType (GSUB) Arabic face with a tatweel: craft-fonts' Noto Sans Arabic when the build has
-/// craft-fonts (`CRAFT_FONTS_DIR`), else an installed one. None skips the test.
+/// An OpenType (GSUB) Arabic face with a tatweel: nodalia-fonts' Noto Sans Arabic when the build has
+/// nodalia-fonts (`NODALIA_FONTS_DIR`), else an installed one. None skips the test.
 fn arabic_face(test: &str) -> Option<std::sync::Arc<FontFace>> {
     let opentype = |face: &FontFace| {
         use skrifa::raw::TableProvider;

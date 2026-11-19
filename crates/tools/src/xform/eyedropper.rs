@@ -907,15 +907,15 @@ mod tests {
         let l = d.layers[0].id;
         let id = d.alloc_id();
         // Three pixels, red, green, blue, 10 pt each.
-        let img = craft_image_codecs::Image::from_raw(
+        let img = nodalia_image_codecs::Image::from_raw(
             3,
             1,
-            craft_image_codecs::ChannelLayout::Rgba,
-            craft_image_codecs::SampleType::U8,
+            nodalia_image_codecs::ChannelLayout::Rgba,
+            nodalia_image_codecs::SampleType::U8,
             vec![255, 0, 0, 255, 0, 255, 0, 255, 0, 0, 255, 255],
         )
         .unwrap();
-        let png = craft_image_codecs::encode(&img, craft_image_codecs::Format::Png, &craft_image_codecs::EncodeOptions::default()).unwrap();
+        let png = nodalia_image_codecs::encode(&img, nodalia_image_codecs::Format::Png, &nodalia_image_codecs::EncodeOptions::default()).unwrap();
         d.images.insert("px".into(), ImageBlob::png(png));
         let im = ImageObject {
             key: "px".into(),

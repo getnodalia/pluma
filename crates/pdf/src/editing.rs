@@ -5,12 +5,12 @@
 use std::collections::HashSet;
 use std::sync::Arc;
 
-use craft_pdf::syntax::Pdf;
-use craft_pdf::syntax::object::{Array, Dict, MaybeRef, Object, ObjectIdentifier, Stream, String as PdfString};
-use craft_pdf::syntax::xref::XRef;
-use craft_pdf::write::backend as krilla;
 use krilla::embed::{AssociationKind, EmbeddedFile, MimeType};
 use krilla::metadata::DateTime;
+use nodalia_pdf::syntax::Pdf;
+use nodalia_pdf::syntax::object::{Array, Dict, MaybeRef, Object, ObjectIdentifier, Stream, String as PdfString};
+use nodalia_pdf::syntax::xref::XRef;
+use nodalia_pdf::write::backend as krilla;
 
 use crate::PdfError;
 use crate::import_color::items;

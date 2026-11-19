@@ -1,5 +1,5 @@
-//! CAD interchange: a DXF writer (versions R12 to 2018) on `craft_dxf::drawing` and a reader on
-//! `craft_dxf::model`, and an HP-GL/2 plot file reader and writer.
+//! CAD interchange: a DXF writer (versions R12 to 2018) on `nodalia_dxf::drawing` and a reader on
+//! `nodalia_dxf::model`, and an HP-GL/2 plot file reader and writer.
 //!
 //! [`export`] writes the visible art of a document into one DXF drawing: each layer becomes a DXF
 //! layer (hidden ones switched off, locked ones locked, non-printing ones not plotted), paths
@@ -17,7 +17,7 @@
 //! [`hpgl::import`] reads an HP-GL plotter file, and [`hpgl::export`] writes one: see [`hpgl`].
 //!
 //! - `aci`: the 256-colour index palette and the nearest index of a colour.
-//! - The ASCII file around those entities is written by `craft_dxf::drawing`.
+//! - The ASCII file around those entities is written by `nodalia_dxf::drawing`.
 //! - `scene`: the document walk that turns objects into entities.
 //! - `import`: the reader, entities to art, blocks to symbols.
 //! - `hpgl`: the HP-GL reader, the pen's moves to paths, and the writer, paths to pen moves.
@@ -142,7 +142,7 @@ impl DxfVersion {
     }
 }
 
-impl From<DxfVersion> for craft_dxf::drawing::Format {
+impl From<DxfVersion> for nodalia_dxf::drawing::Format {
     fn from(v: DxfVersion) -> Self {
         match v {
             DxfVersion::R12 => Self::R12,

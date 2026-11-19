@@ -10,9 +10,9 @@
 //!
 //! Each run hyphenates in its own language ([`pluma_doc::CharStyle::language`]). English
 //! uses the rules above; eleven Indian languages use bundled hyph-utf8 patterns; German, Polish,
-//! Portuguese, Italian, Bulgarian, Turkish and Russian use craft-proof's patterns and rules (German,
+//! Portuguese, Italian, Bulgarian, Turkish and Russian use nodalia-proof's patterns and rules (German,
 //! Polish, Portuguese and Italian only in builds that embed their patterns). Other languages only
-//! break at user exceptions. Indic and craft-proof breaks always preserve Unicode grapheme
+//! break at user exceptions. Indic and nodalia-proof breaks always preserve Unicode grapheme
 //! boundaries.
 
 use std::collections::HashMap;
@@ -205,7 +205,7 @@ pub fn language_has_patterns(language: Option<&str>) -> bool {
     }
 }
 
-/// Language-specific break points as character indices. Indic and craft-proof points and
+/// Language-specific break points as character indices. Indic and nodalia-proof points and
 /// exceptions are filtered to whole graphemes; the paragraph's length options count Unicode
 /// characters.
 pub fn hyphen_points_for_language(word: &str, opts: &HyphenationOptions, language: Option<&str>) -> Vec<usize> {
@@ -235,7 +235,7 @@ pub fn hyphen_points_in(word: &str, opts: &HyphenationOptions, patterns: bool) -
 }
 
 /// Apply exceptions first, then language rules and paragraph limits, protecting Indic and
-/// craft-proof clusters.
+/// nodalia-proof clusters.
 pub(crate) fn points_for(word: &str, opts: &HyphenationOptions, language: Language) -> Vec<usize> {
     if let Some(ex) = exception_for(word) {
         let mut points = match ex {
@@ -325,7 +325,7 @@ pub(crate) fn with_hyphenation_exceptions_for_test(source: &str, f: impl FnOnce(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use craft_proof::hyphen::Patterns;
+    use nodalia_proof::hyphen::Patterns;
 
     /// Paragraph options that let every point through: words of any length, one letter each side.
     fn open() -> HyphenationOptions {
@@ -351,7 +351,7 @@ mod tests {
         assert_eq!(hyphen_points_for_language("Родина", &open(), Some("ru")), vec![2, 4]);
     }
 
-    /// German, Polish, Portuguese and Italian break at their own TeX patterns when craft-proof
+    /// German, Polish, Portuguese and Italian break at their own TeX patterns when nodalia-proof
     /// embeds them, and not at all otherwise (two letters on each side, as TeX's defaults keep).
     #[test]
     fn pattern_languages_break_at_their_own_patterns() {
@@ -371,14 +371,14 @@ mod tests {
                 }
             }
         }
-        // A letter outside the language's patterns sends craft-proof to a general syllable
+        // A letter outside the language's patterns sends nodalia-proof to a general syllable
         // heuristic, which isn't the language's own: the word stays whole.
         for (tag, word) in [("de", "Søndergaard"), ("pl", "Müllerowa"), ("pt", "Łódzkaliano"), ("it", "Łódzkaliano")] {
             assert!(hyphen_points_for_language(word, &open(), Some(tag)).is_empty(), "{tag}: {word}");
         }
     }
 
-    /// A word outside its language's script stays whole: craft-proof would hyphenate it as English.
+    /// A word outside its language's script stays whole: nodalia-proof would hyphenate it as English.
     #[test]
     fn other_scripts_in_a_language_get_no_english_points() {
         for (tag, word) in [("ru", "typography"), ("bg", "typography"), ("ru", "Москваcity"), ("bg", "ёжикова"), ("tr", "родина")]

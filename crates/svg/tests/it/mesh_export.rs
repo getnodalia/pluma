@@ -2,7 +2,7 @@
 //! pieces, each patch cut finely enough that neighbouring pieces differ by about one 8-bit
 //! colour step at most, and no finer: a patch of one colour is one piece, not 64 alike.
 
-use craft_svg::tree::draw::resvg;
+use nodalia_svg::tree::draw::resvg;
 use pluma_color::Color;
 use pluma_doc::live::{GradientMesh, MeshAppearance};
 use pluma_doc::{Document, Node, NodeKind};

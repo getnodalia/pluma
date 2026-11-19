@@ -262,7 +262,7 @@ pub(crate) fn hex_decode(body: &[u8]) -> Option<Vec<u8>> {
     if body.contains(&b'>') {
         return None;
     }
-    craft_stream_codecs::asciihex::decode(body, body.len().div_ceil(2)).ok()
+    nodalia_stream_codecs::asciihex::decode(body, body.len().div_ceil(2)).ok()
 }
 
 /// A number token (`12`, `-3.5`, `.5`, `1e-3`, `16#ff`), or `None`.

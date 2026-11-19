@@ -1,11 +1,11 @@
-//! The colour index palette is `craft_dxf::model::aci`; here are the indices each colour depth
+//! The colour index palette is `nodalia_dxf::model::aci`; here are the indices each colour depth
 //! of the writer may use.
 
 use crate::ColorDepth;
 
 /// The RGB of colour index `i` (1–255; anything else is index 7's white).
 pub fn aci_rgb(i: u8) -> [u8; 3] {
-    craft_dxf::model::aci::rgb(i)
+    nodalia_dxf::model::aci::rgb(i)
 }
 
 /// The indices a colour depth may use (true colour: all of them, for the fallback index).
@@ -20,7 +20,7 @@ fn candidates(depth: ColorDepth) -> Box<dyn Iterator<Item = u8>> {
 /// The index of `depth` nearest to `rgb` (squared RGB distance; ties go to the lower index).
 /// Index 7 stands for both white and black, as CAD apps draw it in the background's contrast.
 pub fn nearest_aci(rgb: [u8; 3], depth: ColorDepth) -> u8 {
-    craft_dxf::model::aci::nearest(rgb, candidates(depth))
+    nodalia_dxf::model::aci::nearest(rgb, candidates(depth))
 }
 
 #[cfg(test)]

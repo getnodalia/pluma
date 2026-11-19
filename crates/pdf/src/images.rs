@@ -29,10 +29,10 @@
 use std::io::Cursor;
 use std::sync::Arc;
 
-use craft_pdf::write::backend as krilla;
 use image::imageops::FilterType;
 use image::{DynamicImage, ExtendedColorType, ImageDecoder, ImageFormat, ImageReader};
 use krilla::image::{BitsPerComponent, CustomImage, Image, ImageColorspace};
+use nodalia_pdf::write::backend as krilla;
 
 use pluma_color::cms::{IccProfile, Intent};
 use pluma_doc::ImageBlob;

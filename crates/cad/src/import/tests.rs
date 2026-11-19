@@ -1000,8 +1000,8 @@ fn binary_dwg_damaged_and_foreign_files() {
     assert!(e.contains("binary DXF") && e.contains("damaged"), "{e}");
     // A binary DXF opens as its ASCII form does.
     let ascii = entities(LINE);
-    let tags = craft_dxf::parse(&ascii).unwrap();
-    let r = open(&craft_dxf::write_binary(&tags, true), &points());
+    let tags = nodalia_dxf::parse(&ascii).unwrap();
+    let r = open(&nodalia_dxf::write_binary(&tags, true), &points());
     assert_eq!(leaves(&r.document).len(), 1);
     let e = import(b"AC1032\x00\x00\x00", &ImportOptions::default()).unwrap_err();
     assert!(e.contains("DWG"), "{e}");
@@ -1171,8 +1171,8 @@ fn many_array_inserts_of_a_missing_block_stay_bounded() {
     let one = [(0, "INSERT"), (8, "0"), (2, "NOPE"), (10, "0"), (20, "0"), (70, "100"), (71, "100"), (44, "1"), (45, "1")];
     let e: Vec<(i32, &str)> = (0..3000).flat_map(|_| one).collect();
     let bytes = entities(&e);
-    let tags = craft_dxf::parse(&bytes).unwrap();
-    let d = reader::Drawing::read(craft_dxf::model::Document::read(&tags));
+    let tags = nodalia_dxf::parse(&bytes).unwrap();
+    let d = reader::Drawing::read(nodalia_dxf::model::Document::read(&tags));
     let model = d.layout("Model").or(d.layouts.first()).unwrap();
     let mut conv = entity::Converter::default();
     let items = conv.items(&d.layout_records(model));

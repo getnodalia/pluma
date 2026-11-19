@@ -3,7 +3,7 @@
 
 use std::sync::Arc;
 
-use craft_pdf::syntax::Pdf;
+use nodalia_pdf::syntax::Pdf;
 use pluma_color::cms::{self, Cms, ColorSettings, DEVICE_CMYK, GENERIC_CMYK, Intent};
 use pluma_color::{Color, Paint};
 use pluma_doc::{Appearance, Document, Node};

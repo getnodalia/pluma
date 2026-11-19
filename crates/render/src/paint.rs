@@ -181,15 +181,15 @@ impl std::fmt::Display for DecodeError {
 }
 
 /// The formats the renderer draws, told from their bytes: those the image crate read for it
-/// before craft-image-codecs did (#778). TGA has no signature to tell it by and was never drawn.
-fn drawn_format(bytes: &[u8]) -> Option<craft_image_codecs::Format> {
-    use craft_image_codecs::Format as F;
-    craft_image_codecs::detect(bytes).filter(|f| matches!(f, F::Png | F::Jpeg | F::Gif | F::WebP | F::Tiff | F::Bmp))
+/// before nodalia-image-codecs did (#778). TGA has no signature to tell it by and was never drawn.
+fn drawn_format(bytes: &[u8]) -> Option<nodalia_image_codecs::Format> {
+    use nodalia_image_codecs::Format as F;
+    nodalia_image_codecs::detect(bytes).filter(|f| matches!(f, F::Png | F::Jpeg | F::Gif | F::WebP | F::Tiff | F::Bmp))
 }
 
 /// `bytes` decoded as `format` within `allowance` bytes: the pixels as stored, not turned upright,
 /// as the image crate gave them.
-fn decode_as(format: craft_image_codecs::Format, bytes: &[u8], allowance: u64) -> Result<image::DynamicImage, craft_image_codecs::CodecError> {
+fn decode_as(format: nodalia_image_codecs::Format, bytes: &[u8], allowance: u64) -> Result<image::DynamicImage, nodalia_image_codecs::CodecError> {
     pluma_doc::decode::decode_image(format, bytes, allowance).map(|(img, _)| img)
 }
 
@@ -203,8 +203,8 @@ fn decode_in_room(bytes: &[u8]) -> Result<image::DynamicImage, (DecodeError, Und
     let (w, h) = match pluma_doc::header_size(bytes) {
         Some(size) => size,
         None => {
-            return Err(match craft_image_codecs::probe_size(bytes) {
-                Err(craft_image_codecs::CodecError::LimitExceeded(e)) => (DecodeError::Limit(e), Undecoded::Unreadable),
+            return Err(match nodalia_image_codecs::probe_size(bytes) {
+                Err(nodalia_image_codecs::CodecError::LimitExceeded(e)) => (DecodeError::Limit(e), Undecoded::Unreadable),
                 Err(e) => unreadable(e.to_string()),
                 Ok(_) => unreadable("the image's size can't be read".into()),
             });
@@ -220,7 +220,7 @@ fn decode_in_room(bytes: &[u8]) -> Result<image::DynamicImage, (DecodeError, Und
     let samples_fit = pluma_doc::decode::decoded_layout(bytes, format)
         .is_some_and(|(_, _, per_pixel)| (u64::from(w) * u64::from(h)).saturating_mul(per_pixel) <= allowance);
     decode_as(format, bytes, allowance).map_err(|e| match e {
-        craft_image_codecs::CodecError::LimitExceeded(m) if !samples_fit => (DecodeError::Limit(m), Undecoded::Unreadable),
+        nodalia_image_codecs::CodecError::LimitExceeded(m) if !samples_fit => (DecodeError::Limit(m), Undecoded::Unreadable),
         e => unreadable(e.to_string()),
     })
 }
@@ -282,7 +282,7 @@ struct Reduction {
 
 /// [`reduced_size`]'s reading of `bytes` within `allowance`.
 fn reduction(bytes: &[u8], allowance: u64) -> Option<Reduction> {
-    use craft_image_codecs::Format as F;
+    use nodalia_image_codecs::Format as F;
     let format = drawn_format(bytes).filter(|f| matches!(f, F::Png | F::Jpeg | F::Gif | F::WebP))?;
     let (w, h, per_pixel) = pluma_doc::decode::decoded_layout(bytes, format)?;
     let pixels = u64::from(w) * u64::from(h);
@@ -295,7 +295,7 @@ fn reduction(bytes: &[u8], allowance: u64) -> Option<Reduction> {
     let to = fitted_dims(w, h, allowance)?;
     // A PNG that isn't interlaced or animated (and upright in pre-pixel EXIF) is read a row at a time when the reader's buffers fit the allowance.
     let row_scratch = if format == F::Png {
-        let streamed = craft_image_codecs::PngDecodeRows::new_streaming(bytes, &png_streaming_limits(allowance))
+        let streamed = nodalia_image_codecs::PngDecodeRows::new_streaming(bytes, &png_streaming_limits(allowance))
             .ok()
             .filter(|dec| dec.streamable())
             .and_then(|dec| png_row_scratch(&dec.header()));
@@ -314,8 +314,8 @@ fn reduction(bytes: &[u8], allowance: u64) -> Option<Reduction> {
 /// Streaming retains rows, not the declared full image. Preserve the renderer's source-pixel
 /// allowance even when RGBA16's declared samples exceed the shared whole-image default budget.
 /// Row scratch and the reduced pixmap are admitted separately before decoding starts.
-fn png_streaming_limits(source_pixels: u64) -> craft_image_codecs::Limits {
-    craft_image_codecs::Limits { max_width: u32::MAX, max_height: u32::MAX, max_pixels: source_pixels, max_alloc: source_pixels.saturating_mul(8) }
+fn png_streaming_limits(source_pixels: u64) -> nodalia_image_codecs::Limits {
+    nodalia_image_codecs::Limits { max_width: u32::MAX, max_height: u32::MAX, max_pixels: source_pixels, max_alloc: source_pixels.saturating_mul(8) }
 }
 
 /// How many rows of an image decoded whole [`reduced_pixmap`] converts to RGBA at a time.
@@ -329,13 +329,13 @@ const PNG_KEPT_ROWS: u64 = 128 << 10;
 /// stream buffer grows by.
 const PNG_WINDOW_AND_STEP: u64 = (32 << 10) + (8 << 10);
 
-/// The most memory `craft-image-codecs`'s PNG row decoder takes in its buffers to read its image
+/// The most memory `nodalia-image-codecs`'s PNG row decoder takes in its buffers to read its image
 /// a row at a time: the stream buffer holds the rows already read up to [`PNG_KEPT_ROWS`] or four
 /// rows, whichever is more, the previous and current rows, and [`PNG_WINDOW_AND_STEP`]. The buffer
 /// grows by doubling its reservation, and while it grows its old reservation and the new one, up
 /// to twice the size it holds, are both allocated: three times that size at most. A copy of a
 /// stored row and the row given out come on top. `None` when a row given out doesn't fit memory.
-fn png_row_scratch(hdr: &craft_image_codecs::PngHeader) -> Option<u64> {
+fn png_row_scratch(hdr: &nodalia_image_codecs::PngHeader) -> Option<u64> {
     let out = u64::from(hdr.width).checked_mul(hdr.layout.channels() as u64)?.checked_mul(hdr.sample.bytes() as u64)?;
     png_row_scratch_for_row(out)
 }
@@ -417,10 +417,10 @@ fn shrunk(bytes: &[u8], r: &Reduction) -> Option<vello_cpu::Pixmap> {
     shrunk_with_png_limits(bytes, r, &png_streaming_limits(allowance()))
 }
 
-fn shrunk_with_png_limits(bytes: &[u8], r: &Reduction, png_limits: &craft_image_codecs::Limits) -> Option<vello_cpu::Pixmap> {
+fn shrunk_with_png_limits(bytes: &[u8], r: &Reduction, png_limits: &nodalia_image_codecs::Limits) -> Option<vello_cpu::Pixmap> {
     let mut shrink = Shrink::new(r.size, r.to);
     if r.rows {
-        use craft_image_codecs::{ChannelLayout, CodecError, Format, PngDecodeRows, SampleType};
+        use nodalia_image_codecs::{ChannelLayout, CodecError, Format, PngDecodeRows, SampleType};
         let mut dec = PngDecodeRows::new_streaming(bytes, png_limits).ok()?;
         if !dec.streamable() {
             return None;
@@ -726,12 +726,12 @@ mod tests {
             crc.update(chunk);
             bytes.extend(crc.sum().to_be_bytes());
         }
-        let default = craft_image_codecs::Limits { max_alloc: 1 << 30, max_pixels: 150_000_000, ..Default::default() };
-        assert!(craft_image_codecs::PngDecodeRows::new_streaming(&bytes, &default).is_err());
-        let rows = craft_image_codecs::PngDecodeRows::new_streaming(&bytes, &png_streaming_limits(150_000_000)).unwrap();
+        let default = nodalia_image_codecs::Limits { max_alloc: 1 << 30, max_pixels: 150_000_000, ..Default::default() };
+        assert!(nodalia_image_codecs::PngDecodeRows::new_streaming(&bytes, &default).is_err());
+        let rows = nodalia_image_codecs::PngDecodeRows::new_streaming(&bytes, &png_streaming_limits(150_000_000)).unwrap();
         assert_eq!((rows.header().width, rows.header().height), (w, h));
         assert!(rows.streamable());
-        assert!(craft_image_codecs::PngDecodeRows::new_streaming(&bytes, &png_streaming_limits(149_999_999)).is_err());
+        assert!(nodalia_image_codecs::PngDecodeRows::new_streaming(&bytes, &png_streaming_limits(149_999_999)).is_err());
     }
 
     #[test]
@@ -752,16 +752,16 @@ mod tests {
         tail.extend(chunk);
         tail.extend((!crc).to_be_bytes());
         bytes.splice(bytes.len() - 12..bytes.len() - 12, tail);
-        let limits = craft_image_codecs::Limits { max_alloc: 1 << 19, ..Default::default() };
-        let mut full = craft_image_codecs::PngDecodeRows::new_streaming(&bytes, &limits).unwrap();
-        assert!(full.step_stream::<craft_image_codecs::CodecError>(1, &mut || true, &mut |_, _| Ok(())).is_err());
+        let limits = nodalia_image_codecs::Limits { max_alloc: 1 << 19, ..Default::default() };
+        let mut full = nodalia_image_codecs::PngDecodeRows::new_streaming(&bytes, &limits).unwrap();
+        assert!(full.step_stream::<nodalia_image_codecs::CodecError>(1, &mut || true, &mut |_, _| Ok(())).is_err());
         // The renderer stops after the pixels instead of retaining ancillary text.
         let reduced = shrunk_with_png_limits(&bytes, &Reduction { size: (8, 1), to: (4, 1), rows: true, scratch: 0 }, &limits).unwrap();
         assert_eq!((reduced.width(), reduced.height()), (4, 1));
         assert!(red_at_its_coverage(&reduced));
     }
 
-    /// The renderer's decoding through craft-image-codecs gives the pixels the image crate gave it
+    /// The renderer's decoding through nodalia-image-codecs gives the pixels the image crate gave it
     /// (#778): the same layout and samples for PNGs of each color type and depth, GIF, WebP, TIFF and
     /// BMP, and JPEG samples within two steps (the two decoders' IDCTs round differently). The EXIF
     /// orientation is left to the caller, as before.

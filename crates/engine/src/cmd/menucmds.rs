@@ -785,15 +785,15 @@ fn cmyk_raster(
     if alpha.iter().all(|&a| a == 255) {
         return Ok((blob, None));
     }
-    let mask = craft_image_codecs::Image::from_raw(
+    let mask = nodalia_image_codecs::Image::from_raw(
         img.width,
         img.height,
-        craft_image_codecs::ChannelLayout::Gray,
-        craft_image_codecs::SampleType::U8,
+        nodalia_image_codecs::ChannelLayout::Gray,
+        nodalia_image_codecs::SampleType::U8,
         alpha,
     )
     .map_err(|_| EngineError::Other("the image's transparency doesn't fit it".into()))?;
-    let png = craft_image_codecs::encode(&mask, craft_image_codecs::Format::Png, &craft_image_codecs::EncodeOptions::default())
+    let png = nodalia_image_codecs::encode(&mask, nodalia_image_codecs::Format::Png, &nodalia_image_codecs::EncodeOptions::default())
         .map_err(|e| EngineError::Other(e.to_string()))?;
     Ok((blob, Some(png)))
 }
@@ -1143,16 +1143,16 @@ pub(crate) fn check_resample_size(sw: u32, sh: u32, w: u32, h: u32) -> Result<()
 
 /// `img` as PNG bytes.
 fn encode_png(img: &image::RgbaImage) -> Result<Vec<u8>> {
-    let fail = |e: craft_image_codecs::CodecError| bad("object.cropImage", e.to_string());
-    let raw = craft_image_codecs::Image::from_raw(
+    let fail = |e: nodalia_image_codecs::CodecError| bad("object.cropImage", e.to_string());
+    let raw = nodalia_image_codecs::Image::from_raw(
         img.width(),
         img.height(),
-        craft_image_codecs::ChannelLayout::Rgba,
-        craft_image_codecs::SampleType::U8,
+        nodalia_image_codecs::ChannelLayout::Rgba,
+        nodalia_image_codecs::SampleType::U8,
         img.as_raw().clone(),
     )
     .map_err(fail)?;
-    craft_image_codecs::encode(&raw, craft_image_codecs::Format::Png, &craft_image_codecs::EncodeOptions::default()).map_err(fail)
+    nodalia_image_codecs::encode(&raw, nodalia_image_codecs::Format::Png, &nodalia_image_codecs::EncodeOptions::default()).map_err(fail)
 }
 
 fn crop_image(s: &mut Session, p: &Value) -> Result<Value> {
@@ -1307,12 +1307,12 @@ fn decode_rgba(c: &str, blob: &pluma_doc::ImageBlob) -> Result<image::RgbaImage>
     {
         return Err(bad(c, format!("an image of {w} × {h} pixels is too large to draw")));
     }
-    let mut opts = craft_image_codecs::DecodeOptions::default();
+    let mut opts = nodalia_image_codecs::DecodeOptions::default();
     opts.limits.max_pixels = crate::cmd::fileio::MAX_RASTER_ALLOC / 4;
     opts.limits.max_alloc = crate::cmd::fileio::MAX_RASTER_ALLOC;
-    let img = craft_image_codecs::decode_with(&blob.bytes, &opts).map_err(|e| match e {
+    let img = nodalia_image_codecs::decode_with(&blob.bytes, &opts).map_err(|e| match e {
         // Within the allowance from its header: a file that can't hold the pixels it declares.
-        craft_image_codecs::CodecError::LimitExceeded(_) if header.is_none() => bad(c, "the image is too large to draw"),
+        nodalia_image_codecs::CodecError::LimitExceeded(_) if header.is_none() => bad(c, "the image is too large to draw"),
         _ => bad(c, format!("the image's pixels can't be read: {e}")),
     })?;
     let (w, h) = img.dimensions();
@@ -1346,10 +1346,15 @@ fn trim_image(s: &mut Session, id: NodeId, im: ImageObject) -> Result<Value> {
     }
     let cut = image::imageops::crop_imm(&px, x0, y0, x1 - x0, y1 - y0).to_image();
     let (cw, ch) = (x1 - x0, y1 - y0);
-    let raw =
-        craft_image_codecs::Image::from_raw(cw, ch, craft_image_codecs::ChannelLayout::Rgba, craft_image_codecs::SampleType::U8, cut.into_raw())
-            .map_err(|e| bad(C, e.to_string()))?;
-    let png = craft_image_codecs::encode(&raw, craft_image_codecs::Format::Png, &craft_image_codecs::EncodeOptions::default())
+    let raw = nodalia_image_codecs::Image::from_raw(
+        cw,
+        ch,
+        nodalia_image_codecs::ChannelLayout::Rgba,
+        nodalia_image_codecs::SampleType::U8,
+        cut.into_raw(),
+    )
+    .map_err(|e| bad(C, e.to_string()))?;
+    let png = nodalia_image_codecs::encode(&raw, nodalia_image_codecs::Format::Png, &nodalia_image_codecs::EncodeOptions::default())
         .map_err(|e| bad(C, e.to_string()))?;
     put_pixels(s, id, png, cw, ch, im.xf * Affine::translate((f64::from(x0), f64::from(y0))))?;
     Ok(json!({ "id": id.0, "width": cw, "height": ch, "trimmed": true }))

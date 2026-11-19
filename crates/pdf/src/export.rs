@@ -4,8 +4,6 @@ use std::borrow::Cow;
 use std::collections::{HashMap, HashSet};
 use std::sync::Arc;
 
-use craft_pdf::write::backend as krilla;
-use craft_pdf::write::{self, Metadata};
 use krilla::color::separation::{Color as SepColor, SeparationColorant, SeparationSpace};
 use krilla::color::{cmyk, luma, rgb};
 use krilla::configure::{Archival, PdfVersion};
@@ -16,6 +14,8 @@ use krilla::page::PageSettings;
 use krilla::paint::{Fill, LinearGradient, RadialGradient, SpreadMethod, Stop, Stroke, StrokeDash, SweepGradient};
 use krilla::text::{Glyph, GlyphId, KrillaGlyph};
 use kurbo::{PathEl, Shape, Vec2};
+use nodalia_pdf::write::backend as krilla;
+use nodalia_pdf::write::{self, Metadata};
 use pluma_color::{BlendMode, Color, GradientKind, Paint};
 use pluma_doc::{AppearanceItem, Document, LineCap, LineJoin, Node, NodeKind, StrokeAlign, StrokeLayer, SymbolBoxes, TextObject};
 use pluma_effects::stroke::{self, WrittenShape};
@@ -167,17 +167,17 @@ mod tests {
 
     #[test]
     fn a_16_bit_png_at_8_bits_keeps_its_color_type_and_icc_profile() {
-        use craft_image_codecs::{ChannelLayout, EncodeOptions, Format, Image as CodecImage, SampleType};
+        use nodalia_image_codecs::{ChannelLayout, EncodeOptions, Format, Image as CodecImage, SampleType};
         let icc = pluma_color::cms::icc_bytes(pluma_color::cms::GRAY).unwrap().to_vec();
         let u16_samples: Vec<u16> = (0..2).flat_map(|y| (0..4).map(move |x| x as u16 * 20000 + y as u16)).collect();
         let raw_u16: Vec<u8> = u16_samples.iter().flat_map(|v| v.to_ne_bytes()).collect();
         let mut src = CodecImage::from_raw(4, 2, ChannelLayout::Gray, SampleType::U16, raw_u16).unwrap();
         src.icc = Some(icc.clone());
-        let png = craft_image_codecs::encode(&src, Format::Png, &EncodeOptions::default()).unwrap();
+        let png = nodalia_image_codecs::encode(&src, Format::Png, &EncodeOptions::default()).unwrap();
         assert!(png_16_bit(&png));
         let out = png_8_bit(&png).unwrap();
         assert!(!png_16_bit(&out));
-        let decoded = craft_image_codecs::decode_as_with(Format::Png, &out, &craft_image_codecs::DecodeOptions::default()).unwrap();
+        let decoded = nodalia_image_codecs::decode_as_with(Format::Png, &out, &nodalia_image_codecs::DecodeOptions::default()).unwrap();
         assert_eq!(decoded.icc, Some(icc));
         assert_eq!(decoded.layout(), ChannelLayout::Gray);
         assert_eq!(decoded.sample_type(), SampleType::U8);

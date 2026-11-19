@@ -1,6 +1,6 @@
 //! The SVG writer.
 
-use craft_svg::tree::usvg;
+use nodalia_svg::tree::usvg;
 use std::collections::{BTreeMap, BTreeSet, HashMap, HashSet};
 use std::fmt::Write as _;
 use std::sync::Arc;
@@ -21,7 +21,7 @@ use crate::{
     xml_escape,
 };
 
-use craft_svg::write::SvgWriter;
+use nodalia_svg::write::SvgWriter;
 
 use crate::css::{self, Props, blend_css, css_string, font_descriptor};
 

@@ -11,38 +11,38 @@ rust-version = "1.95"
 repository = "https://github.com/getnodalia/pluma"
 
 [workspace.dependencies]
-craft-pdf = { git = "https://github.com/getnodalia/foundation", rev = "64b181977a0488e4d1e167bc5cc8cfededc2ed4b", default-features = false, features = ["interpret", "write"] }
-craft-print = { git = "https://github.com/getnodalia/foundation", rev = "64b181977a0488e4d1e167bc5cc8cfededc2ed4b" }
-craft-docpath = { version = "0.1.0", git = "https://github.com/getnodalia/foundation", rev = "64b181977a0488e4d1e167bc5cc8cfededc2ed4b" }
-craft-ui = { git = "https://github.com/getnodalia/foundation", rev = "64b181977a0488e4d1e167bc5cc8cfededc2ed4b", features = ["serde"] }
-craft-keymap = { git = "https://github.com/getnodalia/foundation", rev = "64b181977a0488e4d1e167bc5cc8cfededc2ed4b" }
-craft-proof = { git = "https://github.com/getnodalia/foundation", rev = "64b181977a0488e4d1e167bc5cc8cfededc2ed4b" }
+nodalia-pdf = { git = "https://github.com/getnodalia/foundation", rev = "91ab24c9fe626e44641f8ba42b2557728b114446", default-features = false, features = ["interpret", "write"] }
+nodalia-print = { git = "https://github.com/getnodalia/foundation", rev = "91ab24c9fe626e44641f8ba42b2557728b114446" }
+nodalia-docpath = { version = "0.1.0", git = "https://github.com/getnodalia/foundation", rev = "91ab24c9fe626e44641f8ba42b2557728b114446" }
+nodalia-ui = { git = "https://github.com/getnodalia/foundation", rev = "91ab24c9fe626e44641f8ba42b2557728b114446", features = ["serde"] }
+nodalia-keymap = { git = "https://github.com/getnodalia/foundation", rev = "91ab24c9fe626e44641f8ba42b2557728b114446" }
+nodalia-proof = { git = "https://github.com/getnodalia/foundation", rev = "91ab24c9fe626e44641f8ba42b2557728b114446" }
 # Decides who draws the window frame (desktop vs. app) so the suite shares one native titlebar per
-# desktop. The `egui` feature adds `craft_window::decorate`. (craft-libs#217.)
-craft-window = { git = "https://github.com/getnodalia/foundation", rev = "64b181977a0488e4d1e167bc5cc8cfededc2ed4b", features = ["egui"] }
+# desktop. The `egui` feature adds `nodalia_window::decorate`. (nodalia-libs#217.)
+nodalia-window = { git = "https://github.com/getnodalia/foundation", rev = "91ab24c9fe626e44641f8ba42b2557728b114446", features = ["egui"] }
 # The `.pluma` envelope: its members, version, embedded images and the data after the JSON.
-craft-vectorcraft-format = { git = "https://github.com/getnodalia/foundation", rev = "64b181977a0488e4d1e167bc5cc8cfededc2ed4b" }
-craft-gzip = { git = "https://github.com/getnodalia/foundation", rev = "64b181977a0488e4d1e167bc5cc8cfededc2ed4b" }
-# Native Affinity documents (craft-libs#914).
-craft-affinity = { git = "https://github.com/getnodalia/foundation", rev = "64b181977a0488e4d1e167bc5cc8cfededc2ed4b" }
-# SVG parsing, limits, SVGZ and writer (craft-libs#778).
-craft-svg = { git = "https://github.com/getnodalia/foundation", rev = "64b181977a0488e4d1e167bc5cc8cfededc2ed4b", features = ["tree"] }
-craft-mime = { git = "https://github.com/getnodalia/foundation", rev = "64b181977a0488e4d1e167bc5cc8cfededc2ed4b" }
-# EPS container, previews, ASCII85 and DSC comments (craft-libs#778).
-craft-eps = { git = "https://github.com/getnodalia/foundation", rev = "64b181977a0488e4d1e167bc5cc8cfededc2ed4b" }
-# DXF tags, reader and writer (craft-libs#778, #926, #927).
-craft-plotter = { git = "https://github.com/getnodalia/foundation", rev = "a7fb55eaf9a15c21e8ce0b13cf605dc54fd15f57" }
-craft-dxf = { git = "https://github.com/getnodalia/foundation", rev = "64b181977a0488e4d1e167bc5cc8cfededc2ed4b" }
-# WMF, EMF and EMF+ reader (craft-libs#778).
-craft-metafile = { git = "https://github.com/getnodalia/foundation", rev = "64b181977a0488e4d1e167bc5cc8cfededc2ed4b" }
-craft-xml = { git = "https://github.com/getnodalia/foundation", rev = "64b181977a0488e4d1e167bc5cc8cfededc2ed4b" }
-craft-image-codecs = { git = "https://github.com/getnodalia/foundation", rev = "64b181977a0488e4d1e167bc5cc8cfededc2ed4b" }
-craft-gif = { git = "https://github.com/getnodalia/foundation", rev = "64b181977a0488e4d1e167bc5cc8cfededc2ed4b" }
-craft-tiff = { git = "https://github.com/getnodalia/foundation", rev = "64b181977a0488e4d1e167bc5cc8cfededc2ed4b" }
-craft-ps = { git = "https://github.com/getnodalia/foundation", rev = "64b181977a0488e4d1e167bc5cc8cfededc2ed4b", default-features = false, features = ["write"] }
-craft-psd = { git = "https://github.com/getnodalia/foundation", rev = "64b181977a0488e4d1e167bc5cc8cfededc2ed4b" }
-craft-stream-codecs = { git = "https://github.com/getnodalia/foundation", rev = "64b181977a0488e4d1e167bc5cc8cfededc2ed4b" }
-craft-jxl = { git = "https://github.com/getnodalia/foundation", rev = "64b181977a0488e4d1e167bc5cc8cfededc2ed4b" }
+nodalia-pluma-format = { git = "https://github.com/getnodalia/foundation", rev = "91ab24c9fe626e44641f8ba42b2557728b114446" }
+nodalia-gzip = { git = "https://github.com/getnodalia/foundation", rev = "91ab24c9fe626e44641f8ba42b2557728b114446" }
+# Native Affinity documents (nodalia-libs#914).
+nodalia-affinity = { git = "https://github.com/getnodalia/foundation", rev = "91ab24c9fe626e44641f8ba42b2557728b114446" }
+# SVG parsing, limits, SVGZ and writer (nodalia-libs#778).
+nodalia-svg = { git = "https://github.com/getnodalia/foundation", rev = "91ab24c9fe626e44641f8ba42b2557728b114446", features = ["tree"] }
+nodalia-mime = { git = "https://github.com/getnodalia/foundation", rev = "91ab24c9fe626e44641f8ba42b2557728b114446" }
+# EPS container, previews, ASCII85 and DSC comments (nodalia-libs#778).
+nodalia-eps = { git = "https://github.com/getnodalia/foundation", rev = "91ab24c9fe626e44641f8ba42b2557728b114446" }
+# DXF tags, reader and writer (nodalia-libs#778, #926, #927).
+nodalia-plotter = { git = "https://github.com/getnodalia/foundation", rev = "803e422f91ad08ec2c3a58b932c1b94f061725a8" }
+nodalia-dxf = { git = "https://github.com/getnodalia/foundation", rev = "91ab24c9fe626e44641f8ba42b2557728b114446" }
+# WMF, EMF and EMF+ reader (nodalia-libs#778).
+nodalia-metafile = { git = "https://github.com/getnodalia/foundation", rev = "91ab24c9fe626e44641f8ba42b2557728b114446" }
+nodalia-xml = { git = "https://github.com/getnodalia/foundation", rev = "91ab24c9fe626e44641f8ba42b2557728b114446" }
+nodalia-image-codecs = { git = "https://github.com/getnodalia/foundation", rev = "91ab24c9fe626e44641f8ba42b2557728b114446" }
+nodalia-gif = { git = "https://github.com/getnodalia/foundation", rev = "91ab24c9fe626e44641f8ba42b2557728b114446" }
+nodalia-tiff = { git = "https://github.com/getnodalia/foundation", rev = "91ab24c9fe626e44641f8ba42b2557728b114446" }
+nodalia-ps = { git = "https://github.com/getnodalia/foundation", rev = "91ab24c9fe626e44641f8ba42b2557728b114446", default-features = false, features = ["write"] }
+nodalia-psd = { git = "https://github.com/getnodalia/foundation", rev = "91ab24c9fe626e44641f8ba42b2557728b114446" }
+nodalia-stream-codecs = { git = "https://github.com/getnodalia/foundation", rev = "91ab24c9fe626e44641f8ba42b2557728b114446" }
+nodalia-jxl = { git = "https://github.com/getnodalia/foundation", rev = "91ab24c9fe626e44641f8ba42b2557728b114446" }
 # In-app updates from this app's GitHub releases, with the update windows for egui.
 nodalia-update = { git = "https://github.com/danielmigueltejedor/nodalia-design", rev = "114848a2ff1a7c29c9a5432fb12e955fbe0aeef2", features = ["egui"] }
 nodalia-theme = { git = "https://github.com/danielmigueltejedor/nodalia-design", rev = "6d94e9c17c1767260bcb020f00c71eddd105561f" }
@@ -103,7 +103,7 @@ wat = "1.228"
 # Without `text` (glyph runs, through glifo and a second skrifa): the renderer draws the outlines
 # pluma-text gives it. The other default features stay.
 vello_cpu = { version = "0.2", default-features = false, features = ["std", "png", "u8_pipeline", "f32_pipeline"] }
-# The image crate still decodes and encodes for the readers not yet moved to craft-image-codecs
+# The image crate still decodes and encodes for the readers not yet moved to nodalia-image-codecs
 # (File › Open's raster path, PDF and SVG images, the renderer's image paint, DIBs). Its format
 # features stay until the last of those moves, so no file that opens today stops opening.
 image = { version = "0.25", default-features = false, features = ["png", "jpeg", "webp", "gif", "tiff", "bmp", "tga"] }
@@ -121,8 +121,8 @@ rustix = { version = "1.1", default-features = false }
 # Zstandard decoder (pure Rust, builds for wasm32 too): the editing copy an EPS carries of its art.
 ruzstd = { version = "0.9.1", default-features = false, features = ["std"] }
 # pluma-doc's CMYK TIFF reader and writer (src/cmyk.rs) still use `tiff`. `zune-jpeg` and
-# `hayro-ccitt` are only the references tests compare craft-image-codecs' CMYK JPEG inks and
-# craft-stream-codecs' Group 3 rows with (pluma-doc's and pluma-engine's dev-dependencies).
+# `hayro-ccitt` are only the references tests compare nodalia-image-codecs' CMYK JPEG inks and
+# nodalia-stream-codecs' Group 3 rows with (pluma-doc's and pluma-engine's dev-dependencies).
 tiff = "0.11"
 zune-jpeg = "0.5"
 # JPEG XL decoder (pure Rust, MIT OR Apache-2.0): File › Open and Place read `.jxl` images. It is
@@ -185,13 +185,13 @@ lto = "thin"
 codegen-units = 1
 
 [patch.crates-io]
-hayro-syntax = { git = "https://github.com/getnodalia/foundation", rev = "64b181977a0488e4d1e167bc5cc8cfededc2ed4b" }
-hayro-interpret = { git = "https://github.com/getnodalia/foundation", rev = "64b181977a0488e4d1e167bc5cc8cfededc2ed4b" }
-hayro-jbig2 = { git = "https://github.com/getnodalia/foundation", rev = "64b181977a0488e4d1e167bc5cc8cfededc2ed4b" }
-hayro-cmap = { git = "https://github.com/getnodalia/foundation", rev = "64b181977a0488e4d1e167bc5cc8cfededc2ed4b" }
-hayro-postscript = { git = "https://github.com/getnodalia/foundation", rev = "64b181977a0488e4d1e167bc5cc8cfededc2ed4b" }
-krilla = { git = "https://github.com/getnodalia/foundation", rev = "64b181977a0488e4d1e167bc5cc8cfededc2ed4b" }
-linesweeper = { git = "https://github.com/getnodalia/foundation", rev = "64b181977a0488e4d1e167bc5cc8cfededc2ed4b" }
+hayro-syntax = { git = "https://github.com/getnodalia/foundation", rev = "91ab24c9fe626e44641f8ba42b2557728b114446" }
+hayro-interpret = { git = "https://github.com/getnodalia/foundation", rev = "91ab24c9fe626e44641f8ba42b2557728b114446" }
+hayro-jbig2 = { git = "https://github.com/getnodalia/foundation", rev = "91ab24c9fe626e44641f8ba42b2557728b114446" }
+hayro-cmap = { git = "https://github.com/getnodalia/foundation", rev = "91ab24c9fe626e44641f8ba42b2557728b114446" }
+hayro-postscript = { git = "https://github.com/getnodalia/foundation", rev = "91ab24c9fe626e44641f8ba42b2557728b114446" }
+krilla = { git = "https://github.com/getnodalia/foundation", rev = "91ab24c9fe626e44641f8ba42b2557728b114446" }
+linesweeper = { git = "https://github.com/getnodalia/foundation", rev = "91ab24c9fe626e44641f8ba42b2557728b114446" }
 ecolor = { git = "https://github.com/getnodalia/foundation", rev = "6d518fc799681571963842f95b55a6b68431b15a" }
 emath = { git = "https://github.com/getnodalia/foundation", rev = "6d518fc799681571963842f95b55a6b68431b15a" }
 epaint = { git = "https://github.com/getnodalia/foundation", rev = "6d518fc799681571963842f95b55a6b68431b15a" }
@@ -207,8 +207,3 @@ eframe = { git = "https://github.com/getnodalia/foundation", rev = "6d518fc79968
 egui_demo_lib = { git = "https://github.com/getnodalia/foundation", rev = "6d518fc799681571963842f95b55a6b68431b15a" }
 egui_inspection = { git = "https://github.com/getnodalia/foundation", rev = "6d518fc799681571963842f95b55a6b68431b15a" }
 winit = { git = "https://github.com/getnodalia/foundation", rev = "a517b3846ee8457d84ee4975110bfda6797c44dc" }
-
-# craft-svg's path geometry, from foundation (vendor/vectorcraft/main) at the same commit.
-[patch."https://github.com/storytold/vectorcraft.git"]
-vectorcraft-geom = { git = "https://github.com/getnodalia/foundation", rev = "6b3a6b8788ebcb420d69449199cbdf323888d27e" }
-vectorcraft-pathops = { git = "https://github.com/getnodalia/foundation", rev = "6b3a6b8788ebcb420d69449199cbdf323888d27e" }

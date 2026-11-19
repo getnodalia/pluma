@@ -87,7 +87,7 @@ fn images(d: &Document) -> Vec<(Node, image::RgbaImage)> {
         .into_iter()
         .filter_map(|n| match &n.kind {
             NodeKind::Image(im) => {
-                let decoded = craft_image_codecs::decode(&d.images[&im.key].bytes).unwrap();
+                let decoded = nodalia_image_codecs::decode(&d.images[&im.key].bytes).unwrap();
                 let png = image::RgbaImage::from_raw(decoded.width(), decoded.height(), decoded.to_rgba8()).unwrap();
                 Some((n.clone(), png))
             }
@@ -375,15 +375,15 @@ fn quicktime(ctype: &[u8; 4], matrix: [f64; 6], w: i16, h: i16, data: &[u8]) -> 
 }
 
 fn red_jpeg() -> Vec<u8> {
-    let img = craft_image_codecs::Image::from_raw(
+    let img = nodalia_image_codecs::Image::from_raw(
         4,
         2,
-        craft_image_codecs::ChannelLayout::Rgb,
-        craft_image_codecs::SampleType::U8,
+        nodalia_image_codecs::ChannelLayout::Rgb,
+        nodalia_image_codecs::SampleType::U8,
         [255u8, 0, 0].repeat(8),
     )
     .unwrap();
-    craft_image_codecs::encode(&img, craft_image_codecs::Format::Jpeg, &craft_image_codecs::EncodeOptions::default()).unwrap()
+    nodalia_image_codecs::encode(&img, nodalia_image_codecs::Format::Jpeg, &nodalia_image_codecs::EncodeOptions::default()).unwrap()
 }
 
 #[test]

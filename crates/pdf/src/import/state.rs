@@ -173,8 +173,8 @@ pub(super) struct Builder<'p> {
     pub(super) lines: HashMap<NodeId, LineFacts>,
 }
 
-pub(super) fn blend(b: craft_pdf::interpret::BlendMode) -> BlendMode {
-    use craft_pdf::interpret::BlendMode as H;
+pub(super) fn blend(b: nodalia_pdf::interpret::BlendMode) -> BlendMode {
+    use nodalia_pdf::interpret::BlendMode as H;
     match b {
         H::Normal => BlendMode::Normal,
         H::Multiply => BlendMode::Multiply,
@@ -195,10 +195,10 @@ pub(super) fn blend(b: craft_pdf::interpret::BlendMode) -> BlendMode {
     }
 }
 
-pub(super) fn fill_rule(r: craft_pdf::interpret::FillRule) -> FillRule {
+pub(super) fn fill_rule(r: nodalia_pdf::interpret::FillRule) -> FillRule {
     match r {
-        craft_pdf::interpret::FillRule::NonZero => FillRule::NonZero,
-        craft_pdf::interpret::FillRule::EvenOdd => FillRule::EvenOdd,
+        nodalia_pdf::interpret::FillRule::NonZero => FillRule::NonZero,
+        nodalia_pdf::interpret::FillRule::EvenOdd => FillRule::EvenOdd,
     }
 }
 
@@ -339,18 +339,21 @@ pub(super) fn bounds(nodes: &[Arc<Node>]) -> Option<Rect> {
 }
 
 pub(super) fn rgba_png(rgba: Vec<u8>, w: u32, h: u32) -> Option<Vec<u8>> {
-    let img = craft_image_codecs::Image::from_raw(w, h, craft_image_codecs::ChannelLayout::Rgba, craft_image_codecs::SampleType::U8, rgba).ok()?;
-    craft_image_codecs::encode(&img, craft_image_codecs::Format::Png, &craft_image_codecs::EncodeOptions::default()).ok()
+    let img =
+        nodalia_image_codecs::Image::from_raw(w, h, nodalia_image_codecs::ChannelLayout::Rgba, nodalia_image_codecs::SampleType::U8, rgba).ok()?;
+    nodalia_image_codecs::encode(&img, nodalia_image_codecs::Format::Png, &nodalia_image_codecs::EncodeOptions::default()).ok()
 }
 
 pub(super) fn rgb_png(rgb: Vec<u8>, w: u32, h: u32) -> Option<Vec<u8>> {
-    let img = craft_image_codecs::Image::from_raw(w, h, craft_image_codecs::ChannelLayout::Rgb, craft_image_codecs::SampleType::U8, rgb).ok()?;
-    craft_image_codecs::encode(&img, craft_image_codecs::Format::Png, &craft_image_codecs::EncodeOptions::default()).ok()
+    let img =
+        nodalia_image_codecs::Image::from_raw(w, h, nodalia_image_codecs::ChannelLayout::Rgb, nodalia_image_codecs::SampleType::U8, rgb).ok()?;
+    nodalia_image_codecs::encode(&img, nodalia_image_codecs::Format::Png, &nodalia_image_codecs::EncodeOptions::default()).ok()
 }
 
 pub(super) fn gray_png(gray: Vec<u8>, w: u32, h: u32) -> Option<Vec<u8>> {
-    let img = craft_image_codecs::Image::from_raw(w, h, craft_image_codecs::ChannelLayout::Gray, craft_image_codecs::SampleType::U8, gray).ok()?;
-    craft_image_codecs::encode(&img, craft_image_codecs::Format::Png, &craft_image_codecs::EncodeOptions::default()).ok()
+    let img =
+        nodalia_image_codecs::Image::from_raw(w, h, nodalia_image_codecs::ChannelLayout::Gray, nodalia_image_codecs::SampleType::U8, gray).ok()?;
+    nodalia_image_codecs::encode(&img, nodalia_image_codecs::Format::Png, &nodalia_image_codecs::EncodeOptions::default()).ok()
 }
 
 pub(super) fn resize_alpha(a: &LumaData, w: u32, h: u32) -> Vec<u8> {

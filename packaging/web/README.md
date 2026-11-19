@@ -69,7 +69,7 @@ version check in front of the app on your own page.
 
 ## Fonts folder
 
-Builds made with craft-fonts (`CRAFT_FONTS_DIR`, all releases) have a `fonts/` folder beside the
+Builds made with nodalia-fonts (`NODALIA_FONTS_DIR`, all releases) have a `fonts/` folder beside the
 wasm: the Arabic fonts the app fetches instead of embedding (about 8 MB, each next to its OFL
 licence). Serve it with the rest of the site. Noto Sans Arabic is fetched before the app starts;
 the other families load in the background and appear in the font menus as they arrive.

@@ -502,8 +502,8 @@ pub(super) fn to_rgb(h: &Header<'_>, v: impl Fn(usize) -> f32, cmyk: &impl Fn([f
 
 /// An opaque CMYK composite as its original 8- or 16-bit ink samples. Other modes,
 /// composites with transparency, and images beyond the native CMYK pixel or allocation limit return `None`.
-pub(super) fn decode_cmyk(bytes: &[u8], max_alloc: u64) -> Result<Option<craft_image_codecs::Image>, String> {
-    use craft_image_codecs::{ChannelLayout, Image, SampleType};
+pub(super) fn decode_cmyk(bytes: &[u8], max_alloc: u64) -> Result<Option<nodalia_image_codecs::Image>, String> {
+    use nodalia_image_codecs::{ChannelLayout, Image, SampleType};
     let mut r = Reader::new(bytes);
     let h = header(&mut r)?;
     if h.mode != Mode::Cmyk || (h.channels > 4 && merged_alpha(h.layers, h.psb)) {

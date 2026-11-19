@@ -22,9 +22,9 @@ Every non-code asset in this repository (icons, images, fonts, example art, colo
 
 Generated-in-code art is original and has no file to list. This covers the default swatches, brushes, symbols, patterns, graphic styles, image-trace presets, the vector tool cursors (`crates/ui-egui/src/cursors.rs`) and the Learn panel's practice samples (`crates/ui-egui/src/panels/learn/samples.rs`).
 
-**Font files are never committed here.** Fonts shared by the Nodalia apps live in [getnodalia/foundation's `vendor/craft-fonts/main` branch](https://github.com/getnodalia/foundation/tree/vendor/craft-fonts/main). The small Latin UI/document fonts below predate that rule and stay.
+**Font files are never committed here.** Fonts shared by the Nodalia apps live in [getnodalia/foundation's `nodalia/fonts` branch](https://github.com/getnodalia/foundation/tree/nodalia/fonts). The small Latin UI/document fonts below predate that rule and stay.
 
-**Optional build input: craft-fonts.** Builds made with `CRAFT_FONTS_DIR=<craft-fonts checkout>` (all official releases) embed the Japanese fonts listed in its [`ATTRIBUTION.md`](https://github.com/storytold/craft-fonts/blob/main/ATTRIBUTION.md): BIZ UDPGothic Regular and Bold, Shippori Mincho Regular and BIZ UDMincho Regular (web builds: BIZ UDPGothic Regular only), all under the SIL Open Font License 1.1. They are not files in this repository; release packages carry each one's `OFL-<family>.txt`. Builds without `CRAFT_FONTS_DIR` embed none of them.
+**Optional build input: nodalia-fonts.** Builds made with `NODALIA_FONTS_DIR=<nodalia-fonts checkout>` (all official releases) embed the Japanese fonts listed in its [`ATTRIBUTION.md`](https://github.com/storytold/craft-fonts/blob/main/ATTRIBUTION.md): BIZ UDPGothic Regular and Bold, Shippori Mincho Regular and BIZ UDMincho Regular (web builds: BIZ UDPGothic Regular only), all under the SIL Open Font License 1.1. They are not files in this repository; release packages carry each one's `OFL-<family>.txt`. Builds without `NODALIA_FONTS_DIR` embed none of them.
 
 | Asset | Author | Source | Licence | Notes |
 |---|---|---|---|---|

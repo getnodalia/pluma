@@ -5,8 +5,8 @@
 //! every panel hidden, so the panels cover its edge and the artwork stays where it is. Floating
 //! panels, the Tools panel and the Control bar stay hidden.
 
-use craft_ui::docking::{Layout, Node};
-use craft_ui::layout::SplitAxis;
+use nodalia_ui::docking::{Layout, Node};
+use nodalia_ui::layout::SplitAxis;
 use serde_json::{Value, json};
 
 use super::CANVAS;
@@ -75,7 +75,7 @@ pub(crate) fn edge_panels(layout: &Layout<String>, edge: Edge) -> Vec<String> {
     let mut depth = 0usize;
     while let Some(Node::Split { axis, first, second, .. }) = node {
         depth = depth.saturating_add(1);
-        if depth > 2 * craft_ui::docking::MAX_PANELS {
+        if depth > 2 * nodalia_ui::docking::MAX_PANELS {
             break;
         }
         let (inner, outer, side) = if tree(first).contains(&canvas) { (first, second, Edge::Right) } else { (second, first, Edge::Left) };

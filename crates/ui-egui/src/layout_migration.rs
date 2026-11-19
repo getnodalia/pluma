@@ -11,7 +11,7 @@
 
 use std::collections::{BTreeMap, BTreeSet};
 
-use craft_ui::docking::{Column, Floating, Group, Layout, Location, Node};
+use nodalia_ui::docking::{Column, Floating, Group, Layout, Location, Node};
 use serde_json::{Map, Value};
 
 use crate::panel_docking::{self as docking, CANVAS, COLUMN_MAX, COLUMN_WIDTH, ICON_WIDTH, Placed};
@@ -336,7 +336,7 @@ pub(crate) fn from_legacy(f: &Fields<'_>) -> Option<(Layout<String>, Hidden)> {
     // anyway (its rows, and the panels dropped on it): they take their place there.
     let in_rows = |id: &str| ICON_PANEL_GROUPS.iter().any(|row| row.contains(&id));
     let hidden: BTreeMap<String, Location<String>> =
-        f.hidden.iter().take(craft_ui::docking::MAX_PANELS).map(|(id, location)| (id.clone(), location.clone())).collect();
+        f.hidden.iter().take(nodalia_ui::docking::MAX_PANELS).map(|(id, location)| (id.clone(), location.clone())).collect();
     for id in hidden.keys().filter(|id| !in_rows(id) && !f.icons.contains(*id)) {
         let _ = placed.take(id);
     }
@@ -378,7 +378,7 @@ pub(crate) fn from_legacy(f: &Fields<'_>) -> Option<(Layout<String>, Hidden)> {
 /// it is kept.
 fn take_group(placed: &mut Placed, panels: &[String], active: usize) -> Option<Group<String>> {
     let front = panels.get(active).cloned();
-    let kept: Vec<String> = panels.iter().take(craft_ui::docking::MAX_PANELS).filter_map(|p| placed.take(p)).collect();
+    let kept: Vec<String> = panels.iter().take(nodalia_ui::docking::MAX_PANELS).filter_map(|p| placed.take(p)).collect();
     let active = front.and_then(|front| kept.iter().position(|p| *p == front)).unwrap_or(0);
     (!kept.is_empty()).then(|| Group::new(kept, active))
 }
@@ -408,7 +408,7 @@ fn finite_pos(pos: [f32; 2]) -> [f32; 2] {
 /// The groups of an old dock tree's node, column by column in reading order. A vertical split
 /// stacks its parts in one column; a horizontal split puts them side by side.
 fn tree_columns(node: &Node<String>, depth: usize, placed: &mut Placed) -> Vec<Vec<Group<String>>> {
-    if depth > craft_ui::docking::MAX_DEPTH {
+    if depth > nodalia_ui::docking::MAX_DEPTH {
         return Vec::new();
     }
     let column = |groups: Vec<Group<String>>| if groups.is_empty() { Vec::new() } else { vec![groups] };
@@ -417,7 +417,7 @@ fn tree_columns(node: &Node<String>, depth: usize, placed: &mut Placed) -> Vec<V
         Node::Stack { entries } => column(
             entries
                 .iter()
-                .take(craft_ui::docking::MAX_PANELS)
+                .take(nodalia_ui::docking::MAX_PANELS)
                 .filter_map(|e| placed.take(&e.panel).map(|id| Group { minimized: !e.open, ..Group::new(vec![id], 0) }))
                 .collect(),
         ),
@@ -425,7 +425,7 @@ fn tree_columns(node: &Node<String>, depth: usize, placed: &mut Placed) -> Vec<V
             let mut parts = tree_columns(first, depth.saturating_add(1), placed);
             parts.extend(tree_columns(second, depth.saturating_add(1), placed));
             match axis {
-                craft_ui::layout::SplitAxis::Horizontal => parts,
+                nodalia_ui::layout::SplitAxis::Horizontal => parts,
                 _ => column(parts.into_iter().flatten().collect()),
             }
         }
@@ -436,7 +436,7 @@ fn tree_columns(node: &Node<String>, depth: usize, placed: &mut Placed) -> Vec<V
 /// A floating window's tree with only the panels not placed yet; a split that loses one side
 /// becomes its other side. None when no panel is left.
 fn unplaced_tree(node: &Node<String>, depth: usize, placed: &mut Placed) -> Option<Node<String>> {
-    if depth > craft_ui::docking::MAX_DEPTH {
+    if depth > nodalia_ui::docking::MAX_DEPTH {
         return None;
     }
     match node {
@@ -444,8 +444,8 @@ fn unplaced_tree(node: &Node<String>, depth: usize, placed: &mut Placed) -> Opti
         Node::Stack { entries } => {
             let entries: Vec<_> = entries
                 .iter()
-                .take(craft_ui::docking::MAX_PANELS)
-                .filter_map(|e| placed.take(&e.panel).map(|panel| craft_ui::docking::StackEntry { panel, ..e.clone() }))
+                .take(nodalia_ui::docking::MAX_PANELS)
+                .filter_map(|e| placed.take(&e.panel).map(|panel| nodalia_ui::docking::StackEntry { panel, ..e.clone() }))
                 .collect();
             (!entries.is_empty()).then_some(Node::Stack { entries })
         }

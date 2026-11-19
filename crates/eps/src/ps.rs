@@ -3,7 +3,7 @@
 
 use pluma_geom::{BezPath, FillRule};
 
-pub(crate) use craft_ps::write::{bytes, deflate, inflate, matrix, num, push_num, push_num_places, push_nums, string, written};
+pub(crate) use nodalia_ps::write::{bytes, deflate, inflate, matrix, num, push_num, push_num_places, push_nums, string, written};
 
 /// The procedures the page uses, in `VCdict`.
 pub(crate) const PROLOG: &str = "/VCdict 64 dict def
@@ -21,7 +21,7 @@ end
 
 /// Append path `bp` using the short operators defined by our `VCdict` prolog.
 pub(crate) fn push_path(s: &mut String, bp: &BezPath) {
-    craft_ps::write::push_path(s, bp, craft_ps::write::PathOps::SHORT);
+    nodalia_ps::write::push_path(s, bp, nodalia_ps::write::PathOps::SHORT);
 }
 
 /// The fill operator for `rule`.
@@ -42,7 +42,7 @@ pub(crate) fn clip_op(rule: FillRule) -> &'static str {
 
 /// `bytes` in ASCII85 with its `~>` end, in lines of about [`LINE`] characters, none starting
 /// with `%` (DSC readers would take it for a comment).
-pub(crate) use craft_eps::ascii85::encode as ascii85;
+pub(crate) use nodalia_eps::ascii85::encode as ascii85;
 
 /// Most bytes [`ascii85_decode`] makes: what one filter or data section may hold.
 pub(crate) const MAX_ASCII85: usize = 1 << 28;
@@ -56,7 +56,7 @@ pub(crate) fn ascii85_decode(text: &str) -> Option<Vec<u8>> {
 /// [`ascii85_decode`] of at most `max` bytes: `z` is four bytes for one, so the length of the
 /// text doesn't bound what it becomes (#1715).
 pub(crate) fn ascii85_decode_within(text: &str, max: usize) -> Option<Vec<u8>> {
-    craft_eps::ascii85::decode(text.as_bytes(), max)
+    nodalia_eps::ascii85::decode(text.as_bytes(), max)
 }
 
 /// Run-length encoding (PackBits: what PostScript's `RunLengthDecode` reads), shared with TIFF.

@@ -100,7 +100,7 @@ White light: extruded type with a cove bevel, an Inflate, an Extrude & Bevel (Cl
 {"command":"effect.apply","params":{"effect":"threeD.revolve","item":null,"params":{}}}
 ```
 
-The type is set in Source Sans 3, which a build has only with craft-fonts (`CRAFT_FONTS_DIR`, see `docs/development.md` › Fonts); without it the type falls back to another face. To reproduce, save the commands as `scene.jsonl` and, with each build:
+The type is set in Source Sans 3, which a build has only with nodalia-fonts (`NODALIA_FONTS_DIR`, see `docs/development.md` › Fonts); without it the type falls back to another face. To reproduce, save the commands as `scene.jsonl` and, with each build:
 
 ```
 pluma-cli run --commands scene.jsonl --export scene.pluma

@@ -69,7 +69,7 @@ fn a_paste_takes_the_command_of_the_v_chord_held() {
 
 #[test]
 fn no_two_commands_tools_or_panels_share_a_default_shortcut() {
-    assert_eq!(shortcut_editor::all_conflicts(&craft_keymap::Overrides::new()), vec![]);
+    assert_eq!(shortcut_editor::all_conflicts(&nodalia_keymap::Overrides::new()), vec![]);
 }
 
 /// egui-winit reports every Cmd+C chord as a Copy, Shift and Alt held too, never as its key: the

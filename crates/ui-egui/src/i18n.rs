@@ -100,7 +100,7 @@ fn plural_polish(n: u64) -> usize {
 pub static LANGUAGES: [LangInfo; 29] = [
     LangInfo { code: "en", name: "English", source: "", plural: plural_one_other, complete_menus: false, catalog: OnceLock::new() },
     // Hindi shares the integer zero/one rule with French. Desktop UI fonts are loaded lazily
-    // from installed faces by ui_fonts; the web fetches a Devanagari craft-fonts face on demand.
+    // from installed faces by ui_fonts; the web fetches a Devanagari nodalia-fonts face on demand.
     LangInfo {
         code: "hi",
         name: "हिन्दी",
@@ -111,7 +111,7 @@ pub static LANGUAGES: [LangInfo; 29] = [
     },
     // Gujarati: menus and dialogs, with partial status/error message coverage and loanwords
     // transliterated into Gujarati script; zero/one singular plurals. Gujarati text is drawn with an installed system font
-    // (Gujarati Sangam MN, Nirmala UI, Shruti) or a craft-fonts face tagged `Gujr`. Web selection
+    // (Gujarati Sangam MN, Nirmala UI, Shruti) or a nodalia-fonts face tagged `Gujr`. Web selection
     // requires a bundled Gujarati interface face; otherwise `gu-*` locales use the fallback.
     LangInfo {
         code: "gu",
@@ -138,7 +138,7 @@ pub static LANGUAGES: [LangInfo; 29] = [
     },
     // Korean: the whole interface and the status and error messages, keeping the same names in
     // English as Japanese; a count takes no plural, so plurals have one form. Hangul is drawn with an
-    // installed system font (craft-fonts has no Korean UI face yet); every `ko-*` locale resolves here.
+    // installed system font (nodalia-fonts has no Korean UI face yet); every `ko-*` locale resolves here.
     LangInfo {
         code: "ko", name: "한국어", source: include_str!("i18n/ko.tsv"), plural: plural_none, complete_menus: true, catalog: OnceLock::new()
     },
@@ -368,7 +368,7 @@ pub static LANGUAGES: [LangInfo; 29] = [
 
 impl LangInfo {
     fn available(&self) -> bool {
-        self.available_with_fonts(cfg!(target_arch = "wasm32"), pluma_text::CRAFT_FONTS.iter().any(|f| f.scripts.contains(&"Gujr")))
+        self.available_with_fonts(cfg!(target_arch = "wasm32"), pluma_text::NODALIA_FONTS.iter().any(|f| f.scripts.contains(&"Gujr")))
     }
 
     fn available_with_fonts(&self, web: bool, gujarati_font: bool) -> bool {

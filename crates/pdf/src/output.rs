@@ -45,8 +45,8 @@
 
 use std::sync::{Arc, OnceLock};
 
-use craft_pdf::write::backend as krilla;
 use krilla::image::ImageColorspace;
+use nodalia_pdf::write::backend as krilla;
 use pluma_color::Color;
 use pluma_color::cms::{self, Cms, CmykLut, Intent, Model, ProfileKind, ProofLut};
 use pluma_doc::{ColorMode, Document};

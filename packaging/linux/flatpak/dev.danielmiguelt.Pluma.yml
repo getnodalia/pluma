@@ -47,7 +47,7 @@ finish-args:
 build-options:
   append-path: /usr/lib/sdk/rust-stable/bin
 modules:
-  # CUPS client tools for craft-print: the runtime has libcups but not lpstat/lp/lpoptions.
+  # CUPS client tools for nodalia-print: the runtime has libcups but not lpstat/lp/lpoptions.
   # Linked statically against this release's libcups, so a runtime update can't break them;
   # the socket path matches the host's, which --socket=cups mounts.
   - name: cups-client

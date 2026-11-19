@@ -1,6 +1,6 @@
 //! Synthetic XML 1.0/SVG round trips: https://www.w3.org/TR/xml/#AVNormalize
 //! https://www.w3.org/TR/xml/#NT-NameChar https://www.w3.org/TR/xml/#charsets
-use craft_svg::tree::usvg::roxmltree;
+use nodalia_svg::tree::usvg::roxmltree;
 use pluma_doc::{Document, Node};
 use pluma_svg::{Encoding, ExportOptions, ObjectIds, Output, Styling, export, export_full, import};
 use std::collections::HashSet;

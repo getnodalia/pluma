@@ -3,7 +3,7 @@
 //! draws the file as the canvas draws the gradient; SVG import reads `spreadMethod` as the
 //! gradient's spread; CSS writes repeating gradients.
 
-use craft_svg::tree::draw::resvg;
+use nodalia_svg::tree::draw::resvg;
 use pluma_color::{Color, Gradient, GradientGeom, GradientKind, GradientPaint, GradientSpread, GradientStop, Paint};
 use pluma_doc::{Appearance, Document, Node, NodeKind};
 use pluma_geom::{Point, Rect, Vec2, shapes};

@@ -567,17 +567,17 @@ impl<'a> Reader<'a> {
                 rgba.extend_from_slice(&[px[0], px[1], px[2], a]);
             }
         }
-        let Ok(img) = craft_image_codecs::Image::from_raw(
+        let Ok(img) = nodalia_image_codecs::Image::from_raw(
             w as u32,
             h as u32,
-            craft_image_codecs::ChannelLayout::Rgba,
-            craft_image_codecs::SampleType::U8,
+            nodalia_image_codecs::ChannelLayout::Rgba,
+            nodalia_image_codecs::SampleType::U8,
             rgba,
         ) else {
             self.image_left_out("an image Pluma can't read was left out");
             return Ok(());
         };
-        let Ok(png) = craft_image_codecs::encode(&img, craft_image_codecs::Format::Png, &craft_image_codecs::EncodeOptions::default()) else {
+        let Ok(png) = nodalia_image_codecs::encode(&img, nodalia_image_codecs::Format::Png, &nodalia_image_codecs::EncodeOptions::default()) else {
             self.image_left_out("an image Pluma can't read was left out");
             return Ok(());
         };
@@ -605,9 +605,12 @@ impl<'a> Reader<'a> {
                 gray.push(v);
             }
         }
-        let written = craft_image_codecs::Image::from_raw(w, h, craft_image_codecs::ChannelLayout::Gray, craft_image_codecs::SampleType::U8, gray)
-            .ok()
-            .and_then(|img| craft_image_codecs::encode(&img, craft_image_codecs::Format::Png, &craft_image_codecs::EncodeOptions::default()).ok());
+        let written =
+            nodalia_image_codecs::Image::from_raw(w, h, nodalia_image_codecs::ChannelLayout::Gray, nodalia_image_codecs::SampleType::U8, gray)
+                .ok()
+                .and_then(|img| {
+                    nodalia_image_codecs::encode(&img, nodalia_image_codecs::Format::Png, &nodalia_image_codecs::EncodeOptions::default()).ok()
+                });
         let Some(png) = written else {
             self.image_left_out("an image Pluma can't read was left out");
             return Ok(());
@@ -700,14 +703,16 @@ impl<'a> Reader<'a> {
             Inks::new(ow, oh, pixels).and_then(|i| ImageBlob::cmyk_tiff(&i))
         } else {
             let layout = match (s.channels, inline && opacity.is_some()) {
-                (1, false) => craft_image_codecs::ChannelLayout::Gray,
-                (1, true) => craft_image_codecs::ChannelLayout::GrayA,
-                (_, false) => craft_image_codecs::ChannelLayout::Rgb,
-                (_, true) => craft_image_codecs::ChannelLayout::Rgba,
+                (1, false) => nodalia_image_codecs::ChannelLayout::Gray,
+                (1, true) => nodalia_image_codecs::ChannelLayout::GrayA,
+                (_, false) => nodalia_image_codecs::ChannelLayout::Rgb,
+                (_, true) => nodalia_image_codecs::ChannelLayout::Rgba,
             };
-            craft_image_codecs::Image::from_raw(ow, oh, layout, craft_image_codecs::SampleType::U8, pixels)
+            nodalia_image_codecs::Image::from_raw(ow, oh, layout, nodalia_image_codecs::SampleType::U8, pixels)
                 .ok()
-                .and_then(|img| craft_image_codecs::encode(&img, craft_image_codecs::Format::Png, &craft_image_codecs::EncodeOptions::default()).ok())
+                .and_then(|img| {
+                    nodalia_image_codecs::encode(&img, nodalia_image_codecs::Format::Png, &nodalia_image_codecs::EncodeOptions::default()).ok()
+                })
                 .map(|png| ImageBlob::new("image/png", png))
         };
         // One that can't be encoded is left to the page's art, as one past the hard limits.
@@ -796,10 +801,15 @@ impl<'a> Reader<'a> {
         if alpha.iter().all(|v| *v == 255) {
             return None;
         }
-        let raw =
-            craft_image_codecs::Image::from_raw(w, h, craft_image_codecs::ChannelLayout::Gray, craft_image_codecs::SampleType::U8, alpha.to_vec())
-                .ok()?;
-        let png = craft_image_codecs::encode(&raw, craft_image_codecs::Format::Png, &craft_image_codecs::EncodeOptions::default()).ok()?;
+        let raw = nodalia_image_codecs::Image::from_raw(
+            w,
+            h,
+            nodalia_image_codecs::ChannelLayout::Gray,
+            nodalia_image_codecs::SampleType::U8,
+            alpha.to_vec(),
+        )
+        .ok()?;
+        let png = nodalia_image_codecs::encode(&raw, nodalia_image_codecs::Format::Png, &nodalia_image_codecs::EncodeOptions::default()).ok()?;
         let blob = ImageBlob::new("image/png", png);
         let key = blob.content_key();
         self.doc.images.entry(key.clone()).or_insert(blob);
@@ -1057,8 +1067,9 @@ pub(super) fn preview_png(data: &[u8]) -> Option<(Vec<u8>, u32, u32)> {
         }
     }
     let raw =
-        craft_image_codecs::Image::from_raw(width, height, craft_image_codecs::ChannelLayout::Rgba, craft_image_codecs::SampleType::U8, rgba).ok()?;
-    let png = craft_image_codecs::encode(&raw, craft_image_codecs::Format::Png, &craft_image_codecs::EncodeOptions::default()).ok()?;
+        nodalia_image_codecs::Image::from_raw(width, height, nodalia_image_codecs::ChannelLayout::Rgba, nodalia_image_codecs::SampleType::U8, rgba)
+            .ok()?;
+    let png = nodalia_image_codecs::encode(&raw, nodalia_image_codecs::Format::Png, &nodalia_image_codecs::EncodeOptions::default()).ok()?;
     Some((png, width, height))
 }
 

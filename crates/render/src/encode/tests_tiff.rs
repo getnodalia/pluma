@@ -1,25 +1,25 @@
 //! TIFF export: byte order, LZW, colour models and samples, resolution, profile, strips.
 
-use craft_tiff::Tiff;
-use craft_tiff::tags;
+use nodalia_tiff::Tiff;
+use nodalia_tiff::tags;
 
 use super::jpeg::ColorModel;
 use super::tiff::{self as t, ByteOrder, Compression, Image, Layout, Photometric, TiffOptions};
 
-fn ifd0(file: &[u8]) -> craft_tiff::Ifd {
+fn ifd0(file: &[u8]) -> nodalia_tiff::Ifd {
     Tiff::parse(file).expect("a TIFF").ifds.into_iter().next().expect("IFD0")
 }
 
-fn tag_u16_vec(ifd: &craft_tiff::Ifd, tag: u16) -> Option<Vec<u16>> {
+fn tag_u16_vec(ifd: &nodalia_tiff::Ifd, tag: u16) -> Option<Vec<u16>> {
     ifd.value(tag).map(|v| v.to_u64_vec().into_iter().map(|x| x as u16).collect())
 }
 
-fn tag_u32_vec(ifd: &craft_tiff::Ifd, tag: u16) -> Option<Vec<u32>> {
+fn tag_u32_vec(ifd: &nodalia_tiff::Ifd, tag: u16) -> Option<Vec<u32>> {
     ifd.value(tag).map(|v| v.to_u64_vec().into_iter().map(|x| x as u32).collect())
 }
 
 fn pixels(file: &[u8]) -> Vec<u8> {
-    craft_image_codecs::decode_as(craft_image_codecs::Format::Tiff, file).expect("decodes").into_data()
+    nodalia_image_codecs::decode_as(nodalia_image_codecs::Format::Tiff, file).expect("decodes").into_data()
 }
 
 /// Straight RGBA: flat areas (as art is) with a transparent corner when `clear`.
@@ -68,7 +68,7 @@ fn lzw_is_smaller_and_decodes_the_same() {
     assert_eq!(ifd0(&plain).u16(tags::COMPRESSION), Some(1));
     assert_eq!(pixels(&lzw), px, "transparency kept as an alpha channel");
     assert_eq!(pixels(&plain), px);
-    let img = craft_image_codecs::decode_as(craft_image_codecs::Format::Tiff, &lzw).unwrap();
+    let img = nodalia_image_codecs::decode_as(nodalia_image_codecs::Format::Tiff, &lzw).unwrap();
     assert_eq!(img.data(), px);
 }
 
@@ -107,7 +107,7 @@ fn colour_models_write_their_samples() {
     assert_eq!(d.u16(tags::SAMPLES_PER_PIXEL), Some(4));
     assert_eq!(d.u16(tags::PHOTOMETRIC), Some(5), "separated");
     assert_eq!(d.u16(332), Some(1), "CMYK inks");
-    let cmyk_img = craft_image_codecs::decode_as(craft_image_codecs::Format::Tiff, &cmyk).unwrap();
+    let cmyk_img = nodalia_image_codecs::decode_as(nodalia_image_codecs::Format::Tiff, &cmyk).unwrap();
     assert_eq!(cmyk_img.data(), inks);
 }
 
@@ -118,7 +118,7 @@ fn resolution_tags_and_the_profile() {
         let file = t::encode_samples(&px, 4, 4, ppi, &opts(ColorModel::Rgb)).unwrap();
         let d = ifd0(&file);
         for tag in [tags::X_RESOLUTION, tags::Y_RESOLUTION] {
-            let Some(craft_tiff::Value::Rational(v)) = d.value(tag) else { panic!("rational") };
+            let Some(nodalia_tiff::Value::Rational(v)) = d.value(tag) else { panic!("rational") };
             assert_eq!(v.as_slice(), &[rational]);
         }
         assert_eq!(d.u16(tags::RESOLUTION_UNIT), Some(2), "inches");
@@ -169,7 +169,7 @@ fn packbits_and_bilevel_images_decode() {
     assert_eq!(tag_u16_vec(&d, tags::BITS_PER_SAMPLE).as_deref(), Some([1].as_slice()));
     assert_eq!(d.u16(tags::COMPRESSION), Some(32773));
     // The decoder turns WhiteIsZero into black-is-zero.
-    let dec = craft_image_codecs::decode_as(craft_image_codecs::Format::Tiff, &file).unwrap();
+    let dec = nodalia_image_codecs::decode_as(nodalia_image_codecs::Format::Tiff, &file).unwrap();
     assert_eq!(dec.width(), 10);
     assert_eq!(dec.height(), 3);
     assert_eq!(
@@ -203,7 +203,7 @@ fn packbits_round_trips() {
     }
 }
 
-/// TIFF's LZW strips through craft-stream-codecs (#778) read back as the strip they were made of
+/// TIFF's LZW strips through nodalia-stream-codecs (#778) read back as the strip they were made of
 /// with weezl, the writer before them, and take no more bytes than weezl's: the same bytes until
 /// the code table first fills, after which the two clear it at different codes.
 #[test]
@@ -223,7 +223,7 @@ fn lzw_strips_read_back_as_weezl_reads_them() {
         [vec![], vec![7], vec![0; 70_000], noise(8_192, 256), noise(65_536, 4), noise(200_000, 256), (0..=255).cycle().take(30_000).collect()];
     for strip in &strips {
         let weezl = weezl::encode::Encoder::with_tiff_size_switch(weezl::BitOrder::Msb, 8).encode(strip).unwrap();
-        let craft = craft_stream_codecs::lzw::encode(strip, true);
+        let craft = nodalia_stream_codecs::lzw::encode(strip, true);
         let back = weezl::decode::Decoder::with_tiff_size_switch(weezl::BitOrder::Msb, 8).decode(&craft).unwrap();
         assert!(back == *strip, "{} bytes read back", strip.len());
         assert!(craft.len() <= weezl.len(), "{} bytes: {} against {}", strip.len(), craft.len(), weezl.len());

@@ -530,23 +530,23 @@ fn compare_image(path: &str) -> Result<image::RgbaImage> {
     if let Some((w, h)) = pluma_doc::cmyk::oversized_tiff(&bytes) {
         return Err(bad(C, format!("an image of {w} × {h} pixels is too large to draw")));
     }
-    let format = craft_image_codecs::detect(&bytes);
+    let format = nodalia_image_codecs::detect(&bytes);
     let readable = [
-        craft_image_codecs::Format::Png,
-        craft_image_codecs::Format::Jpeg,
-        craft_image_codecs::Format::WebP,
-        craft_image_codecs::Format::Tiff,
-        craft_image_codecs::Format::Bmp,
+        nodalia_image_codecs::Format::Png,
+        nodalia_image_codecs::Format::Jpeg,
+        nodalia_image_codecs::Format::WebP,
+        nodalia_image_codecs::Format::Tiff,
+        nodalia_image_codecs::Format::Bmp,
     ];
     let Some(format) = format.filter(|f| readable.contains(f)) else {
         return Err(bad(C, format!("{path}: not a PNG, JPEG, WebP, TIFF or BMP image")));
     };
-    let mut opts = craft_image_codecs::DecodeOptions::default();
+    let mut opts = nodalia_image_codecs::DecodeOptions::default();
     opts.limits.max_alloc = pluma_doc::MAX_RASTER_ALLOC;
     opts.limits.max_pixels = pluma_doc::MAX_RASTER_ALLOC / 4;
-    let img = match craft_image_codecs::decode_as_with(format, &bytes, &opts) {
+    let img = match nodalia_image_codecs::decode_as_with(format, &bytes, &opts) {
         Ok(img) => img,
-        Err(craft_image_codecs::CodecError::LimitExceeded(_)) => {
+        Err(nodalia_image_codecs::CodecError::LimitExceeded(_)) => {
             return Err(bad(C, "image is too large to draw"));
         }
         Err(e) => return Err(bad(C, format!("{path}: {e}"))),

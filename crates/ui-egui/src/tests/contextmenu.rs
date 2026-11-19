@@ -767,7 +767,7 @@ fn ignore_all_and_add_to_dictionary_from_the_context_menu() {
     let p = word_at(&app, id, 13, 21);
     let texts = click(&mut app, &ctx, p, PointerButton::Secondary);
     click(&mut app, &ctx, at(&texts, "Add to Dictionary"), PointerButton::Primary);
-    let added = craft_proof_has(&mut app, "kwqzvxtr");
+    let added = nodalia_proof_has(&mut app, "kwqzvxtr");
     app.run("text.spelling.removeWord", json!({"word": "kwqzvxtr"})).unwrap();
     assert!(added, "added to the custom dictionary");
     // Nothing left underlined there: a right-click on it offers no spelling items.
@@ -776,7 +776,7 @@ fn ignore_all_and_add_to_dictionary_from_the_context_menu() {
     assert!(!has(&texts, "Ignore All"), "{texts:?}");
 }
 
-fn craft_proof_has(app: &mut PlumaApp, w: &str) -> bool {
+fn nodalia_proof_has(app: &mut PlumaApp, w: &str) -> bool {
     app.run("text.spelling.dictionary", json!({})).unwrap()["words"].as_array().unwrap().iter().any(|x| x == w)
 }
 

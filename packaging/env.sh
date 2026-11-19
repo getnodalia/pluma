@@ -57,12 +57,12 @@ copy_docs() {
   copy_font_licences "$dest"
 }
 
-# Built with craft-fonts (CRAFT_FONTS_DIR, set by the release-*.yml workflows): the embedded fonts' licences go with
+# Built with nodalia-fonts (NODALIA_FONTS_DIR, set by the release-*.yml workflows): the embedded fonts' licences go with
 # the package, as OFL-<family dir>.txt. Nothing to do without it.
 copy_font_licences() {
   local dest="$1" ofl family
-  [[ -n "${CRAFT_FONTS_DIR:-}" ]] || return 0
-  for ofl in "$CRAFT_FONTS_DIR"/fonts/*/OFL.txt; do
+  [[ -n "${NODALIA_FONTS_DIR:-}" ]] || return 0
+  for ofl in "$NODALIA_FONTS_DIR"/fonts/*/OFL.txt; do
     [[ -f "$ofl" ]] || continue
     family="$(basename "$(dirname "$ofl")")"
     cp "$ofl" "$dest/OFL-$family.txt"

@@ -4,7 +4,7 @@
 
 use std::io::{self, Write};
 
-use craft_gzip::Gz;
+use nodalia_gzip::Gz;
 
 /// The output of a save: plain, or gzip ([`Gz`]).
 pub(crate) enum Out<W: Write> {

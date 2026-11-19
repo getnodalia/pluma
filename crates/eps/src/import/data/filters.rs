@@ -1,6 +1,6 @@
 use super::ops::MAX_DATA;
 use super::{DictRef, ImageBlob, Key, Obj, PsError, Rc, RefCell, Res, find, hex_decode, jpeg_components, ps, ps_err};
-use craft_stream_codecs::CcittParams;
+use nodalia_stream_codecs::CcittParams;
 
 /// A file object: the program itself, or data a filter decoded.
 #[derive(Debug)]
@@ -174,7 +174,7 @@ fn fax(raw: &[u8], settings: CcittParams) -> Res<(Vec<u8>, usize)> {
     // The decoder reads the RTC of Group 3 two-dimensional data as rows: it gets the data before it.
     let rtc = if settings.k > 0 && settings.end_of_block { rtc(raw) } else { None };
     let data = rtc.and_then(|(cut, _)| raw.get(..cut)).unwrap_or(raw);
-    let out = craft_stream_codecs::decode_ccitt_raw(data, &params, rows).map_err(|_| PsError::Limit("decoded data is too large"))?;
+    let out = nodalia_stream_codecs::decode_ccitt_raw(data, &params, rows).map_err(|_| PsError::Limit("decoded data is too large"))?;
     if out.rows_decoded > most {
         return Err(PsError::Limit("decoded data is too large"));
     }

@@ -5,9 +5,9 @@ use std::process::Command;
 
 use serde_json::Value;
 
-const REV: &str = "64b181977a0488e4d1e167bc5cc8cfededc2ed4b";
+const REV: &str = "91ab24c9fe626e44641f8ba42b2557728b114446";
 const PACKAGES: &[(&str, &str, &str)] = &[
-    ("craft-pdf", "0.1.0", REV),
+    ("nodalia-pdf", "0.1.0", REV),
     ("krilla", "0.8.2", REV),
     ("hayro-syntax", "0.7.2", REV),
     ("hayro-interpret", "0.7.0", REV),
@@ -16,7 +16,7 @@ const PACKAGES: &[(&str, &str, &str)] = &[
     ("hayro-postscript", "0.1.0", REV),
 ];
 
-/// The resolved source of a craft-libs package at `rev`.
+/// The resolved source of a nodalia-libs package at `rev`.
 fn source(rev: &str) -> String {
     format!("git+https://github.com/getnodalia/foundation?rev={rev}#{rev}")
 }
@@ -68,7 +68,7 @@ mod tests {
         m["packages"]
             .as_array_mut()
             .unwrap()
-            .push(json!({"name":"craft-print", "version":"0.1.0", "source":"git+https://github.com/getnodalia/foundation?rev=d991bf6792f8ade99c51358bf3c1d902c8cd96b5#d991bf6792f8ade99c51358bf3c1d902c8cd96b5"}));
+            .push(json!({"name":"nodalia-print", "version":"0.1.0", "source":"git+https://github.com/getnodalia/foundation?rev=d991bf6792f8ade99c51358bf3c1d902c8cd96b5#d991bf6792f8ade99c51358bf3c1d902c8cd96b5"}));
         assert!(validate(&m).is_ok());
     }
 

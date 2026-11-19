@@ -1,4 +1,4 @@
-//! EMF (with or without EMF+ records) and WMF files: `craft_metafile` plays the records into a
+//! EMF (with or without EMF+ records) and WMF files: `nodalia_metafile` plays the records into a
 //! picture, and the picture's items become document objects here.
 //!
 //! - A filled or stroked path becomes a path with a fill and a stroke (caps, joins, miter limit
@@ -22,14 +22,14 @@
 //!
 //! A WMF without a placeable header is read at 1440 units an inch, and one whose placeable box is
 //! empty or inverted at the units an inch the header gives. Either one that draws in a metric map
-//! mode (MM_LOMETRIC to MM_TWIPS) is read at 96 pixels an inch, as `craft_metafile` plays those
+//! mode (MM_LOMETRIC to MM_TWIPS) is read at 96 pixels an inch, as `nodalia_metafile` plays those
 //! modes. An EMF without a usable frame is read at its device's pixels a millimetre (96
 //! pixels an inch when the header doesn't say).
 
 use std::collections::HashMap;
 use std::sync::{Arc, Weak};
 
-use craft_metafile::{Cap, ClipPath, HAlign, Item, Join, LineStyle, Seg, VAlign};
+use nodalia_metafile::{Cap, ClipPath, HAlign, Item, Join, LineStyle, Seg, VAlign};
 use pluma_color::Paint;
 use pluma_doc::clipnest::{Clip, Drawn, MAX_NEST, deep_clips, nest};
 use pluma_doc::{
@@ -50,30 +50,30 @@ const AT_LIMIT: &str = "the file or a picture inside it reached a limit on what 
 
 /// Points a unit of a WMF without a placeable header (1440 units an inch).
 const WMF_UNIT: f64 = 72.0 / 1440.0;
-/// The SAVEDC levels `craft_metafile` keeps; it stops reading at a SAVEDC past them.
+/// The SAVEDC levels `nodalia_metafile` keeps; it stops reading at a SAVEDC past them.
 const SAVED_LEVELS: usize = 1024;
 /// Points a pixel at 96 pixels an inch.
 const PT_PER_PX: f64 = 72.0 / 96.0;
 /// Points a millimetre.
 const PT_PER_MM: f64 = 72.0 / 25.4;
 
-/// WMF records that draw lines and shapes, which `craft_metafile` plays only when the mix mode
+/// WMF records that draw lines and shapes, which `nodalia_metafile` plays only when the mix mode
 /// lets them draw.
 const WMF_SHAPES: [u16; 10] = [0x0213, 0x0324, 0x0325, 0x0418, 0x041B, 0x0538, 0x061C, 0x0817, 0x081A, 0x0830];
-/// WMF records that draw text and bitmaps, which `craft_metafile` plays whatever the mix mode.
+/// WMF records that draw text and bitmaps, which `nodalia_metafile` plays whatever the mix mode.
 const WMF_DRAWS: [u16; 5] = [0x0521, 0x0940, 0x0A32, 0x0B41, 0x0F43];
-/// SETROP2 mix modes under which `craft_metafile` draws no lines, shapes or brush fills: R2_XORPEN
+/// SETROP2 mix modes under which `nodalia_metafile` draws no lines, shapes or brush fills: R2_XORPEN
 /// and R2_NOP.
 const WMF_MIX_SKIPS: [u16; 2] = [7, 11];
 /// The mix mode a WMF starts in (R2_COPYPEN).
 const WMF_MIX_START: u16 = 13;
-/// PATBLT raster operations `craft_metafile` draws: PATCOPY (with the brush, as the mix mode
+/// PATBLT raster operations `nodalia_metafile` draws: PATCOPY (with the brush, as the mix mode
 /// allows), BLACKNESS and WHITENESS.
 const PATCOPY: u32 = 0x00F0_0021;
 const BLACKNESS: u32 = 0x0000_0042;
 const WHITENESS: u32 = 0x00FF_0062;
 
-/// Does a WMF draw in a metric map mode (MM_LOMETRIC to MM_TWIPS)? `craft_metafile` plays those
+/// Does a WMF draw in a metric map mode (MM_LOMETRIC to MM_TWIPS)? `nodalia_metafile` plays those
 /// at 96 pixels an inch, whatever the window. The mode that more drawing records are played in
 /// decides, counting only records the reader draws (not lines and shapes under R2_NOP or
 /// R2_XORPEN, nor a PATBLT it does not fill); a file that draws nothing goes by its last mode.
@@ -147,7 +147,7 @@ fn wmf_metric(bytes: &[u8], start: usize) -> bool {
     if in_metric == in_other { metric(mode) } else { in_metric > in_other }
 }
 
-/// Points a picture unit across and down. `craft_metafile` gives a placeable WMF with a box and an
+/// Points a picture unit across and down. `nodalia_metafile` gives a placeable WMF with a box and an
 /// EMF with a frame in points, and other files in their logical units (WMF; pixels in a metric map
 /// mode) or device units (EMF).
 fn unit(bytes: &[u8], kind: Kind) -> (f64, f64) {
@@ -212,7 +212,7 @@ struct Pending {
     path: BezPath,
 }
 
-/// What `craft_metafile` counted as not read or not played as the file asks.
+/// What `nodalia_metafile` counted as not read or not played as the file asks.
 struct Lost {
     /// Records of kinds it doesn't read.
     skipped: u32,
@@ -232,7 +232,7 @@ type MadeRegion = (Vec<[f32; 4]>, Option<Arc<Clip>>);
 /// Brush tiles already averaged, by address: items filled with the same brush share its tile. The
 /// `Weak` keeps the address from being reused, and the tile's pixels are freed once the last item
 /// that uses it has been read.
-type Averaged = HashMap<*const craft_metafile::Tile, (Weak<craft_metafile::Tile>, Option<[u8; 4]>)>;
+type Averaged = HashMap<*const nodalia_metafile::Tile, (Weak<nodalia_metafile::Tile>, Option<[u8; 4]>)>;
 
 struct Mapper {
     /// Picture units → points.
@@ -300,7 +300,7 @@ impl Mapper {
     }
 
     fn path(&self, segs: &[Seg]) -> BezPath {
-        let mut bp = craft_metafile::bez_path(segs);
+        let mut bp = nodalia_metafile::bez_path(segs);
         bp.apply_affine(self.xf);
         bp
     }
@@ -536,7 +536,7 @@ impl Mapper {
         self.push(chain, Node::new(NodeId(0), NodeKind::Image(Box::new(im))));
     }
 
-    fn text(&mut self, t: &craft_metafile::Text, chain: Vec<Arc<Clip>>) {
+    fn text(&mut self, t: &nodalia_metafile::Text, chain: Vec<Arc<Clip>>) {
         // The characters without NULs, and each one's advance (text units) when the file gives
         // one for every character: a NUL's advance goes to the character before it, or moves the
         // start when the string begins with one.
@@ -1002,10 +1002,10 @@ fn ends_early(bytes: &[u8], kind: Kind) -> bool {
 /// Read an EMF or WMF file.
 pub(crate) fn import(bytes: &[u8]) -> Result<Imported, String> {
     let kind = crate::sniff(bytes).ok_or("not an EMF or WMF file")?;
-    let pic = craft_metafile::parse(bytes).map_err(|e| match e {
-        craft_metafile::Error::NotMetafile => "not an EMF or WMF file".to_string(),
-        craft_metafile::Error::BadHeader => format!("the {} header is damaged", kind.id().to_uppercase()),
-        craft_metafile::Error::NoRecords => format!("the {} file holds no records", kind.id().to_uppercase()),
+    let pic = nodalia_metafile::parse(bytes).map_err(|e| match e {
+        nodalia_metafile::Error::NotMetafile => "not an EMF or WMF file".to_string(),
+        nodalia_metafile::Error::BadHeader => format!("the {} header is damaged", kind.id().to_uppercase()),
+        nodalia_metafile::Error::NoRecords => format!("the {} file holds no records", kind.id().to_uppercase()),
     })?;
     let k = unit(bytes, kind);
     let mut m = Mapper::new(f64::from(pic.width), f64::from(pic.height), k);

@@ -129,10 +129,10 @@ name, including English; its native-menu regression passed with the final catalo
 
 The pinned egui fork shapes Devanagari with HarfRust. The desktop's existing `UiFonts` loader
 finds an installed covering face, such as Nirmala UI, Kohinoor Devanagari or Noto Sans Devanagari.
-If a `CRAFT_FONTS_DIR` build includes a face tagged `Deva`, it is also installed at the end of
+If a `NODALIA_FONTS_DIR` build includes a face tagged `Deva`, it is also installed at the end of
 each UI font family. No font binaries are added to this repository. Without either an embedded
 or installed covering face, Hindi cannot display correctly. The web has no system fonts. A web
-build made with craft-fonts serves Noto Sans Devanagari Regular beside the wasm and fetches it
+build made with nodalia-fonts serves Noto Sans Devanagari Regular beside the wasm and fetches it
 when the interface language is Hindi or the interface paints Devanagari
 (`crates/text/web-fonts.txt`, `demand`); until it arrives, Devanagari draws as missing-glyph boxes.
 Other languages do not fetch it.

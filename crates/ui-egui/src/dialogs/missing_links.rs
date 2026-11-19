@@ -293,15 +293,15 @@ mod tests {
 
     fn png(rgb: [u8; 3]) -> Vec<u8> {
         let [r, g, b] = rgb;
-        let img = craft_image_codecs::Image::from_raw(
+        let img = nodalia_image_codecs::Image::from_raw(
             400,
             300,
-            craft_image_codecs::ChannelLayout::Rgba,
-            craft_image_codecs::SampleType::U8,
+            nodalia_image_codecs::ChannelLayout::Rgba,
+            nodalia_image_codecs::SampleType::U8,
             [r, g, b, 255].repeat(400 * 300),
         )
         .unwrap();
-        craft_image_codecs::encode(&img, craft_image_codecs::Format::Png, &craft_image_codecs::EncodeOptions::default()).unwrap()
+        nodalia_image_codecs::encode(&img, nodalia_image_codecs::Format::Png, &nodalia_image_codecs::EncodeOptions::default()).unwrap()
     }
 
     /// A document with two placed linked files, saved to a fresh folder; the files are then

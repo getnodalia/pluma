@@ -7,8 +7,8 @@ use std::collections::HashMap;
 use std::io::{self, Read};
 use std::sync::Arc;
 
-use craft_vectorcraft_format::{Entries, marker_at, split_tail};
 use flate2::read::GzDecoder;
+use nodalia_pluma_format::{Entries, marker_at, split_tail};
 
 use crate::{BLOB_MAGIC, FormatError, MAX_BLOB, MAX_BLOBS, MAX_JSON, MAX_UNPACKED, is_compressed};
 
@@ -173,7 +173,7 @@ impl<'a> Unpacked<'a> {
             let mut entries = Entries::new(tail);
             for (slot, &w) in out.iter_mut().zip(wanted) {
                 *slot = entries.blob(w).map_err(|e| match e {
-                    craft_vectorcraft_format::Error::TooBig => FormatError::TooBig,
+                    nodalia_pluma_format::Error::TooBig => FormatError::TooBig,
                     e => e.into(),
                 })?;
             }

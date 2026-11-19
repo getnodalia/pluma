@@ -4,7 +4,7 @@
 
 use std::sync::Mutex;
 
-use craft_svg::tree::usvg::roxmltree;
+use nodalia_svg::tree::usvg::roxmltree;
 use pluma_doc::{Document, Node};
 use pluma_svg::{Encoding, ExportOptions, ImportOptions, Profile, export, export_full, import, import_with};
 use proptest::prelude::*;

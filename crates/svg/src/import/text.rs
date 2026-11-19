@@ -27,7 +27,7 @@
 //! moves into its sizes ([`size_scale`], [`fold_scale`]), and the rest (a stretch, skew,
 //! rotation or reflection) stays its transform.
 
-use craft_svg::tree::usvg;
+use nodalia_svg::tree::usvg;
 use std::borrow::Cow;
 use std::cell::RefCell;
 use std::collections::HashMap;
@@ -36,7 +36,7 @@ use std::ops::{Range, RangeInclusive};
 use std::rc::Rc;
 use std::str::FromStr;
 
-use craft_svg::tree::usvg::roxmltree;
+use nodalia_svg::tree::usvg::roxmltree;
 use pluma_color::{Color, Paint};
 use pluma_doc::{CharStyle, Dash, Justify, LineCap, LineJoin, ParaDirection, ParaStyle, StrokeLayer, TextKind, TextObject, TextRun};
 use pluma_geom::kurbo::ParamCurveArclen;

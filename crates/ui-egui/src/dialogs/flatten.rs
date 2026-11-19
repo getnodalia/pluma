@@ -399,15 +399,15 @@ mod tests {
     fn ok_says_in_the_status_bar_when_an_image_could_not_be_decoded() {
         const WARNING: &str = "an image couldn't be decoded and is missing from the picture";
         // A PNG whose header reads but whose pixel data is cut short.
-        let img = craft_image_codecs::Image::from_raw(
+        let img = nodalia_image_codecs::Image::from_raw(
             64,
             32,
-            craft_image_codecs::ChannelLayout::Rgba,
-            craft_image_codecs::SampleType::U8,
+            nodalia_image_codecs::ChannelLayout::Rgba,
+            nodalia_image_codecs::SampleType::U8,
             [200u8, 30, 30, 255].repeat(64 * 32),
         )
         .unwrap();
-        let png = craft_image_codecs::encode(&img, craft_image_codecs::Format::Png, &craft_image_codecs::EncodeOptions::default()).unwrap();
+        let png = nodalia_image_codecs::encode(&img, nodalia_image_codecs::Format::Png, &nodalia_image_codecs::EncodeOptions::default()).unwrap();
         for preview in [true, false] {
             let mut app = scene();
             let placed = pluma_testkit::fixtures::place_cut_png(&mut app.session, &png, json!({}));

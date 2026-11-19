@@ -408,7 +408,7 @@ pub(crate) fn follow_from(
     stored: &str,
     from: Option<&str>,
     doc: Option<&str>,
-    resolve: impl Fn(&str, Option<&str>) -> std::result::Result<String, craft_docpath::Refused>,
+    resolve: impl Fn(&str, Option<&str>) -> std::result::Result<String, nodalia_docpath::Refused>,
 ) -> Option<String> {
     let path = resolve(stored, from).ok()?;
     if from == doc { Some(path) } else { resolve(&path, doc).ok() }
@@ -416,8 +416,8 @@ pub(crate) fn follow_from(
 
 /// Why the path of `link` (stored in the document saved at `doc_path`) isn't followed, when it
 /// names another computer, a device or a URL.
-fn refused(link: &LinkInfo, doc_path: Option<&str>) -> Option<craft_docpath::Refused> {
-    fileio::document_path(&link.path, doc_path).err().filter(|r| *r != craft_docpath::Refused::Invalid)
+fn refused(link: &LinkInfo, doc_path: Option<&str>) -> Option<nodalia_docpath::Refused> {
+    fileio::document_path(&link.path, doc_path).err().filter(|r| *r != nodalia_docpath::Refused::Invalid)
 }
 
 /// Where the file of group `g` (of a document looking from `base`) is and whether it still has
@@ -602,8 +602,8 @@ pub(crate) fn store_image(d: &mut Document, key: &str, full: ImageBlob, linked: 
 /// Whether `bytes` are a PNG, JPEG, GIF or WebP file: the formats [`fileio::raster_image`] keeps
 /// as they are after reading only their header.
 pub(crate) fn kept_unread(bytes: &[u8]) -> bool {
-    use craft_image_codecs::Format as F;
-    matches!(craft_image_codecs::detect(bytes), Some(F::Png | F::Jpeg | F::Gif | F::WebP))
+    use nodalia_image_codecs::Format as F;
+    matches!(nodalia_image_codecs::detect(bytes), Some(F::Png | F::Jpeg | F::Gif | F::WebP))
 }
 
 /// `blob`, an image [`fileio::raster_image`] read from a file, ready to keep. When `unread` (the
@@ -1339,7 +1339,7 @@ pub(crate) fn script_hidden(f: &str, doc_path: Option<&str>) -> bool {
 /// Is the file `path` (a link of the document saved at `doc_path`) one the caller asking now may
 /// not be shown? Only a path [`path_shown`] does not allow; a URL is not a file and is shown as it is.
 pub(crate) fn file_hidden(path: &str, doc_path: Option<&str>) -> bool {
-    !path_shown(path, doc_path) && !matches!(fileio::document_path(path, doc_path), Err(craft_docpath::Refused::Url))
+    !path_shown(path, doc_path) && !matches!(fileio::document_path(path, doc_path), Err(nodalia_docpath::Refused::Url))
 }
 
 /// Does an SVG of `d` (a document whose links are looked for from `base`) written for the caller
@@ -2656,33 +2656,33 @@ const UNEMBED_EXTS: &[&str] = &["png", "jpg", "jpeg", "gif", "webp", "tif", "tif
 /// Encoded image `bytes` re-encoded in the format of extension `ext` (JPEG without alpha).
 fn convert_image(bytes: &[u8], ext: &str) -> std::result::Result<Vec<u8>, String> {
     let format = match ext.to_ascii_lowercase().as_str() {
-        "png" => craft_image_codecs::Format::Png,
-        "jpg" | "jpeg" => craft_image_codecs::Format::Jpeg,
-        "gif" => craft_image_codecs::Format::Gif,
-        "webp" => craft_image_codecs::Format::WebP,
-        "tif" | "tiff" => craft_image_codecs::Format::Tiff,
-        "bmp" => craft_image_codecs::Format::Bmp,
+        "png" => nodalia_image_codecs::Format::Png,
+        "jpg" | "jpeg" => nodalia_image_codecs::Format::Jpeg,
+        "gif" => nodalia_image_codecs::Format::Gif,
+        "webp" => nodalia_image_codecs::Format::WebP,
+        "tif" | "tiff" => nodalia_image_codecs::Format::Tiff,
+        "bmp" => nodalia_image_codecs::Format::Bmp,
         _ => return Err(format!("can't write .{ext} images")),
     };
-    let mut opts = craft_image_codecs::DecodeOptions::default();
+    let mut opts = nodalia_image_codecs::DecodeOptions::default();
     opts.limits.max_alloc = pluma_doc::MAX_RASTER_ALLOC;
     opts.limits.max_width = u32::MAX;
     opts.limits.max_height = u32::MAX;
-    let img = craft_image_codecs::decode_with(bytes, &opts).map_err(|e| e.to_string())?;
-    let raw = if format == craft_image_codecs::Format::Jpeg {
+    let img = nodalia_image_codecs::decode_with(bytes, &opts).map_err(|e| e.to_string())?;
+    let raw = if format == nodalia_image_codecs::Format::Jpeg {
         let rgb: Vec<u8> = img.to_rgba8().as_chunks::<4>().0.iter().flat_map(|p| [p[0], p[1], p[2]]).collect();
-        craft_image_codecs::Image::from_raw(
+        nodalia_image_codecs::Image::from_raw(
             img.width(),
             img.height(),
-            craft_image_codecs::ChannelLayout::Rgb,
-            craft_image_codecs::SampleType::U8,
+            nodalia_image_codecs::ChannelLayout::Rgb,
+            nodalia_image_codecs::SampleType::U8,
             rgb,
         )
         .map_err(|e| e.to_string())?
     } else {
         img
     };
-    craft_image_codecs::encode(&raw, format, &craft_image_codecs::EncodeOptions::default()).map_err(|e| e.to_string())
+    nodalia_image_codecs::encode(&raw, format, &nodalia_image_codecs::EncodeOptions::default()).map_err(|e| e.to_string())
 }
 
 /// The extension of the format embedded image `blob` is stored in (PNG for one Unembed doesn't

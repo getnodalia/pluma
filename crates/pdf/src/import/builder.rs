@@ -519,12 +519,12 @@ impl<'p> Builder<'p> {
         &mut self,
         path: &BezPath,
         transform: Affine,
-        paint: &craft_pdf::interpret::Paint<'_>,
+        paint: &nodalia_pdf::interpret::Paint<'_>,
         draw_mode: &PathDrawMode,
         walked: Option<Walked>,
     ) -> bool {
         let PathDrawMode::Stroke(props) = draw_mode else { return false };
-        if self.mask.is_some() || self.blend != BlendMode::Normal || matches!(paint, craft_pdf::interpret::Paint::Pattern(_)) {
+        if self.mask.is_some() || self.blend != BlendMode::Normal || matches!(paint, nodalia_pdf::interpret::Paint::Pattern(_)) {
             return false;
         }
         let (p, opacity) = self.paint(paint, true, walked);
@@ -552,16 +552,16 @@ impl<'p> Builder<'p> {
 
     /// Convert a hayro paint to a Pluma paint and opacity (`stroke`: for a stroke; `walked`:
     /// what it paints in the page's walk, which names its ink).
-    pub(super) fn paint(&mut self, p: &craft_pdf::interpret::Paint<'_>, stroke: bool, walked: Option<Walked>) -> (Paint, f32) {
-        let pattern = matches!(p, craft_pdf::interpret::Paint::Pattern(_));
+    pub(super) fn paint(&mut self, p: &nodalia_pdf::interpret::Paint<'_>, stroke: bool, walked: Option<Walked>) -> (Paint, f32) {
+        let pattern = matches!(p, nodalia_pdf::interpret::Paint::Pattern(_));
         let inks = walked.and_then(|w| self.scan.ink(w, stroke, pattern));
         match p {
-            craft_pdf::interpret::Paint::Color(c) => {
+            nodalia_pdf::interpret::Paint::Color(c) => {
                 let [r, g, b, a] = c.to_rgba().components();
                 let paint = self.colors.solid(c, inks).map_or_else(|| Paint::solid(Color::rgb(round3(r), round3(g), round3(b))), Native::paint);
                 (paint, a)
             }
-            craft_pdf::interpret::Paint::Pattern(pat) => match pat.as_ref() {
+            nodalia_pdf::interpret::Paint::Pattern(pat) => match pat.as_ref() {
                 Pattern::Shading(sp) => {
                     // The ink names outlive the walk's borrow of `self`.
                     let inks = inks.map(<[String]>::to_vec);
@@ -646,7 +646,7 @@ impl<'p> Builder<'p> {
 
     /// Function-based shading `sp` (painting with `inks`) as a paint, read the first time it is
     /// used and within the import's budget of function evaluations; `None` for other shadings.
-    fn function_shading(&mut self, sp: &craft_pdf::interpret::pattern::ShadingPattern, inks: Option<&[String]>) -> Option<Paint> {
+    fn function_shading(&mut self, sp: &nodalia_pdf::interpret::pattern::ShadingPattern, inks: Option<&[String]>) -> Option<Paint> {
         let key = (sp.cache_key(), inks.map(<[String]>::to_vec));
         if let Some(paint) = self.function_paints.get(&key) {
             return Some(paint.clone());
@@ -715,7 +715,7 @@ impl<'p> Builder<'p> {
     /// ([`crate::import_image::tint_gray`]). `None` for another image, an ink whose colour can't
     /// be told, or tints that can't be read (with a warning): the image opens in RGB. The ink is
     /// only marked used once the tints are read.
-    pub(super) fn separation_image(&mut self, st: &craft_pdf::syntax::object::Stream<'_>, w: u32, h: u32) -> Option<(Paint, Vec<u8>)> {
+    pub(super) fn separation_image(&mut self, st: &nodalia_pdf::syntax::object::Stream<'_>, w: u32, h: u32) -> Option<(Paint, Vec<u8>)> {
         let space = self.colors.array_space(&crate::import_image::one_ink_space(st)?)?;
         let gray = crate::import_image::tint_gray(st, w, h).map_err(|why| self.warn(why)).ok()?;
         Some((self.colors.native(space, &[1.0])?.paint(), gray))
@@ -731,7 +731,7 @@ impl<'p> Builder<'p> {
     pub(super) fn alpha_mask(
         &mut self,
         key: u128,
-        r: &craft_pdf::interpret::RasterImage<'_>,
+        r: &nodalia_pdf::interpret::RasterImage<'_>,
         w: u32,
         h: u32,
         transform: Affine,
@@ -749,15 +749,15 @@ impl<'p> Builder<'p> {
                 self.opaque.insert(mkey);
                 return None;
             };
-            let raw = craft_image_codecs::Image::from_raw(
+            let raw = nodalia_image_codecs::Image::from_raw(
                 a.width,
                 a.height,
-                craft_image_codecs::ChannelLayout::Gray,
-                craft_image_codecs::SampleType::U8,
+                nodalia_image_codecs::ChannelLayout::Gray,
+                nodalia_image_codecs::SampleType::U8,
                 a.data,
             )
             .ok()?;
-            let png = craft_image_codecs::encode(&raw, craft_image_codecs::Format::Png, &craft_image_codecs::EncodeOptions::default()).ok()?;
+            let png = nodalia_image_codecs::encode(&raw, nodalia_image_codecs::Format::Png, &nodalia_image_codecs::EncodeOptions::default()).ok()?;
             let blob = ImageBlob::new("image/png", png);
             let k = blob.content_key();
             self.images.insert(k.clone(), blob);
@@ -827,7 +827,7 @@ impl<'p> Builder<'p> {
     /// name, else the available family its name reads as; whether it is available.
     /// The character of glyph `glyph` of font `key` that no mapping names, found by its outline in
     /// the installed face of the font's name ([`identify_glyph`]); cached per glyph.
-    fn identified_char(&mut self, key: u128, glyph: u32, o: &craft_pdf::interpret::font::OutlineGlyph) -> Option<char> {
+    fn identified_char(&mut self, key: u128, glyph: u32, o: &nodalia_pdf::interpret::font::OutlineGlyph) -> Option<char> {
         if let Some(c) = self.identified.get(&(key, glyph)) {
             return *c;
         }
@@ -836,7 +836,7 @@ impl<'p> Builder<'p> {
         c
     }
 
-    fn font_name(&mut self, key: u128, o: &craft_pdf::interpret::font::OutlineGlyph) -> FontInfo {
+    fn font_name(&mut self, key: u128, o: &nodalia_pdf::interpret::font::OutlineGlyph) -> FontInfo {
         if let Some(n) = self.font_names.get(&key) {
             return n.clone();
         }
@@ -873,7 +873,7 @@ impl<'p> Builder<'p> {
     /// ([`Self::end_text`]). Nothing for a glyph that shows nothing.
     fn keep_glyph(
         &mut self,
-        o: &craft_pdf::interpret::font::OutlineGlyph,
+        o: &nodalia_pdf::interpret::font::OutlineGlyph,
         m: Affine,
         drawn: Option<(Paint, Option<StrokeProps>)>,
         opacity: f32,
@@ -922,17 +922,17 @@ impl<'p> Builder<'p> {
     /// Type 3 glyph as live type: added to the line being gathered if it has a ToUnicode mapping.
     pub(super) fn type_type3_glyph(
         &mut self,
-        t3: &craft_pdf::interpret::font::Type3Glyph<'_>,
+        t3: &nodalia_pdf::interpret::font::Type3Glyph<'_>,
         m: Affine,
         scale: f64,
-        paint: Option<&craft_pdf::interpret::Paint<'_>>,
+        paint: Option<&nodalia_pdf::interpret::Paint<'_>>,
         stroke: Option<&StrokeProps>,
         overprint: bool,
     ) -> bool {
         if self.text_as != TextAs::Text || self.nested > 0 {
             return false;
         }
-        let t3_key = craft_pdf::interpret::CacheKey::cache_key(t3);
+        let t3_key = nodalia_pdf::interpret::CacheKey::cache_key(t3);
         let Some(&(font_key, has_to_unicode)) = self.scan.type3_cache_map.get(&t3_key) else {
             return false;
         };
@@ -1014,10 +1014,10 @@ impl<'p> Builder<'p> {
     /// type with neither fill nor stroke.
     pub(super) fn type_glyph(
         &mut self,
-        o: &craft_pdf::interpret::font::OutlineGlyph,
+        o: &nodalia_pdf::interpret::font::OutlineGlyph,
         m: Affine,
         scale: f64,
-        paint: Option<&craft_pdf::interpret::Paint<'_>>,
+        paint: Option<&nodalia_pdf::interpret::Paint<'_>>,
         stroke: Option<&StrokeProps>,
         overprint: bool,
     ) -> bool {

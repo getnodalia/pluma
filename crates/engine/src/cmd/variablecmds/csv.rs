@@ -411,7 +411,7 @@ fn graph_file_value(files: &mut GraphFiles, path: &str, base: Option<&str>, var:
     }
     // Without `base`, a path that stays relative once a `file:` URL is read is refused here, so the
     // error says what to give.
-    if base.is_none() && craft_docpath::resolve(path, None).is_ok_and(|p| !p.is_absolute()) {
+    if base.is_none() && nodalia_docpath::resolve(path, None).is_ok_and(|p| !p.is_absolute()) {
         return Err(bad(
             C,
             format!("line {line}, column {column}: the graph data file `{path}` for `{var}` is a relative path: give `base`, or an absolute path"),

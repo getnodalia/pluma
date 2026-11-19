@@ -17,10 +17,10 @@ pluma-text = { workspace = true }
 pluma-plugins = { workspace = true }
 pluma-trace = { workspace = true }
 image = { workspace = true }
-craft-image-codecs = { workspace = true }
+nodalia-image-codecs = { workspace = true }
 kurbo = { workspace = true }
-# Effect › SVG Filters draws its filters with craft-svg's resvg (`tree-render`).
-craft-svg = { workspace = true, features = ["tree-render"] }
+# Effect › SVG Filters draws its filters with nodalia-svg's resvg (`tree-render`).
+nodalia-svg = { workspace = true, features = ["tree-render"] }
 # The number lists of filter attributes, read as usvg reads them (MIT OR Apache-2.0; already used by usvg).
 svgtypes = "0.16"
 serde_json = { workspace = true }

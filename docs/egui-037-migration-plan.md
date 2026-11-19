@@ -2,9 +2,9 @@
 
 **Status (2026-10-25, shared-docking reconciliation):** the published qualification remains checkpoint `83d6dd2d6603845978f949523e6da2b4945dcffb`, tested with post-PR-4113 `main` `6e7854967d6b8a094bfed809643bd957aa3ba66f` and the two `Id::unique` edits at `crates/ui-egui/src/dialogs/recolor.rs:384,725`; managed job `egui037-vector-postmerge-ci-20261025-1381` passed all 12 mandatory CI stages for that working tree, and publication commit `1072d0e263623882da68d8115934630abbef33ae` records it in PR #4173. The reviewed recolor code is already in `main`: `HEAD` and `origin/main` resolve the same blob `6050af15a3bf7b9a056df6dff347bda7690ad251` for that file.
 
-This checkout, at documentation-only follow-up `12fee85c9cbf9f7f1609a53bc67327b12e4f4dd1` (`M14: distinguish qualification from publication`), is locally reconciling upstream `main` `714434527e1a3e03c4b49096e30dd92b258aab50` (PR #4135: panels on craft-ui's shared docking, floating panels in OS windows). The four conflicted files were resolved by taking upstream's `dock.rs`, `panel_docking.rs` and `panel_docking/tests.rs` and deleting `floating.rs`; `git diff` against `714434527…` is empty for those three files, and no `crate::floating` or `mod floating` path remains. Managed CI job 1422 passed all 12 mandatory stages on the pre-merge tree (`12fee85c9…`); managed job `egui037-vector-combined-ci1443` subsequently passed all 12 mandatory CI stages on the combined working tree, including WASM. Independent integration reviews accepted the conflict resolutions and shared-library pins. This qualification covers the executable source and lockfile; the qualification prose was updated afterward to record that result. Native/platform GUI and IME workflows, final packages and paired app performance remain open.
+This checkout, at documentation-only follow-up `12fee85c9cbf9f7f1609a53bc67327b12e4f4dd1` (`M14: distinguish qualification from publication`), is locally reconciling upstream `main` `714434527e1a3e03c4b49096e30dd92b258aab50` (PR #4135: panels on nodalia-ui's shared docking, floating panels in OS windows). The four conflicted files were resolved by taking upstream's `dock.rs`, `panel_docking.rs` and `panel_docking/tests.rs` and deleting `floating.rs`; `git diff` against `714434527…` is empty for those three files, and no `crate::floating` or `mod floating` path remains. Managed CI job 1422 passed all 12 mandatory stages on the pre-merge tree (`12fee85c9…`); managed job `egui037-vector-combined-ci1443` subsequently passed all 12 mandatory CI stages on the combined working tree, including WASM. Independent integration reviews accepted the conflict resolutions and shared-library pins. This qualification covers the executable source and lockfile; the qualification prose was updated afterward to record that result. Native/platform GUI and IME workflows, final packages and paired app performance remain open.
 
-**Historical status (superseded, not current acceptance):** the earlier reconciliation against `main` `8bf090b25389b48aa6f9d7415de57c9ce7ccf8cb` and managed job `egui037-pluma-artboard-green-ci-20261025-0589` recorded 10,197 passing test executions, zero failures and 14 ignored, including the artboard-name geometry regression, input/IME fixtures, no-bundled-font checks and the web app build. The 0.36.2 lock table and the plan-time local craft-libs/CL-2F statements below are historical planning state. Current dependency pins (read from this checkout's `Cargo.toml` and `Cargo.lock` on 2026-10-25): `egui`, `eframe`, `egui-winit`, `egui-wgpu`, `egui_glow`, `egui_extras`, `egui_kittest`, `epaint`, `emath`, `ecolor`, `epaint_default_fonts` are `0.37.0` from `storytold/egui` rev `6d518fc799681571963842f95b55a6b68431b15a`; `egui_system_font_provider` has an unused patch at that same revision and is not in the resolved dependency graph; `winit` is `0.30.13` from `storytold/winit` rev `a517b3846ee8457d84ee4975110bfda6797c44dc`; `wgpu` is `30.0.1`; `kittest` is `0.5.0`; `accesskit`/`accesskit_winit` are `0.25.1`/`0.34.1`; `craft-ui`, `craft-window`, `craft-keymap`, `craft-print`, `craft-pdf` and `craft-docpath` use published `storytold/craft-libs` rev `a0916808f7d78bed8c7b90cdf937176015454a7f`, as do the `hayro-*` and `krilla` patches.
+**Historical status (superseded, not current acceptance):** the earlier reconciliation against `main` `8bf090b25389b48aa6f9d7415de57c9ce7ccf8cb` and managed job `egui037-pluma-artboard-green-ci-20261025-0589` recorded 10,197 passing test executions, zero failures and 14 ignored, including the artboard-name geometry regression, input/IME fixtures, no-bundled-font checks and the web app build. The 0.36.2 lock table and the plan-time local nodalia-libs/CL-2F statements below are historical planning state. Current dependency pins (read from this checkout's `Cargo.toml` and `Cargo.lock` on 2026-10-25): `egui`, `eframe`, `egui-winit`, `egui-wgpu`, `egui_glow`, `egui_extras`, `egui_kittest`, `epaint`, `emath`, `ecolor`, `epaint_default_fonts` are `0.37.0` from `storytold/egui` rev `6d518fc799681571963842f95b55a6b68431b15a`; `egui_system_font_provider` has an unused patch at that same revision and is not in the resolved dependency graph; `winit` is `0.30.13` from `storytold/winit` rev `a517b3846ee8457d84ee4975110bfda6797c44dc`; `wgpu` is `30.0.1`; `kittest` is `0.5.0`; `accesskit`/`accesskit_winit` are `0.25.1`/`0.34.1`; `nodalia-ui`, `nodalia-window`, `nodalia-keymap`, `nodalia-print`, `nodalia-pdf` and `nodalia-docpath` use published `getnodalia/foundation (nodalia/libs)` rev `a0916808f7d78bed8c7b90cdf937176015454a7f`, as do the `hayro-*` and `krilla` patches.
 
 **Earlier status (historical):** implementation revision 4, 2026-10-24. The Pluma migration is implemented in the
 `pluma-implementation` worktree; this revision incorporates the final upstream-review repairs. At revision 4
@@ -32,13 +32,13 @@ implementation worktree. The earlier pinned review checkout was `vectorcraft` at
 
 This subsection records the current code after PR #4135; §§2–5 below remain the original planning record and are marked historical where the merged code replaced them.
 
-- **Desktop versus web/Wayland:** on the desktop, floating panels open in OS windows of their own through craft-ui's target-gated `native-windows` feature (`crates/ui-egui/Cargo.toml`, `crates/ui-egui/src/panel_docking.rs` module docs, `apps/pluma/src/main.rs::native_input_hook`). On the web and on Wayland they float inside the app window (`panel_docking.rs`; `docs/control-protocol.md`).
-- **Removed app-side floating:** `crates/ui-egui/src/floating.rs` is deleted. `dock.rs` is now 137 lines and holds `panel_body` plus two scroll-bar tests; `panel_docking.rs` draws the canvas and panels through `craft_ui::docking::DockArea`, with the session-only `Runtime`, `inspect`, `hit_rects`, `known` and `valid`. The old `apply_pending_dock_width`, `cancel_legacy_drag`, `seed_dock_panel_width`, `note_dock_width`, `legacy_dock_default_width`, `shared_dock_default_width` and `dock_width_pending` symbols are gone. `tools_float.rs` keeps the Tools panel's own move state.
+- **Desktop versus web/Wayland:** on the desktop, floating panels open in OS windows of their own through nodalia-ui's target-gated `native-windows` feature (`crates/ui-egui/Cargo.toml`, `crates/ui-egui/src/panel_docking.rs` module docs, `apps/pluma/src/main.rs::native_input_hook`). On the web and on Wayland they float inside the app window (`panel_docking.rs`; `docs/control-protocol.md`).
+- **Removed app-side floating:** `crates/ui-egui/src/floating.rs` is deleted. `dock.rs` is now 137 lines and holds `panel_body` plus two scroll-bar tests; `panel_docking.rs` draws the canvas and panels through `nodalia_ui::docking::DockArea`, with the session-only `Runtime`, `inspect`, `hit_rects`, `known` and `valid`. The old `apply_pending_dock_width`, `cancel_legacy_drag`, `seed_dock_panel_width`, `note_dock_width`, `legacy_dock_default_width`, `shared_dock_default_width` and `dock_width_pending` symbols are gone. `tools_float.rs` keeps the Tools panel's own move state.
 - **Dock-width persistence:** `UiState::dock_width` is the app-owned preference. `panel_docking::main_width` clamps it into the default layout, `default_flags`/`Transaction::commit` writes a resized width back, `workspaces::Workspace` captures and applies it (test `saved_workspaces_restore_dock_width`), and `layout_migration` carries it across older preference files. No `PanelState` seeding is used for dock width.
 - **Tests:** `panel_docking/tests.rs` covers pointer/keyboard docking; `panel_docking/native_tests.rs` covers desktop OS windows (keyboard, drops, modal focus and `ui.docking` hit-rect filtering); `layout_migration/tests.rs` covers conversion of layouts saved before the canvas joined the shared dock; `dock.rs` retains two scroll-bar accessibility tests; `workspaces.rs` covers saved-width restore. These test surfaces are included in the combined-tree CI qualification recorded above; native GUI workflows remain a separate open gate.
 
 This plan is deliberately app-specific. The suite-wide dependency order and shared acceptance contract are in the
-local planning draft `craft-libs/docs/egui-037-suite-rollout.md` (not yet published at the time of writing); this
+local planning draft `nodalia-libs/docs/egui-037-suite-rollout.md` (not yet published at the time of writing); this
 document only records what Pluma must do, what it must prove and what remains unresolved. The shared
 lifecycle, capture-slot, performance and font-fixture contracts in that rollout and in
 `egui/docs/egui-037-migration-plan.md` apply here; this document does not weaken them.
@@ -48,7 +48,7 @@ lifecycle, capture-slot, performance and font-fixture contracts in that rollout 
 ## 1. Executive decision
 
 Migrate Pluma from its pre-migration coherent egui **0.36.2** family (then resolved from crates.io, with
-`craft-ui` and `craft-window` pinned to 0.36-era craft-libs revisions) to the selected **egui 0.37.0** family and the suite's
+`nodalia-ui` and `nodalia-window` pinned to 0.36-era nodalia-libs revisions) to the selected **egui 0.37.0** family and the suite's
 `winit 0.30.13` language fork, in a sequence that never leaves `main` with a mixed or unbuildable dependency graph.
 
 The migration is not a version-string bump:
@@ -107,11 +107,11 @@ publishing a mixed or reduced graph.
 | storytold egui 0.36.2 | `767b1cad294120689a514bb4bd68c077e46679b9` (`craft/0.36.2`) | Existing published fork for comparison |
 | aiongg winit candidate | `8b35388bd719e8cc86a95971ba0bc026c9a8f058` (`aiongg/winit craft/0.30.13-lang`) | **Research input only**, not a production pin; missing W15P and W27 lifecycle revisions |
 | Published storytold winit | `ffae5198770d7730e718043f035a772b7dbc3b1b` (`craft/0.30.13`) | Old coherent comparator |
-| craft-libs planning base (historical) | `3832c47ef68a0e6214f2c1e85f3526b6adcb686e` | Local shared-library tree used to prepare the port; it carries PR 199's egui 0.37 update. It is not the current pin. The current workspace uses published craft-libs `a0916808f7d78bed8c7b90cdf937176015454a7f`, which includes the CL-2F capture helper |
-| craft-libs PR 199 head | `b68de8c5f4f1c060904d211a7b1320aa0f7bce78` | **Stale tree; do not merge.** Reuse selected port hunks only (§3.7) |
-| craft-libs PR 199 API commit | `8614e4a04fae516fba16c22b31ff1008cb6be10b` | Historical source of the egui API-port hunks already contained in the `3832c47…` base |
-| craft-libs PR 199 README commit | `1764bca` | README/`scope_id` example hunk to review and apply separately |
-| craft-libs audit merge | `audit/main-plus-199` (`ec8840af…` locally) | **Evidence of conflict resolution risk, not a source.** It drops security checks and lacks `craft-platform`; see §3.7 |
+| nodalia-libs planning base (historical) | `3832c47ef68a0e6214f2c1e85f3526b6adcb686e` | Local shared-library tree used to prepare the port; it carries PR 199's egui 0.37 update. It is not the current pin. The current workspace uses published nodalia-libs `a0916808f7d78bed8c7b90cdf937176015454a7f`, which includes the CL-2F capture helper |
+| nodalia-libs PR 199 head | `b68de8c5f4f1c060904d211a7b1320aa0f7bce78` | **Stale tree; do not merge.** Reuse selected port hunks only (§3.7) |
+| nodalia-libs PR 199 API commit | `8614e4a04fae516fba16c22b31ff1008cb6be10b` | Historical source of the egui API-port hunks already contained in the `3832c47…` base |
+| nodalia-libs PR 199 README commit | `1764bca` | README/`scope_id` example hunk to review and apply separately |
+| nodalia-libs audit merge | `audit/main-plus-199` (`ec8840af…` locally) | **Evidence of conflict resolution risk, not a source.** It drops security checks and lacks `nodalia-platform`; see §3.7 |
 | Adversarial plan review, revision 1 | `plan-reviews/pluma-v1.md` | Reviewed document `70938f132709da9073910631e90364738e8df3dfc0d7b354920ba7910fc01fbe`; findings resolved in §8.1 |
 | Adversarial plan review, revision 2 | `plan-reviews/pluma-v2.md` | Reviewed document `d8c6a7594015919751d2b83bbe0e44ee9fdb4696b4e5c90fb1f8ecbdf7335f83`; findings resolved in §8.2 |
 | Remote bases snapshot | `remote-plan-bases-20261023-0632.json` | Records all suite heads and the two-commit Pluma drift above |
@@ -136,16 +136,16 @@ Historical pre-migration Pluma lock identities (from `Cargo.lock` at the pinned 
 | `accesskit_winit` | `0.32.2` | crates.io (external accessibility crate) |
 | `winit` | `0.30.13` | crates.io |
 | `wgpu` | `30.0.1` | crates.io |
-| `craft-ui` | `0.1.0` | `storytold/craft-libs` rev `5c874d51eeb3de70e735c8ce87a59a7dedd47675` |
-| `craft-window` | `0.1.0` | `storytold/craft-libs` rev `1f805378d454dac48b5c214029d254055fdf961b` |
-| `craft-pdf` | `0.1.0` | `storytold/craft-libs` rev `ca50d63b773c99f96e75c77ce5a1d21e7c9cda0d` |
-| `craft-print` | `0.1.0` | `storytold/craft-libs` rev `d991bf6792f8ade99c51358bf3c1d902c8cd96b5` |
-| `craft-docpath` | `0.1.0` | `storytold/craft-libs` rev `82a24b006eefa036b43c09a67fb9a3fbd17ffe63` |
+| `nodalia-ui` | `0.1.0` | `getnodalia/foundation (nodalia/libs)` rev `5c874d51eeb3de70e735c8ce87a59a7dedd47675` |
+| `nodalia-window` | `0.1.0` | `getnodalia/foundation (nodalia/libs)` rev `1f805378d454dac48b5c214029d254055fdf961b` |
+| `nodalia-pdf` | `0.1.0` | `getnodalia/foundation (nodalia/libs)` rev `ca50d63b773c99f96e75c77ce5a1d21e7c9cda0d` |
+| `nodalia-print` | `0.1.0` | `getnodalia/foundation (nodalia/libs)` rev `d991bf6792f8ade99c51358bf3c1d902c8cd96b5` |
+| `nodalia-docpath` | `0.1.0` | `getnodalia/foundation (nodalia/libs)` rev `82a24b006eefa036b43c09a67fb9a3fbd17ffe63` |
 
 `rust-version = "1.95"` and `edition = "2024"` are already the egui 0.37 MSRV/edition, so no toolchain change is
 implied. Do not treat a compile time as UI performance evidence.
 
-No final `storytold/egui`, `storytold/winit` or final craft-libs SHA is asserted here. Those revisions are created
+No final `storytold/egui`, `storytold/winit` or final nodalia-libs SHA is asserted here. Those revisions are created
 by the fork and library stages after their own reviews, with exact full SHAs, tree hashes and clean-fetch evidence
 recorded at execution time. The candidate aiongg SHAs above are comparison inputs; they lack W15P and E21b/W27
 lifecycle work and must not become interim production pins. The two-commit main drift from `8906073…` to `4a7cba0…`
@@ -160,11 +160,11 @@ Root workspace (`Cargo.toml`):
 - Current workspace UI dependencies: `egui = "0.37"`, `egui_extras = { version = "0.37",
   default-features = false, features = ["svg"] }`, `eframe = { version = "0.37", default-features = false }`,
   `egui_kittest = "0.37"`.
-- Current `craft-ui`, `craft-window` and `craft-keymap` pins are published craft-libs rev `a0916808…`
-  (`craft-ui` with `serde` and target-gated `native-windows`; `craft-window` with `egui`); `craft-print`,
-  `craft-pdf` and `craft-docpath` use the same revision.
+- Current `nodalia-ui`, `nodalia-window` and `nodalia-keymap` pins are published nodalia-libs rev `a0916808…`
+  (`nodalia-ui` with `serde` and target-gated `native-windows`; `nodalia-window` with `egui`); `nodalia-print`,
+  `nodalia-pdf` and `nodalia-docpath` use the same revision.
 - Root `[patch.crates-io]` maps the egui family (including `eframe` and `egui_kittest`) to `storytold/egui` rev
-  `6d518fc7…`, `winit` to `storytold/winit` rev `a517b384…`, and `hayro-*`/`krilla` to craft-libs rev
+  `6d518fc7…`, `winit` to `storytold/winit` rev `a517b384…`, and `hayro-*`/`krilla` to nodalia-libs rev
   `a0916808…`. The hayro/krilla patches are unrelated to egui and must remain unless a separate comparison proves
   replacement.
 - Nested workspaces: `crates/affinity/fuzz` (libfuzzer only; no egui) and `crates/plugins/example` (wasm plug-in
@@ -178,14 +178,14 @@ Manifests that participate in the egui graph (the table records the plan-time de
 | `crates/ui-egui/Cargo.toml` | `egui` workspace + `bytemuck`; `egui_extras`; dev `egui_kittest` `wgpu`,`snapshot` | `egui` must also enable `default_fonts` for library tests/embedders and for downstream kittest tests, which do not inherit kittest's own dev-dependency fonts; `egui_extras`/`egui_kittest` to 0.37; no feature rename assumed |
 | `apps/pluma/Cargo.toml` | `eframe` features `default_fonts`, `wayland`, `x11`; default features `wgpu`, `accessibility`; direct `winit 0.30` | add **`eframe/clipboard`**; keep `links` off (existing native `open_url` service); keep `system_fonts` off; retain winit feature set |
 | `apps/pluma-web/Cargo.toml` | wasm `eframe` features `default_fonts`, `wgpu`, `accesskit` | keep; add `clipboard` only if the chosen eframe 0.37 web path needs the feature (the web clipboard code is not gated by it, but test it); web `open_url` is handled by the web runner |
-| `craft-ui` / `craft-window` pins | 0.36-era craft-libs revisions | final L2 craft-libs revision on `3832c47…` with workspace `egui = "0.37"` and the CL-2F capture helper |
+| `nodalia-ui` / `nodalia-window` pins | 0.36-era nodalia-libs revisions | final L2 nodalia-libs revision on `3832c47…` with workspace `egui = "0.37"` and the CL-2F capture helper |
 | `Cargo.lock` | one coherent 0.36 graph | one coherent 0.37 graph; no second `egui`, `eframe`, `egui-winit`, `egui-wgpu`, `epaint`/`emath`/`ecolor`, or `winit`; external `kittest`/`accesskit*` are separate audited registry identities |
 
 There is no `[patch]` in `crates/ui-egui`, apps, `xtask`, the fuzz workspace or the plug-in example. A dependency's
 `[patch]` section does not propagate into the root; the root `[patch.crates-io]` must carry every fork-source
 family crate and winit. The fork's own `Cargo.toml` patch of winit is **not** inherited by Pluma. The final
-app lock is created only after D1a (complete winit), D1b (complete egui P8) and L2 (final craft-libs/CL-2F),
-never against a candidate, an intermediate fork stage or a provisional craft-libs tree.
+app lock is created only after D1a (complete winit), D1b (complete egui P8) and L2 (final nodalia-libs/CL-2F),
+never against a candidate, an intermediate fork stage or a provisional nodalia-libs tree.
 
 ### 2.3 Targets, binaries and entry points
 
@@ -224,7 +224,7 @@ The 0.36.2 baseline already had:
 - `PlumaApp::logic(ctx)` called from the host logic, guarded by `pluma_engine::guard::catch_panic`.
 - `PlumaApp::ui(ui)` called from the host UI, also guarded.
 - A root `Ui` in `App::ui`; panels are already shown with `egui::Panel::…::show(ui, …)`.
-- Custom `Area`/`Window` dialogs and floating panels in the 0.36.2 baseline; at planning time the app had no `show_viewport_deferred`/child native viewports. The shared-docking integration now opens desktop floating panels as craft-ui OS windows, while the web and Wayland keep them in-page (see “Shared-docking integration (current)” above).
+- Custom `Area`/`Window` dialogs and floating panels in the 0.36.2 baseline; at planning time the app had no `show_viewport_deferred`/child native viewports. The shared-docking integration now opens desktop floating panels as nodalia-ui OS windows, while the web and Wayland keep them in-page (see “Shared-docking integration (current)” above).
 - `ctx.run_ui` in many tests; `ctx.run_ui` in test helpers draws either the whole app or one panel/dialog.
 
 What 0.37 makes explicit:
@@ -308,7 +308,7 @@ names.
   - Exact `IdSalt` parameters (`Atom::custom`, `Id::with_salt`) take `IdSalt::new(source)`.
 - `Id` still satisfies the blanket `AsIdSalt` impl (`Hash + Debug`), so some wrong calls compile while hashing an
   `Id` as a salt. That is the wrong identity even when it compiles; `Atom::custom` rejects `Id` outright.
-- Historical planning (pre-#4135): dynamic dock columns in the then-existing app `floating.rs` used `Panel::right(Id::new(("dock-column", first)))` and were to become `Panel::right(("dock-column", first))`. The app `floating` module is now deleted; craft-ui's shared docking owns dock columns and their layout in `panel_docking.rs`.
+- Historical planning (pre-#4135): dynamic dock columns in the then-existing app `floating.rs` used `Panel::right(Id::new(("dock-column", first)))` and were to become `Panel::right(("dock-column", first))`. The app `floating` module is now deleted; nodalia-ui's shared docking owns dock columns and their layout in `panel_docking.rs`.
 - Do not mechanically wrap an existing `Id` in `IdSalt::new(...)` just to satisfy a signature. Audit the few
   `make_persistent_id`/`with`/`Atom::custom` sites individually and preserve the intended key with a focus/state
   test. `ComboBox::from_id_salt` in `widgets::combo`, `Panel::right` in the deleted `floating.rs` (historical), and `Atom::custom` in `dialogs/layer_options`/`menus` were the concrete sites to review.
@@ -317,7 +317,7 @@ names.
 
 ### 3.4 Panel identity/persistence (historical planning; superseded by shared docking)
 
-> **Historical planning (pre-#4135; not current code).** The text below describes the old app-owned `PanelState` width path and is retained as planning evidence. The current tree has none of `seed_dock_panel_width`, `note_dock_width`, `apply_pending_dock_width`, `legacy_dock_default_width`, `shared_dock_default_width` or `dock_width_pending`. Width now persists through `UiState::dock_width`: `panel_docking::main_width` clamps it into the default layout, `default_flags`/`Transaction::commit` writes the resized width back, `workspaces::Workspace` captures and applies it (`saved_workspaces_restore_dock_width`), and `layout_migration` carries it across older files. The layout itself is craft-ui `DockArea`/`craft_ui::docking::Layout`.
+> **Historical planning (pre-#4135; not current code).** The text below describes the old app-owned `PanelState` width path and is retained as planning evidence. The current tree has none of `seed_dock_panel_width`, `note_dock_width`, `apply_pending_dock_width`, `legacy_dock_default_width`, `shared_dock_default_width` or `dock_width_pending`. Width now persists through `UiState::dock_width`: `panel_docking::main_width` clamps it into the default layout, `default_flags`/`Transaction::commit` writes the resized width back, `workspaces::Workspace` captures and applies it (`saved_workspaces_restore_dock_width`), and `layout_migration` carries it across older files. The layout itself is nodalia-ui `DockArea`/`nodalia_ui::docking::Layout`.
 
 `crates/ui-egui/src/dock.rs::seed_dock_panel_width` and `note_dock_width` read/write
 `egui::containers::panel::PanelState` under `Id::new(panel)`. In 0.37 `Panel` internally derives its bar id from
@@ -393,7 +393,7 @@ Required design (shared weak completion slot, per the suite capture contract):
   request queued in app logic and not yet issued — including every remaining settling frame — must send
   `ViewportCommand::RequestPaintWhileHidden` from logic so a UI pass reaches issuance. A bare `request_repaint()`
   only runs hidden logic, and callback arrival does not wake by itself.
-- This app is one of the eleven existing craft-ui consumers, so it adopts the already-issued shared `craft-ui`
+- This app is one of the eleven existing nodalia-ui consumers, so it adopts the already-issued shared `nodalia-ui`
   completion-slot helper from L2 (CL-1 + CL-2F). Pluma keeps no app-local or provisional capture slot: the
   API must be frozen before the atomic compatibility PR lands.
 - Keep the existing response schema: `{ok, result: {path?, width, height, pngBase64?}}` and the explanatory timeout
@@ -450,13 +450,13 @@ Required design:
   fresh triggering serials per seat/origin, owner/seat changes, empty/absent offers, self-paste, slow/canceled
   transfers and responsiveness during a trickle.
 
-### 3.7 craft-libs PR 199 and #198
+### 3.7 nodalia-libs PR 199 and #198
 
 PR 199 is a source of selected port hunks, not a mergeable branch or tree. Its head `b68de8c` is stale relative
-to the `3832c47…` base: it lacks current `craft-platform` and reverts security, settings, docking and printer fixes. The
+to the `3832c47…` base: it lacks current `nodalia-platform` and reverts security, settings, docking and printer fixes. The
 historical audit tree `ec8840a` is likewise unsafe. Never merge either tree:
 
-- Its API commit `8614e4a` changes workspace `egui` to 0.37, updates `craft-ui` dev dependencies to
+- Its API commit `8614e4a` changes workspace `egui` to 0.37, updates `nodalia-ui` dev dependencies to
   `egui_extras`/`egui_kittest` 0.37, maps `WidgetType` to `Role`, replaces `UiBuilder::id`/`Ui::id` with
   `scope_id`, and replaces `Id::new` with `Id::unique` in tests. That is the reusable shape.
 - The README/`scope_id` documentation change is `1764bca`; apply it separately after review.
@@ -465,18 +465,18 @@ historical audit tree `ec8840a` is likewise unsafe. Never merge either tree:
   - `crates/ui/src/docking/model.rs`: `Action::MoveFloating` no longer checks that every member of the floating
     group is movable;
   - `crates/ui/src/docking/surface.rs`: resizing a floating group no longer requires all members movable.
-  - These checks are present in current craft-libs security work (for example #236, docking group move permission). Do not merge that tree.
+  - These checks are present in current nodalia-libs security work (for example #236, docking group move permission). Do not merge that tree.
 - Keep the egui-related `8614e4a`/`1764bca` shape already in the `3832c47…` base and the CL-2F capture helper
-  (later published in `25da131…`), preserving the permission checks, `craft-platform`, settings, docking, printing
-  and tests. Record the new commit, its parent and the diff. Publish a new immutable final craft-libs revision only
+  (later published in `25da131…`), preserving the permission checks, `nodalia-platform`, settings, docking, printing
+  and tests. Record the new commit, its parent and the diff. Publish a new immutable final nodalia-libs revision only
   after the shared tests and an adversarial review pass.
   That final revision comes **after** the final reviewed storytold egui/winit revisions (which include E21b and
-  W15P), so no provisional craft-libs commit pretends to be final.
-- The final craft-libs revision also carries the CL-2F frozen capture-slot helper; Pluma's final app lock
+  W15P), so no provisional nodalia-libs commit pretends to be final.
+- The final nodalia-libs revision also carries the CL-2F frozen capture-slot helper; Pluma's final app lock
   depends on that revision, not on a provisional prototype.
-- `craft-window` has no source change for 0.37, but it must be consumed from a craft-libs revision whose workspace
+- `nodalia-window` has no source change for 0.37, but it must be consumed from a nodalia-libs revision whose workspace
   `egui` is 0.37; otherwise its `egui = "0.36"` requirement cannot be satisfied by a 0.37 patch.
-- `craft-print`, `craft-pdf` and `craft-docpath` do not depend on egui; keep their current revisions unless a
+- `nodalia-print`, `nodalia-pdf` and `nodalia-docpath` do not depend on egui; keep their current revisions unless a
   separate comparison justifies a bump. Do not churn unrelated pins.
 - #198 is a language-support proposal, not a merged dependency. Pluma has its own i18n catalog and no RTL UI
   language (the catalog list has no Arabic/Hebrew/Persian). The fork's bidi/RTL UI patches still affect text
@@ -502,14 +502,14 @@ historical audit tree `ec8840a` is likewise unsafe. Never merge either tree:
 - eframe 0.37 `system_fonts` (fontique/egui_system_font_provider) is a new default in eframe's default feature
   set. Pluma disables eframe defaults, so it stays off. Keep it off initially: the app owns font discovery
   (`pluma_text::FontDb`, `apps/pluma/src/system_fonts.rs`, `mac_fonts.rs`, web `fonts.rs`) and must
-  build/test with `CRAFT_FONTS` empty. Evaluate #8512 startup cost only if a measured case justifies enabling it.
+  build/test with `NODALIA_FONTS` empty. Evaluate #8512 startup cost only if a measured case justifies enabling it.
 - `eframe` 0.37 `links` is a feature; Pluma's native app installs its own `open_url` service
   (`webbrowser`), and the web runner handles `OutputCommand::OpenUrl`. Keep `links` off as before; add it only if a
   native path actually needs it.
 - `eframe` 0.37 `clipboard` is new and required (above). `eframe` 0.37 `wayland`/`x11` remain required on Linux/CI.
-- `egui_extras` 0.37 still exposes `install_image_loaders` at the crate root; `craft-ui` SVG icons use
+- `egui_extras` 0.37 still exposes `install_image_loaders` at the crate root; `nodalia-ui` SVG icons use
   `ImageSource::Bytes` and the SVG loader. Test the SVG loader with the app's icon set.
-- **Font fixtures follow the shared pin.** Use the exact `craft-fonts` revision
+- **Font fixtures follow the shared pin.** Use the exact `nodalia-fonts` revision
   `2481a8a324b986a45954e90045ed1f8f2efaaf3c` and the identities in `egui` plan §10.6, with recorded licences:
   Arabic `fonts/noto-sans-arabic/NotoSansArabic.ttf` SHA256
   `63111b5b2e074dd48cc67692e0a2726d86ee94c1c37fe8598257b7b4e87e869e`; Thai
@@ -525,8 +525,8 @@ historical audit tree `ec8840a` is likewise unsafe. Never merge either tree:
   `415dc6290378574135b64c808dc640c1df7531973290c4970c51fdeb849cb0c5`; use the same bytes for paired
   measurements and preserve the adjacent licence files. Fetch these as test resources into the task evidence
   directory; do not copy font binaries into this repository, and do not replace them with system fonts. Keep
-  Pluma's own central-font policy (`pluma_text::FontDb`, `CRAFT_FONTS_DIR`, interface-fonts /
-  bundled-fonts) and the `CRAFT_FONTS` empty build/test requirement. A missing glyph fails the strict test unless a
+  Pluma's own central-font policy (`pluma_text::FontDb`, `NODALIA_FONTS_DIR`, interface-fonts /
+  bundled-fonts) and the `NODALIA_FONTS` empty build/test requirement. A missing glyph fails the strict test unless a
   deliberate `allow_missing_glyphs` case is documented.
 
 ### 3.9 IME, text and RTL
@@ -653,13 +653,13 @@ The dependency direction is fixed:
 ```
 D1a  approved storytold/winit: W1–W15 minus W5, plus W17–W27 including replacement W20, W15P, bounded transfer
 D1b  approved storytold/egui P8: P2b + P7 + P7b/E21b + P7c, complete
-        -> L1  craft-libs CL-1 API port on 3832c47 (PR199 already applied) + CL-2F helper
-        -> L2  craft-libs CL-2F capture-helper freeze
+        -> L1  nodalia-libs CL-1 API port on 3832c47 (PR199 already applied) + CL-2F helper
+        -> L2  nodalia-libs CL-2F capture-helper freeze
         -> V2  Pluma atomic app lock
 ```
 
 No stage depends on itself and no app lock precedes L2. No intermediate fork stage, aiongg candidate or provisional
-craft-libs tree becomes a production pin. Candidate aiongg revisions are research inputs only; final fork SHAs and
+nodalia-libs tree becomes a production pin. Candidate aiongg revisions are research inputs only; final fork SHAs and
 tree hashes are recorded when the approved predecessors exist, never invented here.
 
 One coherent 0.37 family:
@@ -670,8 +670,8 @@ eframe 0.37 ─┬─ egui 0.37 ── epaint/emath/ecolor/epaint_default_fonts 
              └─ egui-wgpu 0.37 ── wgpu 30.0.x
 egui_extras 0.37
 egui_kittest 0.37 ── kittest 0.5.0 (registry)
-craft-ui (final craft-libs rev) ── egui 0.37
-craft-window (final craft-libs rev) ── egui 0.37
+nodalia-ui (final nodalia-libs rev) ── egui 0.37
+nodalia-window (final nodalia-libs rev) ── egui 0.37
 ```
 
 - **Required-used fork-source IDs** (each must appear once from the D1b revision): `egui`, `eframe`, `egui-winit`,
@@ -693,7 +693,7 @@ craft-window (final craft-libs rev) ── egui 0.37
   must **not** reject them for not being egui-git packages.
 - Keep version requirements at `0.37` in `[workspace.dependencies]`, and add root `[patch.crates-io]` entries for
   every fork-source crate used **and** `winit` to the final immutable revisions. This makes transitive
-  dependencies from `craft-ui`/`craft-window` resolve to the same source. A dependency's `[patch]` section is
+  dependencies from `nodalia-ui`/`nodalia-window` resolve to the same source. A dependency's `[patch]` section is
   ignored by the consumer.
 - Do not use a branch or a machine-local path in publication. The winit fork's own patch is not inherited.
 - Keep the existing hayro/krilla root patches and PDF fixes. These are unrelated to the egui graph and must not be removed, folded into the fork pin, or
@@ -703,7 +703,7 @@ craft-window (final craft-libs rev) ── egui 0.37
   `same-revision-if-present` rule, the external registry identities above, and the final `winit` rev. It rejects a
   registry fork-family copy, a branch/source mismatch, a **missing required** package, an optional package from an
   unexpected source, a duplicate `egui`/`eframe`/`egui-winit`/`egui-wgpu`/`winit`/`epaint`/`emath`/`ecolor`, an old
-  `craft-ui`/`craft-window`, an unexpected version, or a `path`/`file` source. A version string alone must not pass.
+  `nodalia-ui`/`nodalia-window`, an unexpected version, or a `path`/`file` source. A version string alone must not pass.
   Add negative fixtures for a registry `epaint`, a registry `egui_extras` beside the git copy, a mixed family graph,
   wrong external `kittest`/`accesskit*` versions, a missing family patch and an unapproved moving branch. Run it in
   `cargo xtask ci`.
@@ -712,12 +712,12 @@ craft-window (final craft-libs rev) ── egui 0.37
   0.37 vs `pluma-text`; record them and measure binary size. Do not force a text-engine downgrade without
   evidence.
 - Pluma keeps ownership of its document model, engine commands, undo stack, units, themes, font database,
-  workspace format and persistence. `craft-ui`/`craft-window` remain shared widget/window helpers; this migration
+  workspace format and persistence. `nodalia-ui`/`nodalia-window` remain shared widget/window helpers; this migration
   does not move app semantics into them.
 
 **Publication reachability:** a clean checkout with no cache must `cargo fetch --locked` the chosen revisions;
 `--locked` builds must not update the lock. Recheck the remote commit/tree before merge. If a fork revision or
-craft-libs revision is unavailable, stop and report; do not substitute a branch.
+nodalia-libs revision is unavailable, stop and report; do not substitute a branch.
 
 ### 4.2 Lifecycle: host iteration, input and UI
 
@@ -838,12 +838,12 @@ deadlines and background scheduling. Keep egui's `i.time` for UI animation/gestu
 - Pass the existing `&mut Ui` from `App::ui` to panels; never call `Context::root_ui` inside `App::ui`, tests that
   use `run_ui`, or any code that already holds the root. `root_ui` is only for a `Context`-only integration, which
   Pluma does not have.
-- Dialogs keep `egui::Area`/`Window::show(ctx)`: they create their own `Ui` and do not borrow the root. Floating panels are drawn by `craft_ui::docking::DockArea`; on the desktop craft-ui's `native-windows` feature gives them OS windows of their own, and on the web and Wayland they float inside the app window.
+- Dialogs keep `egui::Area`/`Window::show(ctx)`: they create their own `Ui` and do not borrow the root. Floating panels are drawn by `nodalia_ui::docking::DockArea`; on the desktop nodalia-ui's `native-windows` feature gives them OS windows of their own, and on the web and Wayland they float inside the app window.
 - Panel order remains app bar / control bar / status+hint / toolbar / dock / central canvas / floating / dialogs.
   The new `Panel` id-salt behavior must not change the order or clip; assert `response.rect`, `ui.clip_rect()` and
   hit positions after resize/DPI changes.
-- Pluma does not call `show_viewport_deferred` itself. The only child native viewports are the desktop floating-panel windows that craft-ui's `native-windows` feature creates; the web and Wayland stay in one window. Floating windows' controls are excluded from `ui.docking`'s `hitRects` and from control-channel pointer input (`panel_docking/native_tests.rs`, `docs/control-protocol.md`). Retest screenshot/root behavior for the main viewport with the native child windows present; still test two queued screenshot requests (issued one at a time) and hidden-window paint because the callback contract is new.
-- Docking/floating use `craft_ui::docking`; the app `floating` module is deleted. `panel_docking::Runtime` keeps only session-only space/raise/focus state, and `panel_docking::valid`/`known` plus `Permissions` preserve the layout model and the `MoveFloating` group permission checks.
+- Pluma does not call `show_viewport_deferred` itself. The only child native viewports are the desktop floating-panel windows that nodalia-ui's `native-windows` feature creates; the web and Wayland stay in one window. Floating windows' controls are excluded from `ui.docking`'s `hitRects` and from control-channel pointer input (`panel_docking/native_tests.rs`, `docs/control-protocol.md`). Retest screenshot/root behavior for the main viewport with the native child windows present; still test two queued screenshot requests (issued one at a time) and hidden-window paint because the callback contract is new.
+- Docking/floating use `nodalia_ui::docking`; the app `floating` module is deleted. `panel_docking::Runtime` keeps only session-only space/raise/focus state, and `panel_docking::valid`/`known` plus `Permissions` preserve the layout model and the `MoveFloating` group permission checks.
 - Test: panels open/close/reorder, dock width restore, floating panel drag/dock, popup/flyout focus, window resize
   and 1x/1.5x/2x scale; screenshots and geometry agree.
 
@@ -870,7 +870,7 @@ Implement §3.5. Details:
   reservation when the record is drained, timed out or canceled, and reject a completion whose image exceeds it.
 - Send `RequestPaintWhileHidden` from logic when a screenshot is queued but not yet issued, including settling
   frames; the `Screenshot` command itself covers only the issued request, and callback arrival does not wake.
-- **Use the shared craft-ui completion-slot helper from L2.** Pluma is one of the eleven existing craft-ui
+- **Use the shared nodalia-ui completion-slot helper from L2.** Pluma is one of the eleven existing nodalia-ui
   consumers, so it adopts the CL-1 + CL-2F API before V2 and keeps only app-owned request records, paths/schemas,
   confinement and settle policy around it. There is no app-local or provisional capture slot and no generic
   compatibility map.
@@ -933,12 +933,12 @@ Implement §3.9:
 - Update `i18n/tests.rs` to the public `FontsView` API (`definitions`, `families`, `characters`).
 - Update `font_menu` sample/offset code to `state.offset()`.
 - Add a glyph-coverage test for the UI's own symbols (`→ ▾ ● ✓ ★ ☆ …`) and for CJK/RTL names; `interface-fonts`
-  and `bundled-fonts` on/off matrix. Do not add font files; fonts stay in `craft-fonts`. No new image/icon/font
+  and `bundled-fonts` on/off matrix. Do not add font files; fonts stay in `nodalia-fonts`. No new image/icon/font
   asset is needed; `ASSETS.md` and `NOTICE` stay unchanged unless a reviewed, licensed asset is separately proposed.
-- Use the shared fixture contract from `egui` plan §10.6: craft-fonts `2481a8a…` for Arabic, Thai, CJK SC and
+- Use the shared fixture contract from `egui` plan §10.6: nodalia-fonts `2481a8a…` for Arabic, Thai, CJK SC and
   Japanese, plus pinned Hebrew and Noto Color Emoji v2.047, each with recorded SHA256 and licence text. Fetch them
   into the task fixture directory and enter them in the evidence manifest. Keep the app's own central-font policy:
-  `CRAFT_FONTS_DIR` may add fonts, but all builds/tests must still pass with `CRAFT_FONTS` empty and no fixture
+  `NODALIA_FONTS_DIR` may add fonts, but all builds/tests must still pass with `NODALIA_FONTS` empty and no fixture
   copied into the repository. A system font-provider test is a separate nondeterministic row, not a pixel oracle.
 - `egui_kittest`'s missing-glyph default is `Panic`; fix fixture fonts rather than globally allowing tofu. Use
   `allow_missing_glyphs` only in a documented deliberate case. Production keeps `Tofu`, so glyph-coverage
@@ -959,7 +959,7 @@ Implement §3.3, §3.10 and §3.4:
   `field_w`/`length_field`/form-grid values. Do not add a duplicate label. Treat the custom-painted
   `widgets::label_row` as a separate response/capture job.
 - Keep role/name/value/selected/disabled/focus tests. Add hidden-control disappearance.
-- `craft-ui` role changes are in the shared PR; review its `Other → Unknown` and `SelectableLabel → Button`
+- `nodalia-ui` role changes are in the shared PR; review its `Other → Unknown` and `SelectableLabel → Button`
   decisions semantically, and retain its permission tests.
 
 ### 4.9 GPU and surface behavior
@@ -992,7 +992,7 @@ cargo clippy -p pluma-ui-egui --no-default-features --all-targets -- -D warnings
 cargo test -p pluma-text --no-default-features --test without_bundled_fonts
 cargo xtask ui-deps
 cargo xtask pdf-deps
-CRAFT_FONTS_DIR=/absolute/craft-fonts cargo xtask ci
+NODALIA_FONTS_DIR=/absolute/nodalia-fonts cargo xtask ci
 ```
 
 `cargo xtask ci` currently runs fmt, clippy, test, no-bundled-fonts, pdf-deps, assets, brands, cursors, layers and
@@ -1046,7 +1046,7 @@ Add a `tests/screenshots.rs` (new) covering:
   needs `RequestPaintWhileHidden` to reach issuance and a callback that does not wake by itself;
 - the callback holds no strong `Context`/app: a drop test retains only the weak slot, and no PNG encoding, file
   write or command runs on the callback thread; the live slot owns the strong `Context`/owning-viewport wake handle waker;
-- the shared craft-ui helper (from L2, no app-local slot) passes the same correlation/cancel/close/epoch tests.
+- the shared nodalia-ui helper (from L2, no app-local slot) passes the same correlation/cancel/close/epoch tests.
 
 Add accessibility tests in the existing `role_and_state` style and via kittest:
 
@@ -1061,10 +1061,10 @@ Add accessibility tests in the existing `role_and_state` style and via kittest:
   asset/provenance review. Use geometry, clip rectangles, AccessKit trees and texture counts as committed
   assertions; keep paired screenshots as migration evidence under
   `/home/codex/work/ssd2/task-evidence/egui037-migration-20261022/pluma/`.
-- The shared component suite is separate: run `cargo test -p craft-ui --test visual_regression` on the L1 and L2
+- The shared component suite is separate: run `cargo test -p nodalia-ui --test visual_regression` on the L1 and L2
   revisions and require its 414 exact positive pairs (icon buttons, toolbar fitting, widget palette, SVG
   preparation) plus 36 negative controls, comparing pixels and meshes with no tolerance or automatic baseline
-  update. App screenshot tolerances never apply to craft-ui's exact-pixel contract.
+  update. App screenshot tolerances never apply to nodalia-ui's exact-pixel contract.
 - For each reviewed visual change, capture unchanged 0.36, **stock 0.37.0 (`841a328b`)** and the candidate at the
   same viewport, DPI, theme, fonts and renderer (the stock arm uses the same operation in a pinned minimal adapter
   when fork-only code cannot compile there); compare with a justified tolerance (for example ≤0.5% differing pixels
@@ -1105,7 +1105,7 @@ Add accessibility tests in the existing `role_and_state` style and via kittest:
 
 ### 5.6 Fonts, IDs, IME and accessibility matrices
 
-- Fonts: `interface-fonts` on/off; `bundled-fonts` on/off; `CRAFT_FONTS_DIR` empty/set; Latin, CJK, Cyrillic,
+- Fonts: `interface-fonts` on/off; `bundled-fonts` on/off; `NODALIA_FONTS_DIR` empty/set; Latin, CJK, Cyrillic,
   combining marks, RTL names, emoji. Compare glyph presence, not just layout success.
 - IDs: persisted temp state, workspace, panel width, selection, focused field, scroll offset, open popup.
 - IME: preedit, commit, cancel, replacement bytes/chars, focus/serial changes, two windows, UTF-8 boundaries,
@@ -1152,7 +1152,7 @@ Add a UI-frame harness before touching production code. Proposed:
 - `apps/pluma-cli` gains an optional `ui-perf` feature/dependency on `pluma-ui-egui` and
   `apps/pluma-cli/src/perf_ui.rs`, invoked as `pluma-cli perf --ui --frames 1200 --json PATH`.
 - It builds a deterministic `Session` with `perf::synthetic(50_000)`, installs `theme::install_fonts` and the same
-  `craft-fonts`/interface fonts as production, and runs a **version-neutral** frame driver on a fixed
+  `nodalia-fonts`/interface fonts as production, and runs a **version-neutral** frame driver on a fixed
   `egui::Context`: baseline 0.36.2 calls `PlumaApp::logic` then `ui` inside `run_ui` and `logic` inside
   `run_logic`; the candidate calls `tick` then `ui` inside `run_ui` and `tick` inside `run_logic`. Both invoke the
   host `raw_input_hook`/iteration boundary once per frame, in the real host order. The baseline must not use a
@@ -1161,7 +1161,7 @@ Add a UI-frame harness before touching production code. Proposed:
   not per layout pass. Logic-only iterations are reported separately. Record the exact lifecycle, hook calls and
   pass count for both sides.
 - Fixed environment: 1440×900, 1x, dark theme, dock open, no hidden panels; `pixels_per_point` set explicitly;
-  `CRAFT_FONTS_DIR` fixed; same profile/features/compiler.
+  `NODALIA_FONTS_DIR` fixed; same profile/features/compiler.
 - Workloads: cold first frame/font load; 1,200 idle frames; 1,000 pan frames; 1,000 zoom frames; selection drag;
   panel scroll; dialog open/close; text typing; save/reopen; screenshot request (where renderer available).
 - Metrics: full `Context::run_ui` wall time, app `perf.frame_ms`, shape count, tessellation/vertex counts,
@@ -1232,8 +1232,8 @@ Public text carries no agent/model/tool attribution.
 | V1 | Pluma | Version-neutral UI perf harness, lifecycle/screenshot/accessibility test scaffolding on **0.36.2**; baseline, `4a7cba0…` control and stock-0.37.0 captures | V0 | `cargo xtask ci` on baseline; baseline/control/stock perf report; no production behavior change |
 | D1a | storytold/winit | Complete reviewed immutable winit: W1–W15 minus W5, plus W17–W27 including replacement W20, W15P, bounded transfer; provenance/PATCHES and clean-fetch proof | Independent winit adversarial review; upstream prerequisites | winit test suites, W15P/transfer contract tests, clean `cargo fetch --locked` |
 | D1b | storytold/egui | Complete reviewed immutable egui **P8** (`craft/0.37.0-release`): P2/P3/P4/P5/P6, P2b (E4 regular + PRIMARY), P7 (E7/E19/E21), P7b (E21b), P7c (#8763/#8748); provenance/PATCHES and clean-fetch proof | D1a; independent egui adversarial review; P8 prerequisites | egui test suites, E21b/W27 and P7c regression tests, clean `cargo fetch --locked` |
-| L1 | craft-libs | CL-1 coherent 0.37 API port on `3832c47…` (which already carries `8614e4a`/`1764bca`): `craft-platform` and security/settings/docking/printing fixes preserved, egui 0.37 pins to D1b; includes the CL-2 capture-slot prototype for the Pliego/Celdas pilots (Pluma does not consume it) | D1b | craft-libs fmt/clippy/tests, `cargo test -p craft-ui --test visual_regression` (414 exact positives, 36 negative controls, no autoupdate), no security regression; packaged-manifest check; no stale PR199 tree |
-| L2 | craft-libs | CL-2F final capture-helper API freeze after the Pliego/Celdas adapters are reviewed; final immutable craft-libs revision on the L1 base | L1; adapter review | Shared capture contract tests; visual regression; final package/lock check; adversarial review |
+| L1 | nodalia-libs | CL-1 coherent 0.37 API port on `3832c47…` (which already carries `8614e4a`/`1764bca`): `nodalia-platform` and security/settings/docking/printing fixes preserved, egui 0.37 pins to D1b; includes the CL-2 capture-slot prototype for the Pliego/Celdas pilots (Pluma does not consume it) | D1b | nodalia-libs fmt/clippy/tests, `cargo test -p nodalia-ui --test visual_regression` (414 exact positives, 36 negative controls, no autoupdate), no security regression; packaged-manifest check; no stale PR199 tree |
+| L2 | nodalia-libs | CL-2F final capture-helper API freeze after the Pliego/Celdas adapters are reviewed; final immutable nodalia-libs revision on the L1 base | L1; adapter review | Shared capture contract tests; visual regression; final package/lock check; adversarial review |
 | V2 | Pluma | Atomic compatibility PR: manifests, lock, root patches, `Id`/`Role`/`MouseWheel`/shared screenshot-helper adoption/fonts/scroll/panel-width changes, required E21 byte deletion and E21b canvas producer/owner lifecycle, **and the accessible names/glyph-fixture fixes required to keep kittest 0.37's strict tests green**; no blanket `with_accessibility_check(false)` | V1, D1a, D1b, L2 | `cargo xtask ci`, `ui-deps`, wasm, native build; exact test counts; rebase/DXF gate |
 | V3 | Pluma | Lifecycle: host iteration/tick/input/ui, multi-pass/logic-only, hidden paint, monotonic clock, separate counters | V2 | Lifecycle tests; no command/undo duplicates; hidden background jobs |
 | V4 | Pluma | Extended Clipboard/PRIMARY/PasteImage and native E21/E21b/text/RTL qualification; required canvas adapter already in V2 | V2/V3 | Clipboard/IME tests; native Wayland/X11/macOS-manual gate |
@@ -1245,7 +1245,7 @@ V2 is deliberately atomic: a manifest/lock bump alone would leave `main` unbuild
 accessible-name fixes that `egui_kittest` 0.37 now enforces: the workspace tests would fail immediately. Do not keep
 a blanket `with_accessibility_check(false)` as a staging shortcut. V3–V5 may land in parallel only if each branch
 includes V2 and they do not touch the same lifecycle files; prefer sequential for review. V2 waits for the complete
-D1a winit and D1b egui P8 revisions and for L2; no intermediate fork or craft-libs stage is a production pin.
+D1a winit and D1b egui P8 revisions and for L2; no intermediate fork or nodalia-libs stage is a production pin.
 
 **Rebase gate before V2:** fetch current `getnodalia/pluma` main, record its full SHA and diff against the
 pinned review baseline. The recorded drift is exactly two commits from `8906073…` to `4a7cba0…`, both changing only
@@ -1257,18 +1257,18 @@ fix.
 ### 7.2 Rollback
 
 - Before V2, preserve the exact baseline `Cargo.toml`, `Cargo.lock`, baseline/control/stock executables, D1a/D1b
-  fork revisions and L1/L2 craft-libs revisions outside disposable build dirs. Do not rely on `cargo update` to
+  fork revisions and L1/L2 nodalia-libs revisions outside disposable build dirs. Do not rely on `cargo update` to
   reconstruct an old graph.
 - Rollback is a revert of the complete V2 (or V2–V6) commits, not a version-string edit. The old 0.36.2 lock and
-  craft-libs revisions must remain reachable. Keep the old dependency set in a local branch/commit and in
+  nodalia-libs revisions must remain reachable. Keep the old dependency set in a local branch/commit and in
   evidence; do not delete it during build-cache cleanup. The `4a7cba0…` DXF fix is upstream work, not part of the
   rollback.
 - Per stage: **D1a** and **D1b** roll back by a new immutable revision on the prior base; never force-push or move
-  a published tag, and never delete a published revision. **L1** and **L2** roll back by a new craft-libs revision
+  a published tag, and never delete a published revision. **L1** and **L2** roll back by a new nodalia-libs revision
   on the previous base (L2 → L1 → `3832c47…`), preserving the prior capture-helper and PR199 port. **V2–V6** revert
-  the app commits to the coherent 0.36.2 lock and its craft-libs revisions. Record each revert revision, parent and
+  the app commits to the coherent 0.36.2 lock and its nodalia-libs revisions. Record each revert revision, parent and
   validation, and keep the superseded immutable revisions reachable.
-- If a fork/craft-libs revision becomes unavailable, stop and restore the last coherent graph; do not substitute
+- If a fork/nodalia-libs revision becomes unavailable, stop and restore the last coherent graph; do not substitute
   a branch, path patch or a second egui version.
 - No persistence format change is planned. If one becomes necessary, specify backward compatibility and keep
   unreadable data, or abandon that part of the change.
@@ -1277,8 +1277,8 @@ fix.
 
 - `docs/architecture.md`: revise the UI/lifecycle section to describe host iteration, `tick`/input/`ui`, logic-only iterations,
   root `Ui`, screenshot callbacks and the dependency patch policy.
-- `docs/development.md`: record the selected egui/winit/craft-libs revisions, `ui-deps`, the UI perf harness and
-  any changed browser/Windows workflow. Keep the existing font rules (`craft-fonts`, `CRAFT_FONTS_DIR`).
+- `docs/development.md`: record the selected egui/winit/nodalia-libs revisions, `ui-deps`, the UI perf harness and
+  any changed browser/Windows workflow. Keep the existing font rules (`nodalia-fonts`, `NODALIA_FONTS_DIR`).
 - `docs/control-protocol.md`: update `ui.screenshot` only if native evidence changes the minimized/covered
   behavior; keep the timeout/error contract otherwise.
 - `ROADMAP.md` progress log and the touched docs' status/revision history: record the dependency migration. Do not
@@ -1299,11 +1299,11 @@ These are not “future work”; they block calling the migration done:
    P7c, complete). Record exact full SHAs and tree hashes, preserve fork authorship/PATCHES, and prove a clean
    `cargo fetch --locked`. No intermediate fork stage is a production pin; candidate aiongg revisions remain
    research inputs; no final SHA is invented in this plan.
-2. **Final craft-libs revision (resolved by the published pin).** The CL-1/CL-2F delta is published in
-   craft-libs `25da131…`; the current workspace pins `craft-ui`, `craft-window`, `craft-keymap` and
-   `craft-print` to descendant `a0916808…`, retaining that delta and upstream shared docking. The plan-time requirement was to finish that delta on the `3832c47…` base (which already
-   carries the selected `8614e4a`/`1764bca` changes), preserving `craft-platform`,
-   security/settings/docking/printing fixes, pin D1b and pass `craft-ui` visual regression. Do not merge PR199
+2. **Final nodalia-libs revision (resolved by the published pin).** The CL-1/CL-2F delta is published in
+   nodalia-libs `25da131…`; the current workspace pins `nodalia-ui`, `nodalia-window`, `nodalia-keymap` and
+   `nodalia-print` to descendant `a0916808…`, retaining that delta and upstream shared docking. The plan-time requirement was to finish that delta on the `3832c47…` base (which already
+   carries the selected `8614e4a`/`1764bca` changes), preserving `nodalia-platform`,
+   security/settings/docking/printing fixes, pin D1b and pass `nodalia-ui` visual regression. Do not merge PR199
    head `b68de8c` or audit tree `ec8840a` as trees. L1 (CL-1) and L2 (CL-2F) preceded V2; publication waited for
    the shared gates and the capture-helper adapter review.
 3. **`default_fonts`/font provider.** `ui-egui` library tests and no-default-feature builds must bind non-empty
@@ -1317,7 +1317,7 @@ These are not “future work”; they block calling the migration done:
    late-callback safety with a weak completion slot (the live slot owns the strong `Context`/owning-viewport wake handle waker; callback pixels
    only; no strong `Context`), pre-issue checked-byte admission (4/128/256 MiB defaults), geometry-epoch binding
    and rejection of any resize/DPI/zoom/surface change before save, and `RequestPaintWhileHidden` for a queued but
-   unissued request. Use the L2 shared craft-ui helper; no app-local slot.
+   unissued request. Use the L2 shared nodalia-ui helper; no app-local slot.
 6. **Clipboard/PRIMARY.** eframe `clipboard` must be enabled and must not duplicate the app's `SystemClipboard`
    paste, especially for `PasteImage`. W15P/E4 must provide the winit-owned per-seat PRIMARY path with fresh
    keyboard-or-pointer serials, synchronous claims, bounded 2 s/16 MiB/4-read/2-writer/queue-8 transfers and no
@@ -1361,9 +1361,9 @@ no reviewer finding is treated as an executed test result or an implementation c
 | # | Finding | Disposition |
 |---|---|---|
 | 1 | E21b/P7b outgoing IME surrounding text missing | **Accepted and fixed.** Added E21b/W27 requirements, the canvas model/preedit/UTF-8 payload adapter, final-output/password/focus rules and tests in §3.9, §4.6, §5.2/§5.6, §8; D1b (P7b in P8) is a prerequisite. |
-| 2 | Final storytold pins and craft-libs publication order not implementable | **Accepted and fixed.** D1a winit and D1b egui P8 precede the craft-libs CL-1 L1 and CL-2F L2; V2 depends on L2; no self-dependency; no invented SHAs; clean-fetch gate retained. §4.1, §7.1. |
+| 2 | Final storytold pins and nodalia-libs publication order not implementable | **Accepted and fixed.** D1a winit and D1b egui P8 precede the nodalia-libs CL-1 L1 and CL-2F L2; V2 depends on L2; no self-dependency; no invented SHAs; clean-fetch gate retained. §4.1, §7.1. |
 | 3 | Required W15P/E4 PRIMARY integration absent | **Accepted and fixed.** W15P is a prerequisite, E4/P2b routes PRIMARY through it, second data device forbidden, bounded-transfer and compositor tests added. §3.6, §4.5, §8. |
-| 4 | Screenshot callback violates weak-slot/cancel contract | **Accepted and fixed.** Replaced receiver/strong-`Context` design with a per-request weak completion slot, pre-issue pixel admission, aggregate limits and shared craft-ui helper after CL-2F. §3.5, §4.4, §5.2. |
+| 4 | Screenshot callback violates weak-slot/cancel contract | **Accepted and fixed.** Replaced receiver/strong-`Context` design with a per-request weak completion slot, pre-issue pixel admission, aggregate limits and shared nodalia-ui helper after CL-2F. §3.5, §4.4, §5.2. |
 | 5 | `raw_input_hook`/logic-only lifecycle premise is source-wrong | **Accepted and fixed.** Corrected to both hosts calling the hook before the logic-only decision; it is a host-iteration boundary, not a UI-phase marker. Separate host-iteration and accepted-UI-frame counters; stale input only in a known UI phase; test driver preserves host order; baseline uses `logic`/`ui`, not `tick`. §2.4, §4.2, §5.2, §6.1. |
 | 6 | Whole-family pin gate not exhaustive | **Accepted and fixed.** Full fork-family allowlist plus separate external `kittest`/`accesskit*` registry audit; negative fixtures; version alone insufficient. §4.1. |
 | 7 | The performance harness uses a nonexistent 0.36.2 `tick` API | **Accepted and fixed.** Version-neutral harness: baseline `logic`+`ui`, candidate `tick`+`ui`, same hook order, accepted-frame counting, same-engine control for isolation. §6.1/§6.2. |
@@ -1382,7 +1382,7 @@ Every finding in `plan-reviews/pluma-v2.md` is closed below by source-grounded p
 | 3 | W27 old-epoch invalidation missing | **Accepted and fixed.** Old-epoch `done` is rejected and invalidates that epoch, never edits the new owner; current-epoch mismatch applies incoming once and defers outgoing. §3.9, §4.6, §5.6, §5.7. |
 | 4 | P7c ownership of #8763/#8748 absent | **Accepted and fixed.** P7c owns both fixes and their pointer/keyboard and hidden-parent regressions; D1b includes P7c, V2 depends on it, and an app workaround needs equivalent tests plus a removal condition. §3.11, §7.1, §8.1. |
 | 5 | Empty-family font claim source-wrong | **Accepted and fixed.** Production `MissingGlyphPolicy` defaults to `Tofu`; the kittest harness alone defaults to `Panic`. Mutation 8 now expects the non-empty-family assertion failure; `theme.rs`'s "egui panics…" comment is scheduled for correction. §1, §3.8, §3.10, §4.7, §5.7, §8.3. |
-| 6 | craft-ui visual regression and negative controls missing from L1/V2 | **Accepted and fixed.** L1/L2 run `cargo test -p craft-ui --test visual_regression` with 414 exact positive pairs and 36 negative controls; no tolerance or autoupdate, and app screenshot tolerances stay separate. §5.3, §7.1. |
+| 6 | nodalia-ui visual regression and negative controls missing from L1/V2 | **Accepted and fixed.** L1/L2 run `cargo test -p nodalia-ui --test visual_regression` with 414 exact positive pairs and 36 negative controls; no tolerance or autoupdate, and app screenshot tolerances stay separate. §5.3, §7.1. |
 | 7 | `ui-deps` ledger conflates required and optional packages | **Accepted and fixed.** Required-used, optional/forbidden-if-present and external registry identities are separate ledger classes; the transitive `accesskit_*` platform crates are audited; a missing optional package passes. §4.1. |
 | 8 | D1 not split into winit then egui | **Accepted and fixed.** D1a winit precedes D1b egui P8, each with its own review, SHA, tree hash and clean-fetch proof; V2 depends on D1a, D1b and L2. §4.1, §7.1, §8.1. |
 | 9 | Rollback is app-only | **Accepted and fixed.** Per-stage rollback: new immutable revisions for D1a/D1b and L1/L2, never force-push or move published tags; V2–V6 revert to the coherent 0.36.2 lock. §7.2. |
@@ -1400,10 +1400,10 @@ Primary sources inspected (read-only):
 - `/home/codex/work/CraftApps/egui037-migration-20261022/pluma` (assigned checkout)
 - `/home/codex/work/CraftApps/egui037-migration-20261022/egui` at `0.37.0` and `aiongg/craft/0.37`
 - `/home/codex/work/CraftApps/egui037-migration-20261022/winit` at `8b35388…`/`ffae519…`
-- `/home/codex/work/CraftApps/egui037-migration-20261022/craft-libs-implementation` at `3832c47…` (the historical
-  local planning base; the CL-2F helper later landed in published craft-libs `25da131…`) and the historical PR
+- `/home/codex/work/CraftApps/egui037-migration-20261022/nodalia-libs-implementation` at `3832c47…` (the historical
+  local planning base; the CL-2F helper later landed in published nodalia-libs `25da131…`) and the historical PR
   199/audit branches
-- `craft-libs/docs/egui-037-suite-rollout.md` and `craft-libs/docs/egui-037-migration-plan.md`
+- `nodalia-libs/docs/egui-037-suite-rollout.md` and `nodalia-libs/docs/egui-037-migration-plan.md`
 - `egui/docs/egui-037-migration-plan.md` (E21b, W15P, family pins, §10.6 font fixtures)
 - `/home/codex/work/ssd2/task-evidence/egui037-migration-20261022/` (upstream discussions, text-input research,
   lifecycle audit, IME-surrounding gap, remote bases)
@@ -1412,7 +1412,7 @@ Primary sources inspected (read-only):
 - `/home/codex/work/ssd2/task-evidence/egui037-migration-20261022/remote-plan-bases-20261023-0632.json`
 - `/home/codex/work/ssd2/task-evidence/egui037-migration-20261022/plan-reviews/pluma-v1.md`
 - `/home/codex/work/ssd2/task-evidence/egui037-migration-20261022/plan-reviews/pluma-v2.md`
-- `/home/codex/work/ssd2/task-evidence/egui037-migration-20261022/craft-fonts-manifest-2481a8a.txt`
+- `/home/codex/work/ssd2/task-evidence/egui037-migration-20261022/nodalia-fonts-manifest-2481a8a.txt`
 - `/home/codex/work/ssd2/task-evidence/egui037-audit-20261022/{fork,stock}/pluma.errors`
 
 Public upstream references (immutable where possible):
@@ -1430,8 +1430,8 @@ Public upstream references (immutable where possible):
 - kittest strict names/glyphs: `https://github.com/emilk/egui/blob/841a328ba2dd8f6996beb7189ebb7fc00e668a2a/crates/egui_kittest/src/builder.rs`
 - upstream discussions collected in `/home/codex/work/ssd2/task-evidence/egui037-migration-20261022/upstream-discussions.json`
   (#8731, #8736, #8763/#8764, #8748, #8512, #8657, #8577)
-- suite rollout: local `craft-libs/docs/egui-037-suite-rollout.md` planning draft (link only after it lands)
-- craft-libs PR 199: `https://github.com/storytold/craft-libs/pull/199`; issue 198:
+- suite rollout: local `nodalia-libs/docs/egui-037-suite-rollout.md` planning draft (link only after it lands)
+- nodalia-libs PR 199: `https://github.com/storytold/craft-libs/pull/199`; issue 198:
   `https://github.com/storytold/craft-libs/issues/198`
 
 Fork provenance:
@@ -1468,8 +1468,8 @@ These are decisions this plan recommends but does not silently make:
 - Add `PasteImage` handling rather than disabling eframe's image clipboard. Recommended: yes, with dedupe tests.
 - Keep the app's `SystemClipboard` as the rich-format owner for regular clipboard on Wayland, while the selected
   W15P path owns PRIMARY. Recommended: yes; this is the selected design, not an unresolved ownership test.
-- Adopt the shared craft-ui capture helper from L2 (CL-1 + CL-2F); no app-local capture slot.
-  Recommended: yes, for all eleven craft-ui consumers.
+- Adopt the shared nodalia-ui capture helper from L2 (CL-1 + CL-2F); no app-local capture slot.
+  Recommended: yes, for all eleven nodalia-ui consumers.
 
 ---
 
@@ -1478,10 +1478,10 @@ These are decisions this plan recommends but does not silently make:
 | Date | Change |
 |---|---|
 | 2026-10-23 | Initial source-grounded planning draft. No implementation, build, test or GUI run. |
-| 2026-10-23 | Revision 2: resolved every `pluma-v1` finding (§8.1); corrected the lifecycle model (`raw_input_hook` in both hosts, separate host/accepted-frame counters, host-ordered test driver); added E21b and W15P/E4 prerequisites; moved the weak capture slot to the shared craft-ui contract; fixed final-fork → final craft-libs/CL-2F → app ordering; enumerated family and external registry identities; corrected `row_label` and the `Id::new` inventory; recorded the pinned review baseline, `4a7cba0…` drift/rebase gate and same-engine performance control. Static documentation only; no build/test run. |
-| 2026-10-23 | Revision 3: resolved every `pluma-v2` finding (§8.2) by replacing contradictory prose: stock-0.37 third arm in visual/performance; shared 4/128/256 MiB capture admission with epoch-bound geometry and hidden paint request; W27 old-epoch invalidation and complete E21b contract; P7c owns #8763/#8748; corrected production `Tofu` vs kittest `Panic` and non-propagating kittest dev-dependency fonts; craft-ui exact-pixel visual regressions; split `ui-deps` ledger; split D1a winit / D1b egui P8; per-stage rollback; removed the dead provisional capture slot and app-local adapter; corrected clipboard scope; added W15P synchronous claims and bounded transfers; set 5% median/10% p95/5% RSS gates with no tolerance widening. Static documentation only; no build/test run. |
+| 2026-10-23 | Revision 2: resolved every `pluma-v1` finding (§8.1); corrected the lifecycle model (`raw_input_hook` in both hosts, separate host/accepted-frame counters, host-ordered test driver); added E21b and W15P/E4 prerequisites; moved the weak capture slot to the shared nodalia-ui contract; fixed final-fork → final nodalia-libs/CL-2F → app ordering; enumerated family and external registry identities; corrected `row_label` and the `Id::new` inventory; recorded the pinned review baseline, `4a7cba0…` drift/rebase gate and same-engine performance control. Static documentation only; no build/test run. |
+| 2026-10-23 | Revision 3: resolved every `pluma-v2` finding (§8.2) by replacing contradictory prose: stock-0.37 third arm in visual/performance; shared 4/128/256 MiB capture admission with epoch-bound geometry and hidden paint request; W27 old-epoch invalidation and complete E21b contract; P7c owns #8763/#8748; corrected production `Tofu` vs kittest `Panic` and non-propagating kittest dev-dependency fonts; nodalia-ui exact-pixel visual regressions; split `ui-deps` ledger; split D1a winit / D1b egui P8; per-stage rollback; removed the dead provisional capture slot and app-local adapter; corrected clipboard scope; added W15P synchronous claims and bounded transfers; set 5% median/10% p95/5% RSS gates with no tolerance widening. Static documentation only; no build/test run. |
 | 2026-10-24 | Revision 4: implementation status; repaired the final upstream-review defects (path+data capture downgrade, image-paste repaint and paste-time chord, monotonic hidden tick, IME context invalidation and unavailable revisions, per-viewport exact-once input, Artboard and Split Grid accessible names, fail-closed stale synthetic input); moved the shared-library base reference to the local `3832c47…` implementation base. At that revision the exact tree still needed fresh managed verification before publication. |
-| 2026-10-25 | Documentation reconciliation after PR 4113 and managed job `egui037-vector-postmerge-ci-20261025-1381`: recorded the current merge tree and pass result, marked the `8bf090b…`/`0589` status and 0.36.2 lock table historical, listed current pins from `Cargo.toml`/`Cargo.lock`, and corrected the plan-time local CL-2F base description to the published craft-libs `25da131…`. Documentation only; no build/test run. |
+| 2026-10-25 | Documentation reconciliation after PR 4113 and managed job `egui037-vector-postmerge-ci-20261025-1381`: recorded the current merge tree and pass result, marked the `8bf090b…`/`0589` status and 0.36.2 lock table historical, listed current pins from `Cargo.toml`/`Cargo.lock`, and corrected the plan-time local CL-2F base description to the published nodalia-libs `25da131…`. Documentation only; no build/test run. |
 | 2026-10-25 | Shared-docking reconciliation: recorded the local merge of upstream `main` `714434527…` (PR #4135), the upstream/delete resolution of the four conflicts, the reviewed recolor code already in `main`, and CI 1422's pre-merge pass; corrected current docking claims (desktop OS windows, web/Wayland in-page, deleted `floating.rs` and width helpers, `UiState::dock_width` persistence, new native and layout-migration tests) while retaining the earlier planning sections as historical. The combined executable source and lockfile were subsequently qualified by managed job `egui037-vector-combined-ci1443` (all 12 stages passed); the status text was updated after that run. |
 
 

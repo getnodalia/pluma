@@ -1276,7 +1276,7 @@ struct Listed<'s> {
 }
 
 /// The menu's contents outside a menu, for the unit tests: the header over its rows, as
-/// [`craft_ui::combo::Menu::show_rows_with_header`] lays them out.
+/// [`nodalia_ui::combo::Menu::show_rows_with_header`] lays them out.
 #[cfg(test)]
 fn list(ui: &mut Ui, state_id: egui::Id, st: &mut MenuState, current: &str, sample: Option<&str>, look: MenuLook) -> Option<FontPick> {
     list_of(ui, pluma_text::FontDb::global(), state_id, st, current, sample, look).inner

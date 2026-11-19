@@ -1,9 +1,9 @@
 //! Keyboard shortcuts: command shortcuts from the registry, single-key tool shortcuts, arrows,
 //! and tool keys (Enter/Esc/↑/↓ while drawing).
 
-use craft_keymap::egui::Hit;
-use craft_keymap::{Active, CommandRef};
 use egui::{Key, KeyboardShortcut, Modifiers};
+use nodalia_keymap::egui::Hit;
+use nodalia_keymap::{Active, CommandRef};
 use pluma_engine::cmd::clipboard::{Flavour, TEXT};
 use pluma_engine::{Result as EngineResult, UiRequest, ViewInfo};
 use pluma_tools::{Mods, SurroundingUnit, ToolKey};
@@ -170,12 +170,12 @@ pub fn runs_a_shortcut(key: &str, code: &str, modifiers: Modifiers) -> bool {
     let physical_key = Key::from_name(code);
     let Some(key) = Key::from_name(key).or(physical_key) else { return false };
     let press = egui::Event::Key { key, physical_key, pressed: true, repeat: false, modifiers };
-    let Some(input) = craft_keymap::KeyInput::from_egui(&press, crate::keymap::platform()) else { return false };
+    let Some(input) = nodalia_keymap::KeyInput::from_egui(&press, crate::keymap::platform()) else { return false };
     let mirror = crate::shortcut_editor::current();
-    craft_keymap::Layout::default()
+    nodalia_keymap::Layout::default()
         .candidates(&input)
         .iter()
-        .any(|c| mirror.keymap.lookup(c, false, &Active::NONE) != craft_keymap::Lookup::None || crate::panels::actions::plays_an_action(c))
+        .any(|c| mirror.keymap.lookup(c, false, &Active::NONE) != nodalia_keymap::Lookup::None || crate::panels::actions::plays_an_action(c))
 }
 
 /// Process one frame's events against the keymap at most once per context, viewport and frame, so
@@ -363,11 +363,11 @@ pub fn handle(app: &mut PlumaApp, ctx: &egui::Context) {
     crate::panels::actions::play_function_key(app, ctx);
     // Command, panel and tool shortcuts. A bound shifted punctuation chord uses its key press;
     // other text keys use the typed character below.
-    let row_key = |chord: &craft_keymap::Chord| {
-        rows_keys && chord.is_plain() && !chord.mods.shift && matches!(chord.key, craft_keymap::Key::Delete | craft_keymap::Key::Backspace)
+    let row_key = |chord: &nodalia_keymap::Chord| {
+        rows_keys && chord.is_plain() && !chord.mods.shift && matches!(chord.key, nodalia_keymap::Key::Delete | nodalia_keymap::Key::Backspace)
     };
     // An Escape that ended a ruler-origin drag or floating Tools move runs no command bound to it.
-    let gesture_escape = |chord: &craft_keymap::Chord| escape_ended_gesture && chord.is_plain() && chord.key == craft_keymap::Key::Escape;
+    let gesture_escape = |chord: &nodalia_keymap::Chord| escape_ended_gesture && chord.is_plain() && chord.key == nodalia_keymap::Key::Escape;
     let hits = dispatch(app, ctx, |hit| {
         let chord = &hit.trigger.chord;
         let shifted_punctuation = chord.mods.shift && chord.key.name().chars().all(|c| !c.is_alphanumeric());
@@ -605,7 +605,7 @@ fn single_key_shortcuts(app: &mut PlumaApp, ctx: &egui::Context) {
         // A shifted punctuation character can also be written with its Shift (the Curvature tool's
         // Shift+~ arrives as `~`).
         let shifted = m.shift.then(|| format!("Shift+{text}"));
-        let mut chords: Vec<craft_keymap::Chord> =
+        let mut chords: Vec<nodalia_keymap::Chord> =
             [Some(key), Some(text), shifted].into_iter().flatten().filter_map(|t| crate::keymap::vc_chord(&t)).collect();
         // A character no chord names (`"`, which the backtick key types on Turkish Q) is read as
         // the key that typed it, as the Keyboard Shortcuts editor records that press.
@@ -998,7 +998,7 @@ fn dispatch(app: &mut PlumaApp, ctx: &egui::Context, accept: impl FnMut(&Hit) ->
         // An explicit shifted logical binding takes precedence. Otherwise, Shift+Comma and
         // Shift+Period follow their key positions when no chord for the press is bound.
         for e in &mut i.events {
-            let input = craft_keymap::KeyInput::from_egui(e, crate::keymap::platform());
+            let input = nodalia_keymap::KeyInput::from_egui(e, crate::keymap::platform());
             if let egui::Event::Key { key, physical_key: Some(physical), modifiers, pressed: true, .. } = e
                 && modifiers.shift
                 && !modifiers.command
@@ -1007,12 +1007,12 @@ fn dispatch(app: &mut PlumaApp, ctx: &egui::Context, accept: impl FnMut(&Hit) ->
                 && !modifiers.mac_cmd
                 && matches!(*physical, Key::Comma | Key::Period)
                 && *key != *physical
-                && let (Some(logical), Some(position)) = (craft_keymap::Key::from_egui(*key), craft_keymap::Key::from_egui(*physical))
+                && let (Some(logical), Some(position)) = (nodalia_keymap::Key::from_egui(*key), nodalia_keymap::Key::from_egui(*physical))
                 && let Some(input) = input
             {
-                let mods = craft_keymap::Mods::from_egui(modifiers, crate::keymap::platform());
-                let logical_chord = craft_keymap::Chord::new(mods, logical);
-                let position_chord = craft_keymap::Chord::new(mods, position);
+                let mods = nodalia_keymap::Mods::from_egui(modifiers, crate::keymap::platform());
+                let logical_chord = nodalia_keymap::Chord::new(mods, logical);
+                let position_chord = nodalia_keymap::Chord::new(mods, position);
                 if crate::keymap::lookup(&mirror.keymap, &logical_chord).is_some() {
                     *physical = *key;
                 } else if crate::keymap::lookup(&mirror.keymap, &position_chord).is_some()
@@ -1092,7 +1092,7 @@ fn run_hit(app: &mut PlumaApp, ctx: &egui::Context, c: &CommandRef) {
 }
 
 /// Keys that type a character: letters, digits and punctuation (not Space).
-fn types_text(key: craft_keymap::Key) -> bool {
+fn types_text(key: nodalia_keymap::Key) -> bool {
     key.name().chars().count() == 1
 }
 

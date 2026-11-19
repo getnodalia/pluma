@@ -18,7 +18,7 @@ impl Image {
     }
     /// Decode a PNG.
     pub fn from_png(bytes: &[u8]) -> Result<Self, String> {
-        let img = craft_image_codecs::decode_as(craft_image_codecs::Format::Png, bytes).map_err(|e| e.to_string())?;
+        let img = nodalia_image_codecs::decode_as(nodalia_image_codecs::Format::Png, bytes).map_err(|e| e.to_string())?;
         Ok(Self { width: img.width(), height: img.height(), rgba: img.to_rgba8() })
     }
     pub fn pixel(&self, x: u32, y: u32) -> [u8; 4] {
@@ -41,13 +41,13 @@ impl Image {
     }
     /// Save as PNG (for debugging failed comparisons).
     pub fn save_png(&self, path: &std::path::Path) {
-        if let Ok(img) = craft_image_codecs::Image::from_raw(
+        if let Ok(img) = nodalia_image_codecs::Image::from_raw(
             self.width,
             self.height,
-            craft_image_codecs::ChannelLayout::Rgba,
-            craft_image_codecs::SampleType::U8,
+            nodalia_image_codecs::ChannelLayout::Rgba,
+            nodalia_image_codecs::SampleType::U8,
             self.rgba.clone(),
-        ) && let Ok(png) = craft_image_codecs::encode(&img, craft_image_codecs::Format::Png, &craft_image_codecs::EncodeOptions::default())
+        ) && let Ok(png) = nodalia_image_codecs::encode(&img, nodalia_image_codecs::Format::Png, &nodalia_image_codecs::EncodeOptions::default())
         {
             let _ = std::fs::write(path, png);
         }

@@ -547,9 +547,9 @@ fn paragraph_direction_is_per_paragraph() {
 
 #[test]
 fn craft_arabic_fonts_load_and_noto_sans_arabic_is_the_arabic_fallback() {
-    let arabic: Vec<_> = crate::CRAFT_FONTS.iter().filter(|f| f.scripts.contains(&"Arab")).collect();
+    let arabic: Vec<_> = crate::NODALIA_FONTS.iter().filter(|f| f.scripts.contains(&"Arab")).collect();
     if arabic.is_empty() {
-        eprintln!("skipping: built without craft-fonts (set CRAFT_FONTS_DIR to a craft-fonts checkout)");
+        eprintln!("skipping: built without nodalia-fonts (set NODALIA_FONTS_DIR to a nodalia-fonts checkout)");
         return;
     }
     let db = FontDb::with_font_dirs(vec![]);

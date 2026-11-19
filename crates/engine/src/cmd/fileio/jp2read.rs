@@ -1,7 +1,7 @@
 //! JPEG 2000 JP2 and codestream images for File › Open and File › Place. The decoded image is
 //! bounded before allocation and converted to RGBA for the common PNG storage path.
 
-use craft_image_codecs::{ChannelLayout, CodecError, Format, Limits};
+use nodalia_image_codecs::{ChannelLayout, CodecError, Format, Limits};
 use pluma_color::cms::{IccProfile, Intent};
 
 /// Recognize a JP2 signature box or the start of a raw codestream. The decoder checks the rest.
@@ -38,8 +38,8 @@ pub(super) fn decode(bytes: &[u8], max_alloc: u64) -> Result<image::RgbaImage, S
         return Err("the JPEG 2000 file can't be read".into());
     }
     let limits = Limits { max_alloc, max_pixels: max_alloc / 4, ..Limits::default() };
-    let opts = craft_image_codecs::DecodeOptions { limits, ..craft_image_codecs::DecodeOptions::default() };
-    let image = craft_image_codecs::decode_as_with(Format::Jp2, bytes, &opts).map_err(|e| match e {
+    let opts = nodalia_image_codecs::DecodeOptions { limits, ..nodalia_image_codecs::DecodeOptions::default() };
+    let image = nodalia_image_codecs::decode_as_with(Format::Jp2, bytes, &opts).map_err(|e| match e {
         CodecError::LimitExceeded(_) => "an image is too large to draw".to_string(),
         CodecError::Unsupported { .. } => "the JPEG 2000 file has an unsupported color space or JPX content".to_string(),
         _ => "the JPEG 2000 file can't be read".to_string(),

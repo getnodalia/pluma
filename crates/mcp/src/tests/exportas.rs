@@ -100,7 +100,7 @@ fn raster_export_uses_document_resolution_unless_overridden() {
         params["format"] = json!("png");
         let r = text(&call_tool(&mut h, "export", &params));
         let bytes = pluma_format::base64_decode(r["dataBase64"].as_str().unwrap()).unwrap();
-        assert_eq!(craft_image_codecs::decode(&bytes).unwrap().dimensions(), size, "{args}");
+        assert_eq!(nodalia_image_codecs::decode(&bytes).unwrap().dimensions(), size, "{args}");
     }
 }
 
@@ -116,7 +116,7 @@ fn export_with_a_range_writes_one_file_per_artboard() {
     for (f, board) in files.iter().zip(["Artboard-1", "Artboard-3"]) {
         let p = f.as_str().unwrap();
         assert!(p.ends_with(&format!("icon-{board}.png")), "{p}");
-        let decoded = craft_image_codecs::decode(&std::fs::read(p).unwrap()).unwrap();
+        let decoded = nodalia_image_codecs::decode(&std::fs::read(p).unwrap()).unwrap();
         let img = image::RgbaImage::from_raw(decoded.width(), decoded.height(), decoded.to_rgba8()).unwrap();
         assert_eq!(img.dimensions(), (100, 60), "144 ppi");
         assert!(img.pixels().all(|px| px[3] == 255), "white background");

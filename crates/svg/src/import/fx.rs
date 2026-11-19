@@ -7,14 +7,14 @@
 //! blurred with a fixed amount subtracted from its colors by `feComponentTransfer` (Darkness), and what
 //! our export writes, so export → import keeps the effects.
 
-use craft_svg::tree::usvg;
+use nodalia_svg::tree::usvg;
 use std::collections::HashMap;
 use std::sync::Arc;
 
-use craft_svg::tree::usvg::filter::{
+use nodalia_svg::tree::usvg::filter::{
     ColorInterpolation, ColorMatrixKind, CompositeOperator, Filter, Input, Kind, MorphologyOperator, TransferFunction,
 };
-use craft_svg::tree::usvg::roxmltree;
+use nodalia_svg::tree::usvg::roxmltree;
 use pluma_color::Color;
 use pluma_doc::Effect;
 use pluma_geom::{Affine, Vec2};

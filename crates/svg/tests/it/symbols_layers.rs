@@ -4,7 +4,7 @@
 //! sublayers keep their names and nesting (a one-layer file's from its root element), and the
 //! editing data notices edits made elsewhere.
 
-use craft_svg::tree::draw::resvg;
+use nodalia_svg::tree::draw::resvg;
 use std::sync::Arc;
 
 use pluma_color::{Color, Paint};

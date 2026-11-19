@@ -32,18 +32,18 @@ pub const MAX_SOURCE_PIXELS: u64 = 192 << 20;
 /// The shared allocation probe runs before the decoder's plausibility checks so the caller's
 /// size refusal wins even for a large header-only file. The streaming reader still checks the
 /// PNG structure and plausibility, and reports the expanded layout (including tRNS alpha).
-pub(crate) fn trace_header(bytes: &[u8], max_pixels: u64, max_alloc: u64) -> Result<Option<craft_image_codecs::RasterInspection>, TraceError> {
-    use craft_image_codecs::{ChannelLayout, Format, Limits, PngDecodeRows, RasterColorType, RasterInspection};
-    let decode_err = |e: craft_image_codecs::CodecError| TraceError::Decode(e.to_string());
+pub(crate) fn trace_header(bytes: &[u8], max_pixels: u64, max_alloc: u64) -> Result<Option<nodalia_image_codecs::RasterInspection>, TraceError> {
+    use nodalia_image_codecs::{ChannelLayout, Format, Limits, PngDecodeRows, RasterColorType, RasterInspection};
+    let decode_err = |e: nodalia_image_codecs::CodecError| TraceError::Decode(e.to_string());
     // Refuse a GIF frame larger than its logical screen before inspection's
     // plausibility check can turn the caller's size refusal into a decode error.
     if gif_first_frame_pixels(bytes).is_some_and(|pixels| pixels > max_pixels) {
         return Err(TraceError::TooLarge { width: 0, height: 0, max: max_pixels >> 20 });
     }
-    if craft_image_codecs::detect(bytes) != Some(Format::Png) {
-        return craft_image_codecs::inspect_raster(bytes).map_err(decode_err);
+    if nodalia_image_codecs::detect(bytes) != Some(Format::Png) {
+        return nodalia_image_codecs::inspect_raster(bytes).map_err(decode_err);
     }
-    let (width, height) = craft_image_codecs::probe_allocation_size(bytes).map_err(decode_err)?;
+    let (width, height) = nodalia_image_codecs::probe_allocation_size(bytes).map_err(decode_err)?;
     if u64::from(width) * u64::from(height) > max_pixels {
         return Err(TraceError::TooLarge { width, height, max: max_pixels >> 20 });
     }
@@ -82,8 +82,8 @@ pub(crate) fn trace_header(bytes: &[u8], max_pixels: u64, max_alloc: u64) -> Res
 }
 
 /// Reuse an already-normalized RGBA8 decode instead of allocating a second full pixel buffer.
-fn into_rgba8(img: craft_image_codecs::Image) -> Vec<u8> {
-    if img.layout() == craft_image_codecs::ChannelLayout::Rgba && img.sample_type() == craft_image_codecs::SampleType::U8 {
+fn into_rgba8(img: nodalia_image_codecs::Image) -> Vec<u8> {
+    if img.layout() == nodalia_image_codecs::ChannelLayout::Rgba && img.sample_type() == nodalia_image_codecs::SampleType::U8 {
         img.into_data()
     } else {
         img.to_rgba8()
@@ -220,7 +220,7 @@ impl Raster {
     }
     /// Decode PNG / JPEG / WebP / GIF bytes (at most [`MAX_PIXELS`], checked before decoding).
     pub fn decode(bytes: &[u8]) -> Result<Self, TraceError> {
-        if let Some(info) = trace_header(bytes, MAX_PIXELS, craft_image_codecs::Limits::default().max_alloc)? {
+        if let Some(info) = trace_header(bytes, MAX_PIXELS, nodalia_image_codecs::Limits::default().max_alloc)? {
             if info.width == 0 || info.height == 0 {
                 return Err(TraceError::Empty);
             }
@@ -230,12 +230,12 @@ impl Raster {
         } else if gif_first_frame_pixels(bytes).is_some_and(|p| p > MAX_PIXELS) {
             return Err(TraceError::TooLarge { width: 0, height: 0, max: MAX_PIXELS >> 20 });
         }
-        let opts = craft_image_codecs::DecodeOptions {
+        let opts = nodalia_image_codecs::DecodeOptions {
             // Match rendering and trace placement: coordinates refer to stored pixels.
             keep_orientation: true,
-            limits: craft_image_codecs::Limits { max_pixels: MAX_PIXELS, ..craft_image_codecs::Limits::default() },
+            limits: nodalia_image_codecs::Limits { max_pixels: MAX_PIXELS, ..nodalia_image_codecs::Limits::default() },
         };
-        let img = craft_image_codecs::decode_with(bytes, &opts).map_err(|e| TraceError::Decode(e.to_string()))?;
+        let img = nodalia_image_codecs::decode_with(bytes, &opts).map_err(|e| TraceError::Decode(e.to_string()))?;
         let (w, h) = (img.width(), img.height());
         if w == 0 || h == 0 {
             return Err(TraceError::Empty);
@@ -266,16 +266,16 @@ impl Raster {
         }
         // Decoded within the allocation the source limit needs; the web keeps file import's 512 MB.
         // A deeper image (16 bits a channel) that needs more fails with a decode error.
-        let opts = craft_image_codecs::DecodeOptions {
+        let opts = nodalia_image_codecs::DecodeOptions {
             // Match rendering and trace placement: coordinates refer to stored pixels.
             keep_orientation: true,
-            limits: craft_image_codecs::Limits {
+            limits: nodalia_image_codecs::Limits {
                 max_pixels: MAX_SOURCE_PIXELS,
                 max_alloc: if cfg!(target_arch = "wasm32") { 512 << 20 } else { MAX_SOURCE_PIXELS * 4 },
-                ..craft_image_codecs::Limits::default()
+                ..nodalia_image_codecs::Limits::default()
             },
         };
-        let img = craft_image_codecs::decode_with(bytes, &opts).map_err(|e| TraceError::Decode(e.to_string()))?;
+        let img = nodalia_image_codecs::decode_with(bytes, &opts).map_err(|e| TraceError::Decode(e.to_string()))?;
         let (w, h) = (img.width(), img.height());
         if w == 0 || h == 0 {
             return Err(TraceError::Empty);
@@ -294,10 +294,11 @@ impl Raster {
     }
     /// Encode as PNG.
     pub fn encode_png(&self) -> Vec<u8> {
-        let Ok(img) = craft_image_codecs::Image::from_u8(self.width, self.height, craft_image_codecs::ChannelLayout::Rgba, self.rgba.clone()) else {
+        let Ok(img) = nodalia_image_codecs::Image::from_u8(self.width, self.height, nodalia_image_codecs::ChannelLayout::Rgba, self.rgba.clone())
+        else {
             return Vec::new();
         };
-        craft_image_codecs::encode(&img, craft_image_codecs::Format::Png, &Default::default()).unwrap_or_default()
+        nodalia_image_codecs::encode(&img, nodalia_image_codecs::Format::Png, &Default::default()).unwrap_or_default()
     }
     /// Pixel `(x, y)`; transparent black outside the raster (or past the end of a raster whose
     /// fields were set to a size its bytes don't have).

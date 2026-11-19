@@ -2,7 +2,7 @@ use super::*;
 
 #[test]
 fn named_panel_default_chords_toggle_their_panels() {
-    let keymap = crate::keymap::keymap_with(&craft_keymap::Overrides::new());
+    let keymap = crate::keymap::keymap_with(&nodalia_keymap::Overrides::new());
     for (panel, chord) in [
         ("brushes", "F5"),
         ("color", "F6"),
@@ -87,7 +87,7 @@ fn other_panel_shortcuts_keep_plain_panel_params() {
 
 #[test]
 fn rebound_layers_chord_toggles_and_plain_panel_command_reveals() {
-    let mut overrides = craft_keymap::Overrides::new();
+    let mut overrides = nodalia_keymap::Overrides::new();
     crate::keymap::set_override(&mut overrides, "panel:layers", "Cmd+Alt+Shift+F7");
     let keymap = crate::keymap::keymap_with(&overrides);
     let old = crate::keymap::vc_chord("F7").unwrap();
@@ -1523,7 +1523,7 @@ fn a_command_on_cmd_escape_runs_without_the_tools_escape() {
     let id = app.session.execute("shape.rectangle", &json!({"x": 10, "y": 10, "width": 50, "height": 30})).unwrap()["id"].clone();
     let grid = app.ui.view.grid;
     let cmd_escape = || press(Key::Escape, Modifiers::COMMAND);
-    let bindable = crate::keymap::platform() != craft_keymap::Platform::Windows;
+    let bindable = crate::keymap::platform() != nodalia_keymap::Platform::Windows;
     bind_grid(&mut app, Some("Cmd+Escape"));
     app.select_tool("pen");
     click_at(&mut app, 100.0);

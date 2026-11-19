@@ -24,8 +24,8 @@ pub const ALPHA_MAX_DECODE_BYTES: u64 = 256 << 20;
 /// than [`MAX_PIXELS`] (64 megapixels), or whose samples take more than [`ALPHA_MAX_DECODE_BYTES`],
 /// gives [`TraceError::TooLarge`] before it is decoded.
 pub fn decode_alpha(bytes: &[u8]) -> Result<Option<(u32, u32, Vec<u8>)>, TraceError> {
-    use craft_image_codecs::{ChannelLayout, DecodeOptions, Limits, RasterColorType, SampleType, decode_with};
-    let decode_err = |e: craft_image_codecs::CodecError| TraceError::Decode(e.to_string());
+    use nodalia_image_codecs::{ChannelLayout, DecodeOptions, Limits, RasterColorType, SampleType, decode_with};
+    let decode_err = |e: nodalia_image_codecs::CodecError| TraceError::Decode(e.to_string());
     if let Some(info) = trace_header(bytes, MAX_PIXELS, ALPHA_MAX_DECODE_BYTES)? {
         if info.width == 0 || info.height == 0 {
             return Err(TraceError::Empty);
@@ -288,13 +288,13 @@ mod tests {
     }
 
     /// `img` encoded as `format`.
-    fn encoded(img: &craft_image_codecs::Image, format: craft_image_codecs::Format) -> Vec<u8> {
-        craft_image_codecs::encode(img, format, &Default::default()).unwrap()
+    fn encoded(img: &nodalia_image_codecs::Image, format: nodalia_image_codecs::Format) -> Vec<u8> {
+        nodalia_image_codecs::encode(img, format, &Default::default()).unwrap()
     }
 
     #[test]
     fn decode_alpha_reads_the_alpha_of_formats_that_have_one() {
-        use craft_image_codecs::{ChannelLayout, Format, Image, SampleType};
+        use nodalia_image_codecs::{ChannelLayout, Format, Image, SampleType};
         let mut rgba_bytes = Vec::with_capacity(4 * 4 * 4);
         let mut luma_a_bytes = Vec::with_capacity(4 * 4 * 2);
         let mut rgba16_bytes = Vec::with_capacity(4 * 4 * 8);
@@ -347,7 +347,7 @@ mod tests {
 
     #[test]
     fn decode_alpha_preserves_cmyk_and_lab_tiff_extra_samples() {
-        use craft_image_codecs::{ChannelLayout, Format, Image};
+        use nodalia_image_codecs::{ChannelLayout, Format, Image};
         for (layout, samples) in
             [(ChannelLayout::CmykA, vec![10, 20, 30, 40, 0, 50, 60, 70, 80, 255]), (ChannelLayout::LabA, vec![128, 128, 128, 0, 192, 128, 128, 255])]
         {

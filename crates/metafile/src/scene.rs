@@ -490,7 +490,7 @@ impl<'a> Scene<'a> {
         }
         let blob = self.doc.image_blob(im).filter(|b| !b.bytes.is_empty());
         let img = blob
-            .and_then(|b| craft_image_codecs::decode(&b.bytes).ok())
+            .and_then(|b| nodalia_image_codecs::decode(&b.bytes).ok())
             .and_then(|i| image::RgbaImage::from_raw(i.width(), i.height(), i.to_rgba8()))
             .map(Rgba::fitted)
             .filter(|i| i.width > 0 && i.height > 0)

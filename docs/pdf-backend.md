@@ -1,6 +1,6 @@
 # PDF backend
 
-PDF writing uses `craft-pdf` from `storytold/craft-libs`, pinned to
+PDF writing uses `nodalia-pdf` from `getnodalia/foundation (nodalia/libs)`, pinned to
 `9be9a63782298ab59cd9b7a42ee9cba4f42a5ccb`. Its `write` feature supplies Krilla configuration,
 metadata construction, fallible font preparation and serialization, and native unwind guards.
 The dependency disables default features and enables `write` and `interpret`.
@@ -12,11 +12,11 @@ by the registry reader, preserving compressed export bytes and their derived doc
 Pluma owns document traversal, drawing, font selection and embedding policy, colour
 conversion, presets, page boxes, layers, editing data, postprocessing and print composition.
 Editable import keeps its Pluma adapter, layer routing, colour policy and text decisions.
-Desktop printer submission remains in `craft-print`.
+Desktop printer submission remains in `nodalia-print`.
 
 The shared writer vendors Krilla 0.8.2 with an unwind-safe cleanup and poisoning patch.
-The root `[patch.crates-io]` selects that copy from craft-libs revision
-`9be9a63782298ab59cd9b7a42ee9cba4f42a5ccb`, which includes craft-libs#417 (CMYK, gray and spot
+The root `[patch.crates-io]` selects that copy from nodalia-libs revision
+`9be9a63782298ab59cd9b7a42ee9cba4f42a5ccb`, which includes nodalia-libs#417 (CMYK, gray and spot
 colors keep their exact inks): Cargo does not inherit a dependency workspace's patches. A failed page or surface cleanup poisons the
 backend document, so serialization cannot return an incomplete PDF after unwinding.
 The shared crate's compile-time backend marker and `cargo xtask pdf-deps` (included in CI)
@@ -53,9 +53,9 @@ EOF remain valid. The typed iterator does not classify every malformed operator,
 is known-incomplete rejection rather than a general PDF validity certificate.
 
 The five patched Hayro crates are selected in the root `[patch.crates-io]` from the same
-immutable revision as `craft-pdf`, and Krilla from the revision named above. `cargo xtask pdf-deps`
+immutable revision as `nodalia-pdf`, and Krilla from the revision named above. `cargo xtask pdf-deps`
 rejects missing, duplicate, local-path, registry and mismatched revisions for those seven packages.
-`craft-print`, `craft-ui` and the other craft-libs crates use the same revision.
+`nodalia-print`, `nodalia-ui` and the other nodalia-libs crates use the same revision.
 
 Dependency asset hashes and sources are in `ASSETS.md`; redistributed license texts are
 in `licenses/pdf-backend`. Package staging carries those texts together with `NOTICE`

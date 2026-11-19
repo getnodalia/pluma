@@ -19,4 +19,4 @@ concurrency:
 
 jobs:
   nix:
-    uses: getnodalia/foundation/.github/workflows/nix.yml@976581262c95c0d95c0184149c0e1ba55485ccb3 # foundation main
+    uses: getnodalia/foundation/.github/workflows/nix.yml@a5325485b557dca4040002a0120a06d72b10ccb5 # foundation main
