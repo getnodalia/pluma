@@ -22,9 +22,15 @@ const NDL_EDGE: f32 = 8.0;
 /// The three Nodalia window controls together, with their gap to the window's edge.
 pub const NDL_WIDTH: f32 = 3.0 * NDL_SIZE + 2.0 * NDL_GAP + NDL_EDGE;
 
-/// The width the caption buttons take at the bar's right end with tokens `t`.
+/// The width the caption buttons take at their end of the bar with tokens `t`.
 pub fn width(t: &Tokens) -> f32 {
     if t.nodalia { NDL_WIDTH } else { WIDTH }
+}
+
+/// The side Nodalia's window controls are on: where the platform keeps them (the right on Windows,
+/// what the desktop is set to on Linux). `None` without the app's own title bar.
+pub fn side(app: &PlumaApp) -> Option<nodalia_theme::titlebar::Side> {
+    app.custom_titlebar.then(nodalia_theme::titlebar::system_side)
 }
 /// Resize zone thickness along an edge, and the side of a corner zone.
 const EDGE: f32 = 5.0;
@@ -118,13 +124,23 @@ pub fn caption_buttons(app: &mut PlumaApp, ui: &mut Ui, bar: Rect) {
     let t = Tokens::get(ui.ctx());
     let max = maximized(ui.ctx());
     let mut clicked = None;
+    let left = side(app) == Some(nodalia_theme::titlebar::Side::Left);
     for (i, c) in CAPTIONS.into_iter().enumerate() {
         if t.nodalia {
             // Round controls, each hit area the bar's full height and half the gap either side;
-            // Close's runs to the window's edge so a maximized window's corner hits it.
-            let centre_x = bar.right() - NDL_EDGE - NDL_SIZE / 2.0 - (2 - i) as f32 * (NDL_SIZE + NDL_GAP);
-            let right = if c == Caption::Close { bar.right() } else { centre_x + (NDL_SIZE + NDL_GAP) / 2.0 };
-            let r = Rect::from_min_max(pos2(centre_x - (NDL_SIZE + NDL_GAP) / 2.0, bar.top()), pos2(right, bar.bottom()));
+            // the one at the window's corner runs to the edge so a maximized window's corner hits
+            // it. On the right the order is minimize, maximize, close; on the left, close first.
+            let slot = if left { 2 - i } else { i };
+            let step = NDL_SIZE + NDL_GAP;
+            let centre_x = if left { bar.left() + NDL_EDGE + NDL_SIZE / 2.0 + slot as f32 * step } else { bar.right() - NDL_EDGE - NDL_SIZE / 2.0 - (2 - slot) as f32 * step };
+            let near = if left { slot == 0 } else { slot == 2 };
+            let (lo, hi) = match (left, near) {
+                (true, true) => (bar.left(), centre_x + step / 2.0),
+                (true, false) => (centre_x - step / 2.0, centre_x + step / 2.0),
+                (false, true) => (centre_x - step / 2.0, bar.right()),
+                (false, false) => (centre_x - step / 2.0, centre_x + step / 2.0),
+            };
+            let r = Rect::from_min_max(pos2(lo, bar.top()), pos2(hi, bar.bottom()));
             let resp = ui.interact(r, caption_id(c), Sense::click());
             let pressed = resp.is_pointer_button_down_on() && resp.hovered();
             paint_nodalia(ui, &t, c, max, pos2(centre_x, bar.center().y), (resp.hovered(), pressed), 1.0);
