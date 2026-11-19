@@ -514,7 +514,7 @@ pub const REPEAT_MARK_FAMILY: &str = "Repeattest Sans";
 /// The Japanese characters [`repeat_mark_font`] maps, each to the glyph of the Latin capital beside
 /// it: an ideograph, the repeat marks, kana with and without their voicing marks, and the combining
 /// voicing mark (U+3099), so that a repeat mark followed by it is shaped in this font and not in a
-/// fallback font that also has both characters (craft-fonts' Japanese faces).
+/// fallback font that also has both characters (nodalia-fonts' Japanese faces).
 pub const REPEAT_MARK_CHARS: [(char, char); 12] = [
     ('時', 'A'),
     ('々', 'B'),
@@ -1509,11 +1509,11 @@ fn remapped_source_sans(family: &str, postscript: &str, mapping: &[(char, char)]
 pub const PRIVATE_USE_FAMILY: &str = "Private Use Sans";
 
 /// The character [`private_use_font`] maps: the first code point of Supplementary Private Use
-/// Area-A, which no bundled or craft-fonts face covers.
+/// Area-A, which no bundled or nodalia-fonts face covers.
 pub const PRIVATE_USE_CHAR: char = '\u{F0000}';
 
 /// A face that maps only [`PRIVATE_USE_CHAR`] to the bundled Source Sans 3 `H` outline, for tests
-/// that need a character no other font covers, with or without craft-fonts.
+/// that need a character no other font covers, with or without nodalia-fonts.
 pub fn private_use_font() -> Option<Vec<u8>> {
     remapped_source_sans(PRIVATE_USE_FAMILY, "PrivateUseSans-Regular", &[(PRIVATE_USE_CHAR, 'H')])
 }

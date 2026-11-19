@@ -11,7 +11,7 @@ pub fn status_bar(app: &mut PlumaApp, ui: &mut Ui) {
             let print = app.session.prefs.display_print_size;
             let shown = crate::state::zoom_display_percent(zoom, print);
             ui.name_inputs(tl!("Zoom"), |ui| {
-                craft_ui::ComboBox::from_id_salt("zoom-combo")
+                nodalia_ui::ComboBox::from_id_salt("zoom-combo")
                     .selected_text(egui::RichText::new(zoom_label(zoom, print)).size(11.5))
                     .width(76.0)
                     .show_ui(ui, |ui| {
@@ -34,7 +34,7 @@ pub fn status_bar(app: &mut PlumaApp, ui: &mut Ui) {
             });
             let rot = app.view().map(|v| v.rotation).unwrap_or(0.0);
             ui.name_inputs(tl!("Rotation"), |ui| {
-                craft_ui::ComboBox::from_id_salt("rot-combo")
+                nodalia_ui::ComboBox::from_id_salt("rot-combo")
                     .selected_text(egui::RichText::new(format!("{rot:.0}°")).size(11.5))
                     .width(52.0)
                     .show_ui(ui, |ui| {

@@ -1089,9 +1089,9 @@ fn queue(s: &mut Session, p: &Value) -> Result<Value> {
 
 /// The colour mode an image file stores its pixels in.
 fn color_mode(bytes: &[u8]) -> &'static str {
-    match craft_image_codecs::decode(bytes).ok().map(|img| img.layout()) {
-        Some(craft_image_codecs::ChannelLayout::Gray | craft_image_codecs::ChannelLayout::GrayA) => "Grayscale",
-        Some(craft_image_codecs::ChannelLayout::Cmyk | craft_image_codecs::ChannelLayout::CmykA) => "CMYK",
+    match nodalia_image_codecs::decode(bytes).ok().map(|img| img.layout()) {
+        Some(nodalia_image_codecs::ChannelLayout::Gray | nodalia_image_codecs::ChannelLayout::GrayA) => "Grayscale",
+        Some(nodalia_image_codecs::ChannelLayout::Cmyk | nodalia_image_codecs::ChannelLayout::CmykA) => "CMYK",
         _ => "RGB",
     }
 }

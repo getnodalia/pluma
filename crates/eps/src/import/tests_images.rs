@@ -198,17 +198,17 @@ fn masked_cmyk_images_keep_their_inks_and_carry_the_mask_as_an_opacity_mask() {
         assert_eq!(inks(&r).data, [10, 20, 30, 40, 0, 102, 127, 8], "the inks as they were: {program}");
         let n = first_image(&r);
         let mask = n.extras().mask.as_ref().expect("an opacity mask");
-        let gray = craft_image_codecs::decode(&blob(&r, &mask.art).bytes)
+        let gray = nodalia_image_codecs::decode(&blob(&r, &mask.art).bytes)
             .map(|__cimg| {
                 let (__w, __h) = __cimg.dimensions();
                 match (__cimg.layout(), __cimg.sample_type()) {
-                    (craft_image_codecs::ChannelLayout::Gray, craft_image_codecs::SampleType::U8) => {
+                    (nodalia_image_codecs::ChannelLayout::Gray, nodalia_image_codecs::SampleType::U8) => {
                         image::DynamicImage::ImageLuma8(image::GrayImage::from_raw(__w, __h, __cimg.into_data()).unwrap())
                     }
-                    (craft_image_codecs::ChannelLayout::GrayA, craft_image_codecs::SampleType::U8) => {
+                    (nodalia_image_codecs::ChannelLayout::GrayA, nodalia_image_codecs::SampleType::U8) => {
                         image::DynamicImage::ImageLumaA8(image::GrayAlphaImage::from_raw(__w, __h, __cimg.into_data()).unwrap())
                     }
-                    (craft_image_codecs::ChannelLayout::Rgb, craft_image_codecs::SampleType::U8) => {
+                    (nodalia_image_codecs::ChannelLayout::Rgb, nodalia_image_codecs::SampleType::U8) => {
                         image::DynamicImage::ImageRgb8(image::RgbImage::from_raw(__w, __h, __cimg.into_data()).unwrap())
                     }
                     _ => image::DynamicImage::ImageRgba8(image::RgbaImage::from_raw(__w, __h, __cimg.to_rgba8()).unwrap()),
@@ -588,9 +588,10 @@ fn the_data_of_an_image_too_large_to_read_is_skipped() {
 /// allocates for them.
 #[test]
 fn a_jpeg_with_a_huge_header_is_refused_before_it_is_decoded() {
-    let cimg = craft_image_codecs::Image::from_raw(8, 8, craft_image_codecs::ChannelLayout::Gray, craft_image_codecs::SampleType::U8, vec![128; 64])
-        .unwrap();
-    let mut jpeg = craft_image_codecs::encode(&cimg, craft_image_codecs::Format::Jpeg, &craft_image_codecs::EncodeOptions::default()).unwrap();
+    let cimg =
+        nodalia_image_codecs::Image::from_raw(8, 8, nodalia_image_codecs::ChannelLayout::Gray, nodalia_image_codecs::SampleType::U8, vec![128; 64])
+            .unwrap();
+    let mut jpeg = nodalia_image_codecs::encode(&cimg, nodalia_image_codecs::Format::Jpeg, &nodalia_image_codecs::EncodeOptions::default()).unwrap();
     // The frame header (marker, length, precision, height, width) now says 65535 × 65535.
     let sof = jpeg.windows(2).position(|w| w == [0xFF, 0xC0]).unwrap();
     jpeg[sof + 5..sof + 9].fill(0xFF);

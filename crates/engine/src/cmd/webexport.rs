@@ -856,7 +856,7 @@ fn reduced(rgba: &[u8], w: u32, h: u32, s: &WebSettings, o: &PaletteOptions, loc
 
 /// An optimised image as straight RGBA → `(pixels, width, height)` (the dialog's preview).
 pub fn decode(o: &Optimized) -> std::result::Result<(Vec<u8>, u32, u32), String> {
-    let img = craft_image_codecs::decode(o.display()).map_err(|e| format!("the optimised image can't be read back: {e}"))?;
+    let img = nodalia_image_codecs::decode(o.display()).map_err(|e| format!("the optimised image can't be read back: {e}"))?;
     let (w, h) = img.dimensions();
     Ok((img.to_rgba8(), w, h))
 }

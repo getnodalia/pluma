@@ -32,17 +32,17 @@ fn noise(w: u32, h: u32, opaque: bool) -> Vec<u8> {
 }
 
 fn decode(png: &[u8]) -> Vec<u8> {
-    craft_image_codecs::decode_as(craft_image_codecs::Format::Png, png)
+    nodalia_image_codecs::decode_as(nodalia_image_codecs::Format::Png, png)
         .map(|__cimg| {
             let (__w, __h) = __cimg.dimensions();
             match (__cimg.layout(), __cimg.sample_type()) {
-                (craft_image_codecs::ChannelLayout::Gray, craft_image_codecs::SampleType::U8) => {
+                (nodalia_image_codecs::ChannelLayout::Gray, nodalia_image_codecs::SampleType::U8) => {
                     image::DynamicImage::ImageLuma8(image::GrayImage::from_raw(__w, __h, __cimg.into_data()).unwrap())
                 }
-                (craft_image_codecs::ChannelLayout::GrayA, craft_image_codecs::SampleType::U8) => {
+                (nodalia_image_codecs::ChannelLayout::GrayA, nodalia_image_codecs::SampleType::U8) => {
                     image::DynamicImage::ImageLumaA8(image::GrayAlphaImage::from_raw(__w, __h, __cimg.into_data()).unwrap())
                 }
-                (craft_image_codecs::ChannelLayout::Rgb, craft_image_codecs::SampleType::U8) => {
+                (nodalia_image_codecs::ChannelLayout::Rgb, nodalia_image_codecs::SampleType::U8) => {
                     image::DynamicImage::ImageRgb8(image::RgbImage::from_raw(__w, __h, __cimg.into_data()).unwrap())
                 }
                 _ => image::DynamicImage::ImageRgba8(image::RgbaImage::from_raw(__w, __h, __cimg.to_rgba8()).unwrap()),
@@ -92,17 +92,17 @@ fn png_refuses_a_buffer_of_the_wrong_size() {
 fn gray_and_bilevel_images_store_gray() {
     let header = |file: &[u8]| (file[24], file[25]);
     let gray = |file: &[u8]| {
-        craft_image_codecs::decode(file)
+        nodalia_image_codecs::decode(file)
             .map(|__cimg| {
                 let (__w, __h) = __cimg.dimensions();
                 match (__cimg.layout(), __cimg.sample_type()) {
-                    (craft_image_codecs::ChannelLayout::Gray, craft_image_codecs::SampleType::U8) => {
+                    (nodalia_image_codecs::ChannelLayout::Gray, nodalia_image_codecs::SampleType::U8) => {
                         image::DynamicImage::ImageLuma8(image::GrayImage::from_raw(__w, __h, __cimg.into_data()).unwrap())
                     }
-                    (craft_image_codecs::ChannelLayout::GrayA, craft_image_codecs::SampleType::U8) => {
+                    (nodalia_image_codecs::ChannelLayout::GrayA, nodalia_image_codecs::SampleType::U8) => {
                         image::DynamicImage::ImageLumaA8(image::GrayAlphaImage::from_raw(__w, __h, __cimg.into_data()).unwrap())
                     }
-                    (craft_image_codecs::ChannelLayout::Rgb, craft_image_codecs::SampleType::U8) => {
+                    (nodalia_image_codecs::ChannelLayout::Rgb, nodalia_image_codecs::SampleType::U8) => {
                         image::DynamicImage::ImageRgb8(image::RgbImage::from_raw(__w, __h, __cimg.into_data()).unwrap())
                     }
                     _ => image::DynamicImage::ImageRgba8(image::RgbaImage::from_raw(__w, __h, __cimg.to_rgba8()).unwrap()),
@@ -124,10 +124,10 @@ fn gray_and_bilevel_images_store_gray() {
     assert_eq!(gray(&file), levels);
     let (mime, file) = img.to_bilevel(150.0).unwrap();
     assert_eq!(mime, "image/tiff");
-    let tiff = craft_tiff::Tiff::parse(&file).unwrap();
+    let tiff = nodalia_tiff::Tiff::parse(&file).unwrap();
     let ifd = &tiff.ifds[0];
-    assert_eq!(ifd.u16(craft_tiff::tags::SAMPLES_PER_PIXEL), Some(1));
-    assert_eq!(ifd.value(craft_tiff::tags::BITS_PER_SAMPLE).unwrap().to_u64_vec(), vec![1]);
+    assert_eq!(ifd.u16(nodalia_tiff::tags::SAMPLES_PER_PIXEL), Some(1));
+    assert_eq!(ifd.value(nodalia_tiff::tags::BITS_PER_SAMPLE).unwrap().to_u64_vec(), vec![1]);
     let bw: Vec<u8> = [0u8, 0, 255, 255, 255, 0].iter().flat_map(|&g| [g, 255]).collect();
     assert_eq!(gray(&file), bw, "from 128 up is white");
     // Half-covered white over the light grey; a clear pixel is white.
@@ -154,17 +154,17 @@ fn circle_doc() -> Document {
 
 fn export(d: &Document, format: RasterFormat, o: &RasterExportOptions) -> image::RgbaImage {
     let bytes = Renderer::new().export_region(d, d.artboards[0].rect, format, o).unwrap();
-    craft_image_codecs::decode(&bytes)
+    nodalia_image_codecs::decode(&bytes)
         .map(|__cimg| {
             let (__w, __h) = __cimg.dimensions();
             match (__cimg.layout(), __cimg.sample_type()) {
-                (craft_image_codecs::ChannelLayout::Gray, craft_image_codecs::SampleType::U8) => {
+                (nodalia_image_codecs::ChannelLayout::Gray, nodalia_image_codecs::SampleType::U8) => {
                     image::DynamicImage::ImageLuma8(image::GrayImage::from_raw(__w, __h, __cimg.into_data()).unwrap())
                 }
-                (craft_image_codecs::ChannelLayout::GrayA, craft_image_codecs::SampleType::U8) => {
+                (nodalia_image_codecs::ChannelLayout::GrayA, nodalia_image_codecs::SampleType::U8) => {
                     image::DynamicImage::ImageLumaA8(image::GrayAlphaImage::from_raw(__w, __h, __cimg.into_data()).unwrap())
                 }
-                (craft_image_codecs::ChannelLayout::Rgb, craft_image_codecs::SampleType::U8) => {
+                (nodalia_image_codecs::ChannelLayout::Rgb, nodalia_image_codecs::SampleType::U8) => {
                     image::DynamicImage::ImageRgb8(image::RgbImage::from_raw(__w, __h, __cimg.into_data()).unwrap())
                 }
                 _ => image::DynamicImage::ImageRgba8(image::RgbaImage::from_raw(__w, __h, __cimg.to_rgba8()).unwrap()),
@@ -308,17 +308,17 @@ fn translucent_edges_over_opaque_art_stay_opaque() {
         (&d, RasterExportOptions { ppi: 72.0 * 0.3515625, ..Default::default() }),
     ] {
         let png = Renderer::new().export_region(doc, doc.artboards[0].rect, RasterFormat::Png, &o).unwrap();
-        let img = craft_image_codecs::decode(&png)
+        let img = nodalia_image_codecs::decode(&png)
             .map(|__cimg| {
                 let (__w, __h) = __cimg.dimensions();
                 match (__cimg.layout(), __cimg.sample_type()) {
-                    (craft_image_codecs::ChannelLayout::Gray, craft_image_codecs::SampleType::U8) => {
+                    (nodalia_image_codecs::ChannelLayout::Gray, nodalia_image_codecs::SampleType::U8) => {
                         image::DynamicImage::ImageLuma8(image::GrayImage::from_raw(__w, __h, __cimg.into_data()).unwrap())
                     }
-                    (craft_image_codecs::ChannelLayout::GrayA, craft_image_codecs::SampleType::U8) => {
+                    (nodalia_image_codecs::ChannelLayout::GrayA, nodalia_image_codecs::SampleType::U8) => {
                         image::DynamicImage::ImageLumaA8(image::GrayAlphaImage::from_raw(__w, __h, __cimg.into_data()).unwrap())
                     }
-                    (craft_image_codecs::ChannelLayout::Rgb, craft_image_codecs::SampleType::U8) => {
+                    (nodalia_image_codecs::ChannelLayout::Rgb, nodalia_image_codecs::SampleType::U8) => {
                         image::DynamicImage::ImageRgb8(image::RgbImage::from_raw(__w, __h, __cimg.into_data()).unwrap())
                     }
                     _ => image::DynamicImage::ImageRgba8(image::RgbaImage::from_raw(__w, __h, __cimg.to_rgba8()).unwrap()),

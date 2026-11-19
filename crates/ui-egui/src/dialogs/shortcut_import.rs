@@ -2,12 +2,12 @@
 //! reviewed before it fills Edit › Keyboard Shortcuts' working set.
 //!
 //! Each entry's name is matched against the tools, commands and panels Keyboard Shortcuts lists
-//! ([`craft_keymap::import::namematch`]). Its key and modifier codes are decoded from the user's earlier
+//! ([`nodalia_keymap::import::namematch`]). Its key and modifier codes are decoded from the user's earlier
 //! answers (`importMatches`), from the two codes the format's public description gives (`/Key 48` is
 //! the 0 key and `/Modifiers 0` is none), and by agreement with Pluma's default shortcuts: each
 //! entry whose match has a default votes for what its codes stand for, and a code is proposed when at
 //! least two entries vote for it and four votes in five agree. The user answers the rest in the Keys
-//! section. Apply hands the rows that are ready, in the file's order, to [`craft_keymap::plan`], each
+//! section. Apply hands the rows that are ready, in the file's order, to [`nodalia_keymap::plan`], each
 //! row's target given as the user's answer for it: when two rows want one shortcut, the later row
 //! takes it, and the tools, commands and panels outside the set lose the shortcuts the set gives.
 //! Keyboard Shortcuts then shows the set, and its OK keeps it.
@@ -21,9 +21,9 @@
 use std::collections::{BTreeMap, BTreeSet, HashMap, HashSet};
 use std::sync::{Arc, Mutex};
 
-use craft_keymap::import::namematch::{Candidate, Matcher, Proposal};
-use craft_keymap::import::{MAX_IMPORT_TEXT, MAX_PATH_SEGMENTS};
-use craft_keymap::{CommandRef, ForeignEntry, ForeignKey, ForeignSet, ImportOptions, Keymap, NoneDefined, Start, Trigger, plan};
+use nodalia_keymap::import::namematch::{Candidate, Matcher, Proposal};
+use nodalia_keymap::import::{MAX_IMPORT_TEXT, MAX_PATH_SEGMENTS};
+use nodalia_keymap::{CommandRef, ForeignEntry, ForeignKey, ForeignSet, ImportOptions, Keymap, NoneDefined, Start, Trigger, plan};
 use serde::{Deserialize, Serialize};
 use serde_json::{Value, json};
 
@@ -504,7 +504,7 @@ pub fn confirm(app: &mut PlumaApp, d: &Dialog) -> Result<Value, String> {
     let ov = match (current, &back) {
         (true, Some(b)) => b.fields.get("overrides").map(|v| crate::keymap::stored::from_value(v.clone())).unwrap_or_default(),
         (true, None) => app.ui.shortcut_overrides.clone(),
-        (false, _) => craft_keymap::Overrides::new(),
+        (false, _) => nodalia_keymap::Overrides::new(),
     };
     let mut km = crate::keymap::keymap_with(&ov);
     let applied = apply_ready(&mut km, &review, &statuses, if current { Start::Current } else { Start::Defaults });
@@ -526,13 +526,13 @@ pub fn confirm(app: &mut PlumaApp, d: &Dialog) -> Result<Value, String> {
     Ok(json!({ "applied": applied, "rows": review.rows.len() }))
 }
 
-/// Text cut to what [`craft_keymap::plan`] reads, so an entry's [`ForeignEntry::remember_key`] is
+/// Text cut to what [`nodalia_keymap::plan`] reads, so an entry's [`ForeignEntry::remember_key`] is
 /// the one `plan` looks up.
 fn within_cap(s: &str) -> String {
     s.chars().take(MAX_IMPORT_TEXT).collect()
 }
 
-/// The ready rows applied to `km` as one set through [`craft_keymap::plan`]. Each row's target is
+/// The ready rows applied to `km` as one set through [`nodalia_keymap::plan`]. Each row's target is
 /// passed as the user's answer for its entry, so the review's matching decides; a binding the plan
 /// gives any other command is left out. → the number of rows applied.
 fn apply_ready(km: &mut Keymap, review: &Review, statuses: &[(Status, Option<String>)], start: Start) -> usize {

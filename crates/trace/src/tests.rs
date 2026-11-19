@@ -4142,12 +4142,12 @@ fn png_test_chunk(kind: &[u8; 4], data: &[u8]) -> Vec<u8> {
 
 #[test]
 fn alpha_decode_keeps_rgb_and_grayscale_png_transparency_keys() {
-    use craft_image_codecs::{ChannelLayout, Format, Image};
+    use nodalia_image_codecs::{ChannelLayout, Format, Image};
     for (layout, samples, key) in
         [(ChannelLayout::Rgb, vec![10, 20, 30, 40, 50, 60], vec![0, 10, 0, 20, 0, 30]), (ChannelLayout::Gray, vec![10, 40], vec![0, 10])]
     {
         let image = Image::from_u8(2, 1, layout, samples).unwrap();
-        let mut png = craft_image_codecs::encode(&image, Format::Png, &Default::default()).unwrap();
+        let mut png = nodalia_image_codecs::encode(&image, Format::Png, &Default::default()).unwrap();
         // A transparency key precedes IDAT, immediately after the IHDR chunk.
         png.splice(33..33, png_test_chunk(b"tRNS", &key));
         assert_eq!(decode_alpha(&png).unwrap(), Some((2, 1, vec![0, 255])));
@@ -4156,7 +4156,7 @@ fn alpha_decode_keeps_rgb_and_grayscale_png_transparency_keys() {
 
 #[test]
 fn trace_and_alpha_keep_stored_pixels_with_exif_orientation() {
-    use craft_image_codecs::{ChannelLayout, Format, Image};
+    use nodalia_image_codecs::{ChannelLayout, Format, Image};
     // Little-endian TIFF IFD containing Orientation=6 (90 degrees clockwise).
     let exif = [b'I', b'I', 42, 0, 8, 0, 0, 0, 1, 0, 0x12, 1, 3, 0, 1, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0];
     let raster = Raster::from_fn(3, 2, |x, y| [x as u8 * 60, y as u8 * 90, 17, (x + 3 * y) as u8 * 40]);
@@ -4170,7 +4170,7 @@ fn trace_and_alpha_keep_stored_pixels_with_exif_orientation() {
 
     let image =
         Image::from_u8(3, 2, ChannelLayout::Rgb, raster.rgba.as_chunks::<4>().0.iter().flat_map(|p| p[..3].iter().copied()).collect()).unwrap();
-    let mut jpeg = craft_image_codecs::encode(&image, Format::Jpeg, &Default::default()).unwrap();
+    let mut jpeg = nodalia_image_codecs::encode(&image, Format::Jpeg, &Default::default()).unwrap();
     let expected = Raster::decode(&jpeg).unwrap();
     let mut app1 = vec![0xff, 0xe1];
     app1.extend(((exif.len() + 8) as u16).to_be_bytes());

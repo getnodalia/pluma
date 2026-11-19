@@ -15,7 +15,7 @@ fn off(a: Rect, b: Rect) -> f64 {
     [a.x0 - b.x0, a.y0 - b.y0, a.x1 - b.x1, a.y1 - b.y1].iter().fold(0.0f64, |m, v| m.max(v.abs()))
 }
 
-/// "Type" at 48 pt in a face the test adds, so its glyphs draw on a machine without craft-fonts or
+/// "Type" at 48 pt in a face the test adds, so its glyphs draw on a machine without nodalia-fonts or
 /// system fonts.
 fn type_in_test_face() -> TextObject {
     assert!(pluma_text::FontDb::global().add_font(height_font(true).unwrap()) > 0, "the test face loads");

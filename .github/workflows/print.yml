@@ -21,11 +21,11 @@ jobs:
   # Desktop printing on Windows, through the suite's shared gate. Pull requests restore the cache
   # but never save one; a manual run on main saves the cache they restore.
   windows:
-    uses: getnodalia/foundation/.github/workflows/rust-gate.yml@976581262c95c0d95c0184149c0e1ba55485ccb3 # foundation main
+    uses: getnodalia/foundation/.github/workflows/rust-gate.yml@a5325485b557dca4040002a0120a06d72b10ccb5 # foundation main
     with:
       os: '["windows-2022"]'
       timeout-minutes: 90
-      # As before: printing builds and tests without craft-fonts, nextest or the wasm target.
+      # As before: printing builds and tests without nodalia-fonts, nextest or the wasm target.
       tools: ""
       targets: ""
       # A filter that matches nothing still passes, so the printps run fails unless some test ran.

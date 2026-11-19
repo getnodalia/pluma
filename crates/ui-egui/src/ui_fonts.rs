@@ -1,6 +1,6 @@
 //! Fallback fonts for the app's own text: layer and file names (and anything else the UI shows) in
 //! Chinese, Japanese, Korean or other scripts the UI fonts lack are drawn in an installed font that
-//! covers them. Builds made with craft-fonts (`CRAFT_FONTS_DIR`, all releases) carry Japanese fonts,
+//! covers them. Builds made with nodalia-fonts (`NODALIA_FONTS_DIR`, all releases) carry Japanese fonts,
 //! which `theme::install_fonts` adds after the UI fonts, so Japanese never gets here; nothing else
 //! is bundled for them: the first time a frame paints a character the UI fonts
 //! don't have, an installed font covering it is looked for (in the background on native) and added
@@ -8,7 +8,7 @@
 //! the next frame on. Text the UI fonts cover costs no font loading or memory. On the web, which
 //! has no system fonts, the shell is told which characters no loaded font covers
 //! ([`on_missing_glyphs`]) and fetches a face for them (Korean, Devanagari) when it has one; until
-//! a face arrives they stay missing-glyph boxes (Japanese too, unless built with craft-fonts).
+//! a face arrives they stay missing-glyph boxes (Japanese too, unless built with nodalia-fonts).
 //! Characters no font covered are looked for again whenever the font database changes.
 
 use std::collections::HashSet;
@@ -24,7 +24,7 @@ static MISSING_GLYPHS: OnceLock<fn(&[char])> = OnceLock::new();
 
 /// Have `f` called (on the UI thread, after a frame) with the characters the interface painted
 /// that no loaded or installed font covers, so it can load a font for them: the web shell fetches
-/// its `demand` craft-fonts faces. A character is reported again only after the fonts change and it
+/// its `demand` nodalia-fonts faces. A character is reported again only after the fonts change and it
 /// is still not covered. The first call sets it; later calls are ignored.
 pub fn on_missing_glyphs(f: fn(&[char])) {
     let _ = MISSING_GLYPHS.set(f);
@@ -338,9 +338,9 @@ mod tests {
     }
 
     #[test]
-    fn japanese_renders_with_the_craft_fonts_without_installed_fonts() {
-        if !pluma_text::CRAFT_FONTS.iter().any(|f| f.is_japanese()) {
-            eprintln!("skipped: built without craft-fonts (set CRAFT_FONTS_DIR to a craft-fonts checkout to run it)");
+    fn japanese_renders_with_the_nodalia_fonts_without_installed_fonts() {
+        if !pluma_text::NODALIA_FONTS.iter().any(|f| f.is_japanese()) {
+            eprintln!("skipped: built without nodalia-fonts (set NODALIA_FONTS_DIR to a nodalia-fonts checkout to run it)");
             return;
         }
         let text = "日本語の文字";
@@ -353,19 +353,19 @@ mod tests {
         let families: Vec<FontFamily> = ctx.fonts(|f| f.definitions().families.keys().cloned().collect());
         for family in families {
             let stack = ctx.fonts(|f| f.definitions().families.get(&family).cloned().unwrap_or_default());
-            assert!(stack.last().is_some_and(|n| n.starts_with("craft-fonts ")), "{family:?}: craft-fonts last: {stack:?}");
+            assert!(stack.last().is_some_and(|n| n.starts_with("nodalia-fonts ")), "{family:?}: nodalia-fonts last: {stack:?}");
             for c in text.chars() {
                 assert!(ctx.fonts_mut(|f| f.has_glyph(&FontId::new(13.0, family.clone()), c)), "{family:?} draws {c}");
             }
         }
         // The UI prefers BIZ UDPGothic.
         let stack = ctx.fonts(|f| f.definitions().families.get(&FontFamily::Proportional).cloned().unwrap_or_default());
-        let first = stack.iter().find(|n| n.starts_with("craft-fonts ")).cloned().unwrap_or_default();
-        assert_eq!(first, "craft-fonts BIZ UDPGothic Regular", "{stack:?}");
+        let first = stack.iter().find(|n| n.starts_with("nodalia-fonts ")).cloned().unwrap_or_default();
+        assert_eq!(first, "nodalia-fonts BIZ UDPGothic Regular", "{stack:?}");
     }
 
     #[test]
-    fn the_ui_works_without_the_craft_fonts() {
+    fn the_ui_works_without_the_nodalia_fonts() {
         // Built either way, the fonts install and Japanese text lays out (as installed-font
         // fallbacks or missing-glyph boxes when no font has it).
         let ctx = egui::Context::default();
@@ -374,9 +374,9 @@ mod tests {
         frame(&ctx, &mut fonts, "日本語の文字 Layer 1");
         fonts.finish(&ctx);
         frame(&ctx, &mut fonts, "日本語の文字 Layer 1");
-        if pluma_text::CRAFT_FONTS.is_empty() {
+        if pluma_text::NODALIA_FONTS.is_empty() {
             let names: Vec<String> = ctx.fonts(|f| f.definitions().font_data.keys().cloned().collect());
-            assert!(names.iter().all(|n| !n.starts_with("craft-fonts")), "{names:?}");
+            assert!(names.iter().all(|n| !n.starts_with("nodalia-fonts")), "{names:?}");
         }
         assert!(has_glyph(&ctx, 'L'));
     }
@@ -414,18 +414,18 @@ mod tests {
         }
     }
 
-    /// The bundled craft-fonts faces draw on the baseline of each family's first face: a glyph of
+    /// The bundled nodalia-fonts faces draw on the baseline of each family's first face: a glyph of
     /// each ends as far below `H`'s baseline as it does below its own face's baseline when that face
     /// heads a family.
     #[test]
-    fn craft_fonts_sit_on_the_baseline_of_each_family() {
-        use pluma_text::CraftFont;
-        use pluma_text::craft_fonts::{georgian_ui_fonts, japanese_ui_fonts};
+    fn nodalia_fonts_sit_on_the_baseline_of_each_family() {
+        use pluma_text::NodaliaFont;
+        use pluma_text::nodalia_fonts::{georgian_ui_fonts, japanese_ui_fonts};
         // The face each family draws a script in, with a character of it: (regular face, semibold
         // family's face, character).
-        let first = |faces: Vec<&'static CraftFont>| faces.first().copied();
-        let deva = pluma_text::CRAFT_FONTS.iter().find(|f| f.scripts.contains(&"Deva"));
-        let probes: Vec<(&CraftFont, &CraftFont, char)> = [
+        let first = |faces: Vec<&'static NodaliaFont>| faces.first().copied();
+        let deva = pluma_text::NODALIA_FONTS.iter().find(|f| f.scripts.contains(&"Deva"));
+        let probes: Vec<(&NodaliaFont, &NodaliaFont, char)> = [
             first(japanese_ui_fonts(false)).zip(first(japanese_ui_fonts(true))).map(|(regular, bold)| (regular, bold, '編')),
             first(georgian_ui_fonts()).map(|f| (f, f, 'ა')),
             deva.map(|f| (f, f, 'क')),
@@ -434,13 +434,13 @@ mod tests {
         .flatten()
         .collect();
         if probes.is_empty() {
-            eprintln!("skipped: built without craft-fonts (set CRAFT_FONTS_DIR to a craft-fonts checkout to run it)");
+            eprintln!("skipped: built without nodalia-fonts (set NODALIA_FONTS_DIR to a nodalia-fonts checkout to run it)");
             return;
         }
         let mut defs = crate::theme::interface_fonts();
         let families: Vec<FontFamily> = defs.families.keys().cloned().collect();
-        let probe_name = |f: &CraftFont| format!("probe {}", crate::theme::craft_font_name(f));
-        let probe = |f: &CraftFont| FontFamily::Name(probe_name(f).into());
+        let probe_name = |f: &NodaliaFont| format!("probe {}", crate::theme::nodalia_font_name(f));
+        let probe = |f: &NodaliaFont| FontFamily::Name(probe_name(f).into());
         for &(regular, bold, _) in &probes {
             for f in [regular, bold] {
                 defs.font_data.insert(probe_name(f), Arc::new(FontData::from_static(f.bytes)));
@@ -515,8 +515,8 @@ mod tests {
 
     /// A character painted while no font covers it is reported once, and draws once a font that
     /// covers it is added (as the web fetches one), with no further search while the fonts stay
-    /// the same. The character is a private-use one, which no craft-fonts face covers either (the
-    /// database holds them when the build embeds craft-fonts).
+    /// the same. The character is a private-use one, which no nodalia-fonts face covers either (the
+    /// database holds them when the build embeds nodalia-fonts).
     #[test]
     fn a_font_added_later_draws_characters_painted_before_it() {
         use pluma_text::test_fonts::{PRIVATE_USE_CHAR, PRIVATE_USE_FAMILY, private_use_font};

@@ -350,15 +350,15 @@ impl Rendered {
     /// Encode as PNG without metadata (thumbnails, screenshots, embedded rasters; exports use
     /// [`encode`]).
     pub fn to_png(&self) -> Result<Vec<u8>, String> {
-        let img = craft_image_codecs::Image::from_raw(
+        let img = nodalia_image_codecs::Image::from_raw(
             self.width,
             self.height,
-            craft_image_codecs::ChannelLayout::Rgba,
-            craft_image_codecs::SampleType::U8,
+            nodalia_image_codecs::ChannelLayout::Rgba,
+            nodalia_image_codecs::SampleType::U8,
             self.to_straight(),
         )
         .map_err(|e| format!("PNG encoding failed: {e}"))?;
-        craft_image_codecs::encode(&img, craft_image_codecs::Format::Png, &craft_image_codecs::EncodeOptions::default())
+        nodalia_image_codecs::encode(&img, nodalia_image_codecs::Format::Png, &nodalia_image_codecs::EncodeOptions::default())
             .map_err(|e| format!("PNG encoding failed: {e}"))
     }
     /// Each pixel's grey level and alpha: the Rec. 709 luma of its straight colour, with `bilevel`

@@ -39,10 +39,10 @@ impl FontDb {
 
     fn new(font_paths: FontPaths) -> Self {
         let mut faces = Vec::new();
-        // Bundled fonts first, then explicitly supplied craft-fonts faces: Japanese (Mincho
+        // Bundled fonts first, then explicitly supplied nodalia-fonts faces: Japanese (Mincho
         // first), Arabic, Thai, then remaining faces in manifest order. Existing script fallback
         // priorities stay ahead of the additional families users can now pick by name.
-        let craft = crate::craft_fonts::document_fonts().into_iter().map(|f| f.bytes);
+        let craft = crate::nodalia_fonts::document_fonts().into_iter().map(|f| f.bytes);
         for data in BUNDLED.iter().copied().chain(craft) {
             for (i, spec) in enumerate_faces(data) {
                 if let Some(f) = make_face(FontBytes::Static(data), i, spec, None) {

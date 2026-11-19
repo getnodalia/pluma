@@ -20,8 +20,8 @@ heif = ["dep:heic-rs", "dep:rayon"]
 
 [dependencies]
 # Which paths stored in documents may be opened.
-craft-docpath = { workspace = true }
-craft-proof = { workspace = true }
+nodalia-docpath = { workspace = true }
+nodalia-proof = { workspace = true }
 pluma-geom = { workspace = true }
 pluma-color = { workspace = true }
 pluma-doc = { workspace = true }
@@ -46,7 +46,7 @@ pluma-js = { workspace = true }
 # The commands' parameter schemas (schemas.rs).
 pluma-apischema = { workspace = true }
 image = { workspace = true }
-craft-image-codecs = { workspace = true }
+nodalia-image-codecs = { workspace = true }
 tiff = { workspace = true }
 jxl-oxide = { workspace = true }
 jxl-color = { workspace = true }
@@ -56,7 +56,7 @@ heic-rs = { version = "=0.1.4", default-features = false, features = ["std"], op
 flate2 = { workspace = true }
 chrono = { workspace = true }
 # The XML parts of Word documents placed as type (place/docx.rs).
-craft-xml = { workspace = true }
+nodalia-xml = { workspace = true }
 # The compound file that holds a Word 97-2003 document placed as type (place/doc.rs).
 cfb = "0.15"
 # The Text Import Options character sets other than Unicode and ANSI (place/text.rs). Already in
@@ -89,11 +89,11 @@ rayon = { version = "1.12", optional = true }
 zune-jpegxl = { workspace = true }
 zune-core = { workspace = true }
 # JPEG XL files for the import fuzz tests (tests/import_fuzz.rs).
-craft-jxl = { workspace = true }
-# pluma-doc's Group 3 TIFF reader before craft-stream-codecs, the reference
+nodalia-jxl = { workspace = true }
+# pluma-doc's Group 3 TIFF reader before nodalia-stream-codecs, the reference
 # tests/group3_reference.rs compares it with.
 hayro-ccitt = { workspace = true }
-craft-stream-codecs = { workspace = true }
+nodalia-stream-codecs = { workspace = true }
 pluma-affinity = { workspace = true, features = ["synth"] }
 crc32fast = { workspace = true }
 pluma-testkit = { workspace = true }

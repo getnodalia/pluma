@@ -130,7 +130,7 @@ pub fn detect(name: &str, bytes: &[u8]) -> Option<&'static Format> {
     if super::heifread::is_heif(bytes) {
         return format("heif");
     }
-    if let Some(f) = craft_image_codecs::detect(bytes).and_then(image_format) {
+    if let Some(f) = nodalia_image_codecs::detect(bytes).and_then(image_format) {
         return Some(f);
     }
     // A version 2 PICT is known by its version opcodes after the picture's frame, at byte 522 of a
@@ -156,15 +156,15 @@ pub fn detect(name: &str, bytes: &[u8]) -> Option<&'static Format> {
     by_name
 }
 
-/// The readable raster format behind a craft-image-codecs format.
-fn image_format(f: craft_image_codecs::Format) -> Option<&'static Format> {
+/// The readable raster format behind a nodalia-image-codecs format.
+fn image_format(f: nodalia_image_codecs::Format) -> Option<&'static Format> {
     f.extensions().iter().find_map(|e| format(e)).filter(|f| f.read && f.raster)
 }
 
 /// The image's size and the bytes a pixel of it takes decoded, from its header
-/// ([`pluma_doc::decode::decoded_layout`]), for bytes in a format craft-image-codecs tells.
-fn header_layout(bytes: &[u8]) -> Option<(craft_image_codecs::Format, u32, u32, u64)> {
-    let format = craft_image_codecs::detect(bytes)?;
+/// ([`pluma_doc::decode::decoded_layout`]), for bytes in a format nodalia-image-codecs tells.
+fn header_layout(bytes: &[u8]) -> Option<(nodalia_image_codecs::Format, u32, u32, u64)> {
+    let format = nodalia_image_codecs::detect(bytes)?;
     let (w, h, per_pixel) = pluma_doc::decode::decoded_layout(bytes, format)?;
     Some((format, w, h, per_pixel))
 }
@@ -915,7 +915,7 @@ pub(crate) fn too_large_note(bytes: &[u8]) -> Option<String> {
     // The renderer can stream a non-interlaced PNG a row at a time when those buffers fit. Its
     // full decoded byte count can exceed the allowance even though drawing it at native size is
     // safe; use the renderer's decision for that case instead of warning from total_bytes alone.
-    let png_streams_at_size = samples_over && format == craft_image_codecs::Format::Png && pluma_render::reduced_size(bytes) == Some((w, h));
+    let png_streams_at_size = samples_over && format == nodalia_image_codecs::Format::Png && pluma_render::reduced_size(bytes) == Some((w, h));
     (rgba_over || (samples_over && !png_streams_at_size)).then(|| format!("an image of {w} × {h} pixels is too large to draw"))
 }
 
@@ -975,8 +975,8 @@ pub fn raster_image(bytes: &[u8]) -> Result<RasterImage> {
                 native.meta.text.push(("Description".into(), format!("{CLIP_KEYWORD}\n{json}")));
                 Some((path, pluma_geom::FillRule::EvenOdd))
             });
-            let data =
-                craft_image_codecs::encode(&native, craft_image_codecs::Format::Tiff, &craft_image_codecs::EncodeOptions::default()).map_err(err)?;
+            let data = nodalia_image_codecs::encode(&native, nodalia_image_codecs::Format::Tiff, &nodalia_image_codecs::EncodeOptions::default())
+                .map_err(err)?;
             let mut img = stored(data, "image/tiff", native.dimensions(), ppi)?;
             img.clip = clip;
             return Ok(img);
@@ -1000,11 +1000,11 @@ pub fn raster_image(bytes: &[u8]) -> Result<RasterImage> {
     if super::pxrread::is_pxr(bytes) {
         return as_png(super::pxrread::decode(bytes, MAX_RASTER_ALLOC).map_err(err)?, None, ppi);
     }
-    let mut detected = craft_image_codecs::detect(bytes);
+    let mut detected = nodalia_image_codecs::detect(bytes);
     if detected.is_none() && super::tgaread::is_targa(bytes) {
-        detected = Some(craft_image_codecs::Format::Tga);
+        detected = Some(nodalia_image_codecs::Format::Tga);
     }
-    if (detected.is_none() || detected == Some(craft_image_codecs::Format::Pcx)) && super::pcxread::is_pcx(bytes) {
+    if (detected.is_none() || detected == Some(nodalia_image_codecs::Format::Pcx)) && super::pcxread::is_pcx(bytes) {
         return as_png(super::pcxread::decode(bytes, MAX_RASTER_ALLOC).map_err(err)?, None, ppi);
     }
     let kind = detected.ok_or_else(|| err("not an image Pluma reads (see document.formats)"))?;
@@ -1044,7 +1044,7 @@ pub fn raster_image(bytes: &[u8]) -> Result<RasterImage> {
             None => {
                 // The allowance counts the decoded samples and the RGBA pixels they become (#1717).
                 // A Targa file's size is read from its header, which no signature points a probe at.
-                let tga = || (kind == craft_image_codecs::Format::Tga).then(|| super::tgaread::size(bytes)).flatten().map(|(w, h)| (w, h, 4));
+                let tga = || (kind == nodalia_image_codecs::Format::Tga).then(|| super::tgaread::size(bytes)).flatten().map(|(w, h)| (w, h, 4));
                 let (w, h, per_pixel) =
                     pluma_doc::decode::decoded_layout(bytes, kind).or_else(tga).ok_or_else(|| err("the image's size can't be read"))?;
                 let pixels = u64::from(w) * u64::from(h);
@@ -1130,7 +1130,7 @@ pub fn texture_image(bytes: &[u8]) -> Result<String> {
             LoadedTexture::from_rgba(inks.width, inks.height, &rgba)
         }
         None => {
-            let kind = craft_image_codecs::detect(&blob.bytes).ok_or_else(|| err("the image can't be read as a texture"))?;
+            let kind = nodalia_image_codecs::detect(&blob.bytes).ok_or_else(|| err("the image can't be read as a texture"))?;
             let img = pluma_doc::decode::decode_image(kind, &blob.bytes, MAX_RASTER_ALLOC).map_err(err)?.0.to_rgba8();
             LoadedTexture::from_rgba(img.width(), img.height(), img.as_raw())
         }

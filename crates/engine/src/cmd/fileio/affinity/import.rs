@@ -30,11 +30,11 @@ fn preview(name: &str, bytes: &[u8], native: &pluma_affinity::Error) -> Result<(
     let p = pluma_affinity::preview(bytes).map_err(|e| err(format!("{native}; its embedded preview can't be read either ({e})")))?;
     // `raster_doc` normally probes PNG dimensions and keeps its encoded bytes. Verify this
     // untrusted preview's complete pixels first, so corrupt data cannot create a blank image.
-    let mut opts = craft_image_codecs::DecodeOptions::default();
+    let mut opts = nodalia_image_codecs::DecodeOptions::default();
     opts.limits.max_width = 4096;
     opts.limits.max_height = 4096;
     opts.limits.max_alloc = 128 << 20;
-    let _pixels = craft_image_codecs::decode_as_with(craft_image_codecs::Format::Png, p.png, &opts).map_err(err)?;
+    let _pixels = nodalia_image_codecs::decode_as_with(nodalia_image_codecs::Format::Png, p.png, &opts).map_err(err)?;
     let d = raster_doc(name, p.png)?;
     Ok((
         d,

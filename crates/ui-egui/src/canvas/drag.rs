@@ -308,9 +308,9 @@ pub(super) fn drag_art_out(app: &PlumaApp, ui: &Ui, resp: &egui::Response, p: Po
     if tool != "selection" && st.selection.objects.iter().any(|id| st.selection.partial(*id).is_some() || st.selection.segments.contains_key(id)) {
         return false;
     }
-    // A floating panel in an OS window of its own takes the art too: craft-ui hands that window
+    // A floating panel in an OS window of its own takes the art too: nodalia-ui hands that window
     // the pointer while it is over it, and this window sees the pointer go.
-    craft_ui::docking::route_app_drag(ui.ctx(), crate::panel_docking::area_id());
+    nodalia_ui::docking::route_app_drag(ui.ctx(), crate::panel_docking::area_id());
     if on_canvas(ui, resp, p) && ui.input(|i| i.pointer.has_pointer()) {
         return false;
     }

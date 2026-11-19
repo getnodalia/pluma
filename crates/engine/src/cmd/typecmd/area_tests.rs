@@ -1662,7 +1662,7 @@ fn leading_model_is_set_per_paragraph_and_saved_only_when_top_to_top() {
     use pluma_doc::LeadingModel;
     let mut s = Session::new();
     s.execute("file.new", &json!({"width": 400, "height": 400})).unwrap();
-    // Exercise ink bounds with bundled glyphs; Japanese outlines require optional craft-fonts.
+    // Exercise ink bounds with bundled glyphs; Japanese outlines require optional nodalia-fonts.
     let id =
         s.execute("text.create", &json!({"x": 10, "y": 10, "text": "A\nB", "area": {"width": 200, "height": 100}})).unwrap()["id"].as_u64().unwrap();
     let text = |s: &Session| match &s.doc().unwrap().doc.node(NodeId(id)).unwrap().kind {
@@ -1676,8 +1676,8 @@ fn leading_model_is_set_per_paragraph_and_saved_only_when_top_to_top() {
     s.execute("text.setFormat", &json!({"leadingModel": "emBoxTop"})).unwrap();
     let t = text(&s);
     assert_eq!(t.para.leading_model, LeadingModel::EmBoxTop);
-    // The fallback used without craft-fonts has no glyph metrics to move the first line.
-    if !pluma_text::CRAFT_FONTS.is_empty() {
+    // The fallback used without nodalia-fonts has no glyph metrics to move the first line.
+    if !pluma_text::NODALIA_FONTS.is_empty() {
         assert_ne!(t.cached_bounds, before, "the first line moves up to the frame's top");
     }
     assert_eq!(serde_json::to_value(&t.para).unwrap()["leading_model"], "emBoxTop");

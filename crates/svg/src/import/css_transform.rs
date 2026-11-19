@@ -11,7 +11,7 @@
 use std::f64::consts::PI;
 use std::ops::Range;
 
-use craft_svg::tree::usvg::roxmltree;
+use nodalia_svg::tree::usvg::roxmltree;
 
 use super::css::XNode;
 

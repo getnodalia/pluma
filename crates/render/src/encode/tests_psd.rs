@@ -150,8 +150,8 @@ fn unpack(mut src: &[u8], out: &mut Vec<u8>) {
 
 /// The stored composite: RGB stays white-matted, with its original alpha.
 fn merged(f: &[u8]) -> Vec<u8> {
-    let psd = craft_psd::PsdFile::from_bytes(f).expect("a PSD a reader takes");
-    if psd.header.color_mode != craft_psd::ColorMode::Rgb {
+    let psd = nodalia_psd::PsdFile::from_bytes(f).expect("a PSD a reader takes");
+    if psd.header.color_mode != nodalia_psd::ColorMode::Rgb {
         return psd.composite_rgba8().expect("composite").data;
     }
     assert_eq!(psd.header.depth, 8);
@@ -181,10 +181,10 @@ fn layers_are_the_top_level_layers_and_the_merged_image_is_the_render() {
     assert_eq!(p.records[1].rect, [0, 0, 50, 60], "the blue square and the corner");
 
     // A reader decodes it: the layers, in place, and the merged image.
-    let psd = craft_psd::PsdFile::from_bytes(&file).unwrap();
+    let psd = nodalia_psd::PsdFile::from_bytes(&file).unwrap();
     assert_eq!((psd.header.width, psd.header.height, psd.layers().len()), (100, 60, 2));
     let layer = psd.iter_layers().find(|l| l.name() == "Layer 1").unwrap();
-    assert_eq!(layer.record.rect, craft_psd::layer::Rect { top: 10, left: 10, bottom: 40, right: 40 });
+    assert_eq!(layer.record.rect, nodalia_psd::layer::Rect { top: 10, left: 10, bottom: 40, right: 40 });
     let red = layer.rgba8().unwrap().data;
     assert_eq!(pixel(&red, 30, 10, 10), [255, 0, 0, 255]);
 
@@ -214,7 +214,7 @@ fn flat_writes_the_merged_image_alone_on_white() {
     assert_eq!(o.encode(&img, RasterFormat::Psd).unwrap(), file);
     let file = export(&doc, &RasterExportOptions { ppi: 150.0, ..o });
     assert_eq!(u32_at(parse(&file).resources, 12), 150 << 16);
-    assert_eq!(craft_psd::PsdFile::from_bytes(&file).unwrap().header.width, 208);
+    assert_eq!(nodalia_psd::PsdFile::from_bytes(&file).unwrap().header.width, 208);
 }
 
 #[test]
@@ -244,10 +244,13 @@ fn maximum_editability_writes_groups_and_an_object_per_layer() {
     assert_eq!((p.records[4].opacity, p.records[4].blend, p.records[4].rect), (128, *b"mul ", [20, 30, 50, 60]));
     assert_eq!((p.records[8].blend, p.records[8].opacity), (*b"pass", 255));
     assert_eq!(p.records[6].rect, [0, 0, 6, 6]);
-    let psd = craft_psd::PsdFile::from_bytes(&file).unwrap();
-    let content_layers = psd.layers().iter().filter(|l| matches!(l.section_type(), craft_psd::SectionType::Other)).count();
-    let groups =
-        psd.layers().iter().filter(|l| matches!(l.section_type(), craft_psd::SectionType::OpenFolder | craft_psd::SectionType::ClosedFolder)).count();
+    let psd = nodalia_psd::PsdFile::from_bytes(&file).unwrap();
+    let content_layers = psd.layers().iter().filter(|l| matches!(l.section_type(), nodalia_psd::SectionType::Other)).count();
+    let groups = psd
+        .layers()
+        .iter()
+        .filter(|l| matches!(l.section_type(), nodalia_psd::SectionType::OpenFolder | nodalia_psd::SectionType::ClosedFolder))
+        .count();
     assert_eq!((content_layers, groups), (3, 3));
     assert_eq!(merged(&file), merged(&export(&doc, &opts(PsdOptions::default()))), "the same merged image");
 
@@ -317,7 +320,7 @@ fn a_background_colour_is_the_bottom_layer() {
     let p = parse(&file);
     assert_eq!((p.channels, p.count), (3, 3), "opaque: no merged alpha");
     assert_eq!((p.records[0].name.as_str(), p.records[0].rect), ("Background", [0, 0, 60, 100]));
-    let psd = craft_psd::PsdFile::from_bytes(&file).unwrap();
+    let psd = nodalia_psd::PsdFile::from_bytes(&file).unwrap();
     assert!(psd.iter_layers().find(|l| l.name() == "Background").unwrap().rgba8().unwrap().data.chunks(4).all(|p| p == [0, 0, 255, 255]));
     assert_eq!(pixel(&merged(&file), 100, 5, 50), [0, 0, 255, 255]);
 }
@@ -527,7 +530,7 @@ fn preserve_text_writes_point_type_as_a_type_layer_between_pixel_layers() {
     assert!(has(b"/UseFractionalGlyphWidths true"), "Fractional Widths on");
 
     // A reader takes the file, and the merged image is the same render.
-    assert_eq!(craft_psd::PsdFile::from_bytes(&file).unwrap().layers().len(), p.records.len());
+    assert_eq!(nodalia_psd::PsdFile::from_bytes(&file).unwrap().layers().len(), p.records.len());
     let plain = export(&doc, &RasterExportOptions { ppi: 144.0, ..opts(PsdOptions::default()) });
     assert_eq!(merged(&file), merged(&plain));
     assert_eq!(parse(&plain).records.iter().filter(|r| r.type_tool.is_some()).count(), 0, "off: no type layers");
@@ -755,9 +758,9 @@ fn sliced() -> Document {
 }
 
 /// The slices resource of `file` as an independent reader reads it.
-fn slices_of(file: &[u8]) -> Option<craft_psd::slices::SlicesResource> {
-    let psd = craft_psd::PsdFile::from_bytes(file).expect("a PSD a reader takes");
-    psd.resource(1050).map(|r| craft_psd::slices::SlicesResource::from_bytes(&r.data).expect("a slices resource a reader takes"))
+fn slices_of(file: &[u8]) -> Option<nodalia_psd::slices::SlicesResource> {
+    let psd = nodalia_psd::PsdFile::from_bytes(file).expect("a PSD a reader takes");
+    psd.resource(1050).map(|r| nodalia_psd::slices::SlicesResource::from_bytes(&r.data).expect("a slices resource a reader takes"))
 }
 
 #[test]

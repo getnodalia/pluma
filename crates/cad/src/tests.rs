@@ -852,17 +852,17 @@ fn the_cnc_preset_writes_version_2000_in_millimeters_with_type_as_paths_and_stro
 /// A 4 × 2 px PNG placed at (10, 20) under key `raster-1`, and before it in paint order
 /// `fill`'s rectangle.
 fn image_and_fill_doc(fill: Paint) -> Document {
-    let png = craft_image_codecs::encode(
-        &craft_image_codecs::Image::from_raw(
+    let png = nodalia_image_codecs::encode(
+        &nodalia_image_codecs::Image::from_raw(
             4,
             2,
-            craft_image_codecs::ChannelLayout::Rgba,
-            craft_image_codecs::SampleType::U8,
+            nodalia_image_codecs::ChannelLayout::Rgba,
+            nodalia_image_codecs::SampleType::U8,
             [0u8, 0, 255, 255].repeat(8),
         )
         .unwrap(),
-        craft_image_codecs::Format::Png,
-        &craft_image_codecs::EncodeOptions::default(),
+        nodalia_image_codecs::Format::Png,
+        &nodalia_image_codecs::EncodeOptions::default(),
     )
     .unwrap();
     let mut d = doc_with(|d| {
@@ -1323,17 +1323,17 @@ fn a_font_height_reference_is_written_as_the_size_drawn() {
 
 #[test]
 fn images_link_png_or_jpeg_files() {
-    let png = craft_image_codecs::encode(
-        &craft_image_codecs::Image::from_raw(
+    let png = nodalia_image_codecs::encode(
+        &nodalia_image_codecs::Image::from_raw(
             4,
             2,
-            craft_image_codecs::ChannelLayout::Rgba,
-            craft_image_codecs::SampleType::U8,
+            nodalia_image_codecs::ChannelLayout::Rgba,
+            nodalia_image_codecs::SampleType::U8,
             [255u8, 0, 0, 128].repeat(8),
         )
         .unwrap(),
-        craft_image_codecs::Format::Png,
-        &craft_image_codecs::EncodeOptions::default(),
+        nodalia_image_codecs::Format::Png,
+        &nodalia_image_codecs::EncodeOptions::default(),
     )
     .unwrap();
     let mut d = doc_with(|d| {
@@ -1515,17 +1515,17 @@ fn moved_by(mut n: Node, x: f64) -> Node {
 /// A line moved by a Transform effect, an instance of a symbol whose art carries the same effect
 /// stained by its fill, a semi-transparent line in a blending mode, and a placed PNG image.
 fn drawings_doc() -> Document {
-    let png = craft_image_codecs::encode(
-        &craft_image_codecs::Image::from_raw(
+    let png = nodalia_image_codecs::encode(
+        &nodalia_image_codecs::Image::from_raw(
             2,
             2,
-            craft_image_codecs::ChannelLayout::Rgba,
-            craft_image_codecs::SampleType::U8,
+            nodalia_image_codecs::ChannelLayout::Rgba,
+            nodalia_image_codecs::SampleType::U8,
             [0u8, 128, 255, 255].repeat(4),
         )
         .unwrap(),
-        craft_image_codecs::Format::Png,
-        &craft_image_codecs::EncodeOptions::default(),
+        nodalia_image_codecs::Format::Png,
+        &nodalia_image_codecs::EncodeOptions::default(),
     )
     .unwrap();
     let mut d = doc_with(|d| {

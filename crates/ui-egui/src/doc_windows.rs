@@ -327,7 +327,7 @@ pub(crate) fn dock_all(app: &mut PlumaApp) {
 }
 
 /// Whether the floating windows are OS windows: egui runs viewports of their own, the session is
-/// not Wayland, where the main window cannot learn where its other windows are (craft-ui's docking
+/// not Wayland, where the main window cannot learn where its other windows are (nodalia-ui's docking
 /// floats panels by the same rule), and no control channel is attached. With a control channel the
 /// windows stay inside the main window, where `ui.click`, `ui.drag` and `ui.screenshot` reach them
 /// and `canvasRect` is in the main window's coordinates.

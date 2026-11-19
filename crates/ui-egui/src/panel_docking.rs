@@ -1,4 +1,4 @@
-//! The window's panels and the canvas as one craft-ui docking layout.
+//! The window's panels and the canvas as one nodalia-ui docking layout.
 //!
 //! The layout is a horizontal split of the protected `canvas` panel and a dock at the window's
 //! right edge. The dock's columns, from the window edge inwards: the Properties · Layers ·
@@ -8,12 +8,12 @@
 //! was never customized has no saved layout (`UiState::docking` is `None`): its layout is built
 //! from its flags (`dock_tab`, `dock_collapsed`, `dock_width`).
 //!
-//! craft-ui draws the layout and its gestures; every change goes through [`Transaction`], whether
+//! nodalia-ui draws the layout and its gestures; every change goes through [`Transaction`], whether
 //! a gesture, a menu item or a control command made it.
 
 use std::collections::BTreeMap;
 
-use craft_ui::docking::{
+use nodalia_ui::docking::{
     Action, Column, DockCommand, DockEvent, DockOperation, FloatSpace, Floating, Group, HidePanels, Layout, Location, Node, Permissions, Placement,
     Side, Target, UiDock, Workspace as DockWorkspace,
 };
@@ -57,8 +57,8 @@ pub(crate) struct Runtime {
 
 /// Every docking control the main window drew last frame with its rect. Controls in floating
 /// panels' own OS windows are not among them: egui keeps each window's widgets apart.
-pub(crate) fn hit_rects(ctx: &egui::Context) -> Vec<(craft_ui::docking::Hit<String>, egui::Rect)> {
-    craft_ui::docking::DockArea::<String>::hit_rects(ctx, area_id())
+pub(crate) fn hit_rects(ctx: &egui::Context) -> Vec<(nodalia_ui::docking::Hit<String>, egui::Rect)> {
+    nodalia_ui::docking::DockArea::<String>::hit_rects(ctx, area_id())
 }
 
 /// `ui.docking`: the layout in use, the open flyout, the focused panel and every docking
@@ -143,8 +143,8 @@ pub(crate) fn with_canvas(columns: Vec<Column<String>>, floating: Vec<Floating<S
     let width: f32 = columns.iter().map(|c| if c.iconic { c.iconic_width.unwrap_or(ICON_WIDTH) } else { c.width }).sum();
     Layout {
         root: Some(Node::Split {
-            axis: craft_ui::layout::SplitAxis::Horizontal,
-            size: craft_ui::layout::SplitSize::FixedSecond(width),
+            axis: nodalia_ui::layout::SplitAxis::Horizontal,
+            size: nodalia_ui::layout::SplitSize::FixedSecond(width),
             first: Box::new(Node::Tabs { panels: vec![CANVAS.to_string()], active: 0 }),
             second: Box::new(Node::Dock { side: Side::End, columns }),
         }),
@@ -222,7 +222,7 @@ fn dock_columns(layout: &Layout<String>) -> Vec<&Column<String>> {
     let mut seen = 0usize;
     while let Some(node) = visit.pop() {
         seen = seen.saturating_add(1);
-        if seen > 2 * craft_ui::docking::MAX_PANELS {
+        if seen > 2 * nodalia_ui::docking::MAX_PANELS {
             break;
         }
         match node {
@@ -270,7 +270,8 @@ pub(crate) fn floats(ui: &UiState, panel: &str) -> bool {
 pub(crate) fn showing(ui: &UiState, panel: &str) -> bool {
     let layout = layout_of(ui);
     let iconic = in_iconic_column(&layout, panel);
-    (ui.open_panel.as_deref() == Some(panel) && iconic) || (!iconic && layout.panel_state(&panel.to_string()) == craft_ui::docking::PanelState::Front)
+    (ui.open_panel.as_deref() == Some(panel) && iconic)
+        || (!iconic && layout.panel_state(&panel.to_string()) == nodalia_ui::docking::PanelState::Front)
 }
 
 /// Can `panel` be seen: [`showing`] while the dock is shown (Tab and Shift+Tab hide it) and
@@ -288,8 +289,8 @@ fn thumbnail_panel_showing(ui: &UiState, ctx: &egui::Context) -> bool {
     let layout = layout_of(ui);
     let regular = ["layers", "links"]
         .iter()
-        .any(|panel| !in_iconic_column(&layout, panel) && layout.panel_state(&(*panel).to_string()) == craft_ui::docking::PanelState::Front);
-    let flyout = craft_ui::docking::flyout::<String>(ctx, area_id());
+        .any(|panel| !in_iconic_column(&layout, panel) && layout.panel_state(&(*panel).to_string()) == nodalia_ui::docking::PanelState::Front);
+    let flyout = nodalia_ui::docking::flyout::<String>(ctx, area_id());
     let iconic = flyout.as_ref().and_then(|anchor| {
         dock_columns(&layout)
             .into_iter()
@@ -317,7 +318,7 @@ fn apply(layout: &mut Layout<String>, action: Action<String>) -> Result<Vec<Stri
 
 /// The docking commands Pluma handles here: `window.panel` (the Window menu), its own
 /// `window.panel.collapse`, `window.panel.cycleOptions` and `window.collapseDock`, the Tools panel's float and dock
-/// ([`crate::tools_float`]) and craft-ui's shared ids. Workspaces stay [`crate::workspaces`]'.
+/// ([`crate::tools_float`]) and nodalia-ui's shared ids. Workspaces stay [`crate::workspaces`]'.
 pub(crate) fn command(app: &mut PlumaApp, id: &str, params: &Value) -> Option<Result<Value, String>> {
     if let Some(result) = crate::tools_float::command(app, id, params) {
         return Some(result);
@@ -469,7 +470,7 @@ pub(crate) fn collapse_dock(app: &mut PlumaApp, collapsed: Option<bool>) -> Resu
 }
 
 /// Where `window.panel.float` and `window.panel.dock` put a panel by the parameters Pluma
-/// gave them before its panels moved to craft-ui's layout.
+/// gave them before its panels moved to nodalia-ui's layout.
 enum Legacy {
     /// `onto` (a tab of the group holding `anchor`, which floats unless the panel docks), `above`
     /// or `below` (a group of its own there, in that group's floating window or dock column).
@@ -484,7 +485,7 @@ enum Legacy {
 }
 
 /// The Pluma-only parameters of `window.panel.float` / `window.panel.dock`, taken out of
-/// `fields` so craft-ui parses the rest: where the panel goes, and `collapsed`.
+/// `fields` so nodalia-ui parses the rest: where the panel goes, and `collapsed`.
 fn take_legacy(id: &str, fields: &mut serde_json::Map<String, Value>) -> Result<(Option<Legacy>, Option<bool>), String> {
     let dock = id == "window.panel.dock";
     let minimized = match fields.remove("collapsed") {
@@ -512,7 +513,7 @@ fn take_legacy(id: &str, fields: &mut serde_json::Map<String, Value>) -> Result<
     let destination = ["anchor", "side", "zone", "before"].iter().any(|k| fields.get(*k).is_some_and(|v| !v.is_null()));
     let column = match fields.get("column") {
         None | Some(Value::Null) | Some(Value::Bool(false)) => None,
-        // craft-ui's `column: true`: the panel's whole dock column or floating window.
+        // nodalia-ui's `column: true`: the panel's whole dock column or floating window.
         Some(Value::Bool(true)) if !dock || destination => None,
         Some(Value::Bool(true)) => Some(usize::MAX),
         Some(value) => match value.as_u64().filter(|n| *n >= 1) {
@@ -551,7 +552,7 @@ fn take_legacy(id: &str, fields: &mut serde_json::Map<String, Value>) -> Result<
     Ok((legacy, minimized))
 }
 
-/// `window.panel.float` and `window.panel.dock`: craft-ui's commands, with Pluma's own
+/// `window.panel.float` and `window.panel.dock`: nodalia-ui's commands, with Pluma's own
 /// parameters ([`Legacy`], `collapsed`) done in the same transaction.
 fn float_or_dock(app: &mut PlumaApp, id: &str, params: &Value) -> Result<Value, String> {
     let mut params = if params.is_null() { json!({}) } else { params.clone() };
@@ -566,7 +567,7 @@ fn group_of(layout: &Layout<String>, panel: &String) -> Vec<String> {
     let mut seen = 0usize;
     while let Some(node) = visit.pop() {
         seen = seen.saturating_add(1);
-        if seen > 2 * craft_ui::docking::MAX_PANELS {
+        if seen > 2 * nodalia_ui::docking::MAX_PANELS {
             break;
         }
         match node {
@@ -593,7 +594,7 @@ fn end_columns(layout: &Layout<String>) -> Vec<&Column<String>> {
     let mut seen = 0usize;
     while let Some(node) = visit.pop() {
         seen = seen.saturating_add(1);
-        if seen > 2 * craft_ui::docking::MAX_PANELS {
+        if seen > 2 * nodalia_ui::docking::MAX_PANELS {
             break;
         }
         match node {
@@ -731,7 +732,7 @@ fn resolve_panels(params: &Value) -> Result<Value, String> {
 }
 
 /// A shared docking command (`window.panel.*`, `ui.dock`) on the layout in use, all or nothing.
-/// craft-ui's `DockCommand` parses it and makes the layout actions; Pluma resolves panel
+/// nodalia-ui's `DockCommand` parses it and makes the layout actions; Pluma resolves panel
 /// names, shows a hidden panel before moving, floating or docking it, floats a panel the layout
 /// has no place for, and returns a floated panel to its dock place on Dock Panel.
 fn shared_command(app: &mut PlumaApp, id: &str, params: &Value) -> Result<Value, String> {
@@ -756,7 +757,7 @@ fn shared_command_with(app: &mut PlumaApp, id: &str, params: &Value, legacy: Opt
         _ => {}
     }
     // Pluma's docks are columns beside the canvas, so a dock at a window edge is a `side`,
-    // not a frame on the outer edge (craft-ui's `Placement::Edge`).
+    // not a frame on the outer edge (nodalia-ui's `Placement::Edge`).
     if let DockCommand::Dock { anchor: None, side: None, zone: Some(_), .. } = &command {
         return Err("zone needs an anchor: dock beside a panel with anchor, or in a new dock column with side (Start or End)".into());
     }
@@ -794,7 +795,7 @@ fn shared_command_with(app: &mut PlumaApp, id: &str, params: &Value, legacy: Opt
         }
         (_, Some(_)) => return Err("onto, above, below, icon and a column place belong to window.panel.float and window.panel.dock".into()),
         (command, None) => match command {
-            // Showing it was the whole command (craft-ui's `DockCommand::apply` does the same).
+            // Showing it was the whole command (nodalia-ui's `DockCommand::apply` does the same).
             DockCommand::Dock { anchor: None, side: None, .. } if shown || returned => Vec::new(),
             DockCommand::Activate { .. } if shown => Vec::new(),
             _ => command.to_actions(&txn.workspace, false, &space).map_err(|e| e.to_string())?,
@@ -876,7 +877,7 @@ impl Transaction {
         }
         let mut workspace = DockWorkspace::new(layout_of(&app.ui));
         let mut returns = BTreeMap::new();
-        for (panel, location) in app.ui.docking_hidden.iter().filter(|(id, _)| registered(id)).take(craft_ui::docking::MAX_PANELS) {
+        for (panel, location) in app.ui.docking_hidden.iter().filter(|(id, _)| registered(id)).take(nodalia_ui::docking::MAX_PANELS) {
             if !workspace.layout.contains(panel) {
                 workspace.hidden.push((panel.clone(), location.clone()));
             } else if workspace.layout.floating.iter().any(|w| w.contains(panel)) {
@@ -1079,7 +1080,7 @@ fn docked_group_place(layout: &Layout<String>, panel: &String) -> Option<(Vec<St
 }
 
 /// Whether every panel an action names is registered (and a split path is not excessive).
-/// The application owns the registry; craft-ui owns tree validation and structural changes.
+/// The application owns the registry; nodalia-ui owns tree validation and structural changes.
 fn known(action: &Action<String>) -> bool {
     let registered = |id: &String| self::registered(id);
     let tab = |placement: &Placement<String>| match placement {
@@ -1097,8 +1098,8 @@ fn known(action: &Action<String>) -> bool {
         | Action::MoveFloating { panel, .. }
         | Action::SetStackOpen { panel, .. }
         | Action::ResizeStack { panel, .. } => registered(panel),
-        Action::ResizeSplit { path, .. } => path.len() <= craft_ui::docking::MAX_DEPTH,
-        Action::ResizeWindowSplit { panel, path, .. } => registered(panel) && path.len() <= craft_ui::docking::MAX_DEPTH,
+        Action::ResizeSplit { path, .. } => path.len() <= nodalia_ui::docking::MAX_DEPTH,
+        Action::ResizeWindowSplit { panel, path, .. } => registered(panel) && path.len() <= nodalia_ui::docking::MAX_DEPTH,
         Action::MovePanel { panel, to } | Action::MoveGroup { panel, to } | Action::MoveColumn { panel, to } | Action::MoveWindow { panel, to } => {
             registered(panel)
                 && match to {
@@ -1135,7 +1136,7 @@ pub(crate) fn show(app: &mut PlumaApp, ui: &mut egui::Ui) {
         previous.is_some_and(|generation| generation != app.ui.docking_generation)
     });
     if changed_workspace {
-        craft_ui::docking::cancel_drag::<String>(&ctx, area);
+        nodalia_ui::docking::cancel_drag::<String>(&ctx, area);
     }
     if app.ui.docking.as_ref().is_some_and(|layout| !valid(layout)) {
         app.ui.docking = None;
@@ -1144,23 +1145,23 @@ pub(crate) fn show(app: &mut PlumaApp, ui: &mut egui::Ui) {
     let mut layout = layout_of(&app.ui);
     // `open_panel` is the open flyout: a command or a workspace that sets it opens that flyout,
     // showing that panel of its group.
-    let flyout = craft_ui::docking::flyout::<String>(&ctx, area);
+    let flyout = nodalia_ui::docking::flyout::<String>(&ctx, area);
     if flyout != app.ui.open_panel {
         match app.ui.open_panel.clone() {
             Some(panel) if in_iconic_column(&layout, &panel) => {
-                if app.ui.docking.is_some() && layout.panel_state(&panel) != craft_ui::docking::PanelState::Front {
+                if app.ui.docking.is_some() && layout.panel_state(&panel) != nodalia_ui::docking::PanelState::Front {
                     if let Err(error) = gesture(app, Action::Activate { panel: panel.clone() }) {
                         app.ui.status = error;
                     }
                     layout = layout_of(&app.ui);
                 }
-                craft_ui::docking::open_flyout(&ctx, area, panel);
+                nodalia_ui::docking::open_flyout(&ctx, area, panel);
             }
             Some(_) => {
                 app.ui.open_panel = None;
-                craft_ui::docking::close_flyout::<String>(&ctx, area);
+                nodalia_ui::docking::close_flyout::<String>(&ctx, area);
             }
-            None => craft_ui::docking::close_flyout::<String>(&ctx, area),
+            None => nodalia_ui::docking::close_flyout::<String>(&ctx, area),
         }
     }
     let modal = modal_open(app, &ctx);
@@ -1177,7 +1178,7 @@ pub(crate) fn show(app: &mut PlumaApp, ui: &mut egui::Ui) {
     let peeking = peek::update(app, &ctx, ui.available_rect_before_wrap(), &layout, !blocked.is_empty()).map(|edge| peek::edge_panels(&layout, edge));
     let shown_from_edge = |panel: &String| peeking.as_ref().is_some_and(|panels| panels.contains(panel));
     let style = dock_style(ui);
-    let mut dock = craft_ui::docking::DockArea::new(area)
+    let mut dock = nodalia_ui::docking::DockArea::new(area)
         .blocked_rects(&blocked)
         .input_blocked(modal)
         .monitors(app.services.dock_monitors.clone())
@@ -1215,7 +1216,7 @@ pub(crate) fn show(app: &mut PlumaApp, ui: &mut egui::Ui) {
         crate::theme::round_island_corners(ui.painter(), &t, rect);
     }
     if t.nodalia {
-        // The tab strips are the island's colour, which craft-ui gives the column bars too: put
+        // The tab strips are the island's colour, which nodalia-ui gives the column bars too: put
         // the bars back on the window's colour, with their » or «.
         let hover = ctx.pointer_hover_pos();
         for (bar, button, glyph) in std::mem::take(&mut content.bars) {
@@ -1224,7 +1225,7 @@ pub(crate) fn show(app: &mut PlumaApp, ui: &mut egui::Ui) {
             ui.painter().with_clip_rect(button).text(button.center(), egui::Align2::CENTER_CENTER, glyph, style.font.clone(), ink);
         }
     }
-    app.dock_rt.space = craft_ui::docking::float_space(&ctx, area);
+    app.dock_rt.space = nodalia_ui::docking::float_space(&ctx, area);
     if let Some(panel) = output.focused.take() {
         app.dock_rt.focused = Some(panel);
     }
@@ -1263,7 +1264,7 @@ pub(crate) fn show(app: &mut PlumaApp, ui: &mut egui::Ui) {
 /// in OS windows of their own take no input meanwhile, as the main window behind it takes none.
 /// The window level and visibility a palette window takes: hidden under a modal dialog (a click
 /// must not bring it back over the dialog), at the normal level under a menu or another popup drawn
-/// in the main window (so the menu is seen), and otherwise its palette level, which craft-ui leaves
+/// in the main window (so the menu is seen), and otherwise its palette level, which nodalia-ui leaves
 /// a palette at when it creates one: topmost while the app is active, behind other applications'
 /// windows while it is not.
 #[cfg(not(target_arch = "wasm32"))]
@@ -1288,7 +1289,7 @@ fn palette_window_state(modal: bool, popup: bool, active: bool) -> (egui::Window
 }
 
 /// Sends the palette windows of `layout` the level and visibility [`palette_window_state`] gives
-/// when they change. craft-ui varies a palette's level through the viewport builder, which egui
+/// when they change. nodalia-ui varies a palette's level through the viewport builder, which egui
 /// applies when the window opens and not to one already on screen, so the commands go explicitly to
 /// the windows there are. A window that opens while the others are hidden (a panel floated under a
 /// dialog, a menu, a flyout or the drawer) opens shown at its palette level, so it gets the commands
@@ -1312,7 +1313,7 @@ fn palette_window_levels(ctx: &egui::Context, layout: &Layout<String>, modal: bo
         ctx.data_mut(|d| d.insert_temp(key, (state, windows)));
     }
     for window in layout.floating.iter().filter(|window| fresh.contains(&window.id)) {
-        let viewport = craft_ui::docking::DockArea::<String>::window_viewport(area_id(), window.id);
+        let viewport = nodalia_ui::docking::DockArea::<String>::window_viewport(area_id(), window.id);
         ctx.send_viewport_cmd_to(viewport, egui::ViewportCommand::WindowLevel(level));
         ctx.send_viewport_cmd_to(viewport, egui::ViewportCommand::Visible(visible));
     }
@@ -1364,7 +1365,7 @@ pub(crate) fn close_overlays_for_modal(app: &mut PlumaApp, ctx: &egui::Context) 
 
 /// Keys, text and clipboard events that a floating panel's own OS window left over run the main
 /// window's shortcuts, tool keys and clipboard on its next frame ([`PlumaApp::raw_input_hook`]).
-/// craft-ui forwards nothing while a field in that window has the keyboard. A field of the main
+/// nodalia-ui forwards nothing while a field in that window has the keyboard. A field of the main
 /// window loses it, as a click elsewhere in one window would take it. A floating document's OS
 /// window forwards its keys here too ([`crate::doc_windows`]).
 pub(crate) fn forward_keys(app: &mut PlumaApp, ctx: &egui::Context, events: Vec<egui::Event>, modifiers: Option<egui::Modifiers>) {
@@ -1385,17 +1386,17 @@ pub(crate) fn forward_keys(app: &mut PlumaApp, ctx: &egui::Context, events: Vec<
 }
 
 /// A field of a floating panel's window that ends its editing on Enter or Escape lets go of the
-/// keyboard in that frame, so craft-ui would forward the key to the main window's shortcuts: Enter
+/// keyboard in that frame, so nodalia-ui would forward the key to the main window's shortcuts: Enter
 /// in the Transparency panel's Opacity field also opened the Move dialog (#4803). The key was the
 /// field's, so it stays in the window.
 fn keep_field_ending_keys(ui: &egui::Ui) {
     ui.input_mut(|i| i.events.retain(|e| !matches!(e, egui::Event::Key { key: egui::Key::Enter | egui::Key::Escape, pressed: true, .. })));
 }
 
-/// Pluma's look and wording of craft-ui's docking.
-fn dock_style(ui: &egui::Ui) -> craft_ui::docking::DockStyle {
+/// Pluma's look and wording of nodalia-ui's docking.
+fn dock_style(ui: &egui::Ui) -> nodalia_ui::docking::DockStyle {
     let t = crate::theme::Tokens::get(ui.ctx());
-    let mut style = craft_ui::docking::DockStyle::from_ui(ui);
+    let mut style = nodalia_ui::docking::DockStyle::from_ui(ui);
     style.tab_height = 33.0;
     style.background = t.panel;
     style.tab_background = t.tab_strip;
@@ -1422,7 +1423,7 @@ fn dock_style(ui: &egui::Ui) -> craft_ui::docking::DockStyle {
     style.localized(|key| DOCK_LABELS.iter().find(|(k, _)| *k == key).map(|(_, english)| tl!(english).to_owned()))
 }
 
-/// Pluma's wording of craft-ui's docking labels, translated through `tl!`.
+/// Pluma's wording of nodalia-ui's docking labels, translated through `tl!`.
 const DOCK_LABELS: &[(&str, &str)] = &[
     ("dock.float", "Float Panel"),
     ("dock.close", "Close Panel"),
@@ -1448,7 +1449,7 @@ pub(crate) fn floating_size(panel: &str) -> egui::Vec2 {
     }
 }
 
-/// The width of a column bar's »/« button (craft-ui's).
+/// The width of a column bar's »/« button (nodalia-ui's).
 const COLLAPSE_WIDTH: f32 = 18.0;
 
 /// The panels' content, labels and icons.
@@ -1465,16 +1466,16 @@ struct PanelContent<'a> {
     rtl: bool,
 }
 
-impl craft_ui::docking::DockContent<String> for PanelContent<'_> {
+impl nodalia_ui::docking::DockContent<String> for PanelContent<'_> {
     /// Draw a registered panel body, fitting untouched flyouts and pinning sized panels' footers.
-    fn column_rect(&mut self, _ctx: &egui::Context, column: &craft_ui::docking::Column<String>, rect: egui::Rect, side: craft_ui::docking::Side) {
+    fn column_rect(&mut self, _ctx: &egui::Context, column: &nodalia_ui::docking::Column<String>, rect: egui::Rect, side: nodalia_ui::docking::Side) {
         // The island is the column under its collapse bar: rounded at the bar, its corners hid.
         let mut island = rect;
         island.min.y = (island.min.y + self.column_bar).min(island.max.y);
         self.islands.push(island);
-        // The bar and its button at the column's outer end, as craft-ui lays them out.
+        // The bar and its button at the column's outer end, as nodalia-ui lays them out.
         let bar = egui::Rect::from_min_max(rect.min, egui::pos2(rect.right(), island.min.y));
-        let left = (side == craft_ui::docking::Side::Start) != self.rtl;
+        let left = (side == nodalia_ui::docking::Side::Start) != self.rtl;
         let w = COLLAPSE_WIDTH.min(bar.width());
         let button = if left {
             egui::Rect::from_min_max(bar.min, egui::pos2(bar.left() + w, bar.bottom()))
@@ -1525,7 +1526,7 @@ impl craft_ui::docking::DockContent<String> for PanelContent<'_> {
             if DockTab::from_id(id).is_some() {
                 crate::dock::panel_body(self.app, ui, id, width, height);
             } else {
-                // Shrinking to the content's height lets craft-ui fit a float or flyout to it.
+                // Shrinking to the content's height lets nodalia-ui fit a float or flyout to it.
                 crate::widgets::panel_scroll(ui, egui::ScrollArea::vertical().id_salt(("shared-panel-body", id)).auto_shrink([false, true]), |ui| {
                     let width = ui.available_width();
                     crate::dock::panel_body(self.app, ui, id, width, height)
@@ -1550,11 +1551,11 @@ impl craft_ui::docking::DockContent<String> for PanelContent<'_> {
         model_permissions(id)
     }
 
-    fn limits(&self, id: &String) -> craft_ui::docking::PanelLimits {
+    fn limits(&self, id: &String) -> nodalia_ui::docking::PanelLimits {
         // The canvas keeps room for Tools and the lane of toolbars docked beside it.
         let beside = crate::toolbar::docked_width(&self.app.ui) + crate::custom_toolbars::beside_canvas_reserve(&self.app.ui);
         let min = if id == CANVAS { egui::vec2(200.0 + beside, 120.0) } else { egui::vec2(PANEL_MIN_WIDTH, 80.0) };
-        craft_ui::docking::PanelLimits { min, ..Default::default() }
+        nodalia_ui::docking::PanelLimits { min, ..Default::default() }
     }
 
     fn floating_size(&self, id: &String) -> Option<egui::Vec2> {

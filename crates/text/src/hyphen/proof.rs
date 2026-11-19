@@ -1,10 +1,10 @@
-//! Break points from craft-proof for the languages it has rules or patterns of its own for:
-//! German, Polish, Portuguese and Italian (hyph-utf8's TeX patterns, embedded only when craft-proof
-//! is built with `CRAFT_I18N_DIR`), Bulgarian and Turkish (syllable rules) and Russian (word-division
-//! rules). craft-proof hyphenates any other word as English; those points are dropped here, so a
+//! Break points from nodalia-proof for the languages it has rules or patterns of its own for:
+//! German, Polish, Portuguese and Italian (hyph-utf8's TeX patterns, embedded only when nodalia-proof
+//! is built with `NODALIA_I18N_DIR`), Bulgarian and Turkish (syllable rules) and Russian (word-division
+//! rules). nodalia-proof hyphenates any other word as English; those points are dropped here, so a
 //! word outside its language's script, or one these rules don't cover, stays whole.
 
-use craft_proof::hyphen::{Patterns, ProofLang, Source, word_breaks_in};
+use nodalia_proof::hyphen::{Patterns, ProofLang, Source, word_breaks_in};
 use unicode_normalization::UnicodeNormalization;
 use unicode_script::{Script, UnicodeScript};
 
@@ -45,13 +45,13 @@ fn latin(c: char) -> bool {
     matches!(c.script(), Script::Latin | Script::Inherited) && c != '\u{200c}' && c != '\u{200d}'
 }
 
-/// A Cyrillic letter, as craft-proof's Russian rules read them.
+/// A Cyrillic letter, as nodalia-proof's Russian rules read them.
 fn cyrillic(c: char) -> bool {
     matches!(c, '\u{0400}'..='\u{052F}') && c.is_alphabetic()
 }
 
 /// Whether `word` is written in the language's script, and the sources of points that come from
-/// the language's own rules or patterns. A Cyrillic word is checked composed, as craft-proof
+/// the language's own rules or patterns. A Cyrillic word is checked composed, as nodalia-proof
 /// hyphenates it: `и` + U+0306 is `й`, while a stress mark, which composes with nothing, is not a
 /// letter.
 fn fits(lang: ProofLang, word: &str) -> Option<&'static [Source]> {

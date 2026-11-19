@@ -25,10 +25,10 @@ permissions:
 
 jobs:
   freebsd:
-    uses: getnodalia/foundation/.github/workflows/freebsd.yml@976581262c95c0d95c0184149c0e1ba55485ccb3 # foundation main
+    uses: getnodalia/foundation/.github/workflows/freebsd.yml@a5325485b557dca4040002a0120a06d72b10ccb5 # foundation main
     with:
       fonts-repository: getnodalia/foundation
-      fonts-ref: b076417b5880bd4154bd22f00695b1d28c6bea83
+      fonts-ref: d4f57e6b31d7c7526b539f7aaaa07312c9908bb8
       # Build and test, then the release package and its tarball.
       command: >-
         cargo build --workspace --all-targets --locked &&

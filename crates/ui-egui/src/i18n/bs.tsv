@@ -4,7 +4,7 @@
 # Clean-room: every entry is written from the meaning of Pluma's English label, in standard
 # Bosnian (historija, sačuvaj, tačka, datoteka, postavke); no other application's localisation was
 # consulted or copied. Drafted with AI assistance (Claude Code) from the English meaning; not yet
-# reviewed by a native speaker. The wording is shared with storytold/craft-i18n
+# reviewed by a native speaker. The wording is shared with getnodalia/foundation (nodalia/i18n)
 # (locales/bs/pluma.tsv and common.tsv). Vocabulary: radna ploča (artboard), putanja (path),
 # sidrena tačka (anchor point), potez (stroke), ispuna (fill), gradijent, uzorci boja (Swatches),
 # uzorak (pattern), neprozirnost (opacity), četkica (brush), praćenje slike (Image Trace).

@@ -7,7 +7,7 @@ use std::ops::Range;
 use std::sync::Arc;
 use std::sync::atomic::AtomicU64;
 
-use craft_svg::tree::usvg::roxmltree;
+use nodalia_svg::tree::usvg::roxmltree;
 use pluma_doc::color::Color;
 use pluma_doc::{Document, Node, NodeId, NodeKind};
 use pluma_geom::Affine;

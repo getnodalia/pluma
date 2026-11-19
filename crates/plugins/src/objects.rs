@@ -366,7 +366,7 @@ fn encode_read_only_within(doc: &Document, n: &Node, symbols: &SymbolBoxes, left
             left.pixels = left.pixels.saturating_sub(charged);
             o["pixelsOmitted"] = json!(pixels.is_none());
             if let Some(p) = pixels {
-                o["pixelsBase64"] = json!(craft_vectorcraft_format::base64::encode(&p));
+                o["pixelsBase64"] = json!(nodalia_pluma_format::base64::encode(&p));
             }
         }
         _ => {}
@@ -490,10 +490,10 @@ fn rgba_pixels(b: &ImageBlob, w: u32, h: u32, max: usize, charged: &mut usize) -
     if cmyk {
         return cmyk_rgba(b, w, h);
     }
-    let mut opts = craft_image_codecs::DecodeOptions::default();
+    let mut opts = nodalia_image_codecs::DecodeOptions::default();
     // The decoder's own buffers besides the RGBA it gives.
     opts.limits.max_alloc = 64 << 20;
-    let img = craft_image_codecs::decode_with(&b.bytes, &opts).ok()?;
+    let img = nodalia_image_codecs::decode_with(&b.bytes, &opts).ok()?;
     (img.dimensions() == (w, h)).then(|| img.to_rgba8())
 }
 

@@ -355,23 +355,23 @@ fn read_data(ps: &[u8], name: &str) -> Option<Vec<u8>> {
     None
 }
 
-pub use craft_eps::{DOS_HEADER, DOS_MAGIC, Sections, is_eps};
+pub use nodalia_eps::{DOS_HEADER, DOS_MAGIC, Sections, is_eps};
 
 /// `ps` behind a binary header, followed by the TIFF preview `tiff`.
 fn dos_eps(ps: &[u8], tiff: &[u8]) -> Result<Vec<u8>, String> {
-    craft_eps::wrap(ps, Some(tiff), None).map_err(|e| e.to_string())
+    nodalia_eps::wrap(ps, Some(tiff), None).map_err(|e| e.to_string())
 }
 
 /// The sections of an EPS file: its PostScript and its TIFF preview (binary header), or the whole
 /// file as PostScript. `None` when a binary header points outside the file.
 pub fn sections(bytes: &[u8]) -> Option<(&[u8], Option<&[u8]>)> {
-    let s = craft_eps::sections(bytes).ok()?;
+    let s = nodalia_eps::sections(bytes).ok()?;
     Some((s.postscript, s.tiff))
 }
 
 /// The Windows metafile preview behind an EPS file's binary header, if it has one.
 pub fn metafile_preview(bytes: &[u8]) -> Option<&[u8]> {
-    craft_eps::sections(bytes).ok()?.metafile
+    nodalia_eps::sections(bytes).ok()?.metafile
 }
 
 /// The native document an EPS file written by [`export`] carries, if any.

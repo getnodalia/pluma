@@ -1,12 +1,12 @@
 //! usvg tree → document conversion.
 
-use craft_svg::tree::usvg;
+use nodalia_svg::tree::usvg;
 use std::borrow::Cow;
 use std::collections::{HashMap, HashSet};
 use std::str::FromStr;
 use std::sync::Arc;
 
-use craft_svg::tree::usvg::roxmltree;
+use nodalia_svg::tree::usvg::roxmltree;
 use pluma_color::{BlendMode, Color, Gradient, GradientGeom, GradientKind, GradientPaint, GradientStop, Paint};
 use pluma_doc::{
     Appearance, AppearanceItem, Dash, Document, FillLayer, ForeignAttribute, ImageBlob, ImageObject, LayerColor, LineCap, LineJoin, MAX_SVG_SCRIPTS,

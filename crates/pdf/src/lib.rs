@@ -255,8 +255,8 @@ pub enum PdfError {
     PlaceholderOnly,
 }
 
-impl From<craft_pdf::write::WriteError> for PdfError {
-    fn from(error: craft_pdf::write::WriteError) -> Self {
+impl From<nodalia_pdf::write::WriteError> for PdfError {
+    fn from(error: nodalia_pdf::write::WriteError) -> Self {
         Self::Write(error.to_string())
     }
 }

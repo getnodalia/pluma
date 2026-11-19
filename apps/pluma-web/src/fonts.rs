@@ -4,12 +4,12 @@
 //! [`want_chars`] a `demand` face (Korean, Devanagari) when the interface language or the
 //! interface's own text needs its script. The browser checks each file against its SHA-256
 //! (Subresource Integrity). A face that fails is logged and skipped: the app runs without it. With
-//! `WEB_FONTS` empty (built without craft-fonts) these do nothing.
+//! `WEB_FONTS` empty (built without nodalia-fonts) these do nothing.
 
 use std::cell::{Cell, RefCell};
 use std::rc::Rc;
 
-use pluma_text::craft_fonts::demand_fonts;
+use pluma_text::nodalia_fonts::demand_fonts;
 use pluma_text::{FontDb, WEB_FONTS, WebFont};
 use wasm_bindgen::JsCast as _;
 use wasm_bindgen::closure::Closure;

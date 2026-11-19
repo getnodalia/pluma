@@ -1,6 +1,6 @@
 //! Edit → Spelling: the words of the document's type that its dictionaries don't know
 //! (`text.spelling.check`) and the words they suggest instead (`text.spelling.suggest`), checked
-//! by craft-proof in each run's language
+//! by nodalia-proof in each run's language
 //! ([Check and correct spelling](https://helpx.adobe.com/illustrator/desktop/design-with-text/edit-format-text/check-and-correct-spelling.html)).
 //! A word is changed with `text.editRange` over the bytes the check gives. Add and Edit Custom
 //! Dictionary keep words in the custom dictionary (`text.spelling.dictionary`, `addWord`,
@@ -11,7 +11,7 @@ use std::collections::{BTreeMap, BTreeSet};
 use std::ops::Range;
 use std::sync::atomic::{AtomicU64, Ordering};
 
-use craft_proof::{IssueKind, Options, ProofLang};
+use nodalia_proof::{IssueKind, Options, ProofLang};
 use pluma_doc::{Document, NodeId, NodeKind, TextObject};
 use pluma_text::edit;
 use serde_json::{Value, json};
@@ -267,7 +267,7 @@ pub fn misspellings(t: &TextObject, ignored: &BTreeSet<String>, max: usize) -> (
 
 /// [`misspellings`] of the words that start at byte `from` or later. The paragraphs that end at
 /// or before `from` are not checked; the paragraph that holds `from` is checked whole, since
-/// craft-proof reads a paragraph's language from all of it.
+/// nodalia-proof reads a paragraph's language from all of it.
 pub fn misspellings_from(t: &TextObject, ignored: &BTreeSet<String>, from: usize, max: usize) -> (Vec<Misspelling>, bool) {
     let text = t.plain_text();
     // Each run in its own language, at its bytes of the plain text.
@@ -280,7 +280,7 @@ pub fn misspellings_from(t: &TextObject, ignored: &BTreeSet<String>, from: usize
     }
     let opts = Options::default();
     let mut found = vec![];
-    // craft-proof checks one paragraph at a time (its language detection reads the paragraph),
+    // nodalia-proof checks one paragraph at a time (its language detection reads the paragraph),
     // and the check stops at the paragraph where the list fills up rather than proofing the rest
     // of the text.
     let mut para_start = 0;
@@ -298,7 +298,7 @@ pub fn misspellings_from(t: &TextObject, ignored: &BTreeSet<String>, from: usize
                 (a < b).then(|| (a - para_start..b - para_start, *lang))
             })
             .collect();
-        for issue in craft_proof::check_text_with(para, &para_spans, &opts, false, false) {
+        for issue in nodalia_proof::check_text_with(para, &para_spans, &opts, false, false) {
             if issue.kind != IssueKind::Spelling {
                 continue;
             }
@@ -307,7 +307,7 @@ pub fn misspellings_from(t: &TextObject, ignored: &BTreeSet<String>, from: usize
                 continue;
             }
             let Some(word) = text.get(start..end) else { continue };
-            if craft_proof::custom_word(word).is_some_and(|w| ignored.contains(&w)) {
+            if nodalia_proof::custom_word(word).is_some_and(|w| ignored.contains(&w)) {
                 continue;
             }
             if found.len() == max {
@@ -356,24 +356,24 @@ fn suggest(_s: &mut Session, p: &Value) -> Result<Value> {
     }
     let lang = ProofLang::from_tag(str_param(p, "lang"));
     // `max` is at most MAX_SUGGESTIONS, so it fits.
-    let suggestions = craft_proof::suggest_in(word, usize::try_from(max).unwrap_or(5), lang);
+    let suggestions = nodalia_proof::suggest_in(word, usize::try_from(max).unwrap_or(5), lang);
     Ok(json!({ "suggestions": suggestions }))
 }
 
 /// `w` as the custom dictionary keeps it (trimmed, lower case), or None when it isn't one word of at
-/// most `craft_proof::MAX_CUSTOM_WORD_CHARS` characters: what `text.spelling.addWord` takes.
+/// most `nodalia_proof::MAX_CUSTOM_WORD_CHARS` characters: what `text.spelling.addWord` takes.
 pub fn custom_word(w: &str) -> Option<String> {
-    craft_proof::custom_word(w)
+    nodalia_proof::custom_word(w)
 }
 
 /// `p`'s `key` as a custom-dictionary word (trimmed, lower case), or an error naming what it must be.
 fn word_param(p: &Value, key: &str, command: &str) -> Result<String> {
     let w = str_param(p, key).ok_or_else(|| bad(command, format!("missing `{key}`")))?;
-    craft_proof::custom_word(w)
-        .ok_or_else(|| bad(command, format!("`{key}` must be one word of at most {} characters", craft_proof::MAX_CUSTOM_WORD_CHARS)))
+    nodalia_proof::custom_word(w)
+        .ok_or_else(|| bad(command, format!("`{key}` must be one word of at most {} characters", nodalia_proof::MAX_CUSTOM_WORD_CHARS)))
 }
 
-/// Largest custom dictionary file taken in, in bytes: craft-proof reads no more of one (its
+/// Largest custom dictionary file taken in, in bytes: nodalia-proof reads no more of one (its
 /// `MAX_CUSTOM_FILE_BYTES`), so a larger file would lose its other words when written back.
 pub const MAX_DICTIONARY_FILE_BYTES: u64 = 1_000_000;
 
@@ -386,7 +386,7 @@ fn dictionary_file_readable(path: &std::path::Path) -> std::result::Result<(), S
         Ok(m) if !m.is_file() => Err("it isn't a file".into()),
         Ok(m) if m.len() > MAX_DICTIONARY_FILE_BYTES => Err(format!("it is larger than {MAX_DICTIONARY_FILE_BYTES} bytes")),
         Ok(_) => {
-            // Read it whole, as craft-proof will: a file that opens but then can't be read would
+            // Read it whole, as nodalia-proof will: a file that opens but then can't be read would
             // read as no words there.
             use std::io::Read;
             let mut bytes = Vec::new();
@@ -404,7 +404,7 @@ fn dictionary_file_readable(path: &std::path::Path) -> std::result::Result<(), S
 /// a word another window saved meanwhile, which the change had added too, stays.
 fn retake_file_words(s: &Session) {
     if let Some(path) = s.dictionary_file.as_deref().filter(|p| dictionary_file_readable(p).is_ok()) {
-        craft_proof::load_user_dictionary(path);
+        nodalia_proof::load_user_dictionary(path);
     }
 }
 
@@ -416,27 +416,27 @@ fn save_dictionary(s: &Session, removed: &[String], command: &str) -> Result<()>
     if let Err(why) = dictionary_file_readable(path) {
         return Err(bad(command, format!("the custom dictionary {} can't be read ({why}), so it is left as it is", path.display())));
     }
-    craft_proof::save_user_dictionary(path, removed)
+    nodalia_proof::save_user_dictionary(path, removed)
         .map_err(|e| bad(command, format!("the custom dictionary couldn't be saved to {}: {e}", path.display())))
 }
 
 /// `text.spelling.dictionary`: the custom dictionary's words.
 fn dictionary(_s: &mut Session, _p: &Value) -> Result<Value> {
-    Ok(json!({ "words": craft_proof::user_dictionary() }))
+    Ok(json!({ "words": nodalia_proof::user_dictionary() }))
 }
 
 /// `text.spelling.addWord`: Add, and Edit Custom Dictionary's Add.
 fn add_word(s: &mut Session, p: &Value) -> Result<Value> {
     const C: &str = "text.spelling.addWord";
     let word = word_param(p, "word", C)?;
-    let added = !craft_proof::user_dictionary().contains(&word);
-    craft_proof::add_word(&word);
+    let added = !nodalia_proof::user_dictionary().contains(&word);
+    nodalia_proof::add_word(&word);
     let saved = save_dictionary(s, &[], C);
     dictionary_changed();
     saved.inspect_err(|_| {
         // Only this command's word: words the save took in from the file stay.
         if added {
-            craft_proof::remove_word(&word);
+            nodalia_proof::remove_word(&word);
             retake_file_words(s);
         }
     })?;
@@ -447,12 +447,12 @@ fn add_word(s: &mut Session, p: &Value) -> Result<Value> {
 fn remove_word(s: &mut Session, p: &Value) -> Result<Value> {
     const C: &str = "text.spelling.removeWord";
     let word = word_param(p, "word", C)?;
-    if !craft_proof::remove_word(&word) {
+    if !nodalia_proof::remove_word(&word) {
         return Err(bad(C, format!("`{word}` isn't in the custom dictionary")));
     }
     let saved = save_dictionary(s, std::slice::from_ref(&word), C);
     dictionary_changed();
-    saved.inspect_err(|_| craft_proof::add_word(&word))?;
+    saved.inspect_err(|_| nodalia_proof::add_word(&word))?;
     Ok(json!({ "word": word }))
 }
 
@@ -461,7 +461,7 @@ fn change_word(s: &mut Session, p: &Value) -> Result<Value> {
     const C: &str = "text.spelling.changeWord";
     let word = word_param(p, "word", C)?;
     let to = word_param(p, "to", C)?;
-    if !craft_proof::user_dictionary().contains(&word) {
+    if !nodalia_proof::user_dictionary().contains(&word) {
         return Err(bad(C, format!("`{word}` isn't in the custom dictionary")));
     }
     if word == to {
@@ -470,17 +470,17 @@ fn change_word(s: &mut Session, p: &Value) -> Result<Value> {
         saved?;
         return Ok(json!({ "word": to }));
     }
-    let to_is_new = !craft_proof::user_dictionary().contains(&to);
-    craft_proof::remove_word(&word);
-    craft_proof::add_word(&to);
+    let to_is_new = !nodalia_proof::user_dictionary().contains(&to);
+    nodalia_proof::remove_word(&word);
+    nodalia_proof::add_word(&to);
     let saved = save_dictionary(s, std::slice::from_ref(&word), C);
     dictionary_changed();
     saved.inspect_err(|_| {
         if to_is_new {
-            craft_proof::remove_word(&to);
+            nodalia_proof::remove_word(&to);
             retake_file_words(s);
         }
-        craft_proof::add_word(&word);
+        nodalia_proof::add_word(&word);
     })?;
     Ok(json!({ "word": to }))
 }
@@ -499,8 +499,8 @@ fn word_list(p: &Value, key: &str, command: &str) -> Result<BTreeSet<String>> {
         .iter()
         .map(|w| {
             w.as_str()
-                .and_then(craft_proof::custom_word)
-                .ok_or_else(|| bad(command, format!("`{key}` must hold single words of at most {} characters", craft_proof::MAX_CUSTOM_WORD_CHARS)))
+                .and_then(nodalia_proof::custom_word)
+                .ok_or_else(|| bad(command, format!("`{key}` must hold single words of at most {} characters", nodalia_proof::MAX_CUSTOM_WORD_CHARS)))
         })
         .collect()
 }
@@ -511,7 +511,7 @@ fn word_list(p: &Value, key: &str, command: &str) -> Result<BTreeSet<String>> {
 fn edit_dictionary(s: &mut Session, p: &Value) -> Result<Value> {
     const C: &str = "text.spelling.editDictionary";
     let (remove, add) = (word_list(p, "remove", C)?, word_list(p, "add", C)?);
-    let before: BTreeSet<String> = craft_proof::user_dictionary().into_iter().collect();
+    let before: BTreeSet<String> = nodalia_proof::user_dictionary().into_iter().collect();
     // A word in both lists stays; a word to delete that another window deleted already is skipped.
     let removed: Vec<String> = remove.iter().filter(|w| !add.contains(*w) && before.contains(*w)).cloned().collect();
     let added: Vec<String> = add.iter().filter(|w| !before.contains(*w)).cloned().collect();
@@ -519,19 +519,19 @@ fn edit_dictionary(s: &mut Session, p: &Value) -> Result<Value> {
         return Ok(json!({ "removed": removed, "added": added }));
     }
     for w in &removed {
-        craft_proof::remove_word(w);
+        nodalia_proof::remove_word(w);
     }
     for w in &added {
-        craft_proof::add_word(w);
+        nodalia_proof::add_word(w);
     }
     let saved = save_dictionary(s, &removed, C);
     dictionary_changed();
     saved.inspect_err(|_| {
         for w in &added {
-            craft_proof::remove_word(w);
+            nodalia_proof::remove_word(w);
         }
         for w in &removed {
-            craft_proof::add_word(w);
+            nodalia_proof::add_word(w);
         }
         // Words the save took in from the file stay, as for one word.
         if !added.is_empty() {
@@ -559,7 +559,7 @@ impl Session {
     pub fn attach_custom_dictionary(&mut self, path: std::path::PathBuf) {
         match dictionary_file_readable(&path) {
             Ok(()) => {
-                craft_proof::load_user_dictionary(&path);
+                nodalia_proof::load_user_dictionary(&path);
             }
             Err(why) => log::warn!("not reading the custom dictionary {}: {why}; it is left as it is", path.display()),
         }

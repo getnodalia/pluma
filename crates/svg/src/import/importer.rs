@@ -7,8 +7,8 @@ use super::{
     StrokeLayer, Vec2, fnv1a, fx, shapes, text, vector_effect,
 };
 use crate::SvgError;
-use craft_svg::tree::usvg;
 use kurbo::BezPath;
+use nodalia_svg::tree::usvg;
 use pluma_color::GradientSpread;
 
 /// How many clip paths deep (`<clipPath clip-path>`) an object's clip is read.

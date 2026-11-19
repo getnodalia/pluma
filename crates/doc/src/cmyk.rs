@@ -40,7 +40,7 @@ fn pixels(width: u32, height: u32) -> Option<u64> {
 /// The number of colour components of JPEG `bytes` (its frame header); `None` when they aren't a
 /// JPEG.
 pub fn jpeg_components(bytes: &[u8]) -> Option<usize> {
-    craft_image_codecs::jpeg_inks::jpeg_components(bytes)
+    nodalia_image_codecs::jpeg_inks::jpeg_components(bytes)
 }
 
 fn is_tiff(bytes: &[u8]) -> bool {
@@ -636,7 +636,7 @@ pub fn tiff_icc_profile(bytes: &[u8]) -> Option<Vec<u8>> {
 /// The ICC profile of a JPEG, put together from all its numbered `ICC_PROFILE` APP2 segments;
 /// `None` without one.
 fn jpeg_icc(bytes: &[u8]) -> Option<Vec<u8>> {
-    craft_image_codecs::jpeg_inks::jpeg_icc_profile(bytes)
+    nodalia_image_codecs::jpeg_inks::jpeg_icc_profile(bytes)
 }
 
 /// The bytes after an `ICC_PROFILE` APP2 segment's length: its name, then the segment's number and
@@ -840,7 +840,7 @@ impl ImageBlob {
     pub fn header_size(&self) -> Option<(u32, u32)> {
         let bytes = self.bytes.as_slice();
         if bytes.starts_with(&[0xFF, 0xD8]) {
-            return craft_image_codecs::jpeg_inks::jpeg_dimensions(bytes);
+            return nodalia_image_codecs::jpeg_inks::jpeg_dimensions(bytes);
         }
         tiff(bytes).and_then(|(_, mut d)| d.dimensions().ok())
     }
@@ -918,8 +918,8 @@ fn sample_inks(inks: &Inks, x: f64, y: f64, size: u32) -> Option<[u8; 4]> {
 /// The ink amounts of a four-component JPEG (its samples inverted back; YCCK converted to CMYK
 /// first, as JPEG readers do).
 fn jpeg_inks(bytes: &[u8]) -> Option<Inks> {
-    let limits = craft_image_codecs::Limits { max_pixels: MAX_CMYK_PIXELS, ..craft_image_codecs::Limits::default() };
-    let image = craft_image_codecs::jpeg_inks::decode_jpeg_inks(bytes, &limits).ok()?;
+    let limits = nodalia_image_codecs::Limits { max_pixels: MAX_CMYK_PIXELS, ..nodalia_image_codecs::Limits::default() };
+    let image = nodalia_image_codecs::jpeg_inks::decode_jpeg_inks(bytes, &limits).ok()?;
     let (w, h) = image.dimensions();
     Inks::new(w, h, image.into_data())
 }
@@ -1074,14 +1074,14 @@ pub enum Group3Error {
     /// A strip or tile ends before its last row or can't be decoded (it holds a code the decoder
     /// doesn't read, such as T.4's uncompressed mode, or a row of the wrong width), or a tile is
     /// larger than [`crate::MAX_RASTER_ALLOC`] allows as RGBA, or is wider than
-    /// [`craft_stream_codecs::MAX_CCITT_COLUMNS`].
+    /// [`nodalia_stream_codecs::MAX_CCITT_COLUMNS`].
     #[error("could not decode image: {}", damage(*.0))]
-    Damaged(craft_stream_codecs::CcittErrorKind),
+    Damaged(nodalia_stream_codecs::CcittErrorKind),
 }
 
 /// What went wrong in a Group 3 strip or tile, as [`Group3Error::Damaged`] says it.
-fn damage(kind: craft_stream_codecs::CcittErrorKind) -> &'static str {
-    use craft_stream_codecs::CcittErrorKind as K;
+fn damage(kind: nodalia_stream_codecs::CcittErrorKind) -> &'static str {
+    use nodalia_stream_codecs::CcittErrorKind as K;
     match kind {
         K::UnexpectedEof => "unexpected end of input",
         K::Overflow => "arithmetic overflow in position calculation",
@@ -1101,7 +1101,7 @@ fn damage(kind: craft_stream_codecs::CcittErrorKind) -> &'static str {
 /// an error when the pixels would take more than [`crate::MAX_RASTER_ALLOC`] as RGBA, a tile is
 /// larger than that allowance, or a strip or tile can't be decoded or ends before its last row.
 pub fn group3_tiff_rgba(bytes: &[u8]) -> Option<Result<image::RgbaImage, Group3Error>> {
-    use craft_stream_codecs::{CcittErrorKind as DecodeError, CcittParams, decode_ccitt_raw};
+    use nodalia_stream_codecs::{CcittErrorKind as DecodeError, CcittParams, decode_ccitt_raw};
     use tiff::tags::Tag;
     let (kind, mut d) = tiff(bytes)?;
     let compression = d.find_tag_unsigned::<u16>(Tag::Compression).ok().flatten()?;
@@ -2161,7 +2161,7 @@ mod tests {
         assert_eq!(Inks::new(1 << 14, 1 << 13, vec![]), None, "too large");
     }
 
-    /// The CMYK JPEG reader before craft-image-codecs read the inks (zune-jpeg, every sample
+    /// The CMYK JPEG reader before nodalia-image-codecs read the inks (zune-jpeg, every sample
     /// inverted, libjpeg's truncating YCCK conversion), the reference [`jpeg_inks`] matches.
     fn zune_inks(bytes: &[u8]) -> Option<Inks> {
         use zune_jpeg::zune_core::{bytestream::ZCursor, colorspace::ColorSpace, options::DecoderOptions};

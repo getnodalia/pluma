@@ -153,7 +153,7 @@ fn the_image_trace_preview_setting_is_kept_across_a_restart() {
 
 #[test]
 fn the_system_title_bar_preference_keeps_the_window_decorations() {
-    use craft_window::{Frame, Layout};
+    use nodalia_window::{Frame, Layout};
 
     // The System Title Bar preference (Preferences › User Interface) is read the same way on
     // every platform; a missing or unreadable value is `false`.
@@ -225,7 +225,7 @@ fn the_app_title_bar_preference_gives_the_app_frame_on_desktop_frames() {
 /// where the app frame is not drawn. System Title Bar takes precedence over the preference.
 #[test]
 fn the_start_frame_applies_the_app_title_bar_preference() {
-    use craft_window::{Button, Frame, Layout};
+    use nodalia_window::{Button, Frame, Layout};
     let gnome = Layout { left: vec![Button::Close], right: vec![] };
     let cases = [
         // (probed, overridden, forced_to_x11, opted_into_app), expected
@@ -253,7 +253,7 @@ fn the_start_frame_applies_the_app_title_bar_preference() {
 /// macOS and Windows keep all three at the right.
 #[test]
 fn the_caption_buttons_follow_the_frame_layout() {
-    use craft_window::{Button, Frame, Layout};
+    use nodalia_window::{Button, Frame, Layout};
     use pluma_ui_egui::titlebar::{Caption, CaptionLayout};
     let close_only = Layout::parse("appmenu:close");
     let at_left = Layout { left: vec![Button::Close, Button::Minimize, Button::Maximize], right: vec![] };
@@ -276,7 +276,7 @@ fn the_caption_buttons_follow_the_frame_layout() {
 /// on. The saved preference still decides while the variable is unset.
 #[test]
 fn the_titlebar_variable_takes_precedence_over_system_title_bar() {
-    use craft_window::Frame;
+    use nodalia_window::Frame;
     assert!(super::system_title_bar_applies(true, false));
     assert!(!super::system_title_bar_applies(true, true));
     assert!(!super::system_title_bar_applies(false, false));
@@ -290,7 +290,7 @@ fn the_titlebar_variable_takes_precedence_over_system_title_bar() {
     // PLUMA_TITLEBAR=desktop with System Title Bar off keeps the desktop's frame.
     #[cfg(not(any(target_os = "macos", target_os = "windows")))]
     {
-        let frame = super::start_frame(Frame::App(craft_window::Layout::default()), Some(false), false, false);
+        let frame = super::start_frame(Frame::App(nodalia_window::Layout::default()), Some(false), false, false);
         assert!(!super::custom_titlebar_from(&frame, super::system_title_bar_applies(false, true)));
     }
 }
@@ -339,7 +339,7 @@ fn the_titlebar_variable_decides_the_frame_before_the_window_opens() {
             "app" => true,
             "system" | "desktop" => false,
             // Not a value the variable takes: System Title Bar decides when it is on. Otherwise the
-            // `craft-window` probe decides, the same with System Title Bar off as with no saved
+            // `nodalia-window` probe decides, the same with System Title Bar off as with no saved
             // preferences.
             _ if opted_into_system => false,
             _ => super::custom_titlebar(None).0,
@@ -356,7 +356,7 @@ fn the_titlebar_variable_decides_the_frame_before_the_window_opens() {
 #[test]
 fn the_desktop_keeps_the_frame_where_system_title_bar_does_not_change_it() {
     use crate::titlebar::desktop_keeps_frame_from;
-    use craft_window::{Frame, Layout};
+    use nodalia_window::{Frame, Layout};
     let linux = cfg!(not(any(target_os = "macos", target_os = "windows")));
     for probed in [Frame::Desktop, Frame::App(Layout::default())] {
         for forced_to_x11 in [false, true] {

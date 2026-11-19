@@ -74,7 +74,7 @@ pub(super) fn key_and_color(ui: &mut egui::Ui, d: &mut Dialog) {
     let keys: Vec<String> = std::iter::once(none.to_string()).chain((1..=FUNCTION_KEYS).map(|n| format!("F{n}"))).collect();
     let labels: Vec<&str> = keys.iter().map(String::as_str).collect();
     let shown = usize::try_from(key).ok().and_then(|k| labels.get(k)).copied().unwrap_or(none);
-    let modifier = if crate::keymap::platform() == craft_keymap::Platform::Mac { "⌘" } else { "Ctrl" };
+    let modifier = if crate::keymap::platform() == nodalia_keymap::Platform::Mac { "⌘" } else { "Ctrl" };
     widgets::label_row(ui, "Function Key:", LABEL_W, |ui| {
         if let Some(i) = widgets::dropdown_names(ui, "action-key", shown, &labels, 70.0) {
             d.fields.insert("key".into(), json!(i));

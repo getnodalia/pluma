@@ -10,7 +10,7 @@
 //! lineweights, linetypes and transparency come through layers and blocks as CAD apps resolve
 //! them. What can't come in is listed in the warnings.
 //!
-//! - `reader`: what the import uses of the drawing `craft_dxf::model` reads: header, tables,
+//! - `reader`: what the import uses of the drawing `nodalia_dxf::model` reads: header, tables,
 //!   blocks and layouts.
 //! - `entity`: entities to items (geometry and properties).
 //! - `curve`: bulges, arcs, ellipses and NURBS as Bézier paths.
@@ -103,12 +103,12 @@ pub fn is_dxf(bytes: &[u8]) -> bool {
 }
 
 /// The tags of a DXF file and where it is damaged (DWG files are refused).
-fn tags(bytes: &[u8]) -> Result<(Vec<craft_dxf::Tag>, Option<String>), String> {
+fn tags(bytes: &[u8]) -> Result<(Vec<nodalia_dxf::Tag>, Option<String>), String> {
     if bytes.starts_with(b"AC10") || bytes.starts_with(b"AC1.") {
         return Err("this is a DWG drawing, which can't be read: save it from the CAD app as a DXF and open that".into());
     }
-    let (tags, damaged) = craft_dxf::parse_recovering(bytes).map_err(|e| match e {
-        craft_dxf::DxfError::TooLarge { .. } => "the drawing is too large to open".to_string(),
+    let (tags, damaged) = nodalia_dxf::parse_recovering(bytes).map_err(|e| match e {
+        nodalia_dxf::DxfError::TooLarge { .. } => "the drawing is too large to open".to_string(),
         _ if bytes.starts_with(reader::BINARY_SENTINEL) => "this binary DXF file is damaged or cut short".to_string(),
         _ => "not a DXF drawing".to_string(),
     })?;
@@ -165,7 +165,7 @@ fn units_name(code: i64) -> &'static str {
 /// Read what `bytes` holds: its version, units, layouts and layers.
 pub fn info(bytes: &[u8]) -> Result<DxfInfo, String> {
     let (tags, _) = tags(bytes)?;
-    let d = reader::Drawing::read(craft_dxf::model::Document::read(&tags));
+    let d = reader::Drawing::read(nodalia_dxf::model::Document::read(&tags));
     if d.sections == 0 {
         return Err("not a DXF drawing".into());
     }
@@ -194,7 +194,7 @@ pub fn import(bytes: &[u8], o: &ImportOptions) -> Result<Imported, String> {
         return Err(format!("scale must be a number from {} to {}, not {s}", SCALE_RANGE.start(), SCALE_RANGE.end()));
     }
     let (tags, damaged) = tags(bytes)?;
-    let d = reader::Drawing::read(craft_dxf::model::Document::read(&tags));
+    let d = reader::Drawing::read(nodalia_dxf::model::Document::read(&tags));
     if d.sections == 0 {
         return Err("not a DXF drawing".into());
     }

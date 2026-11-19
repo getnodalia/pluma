@@ -4,16 +4,16 @@ use std::collections::{HashMap, HashSet};
 use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::{Arc, Mutex};
 
-use craft_pdf::interpret::font::Glyph;
-use craft_pdf::interpret::hayro_cmap::BfString;
-use craft_pdf::interpret::pattern::{Pattern, TilingPattern};
-use craft_pdf::interpret::{
+use kurbo::{Affine, BezPath, PathEl, Rect, Shape};
+use nodalia_pdf::interpret::font::Glyph;
+use nodalia_pdf::interpret::hayro_cmap::BfString;
+use nodalia_pdf::interpret::pattern::{Pattern, TilingPattern};
+use nodalia_pdf::interpret::{
     CacheKey, ClipPath, Context, Device, GlyphDrawMode, Image, ImageData, InterpreterCache, InterpreterSettings, InterpreterWarning, LumaData,
     MaskType, PathDrawMode, SoftMask, StrokeProps,
 };
-use craft_pdf::syntax::object::Name;
-use craft_pdf::syntax::page::Page;
-use kurbo::{Affine, BezPath, PathEl, Rect, Shape};
+use nodalia_pdf::syntax::object::Name;
+use nodalia_pdf::syntax::page::Page;
 use pluma_color::{BlendMode, Color, Paint, Swatch};
 use pluma_doc::{
     Appearance, AppearanceItem, Artboard, ColorMode, Dash, Document, FillLayer, ImageBlob, ImageObject, Knockout, LayerColor, LineCap, LineJoin,

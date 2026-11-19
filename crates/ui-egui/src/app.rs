@@ -164,7 +164,7 @@ impl PlumaApp {
             font_install_check_at: f64::NEG_INFINITY,
             paste_chord: Default::default(),
             // Held keys repeat their command (Cmd+= keeps zooming in).
-            dispatcher: craft_keymap::egui::Dispatcher::new().with_repeat(true),
+            dispatcher: nodalia_keymap::egui::Dispatcher::new().with_repeat(true),
             background: Default::default(),
             opening: Default::default(),
             plugin_runs: Default::default(),

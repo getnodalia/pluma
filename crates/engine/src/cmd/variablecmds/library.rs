@@ -240,23 +240,23 @@ impl Library {
 /// type declaration defines are read as [`without_doctype`] says.
 fn parse_library(xml: &str, cmd: &str, text_only: bool) -> Result<Library> {
     let xml = without_doctype(xml, cmd)?;
-    let opts = craft_xml::Options {
-        names: craft_xml::Names::AsWritten,
-        limits: craft_xml::Limits { max_depth: MAX_LIBRARY_NESTING, max_nodes: MAX_LIBRARY_NODES as usize, ..craft_xml::Limits::DEFAULT },
-        ..craft_xml::Options::default()
+    let opts = nodalia_xml::Options {
+        names: nodalia_xml::Names::AsWritten,
+        limits: nodalia_xml::Limits { max_depth: MAX_LIBRARY_NESTING, max_nodes: MAX_LIBRARY_NODES as usize, ..nodalia_xml::Limits::DEFAULT },
+        ..nodalia_xml::Options::default()
     }
     .strict();
     let doc = opts.parse(xml.as_bytes()).map_err(|e| match e {
-        craft_xml::Error::TooDeep(_) => bad(cmd, format!("the variable library nests elements more than {MAX_LIBRARY_NESTING} deep")),
+        nodalia_xml::Error::TooDeep(_) => bad(cmd, format!("the variable library nests elements more than {MAX_LIBRARY_NESTING} deep")),
         _ => bad(cmd, format!("the variable library is not well-formed XML: {e}")),
     })?;
     crate::cmd::xmlattrs::validate(xml.as_bytes(), opts.limits).map_err(|e| bad(cmd, format!("the variable library is not well-formed XML: {e}")))?;
-    let Some(root) = std::iter::once(&doc).chain(doc.descendants()).find(|n| n.is(craft_xml::Local("variableSets"))) else {
+    let Some(root) = std::iter::once(&doc).chain(doc.descendants()).find(|n| n.is(nodalia_xml::Local("variableSets"))) else {
         return Err(bad(cmd, "the file holds no `variableSets` element"));
     };
-    let sets: Vec<&craft_xml::El> = root.children(craft_xml::Local("variableSet")).collect();
+    let sets: Vec<&nodalia_xml::El> = root.children(nodalia_xml::Local("variableSet")).collect();
     let (mut variables, mut kinds, mut refs) = (Vec::new(), BTreeMap::new(), Vec::new());
-    for var in sets.iter().flat_map(|s| s.children(craft_xml::Local("variables"))).flat_map(|v| v.children(craft_xml::Local("variable"))) {
+    for var in sets.iter().flat_map(|s| s.children(nodalia_xml::Local("variables"))).flat_map(|v| v.children(nodalia_xml::Local("variable"))) {
         let name = named(var.attr("varName"), "varName", cmd)?;
         let trait_name = var.attr("trait").map(|t| t.chars().take(MAX_NAME).collect::<String>());
         let kind = trait_kind(trait_name.as_deref());
@@ -279,7 +279,9 @@ fn parse_library(xml: &str, cmd: &str, text_only: bool) -> Result<Library> {
         return Err(bad(cmd, "the variable library declares no variables"));
     }
     let (mut datasets, mut seen) = (Vec::new(), BTreeSet::new());
-    for row in sets.iter().flat_map(|s| s.children(craft_xml::Local("sampleDataSets"))).flat_map(|d| d.children(craft_xml::Local("sampleDataSet"))) {
+    for row in
+        sets.iter().flat_map(|s| s.children(nodalia_xml::Local("sampleDataSets"))).flat_map(|d| d.children(nodalia_xml::Local("sampleDataSet")))
+    {
         let name = named(row.attr("dataSetName"), "dataSetName", cmd)?;
         if !seen.insert(name.clone()) {
             return Err(bad(cmd, format!("data set `{name}` is declared twice")));
@@ -316,12 +318,12 @@ fn parse_library(xml: &str, cmd: &str, text_only: bool) -> Result<Library> {
 /// white space round them, and an element holding only white space gives none. A variable of
 /// unknown kind takes no value, so what its element holds is passed over. `set` names the data set
 /// in the errors.
-fn library_value(el: &craft_xml::El, kind: VariableKind, set: &str, cmd: &str) -> Result<Option<DataValue>> {
+fn library_value(el: &nodalia_xml::El, kind: VariableKind, set: &str, cmd: &str) -> Result<Option<DataValue>> {
     let refused = |what: &str| bad(cmd, format!("data set `{set}` holds a value for `{}` that isn't {what}", el.local()));
     let text = || if el.elements().next().is_some() { None } else { Some(el.deep_text()) };
     match kind {
         VariableKind::Text => {
-            let paras: Vec<String> = el.children(craft_xml::Local("p")).map(craft_xml::El::deep_text).collect();
+            let paras: Vec<String> = el.children(nodalia_xml::Local("p")).map(nodalia_xml::El::deep_text).collect();
             Ok((!paras.is_empty()).then(|| DataValue::Text(paras.join("\n"))))
         }
         VariableKind::Visibility => {
@@ -419,10 +421,10 @@ fn library_file(path: &str) -> String {
 /// series, or when `el` holds only white space, there is no value. Anything else in `el`, more than
 /// [`MAX_GRAPH_CATEGORIES`] rows or [`MAX_GRAPH_SERIES`] series (what a graph holds), and CSV longer
 /// than graph values hold, are refused.
-fn graph_value(el: &craft_xml::El, set: &str, cmd: &str) -> Result<Option<DataValue>> {
+fn graph_value(el: &nodalia_xml::El, set: &str, cmd: &str) -> Result<Option<DataValue>> {
     let var = el.local();
     let refused = || bad(cmd, format!("data set `{set}` holds a value for `{var}` that isn't a graph's `data` element"));
-    let named = |name: &'static str| craft_xml::Local(name);
+    let named = |name: &'static str| nodalia_xml::Local(name);
     let mut children = el.elements();
     let data = match (children.next(), children.next()) {
         (None, _) if el.deep_text().trim_matches(XML_SPACE).is_empty() => return Ok(None),
@@ -431,14 +433,14 @@ fn graph_value(el: &craft_xml::El, set: &str, cmd: &str) -> Result<Option<DataVa
     };
     // Labels keep their white space; numbers are read without it.
     let series: Vec<String> =
-        data.child(named("propertyRow")).map(|r| r.children(named("value")).skip(1).map(craft_xml::El::deep_text).collect()).unwrap_or_default();
-    let rows: Vec<&craft_xml::El> = data.children(named("values")).flat_map(|v| v.children(named("row"))).take(MAX_GRAPH_CATEGORIES + 1).collect();
+        data.child(named("propertyRow")).map(|r| r.children(named("value")).skip(1).map(nodalia_xml::El::deep_text).collect()).unwrap_or_default();
+    let rows: Vec<&nodalia_xml::El> = data.children(named("values")).flat_map(|v| v.children(named("row"))).take(MAX_GRAPH_CATEGORIES + 1).collect();
     if rows.is_empty() && series.is_empty() {
         return Ok(None);
     }
     let too_many = || bad(cmd, format!("data set `{set}` holds a graph value for `{var}` with {}", graph_limits()));
     // A row's values after its name.
-    let wide = |row: &&craft_xml::El| {
+    let wide = |row: &&nodalia_xml::El| {
         let mut values = row.children(named("value")).peekable();
         let _name = values.next_if(|v| v.attr("key") == Some("name"));
         values.count() > MAX_GRAPH_SERIES
@@ -455,8 +457,8 @@ fn graph_value(el: &craft_xml::El, set: &str, cmd: &str) -> Result<Option<DataVa
             let mut values = row.children(named("value")).peekable();
             let name = values.next_if(|v| v.attr("key") == Some("name"));
             labelled |= name.is_some_and(|v| v.attr("type") == Some("string") || !v.deep_text().is_empty());
-            let name = name.map(craft_xml::El::deep_text);
-            let number = |v: &craft_xml::El| v.deep_text().trim_matches(XML_SPACE).parse::<f64>().ok().filter(|n| n.is_finite());
+            let name = name.map(nodalia_xml::El::deep_text);
+            let number = |v: &nodalia_xml::El| v.deep_text().trim_matches(XML_SPACE).parse::<f64>().ok().filter(|n| n.is_finite());
             let numbers = values.map(|v| if v.attr("type") == Some("string") { None } else { number(v) });
             (name, numbers.collect())
         })

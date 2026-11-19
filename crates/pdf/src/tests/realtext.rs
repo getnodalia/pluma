@@ -994,15 +994,15 @@ fn dithered_type_keeps_its_resolution_when_scaled_and_stays_searchable() {
     assert_eq!(texts(&import_as(&scaled, TextAs::Text)), ["Dither"]);
 }
 
-/// Exact craft-fonts face: a substituted Arabic font would miss Noto's dot decomposition.
+/// Exact nodalia-fonts face: a substituted Arabic font would miss Noto's dot decomposition.
 fn mark_text(text: &str) -> Option<TextObject> {
-    // The craft-fonts build of the face: a system font of the same family (Linux distributions
+    // The nodalia-fonts build of the face: a system font of the same family (Linux distributions
     // install one) can lack the Latin and digit glyphs these fixtures shape with it.
-    let bundled = pluma_text::CRAFT_FONTS.iter().any(|f| f.family == "Noto Sans Arabic" && f.style == "Regular");
+    let bundled = pluma_text::NODALIA_FONTS.iter().any(|f| f.family == "Noto Sans Arabic" && f.style == "Regular");
     let face = FontDb::global().face("Noto Sans Arabic", "Regular").filter(|f| bundled && f.family == "Noto Sans Arabic");
     let Some(face) = face else {
-        assert!(std::env::var("CRAFT_FONTS_REQUIRED").as_deref() != Ok("1"), "Noto Sans Arabic is required");
-        eprintln!("SKIPPED: PDF mark-text regression needs craft-fonts Noto Sans Arabic");
+        assert!(std::env::var("NODALIA_FONTS_REQUIRED").as_deref() != Ok("1"), "Noto Sans Arabic is required");
+        eprintln!("SKIPPED: PDF mark-text regression needs nodalia-fonts Noto Sans Arabic");
         return None;
     };
     Some(TextObject::point(Point::new(30.0, 100.0), text, CharStyle { font_family: face.family.clone(), ..style(32.0) }))
@@ -1012,7 +1012,7 @@ fn mark_text(text: &str) -> Option<TextObject> {
 /// CIDs otherwise resolve through the active font's ToUnicode. A shared mark glyph can only
 /// carry one ToUnicode value; its other clusters must still occur exactly once via ActualText.
 fn mark_stream(bytes: &[u8]) -> (usize, Vec<String>, Vec<String>) {
-    use craft_pdf::syntax::{
+    use nodalia_pdf::syntax::{
         Pdf,
         content::UntypedIter,
         object::{Dict, Object, Stream},
@@ -1054,7 +1054,7 @@ fn mark_stream(bytes: &[u8]) -> (usize, Vec<String>, Vec<String>) {
             b"BMC" | b"BDC" => {
                 let replacement = op.operands().find_map(|operand| {
                     if let Object::Dict(d) = operand {
-                        d.get::<craft_pdf::syntax::object::String<'_>>(b"ActualText").map(|s| crate::import_scan::text_string(s.as_bytes()))
+                        d.get::<nodalia_pdf::syntax::object::String<'_>>(b"ActualText").map(|s| crate::import_scan::text_string(s.as_bytes()))
                     } else {
                         None
                     }
@@ -1074,7 +1074,7 @@ fn mark_stream(bytes: &[u8]) -> (usize, Vec<String>, Vec<String>) {
                     .operands()
                     .flat_map(|o| match o {
                         Object::String(s) => vec![s.clone()],
-                        Object::Array(a) => a.iter::<craft_pdf::syntax::object::String<'_>>().collect(),
+                        Object::Array(a) => a.iter::<nodalia_pdf::syntax::object::String<'_>>().collect(),
                         _ => vec![],
                     })
                     .collect();

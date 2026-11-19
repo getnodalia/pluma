@@ -3,14 +3,14 @@ name = "pluma-cad"
 version.workspace = true
 edition.workspace = true
 license.workspace = true
-description = "Pluma CAD interchange: DXF export through craft-dxf and an HP-GL/2 plot file reader and writer"
+description = "Pluma CAD interchange: DXF export through nodalia-dxf and an HP-GL/2 plot file reader and writer"
 
 [lints]
 workspace = true
 
 [dependencies]
-craft-dxf = { workspace = true }
-craft-plotter = { workspace = true }
+nodalia-dxf = { workspace = true }
+nodalia-plotter = { workspace = true }
 pluma-geom = { workspace = true }
 pluma-color = { workspace = true }
 pluma-doc = { workspace = true }
@@ -20,7 +20,7 @@ pluma-pathops = { workspace = true }
 pluma-text = { workspace = true }
 kurbo = { workspace = true }
 image = { workspace = true }
-craft-image-codecs = { workspace = true }
+nodalia-image-codecs = { workspace = true }
 
 [dev-dependencies]
 serde_json = { workspace = true }

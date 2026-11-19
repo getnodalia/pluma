@@ -1,6 +1,6 @@
 //! Arabic marks (harakat) styled apart from their letters ([`crate::harakat`]).
-//! Layout cases need an Arabic face: craft-fonts' Noto Sans Arabic when the build has
-//! `CRAFT_FONTS_DIR`, else an installed OpenType Arabic face. Without either they skip.
+//! Layout cases need an Arabic face: nodalia-fonts' Noto Sans Arabic when the build has
+//! `NODALIA_FONTS_DIR`, else an installed OpenType Arabic face. Without either they skip.
 
 use std::sync::Arc;
 
@@ -45,7 +45,7 @@ fn arabic_face(test: &str) -> Option<Arc<FontFace>> {
     match &face {
         Some(face) => eprintln!("ASSERTIONS RUN: {test}; Arabic font {} {} (GDEF marks)", face.family, face.style),
         None => {
-            eprintln!("SKIPPED: {test}; no OpenType Arabic font with harakat and GDEF mark classes (set CRAFT_FONTS_DIR or install one)")
+            eprintln!("SKIPPED: {test}; no OpenType Arabic font with harakat and GDEF mark classes (set NODALIA_FONTS_DIR or install one)")
         }
     }
     face

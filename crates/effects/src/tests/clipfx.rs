@@ -258,8 +258,8 @@ fn clipping_type_keeps_its_effect_where_other_type_stays_type() {
             _ => n.children()?.iter().find_map(|c| clip_of(c)),
         }
     }
-    if pluma_text::CRAFT_FONTS.is_empty() {
-        eprintln!("skipped: built without craft-fonts (set CRAFT_FONTS_DIR to a craft-fonts checkout to run it)");
+    if pluma_text::NODALIA_FONTS.is_empty() {
+        eprintln!("skipped: built without nodalia-fonts (set NODALIA_FONTS_DIR to a nodalia-fonts checkout to run it)");
         return;
     }
     let plain = clip_outline(&text(3, vec![])).unwrap().0.bounding_box();

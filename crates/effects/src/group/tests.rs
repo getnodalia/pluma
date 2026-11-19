@@ -3,11 +3,11 @@ use pluma_color::{BlendMode, Color, Paint};
 use pluma_doc::{CharStyle, Effect, FillLayer, NodeId, TextObject};
 use pluma_geom::{Point, Rect, shapes};
 
-/// Type tests need glyph outlines, which only the optional craft-fonts build input provides.
-fn skip_without_craft_fonts() -> bool {
-    let skip = pluma_text::CRAFT_FONTS.is_empty();
+/// Type tests need glyph outlines, which only the optional nodalia-fonts build input provides.
+fn skip_without_nodalia_fonts() -> bool {
+    let skip = pluma_text::NODALIA_FONTS.is_empty();
     if skip {
-        eprintln!("skipped: built without craft-fonts (set CRAFT_FONTS_DIR to a craft-fonts checkout to run it)");
+        eprintln!("skipped: built without nodalia-fonts (set NODALIA_FONTS_DIR to a nodalia-fonts checkout to run it)");
     }
     skip
 }
@@ -236,7 +236,7 @@ fn results(g: &Node) -> Vec<Arc<Node>> {
 
 #[test]
 fn type_changes_the_result_of_every_pathfinder_effect() {
-    if skip_without_craft_fonts() {
+    if skip_without_nodalia_fonts() {
         return;
     }
     let glyphs = crate::outline_text(&type_h()).unwrap();
@@ -266,7 +266,7 @@ fn type_changes_the_result_of_every_pathfinder_effect() {
 
 #[test]
 fn pieces_of_type_keep_its_paint_opacity_and_blend_mode() {
-    if skip_without_craft_fonts() {
+    if skip_without_nodalia_fonts() {
         return;
     }
     let mut t = type_h();
@@ -310,7 +310,7 @@ fn type_in_group(style: impl FnOnce(&mut Node)) -> Node {
 
 #[test]
 fn type_in_a_group_keeps_its_look_when_the_groups_geometry_effects_outline_it() {
-    if skip_without_craft_fonts() {
+    if skip_without_nodalia_fonts() {
         return;
     }
     use pluma_color::BlendMode;
@@ -342,7 +342,7 @@ fn hidden_effect_or_plain_group_is_untouched() {
 
 #[test]
 fn a_transform_on_a_group_moves_the_gradients_of_its_type_and_those_placed_on_its_paths() {
-    if skip_without_craft_fonts() {
+    if skip_without_nodalia_fonts() {
         return;
     }
     use pluma_color::{Gradient, GradientGeom, GradientKind, GradientPaint, GradientStop};
@@ -816,7 +816,7 @@ fn a_baked_group_applies_its_members_effects_first() {
 /// their middle, spans 150 pt).
 #[test]
 fn a_baked_group_that_keeps_its_type_applies_its_members_effects_first() {
-    if skip_without_craft_fonts() {
+    if skip_without_nodalia_fonts() {
         return;
     }
     let style = CharStyle { size: 24.0, fill: Paint::solid(Color::BLACK), ..Default::default() };
@@ -1435,7 +1435,7 @@ fn a_groups_effects_reshape_a_live_object_in_a_members_mask() {
 /// art with the member.
 #[test]
 fn a_groups_transform_moves_type_in_a_members_mask() {
-    if skip_without_craft_fonts() {
+    if skip_without_nodalia_fonts() {
         return;
     }
     let member = masked_by(white_square(1), type_h(), true);

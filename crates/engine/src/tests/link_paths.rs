@@ -92,7 +92,7 @@ fn linked_files_on_other_computers_are_never_read() {
 fn places_named_from_a_share_are_not_followed_after_a_save_elsewhere() {
     use crate::cmd::links::follow_from;
     let resolve =
-        |stored: &str, doc: Option<&str>| craft_docpath::resolve(stored, doc.map(std::path::Path::new)).map(|p| p.to_string_lossy().into_owned());
+        |stored: &str, doc: Option<&str>| nodalia_docpath::resolve(stored, doc.map(std::path::Path::new)).map(|p| p.to_string_lossy().into_owned());
     let (link, on_share) = (r"\\server\share\a\art\photo.png", Some(r"\\server\share\a\poster.pluma"));
     assert_eq!(follow_from(link, on_share, on_share, resolve).as_deref(), Some(link));
     assert_eq!(follow_from(link, on_share, Some(r"\\server\share\b\poster.pluma"), resolve).as_deref(), Some(link));
@@ -111,10 +111,10 @@ fn on_share(folder: &str) -> Option<std::path::PathBuf> {
 #[test]
 fn a_document_on_a_mapped_drive_is_on_the_share_behind_it() {
     use crate::cmd::fileio::share_of;
-    // craft-docpath refuses a link on the share when the document is given by its drive letter.
+    // nodalia-docpath refuses a link on the share when the document is given by its drive letter.
     let link = r"\\server\share\img\logo.png";
-    assert_eq!(craft_docpath::resolve(link, Some(std::path::Path::new(r"Z:\jobs\doc.pluma"))), Err(craft_docpath::Refused::Network));
-    assert!(craft_docpath::resolve(link, Some(std::path::Path::new(r"\\server\share\jobs\doc.pluma"))).is_ok());
+    assert_eq!(nodalia_docpath::resolve(link, Some(std::path::Path::new(r"Z:\jobs\doc.pluma"))), Err(nodalia_docpath::Refused::Network));
+    assert!(nodalia_docpath::resolve(link, Some(std::path::Path::new(r"\\server\share\jobs\doc.pluma"))).is_ok());
 
     // The document's path on the share, from its folder's final path.
     let mut asked = vec![];
@@ -190,10 +190,10 @@ fn links_on_a_mapped_drives_share_are_followed() {
     // A link on the share behind the drive is followed; one on another share still isn't.
     assert_eq!(document_path_with(r"\\server\share\img\logo.png", doc, share).as_deref(), Ok(r"\\server\share\img\logo.png"));
     assert_eq!(document_path_with(r"\\SERVER\Share\logo.png", doc, share).as_deref(), Ok(r"\\SERVER\Share\logo.png"));
-    assert_eq!(document_path_with(r"\\other\share\logo.png", doc, share), Err(craft_docpath::Refused::Network));
-    assert_eq!(document_path_with("file://server/share/logo.png", doc, share), Err(craft_docpath::Refused::Network));
+    assert_eq!(document_path_with(r"\\other\share\logo.png", doc, share), Err(nodalia_docpath::Refused::Network));
+    assert_eq!(document_path_with("file://server/share/logo.png", doc, share), Err(nodalia_docpath::Refused::Network));
     // On a local volume, the link stays refused.
-    assert_eq!(document_path_with(r"\\server\share\logo.png", doc, |_| None), Err(craft_docpath::Refused::Network));
+    assert_eq!(document_path_with(r"\\server\share\logo.png", doc, |_| None), Err(nodalia_docpath::Refused::Network));
     // Links that were followed resolve as before, without looking the share up.
     let unasked = |d: &str| -> Option<String> { panic!("looked up {d}") };
     assert_eq!(document_path_with(r"img\logo.png", doc, unasked).as_deref(), Ok(r"Z:\jobs\img\logo.png"));
@@ -206,7 +206,7 @@ fn links_on_a_drive_mapped_to_another_share_are_not_followed() {
     use crate::cmd::fileio::{document_path_on, drive_share_of, share_of};
     let share = |d: &str| share_of(d, mapped);
     let drive = |p: &str| drive_share_of(p, mapped);
-    let refused = Err(craft_docpath::Refused::Network);
+    let refused = Err(nodalia_docpath::Refused::Network);
     // From a document on this computer, a drive mapped to any share is another computer.
     let local = Some(r"C:\art\doc.pluma");
     for link in [r"Y:\img\logo.png", r"Z:\logo.png", r"\\?\Y:\logo.png", "file:///Y:/logo.png", r"Y:\gone\logo.png"] {
@@ -237,7 +237,7 @@ fn links_on_the_documents_share_or_this_computer_are_followed() {
     let verbatim = Some(r"\\?\Z:\jobs\doc.pluma");
     assert_eq!(document_path_on(r"V:\img\logo.png", verbatim, share, drive).as_deref(), Ok(r"V:\img\logo.png"));
     assert_eq!(document_path_on(r"\\server\share\logo.png", verbatim, share, drive).as_deref(), Ok(r"\\server\share\logo.png"));
-    assert_eq!(document_path_on(r"Y:\img\logo.png", verbatim, share, drive), Err(craft_docpath::Refused::Network));
+    assert_eq!(document_path_on(r"Y:\img\logo.png", verbatim, share, drive), Err(nodalia_docpath::Refused::Network));
     // Links on this computer and on a drive that can't be opened are followed, from a document
     // anywhere.
     for doc in [Some(r"C:\art\doc.pluma"), doc, Some(r"\\far\jobs\doc.pluma"), None] {

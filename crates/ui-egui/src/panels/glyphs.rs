@@ -1696,7 +1696,7 @@ mod tests {
     /// With Show East Asian Options, the panel menu lists the East Asian glyph forms; choosing one
     /// draws the Type tool's selected characters in it, checks it, and Revert To Default Forms
     /// takes it away. A form the font has no feature for is disabled. The second half needs
-    /// craft-fonts' BIZ UDMincho, which has JIS 78 forms and no JIS 04 forms (skipped without it).
+    /// nodalia-fonts' BIZ UDMincho, which has JIS 78 forms and no JIS 04 forms (skipped without it).
     #[test]
     fn east_asian_glyph_forms_in_the_panel_menu_set_the_selected_characters_form() {
         let (mut app, id) = editing("亜唖");
@@ -1712,7 +1712,7 @@ mod tests {
         }
         const FAMILY: &str = "BIZ UDMincho";
         if FontDb::global().face(FAMILY, "Regular").is_none_or(|f| f.family != FAMILY) {
-            eprintln!("skipped: built without craft-fonts (set CRAFT_FONTS_DIR to a craft-fonts checkout to run it)");
+            eprintln!("skipped: built without nodalia-fonts (set NODALIA_FONTS_DIR to a nodalia-fonts checkout to run it)");
             return;
         }
         app.run("text.setRangeStyle", json!({"id": id, "font": FAMILY})).unwrap();

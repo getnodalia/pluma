@@ -1,5 +1,5 @@
 //! Desktop printer transport. Pluma composes every page and copy before submission;
-//! craft-print owns discovery and spooling.
+//! nodalia-print owns discovery and spooling.
 use pluma_ui_egui::print::{PrintJob, PrintService, Printer};
 use std::process::Command;
 
@@ -17,7 +17,7 @@ impl PrintService for SystemPrint {
     }
     fn turns_landscape(&self) -> bool {
         // macOS's `lp` doesn't turn a landscape page to the paper: it cuts it off on upright
-        // paper. craft-print turns each sheet to its own orientation on Windows.
+        // paper. nodalia-print turns each sheet to its own orientation on Windows.
         !cfg!(target_os = "macos")
     }
     fn has_setup(&self) -> bool {
@@ -40,13 +40,13 @@ fn sent(title: &str, printer: Option<&str>, note: &str) -> String {
 mod system {
     use super::{Command, PrintJob, Printer};
     pub fn printers() -> Vec<Printer> {
-        craft_print::printers().into_iter().map(|p| Printer { name: p.name, default: p.default }).collect()
+        nodalia_print::printers().into_iter().map(|p| Printer { name: p.name, default: p.default }).collect()
     }
     pub fn print(job: &PrintJob) -> Result<String, String> {
         // Copies, layout, marks and colour management are already in the PDF. Preserve its
         // physical sheet size and the queue's duplex default without printing copies twice.
-        let settings = craft_print::Job { printer: job.printer.map(str::to_string), title: job.title.into(), ..Default::default() };
-        craft_print::submit(job.pdf, &settings).map_err(|e| e.to_string())
+        let settings = nodalia_print::Job { printer: job.printer.map(str::to_string), title: job.title.into(), ..Default::default() };
+        nodalia_print::submit(job.pdf, &settings).map_err(|e| e.to_string())
     }
     #[cfg(windows)]
     pub(crate) fn setup_command(printer: Option<&str>, default_printer: Option<&str>) -> Command {

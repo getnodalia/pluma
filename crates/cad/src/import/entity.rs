@@ -7,7 +7,7 @@ use kurbo::{BezPath, PathEl};
 use pluma_doc::Justify;
 use pluma_geom::{Affine, Point, Vec2};
 
-use craft_dxf::model::{self, EntityRecord, Groups, HatchEdge, HatchPath};
+use nodalia_dxf::model::{self, EntityRecord, Groups, HatchEdge, HatchPath};
 
 use super::curve::{self, Vertex};
 use super::reader::{aci_paper, point};
@@ -578,11 +578,11 @@ fn text(t: &model::Text, g: &Groups<'_>, attrib: bool, ocs: Affine) -> Option<Te
 }
 
 /// MTEXT. The contents are read from groups 3 and 1 as written, as for [`text`].
-fn mtext(t: &model::MText, tags: &[craft_dxf::Tag]) -> Option<TextItem> {
+fn mtext(t: &model::MText, tags: &[nodalia_dxf::Tag]) -> Option<TextItem> {
     // The text comes in 250-character chunks (3) before the last (1), up to an embedded object.
     let (own, _) = model::text::split_embedded(tags);
     let g = Groups(own);
-    let raw: String = own.iter().filter(|t| t.code == 3).map(craft_dxf::Tag::str).chain(g.s(1)).collect();
+    let raw: String = own.iter().filter(|t| t.code == 3).map(nodalia_dxf::Tag::str).chain(g.s(1)).collect();
     let (s, family) = super::text::mtext(&raw);
     if s.trim().is_empty() {
         return None;

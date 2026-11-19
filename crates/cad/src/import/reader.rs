@@ -1,9 +1,9 @@
-//! What the import uses of a drawing, from `craft_dxf::model`: header variables; the layer,
+//! What the import uses of a drawing, from `nodalia_dxf::model`: header variables; the layer,
 //! linetype and text style tables; the blocks; the entities; the layouts.
 
 use std::collections::HashMap;
 
-use craft_dxf::model::{self, EntityRecord};
+use nodalia_dxf::model::{self, EntityRecord};
 use pluma_geom::Point;
 
 /// The first bytes of a binary DXF file (its format's signature).

@@ -14,7 +14,7 @@
 //!   lines or gradients, so clipped art is written whole, images over white, dashes as separate
 //!   lines and gradients and patterns as one colour (each loss comes back as a warning).
 //!
-//! [`import`] reads either format (an EMF with its EMF+ records too, through `craft_metafile`)
+//! [`import`] reads either format (an EMF with its EMF+ records too, through `nodalia_metafile`)
 //! into a document of one artboard (the picture's frame) and one layer: paths with fills and
 //! strokes, clipping, images and text. Records it doesn't read are skipped, with one warning.
 //! A picture cut short by a reader limit, images and pattern brushes that can't be read, clips

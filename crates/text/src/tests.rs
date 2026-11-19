@@ -1009,13 +1009,13 @@ fn bold_italic_of_a_missing_family_keeps_the_bold() {
 /// A space the primary font doesn't map goes to the fallback face like any other character
 /// (#1844): an ideographic space in a face without U+3000 keeps its em, so an indent made with it
 /// isn't lost. A tab, which the layout handles itself, stays with the primary face. Needs a bundled
-/// face with U+3000 and あ (craft-fonts; skipped without it).
+/// face with U+3000 and あ (nodalia-fonts; skipped without it).
 #[test]
 fn whitespace_the_primary_font_lacks_takes_the_fallback_face() {
     let primary = db().face("Source Sans 3", "Regular").unwrap();
     assert!(!primary.covers('\u{3000}'));
     if ['\u{3000}', 'あ'].iter().any(|&c| db().fallback_for(c, primary.id()).is_none()) {
-        eprintln!("skipped: built without craft-fonts (set CRAFT_FONTS_DIR to a craft-fonts checkout to run it)");
+        eprintln!("skipped: built without nodalia-fonts (set NODALIA_FONTS_DIR to a nodalia-fonts checkout to run it)");
         return;
     }
     let l = layout(db(), &point("あ\u{3000}あ", style(20.0)));
@@ -1890,18 +1890,18 @@ fn a_list_paragraph_at_a_deeper_level_is_set_further_in_and_counts_on_its_own() 
     assert!((rtl(1) - 200.0).abs() < 1e-6 && (rtl(2) - 182.0).abs() < 1e-6, "{} {}", rtl(1), rtl(2));
 }
 
-/// Are the Japanese craft-fonts faces built in? Tests of Japanese glyphs skip (and say so) when
+/// Are the Japanese nodalia-fonts faces built in? Tests of Japanese glyphs skip (and say so) when
 /// they aren't: the bundled fonts have none, and [`db`] reads no system fonts.
 fn japanese_fonts() -> bool {
-    let built_in = CRAFT_FONTS.iter().any(|f| f.is_japanese());
+    let built_in = NODALIA_FONTS.iter().any(|f| f.is_japanese());
     if !built_in {
-        eprintln!("skipped: built without craft-fonts (set CRAFT_FONTS_DIR to a craft-fonts checkout to run it)");
+        eprintln!("skipped: built without nodalia-fonts (set NODALIA_FONTS_DIR to a nodalia-fonts checkout to run it)");
     }
     built_in
 }
 
 #[test]
-fn japanese_text_uses_the_craft_fonts_mincho_after_the_bundled_fonts() {
+fn japanese_text_uses_the_nodalia_fonts_mincho_after_the_bundled_fonts() {
     if !japanese_fonts() {
         return;
     }
@@ -1910,31 +1910,31 @@ fn japanese_text_uses_the_craft_fonts_mincho_after_the_bundled_fonts() {
     assert!(l.glyphs.iter().all(|g| g.gid != 0 && !g.outline.elements().is_empty()), "real glyphs, no tofu");
     let face = db().face_covering('日').unwrap();
     assert!(face.family.contains("Mincho"), "document text falls back to a Mincho face: {}", face.family);
-    assert!(CRAFT_FONTS.iter().any(|f| f.family == face.family));
+    assert!(NODALIA_FONTS.iter().any(|f| f.family == face.family));
     // Latin keeps the bundled fallback family.
     assert_eq!(db().face_covering('a').unwrap().family, FALLBACK_FAMILY);
 }
 
 #[test]
 fn all_supplied_craft_font_families_are_registered_without_system_fonts() {
-    if CRAFT_FONTS.is_empty() {
-        eprintln!("skipped: built without craft-fonts (set CRAFT_FONTS_DIR to a checkout)");
+    if NODALIA_FONTS.is_empty() {
+        eprintln!("skipped: built without nodalia-fonts (set NODALIA_FONTS_DIR to a checkout)");
         return;
     }
     let db = FontDb::with_font_dirs(vec![]);
-    for font in CRAFT_FONTS {
+    for font in NODALIA_FONTS {
         let face = db.face(font.family, font.style).unwrap();
         assert_eq!(face.family, font.family, "{} {}", font.family, font.style);
     }
 }
 
 #[test]
-fn japanese_text_lays_out_without_the_craft_fonts() {
+fn japanese_text_lays_out_without_the_nodalia_fonts() {
     // Built either way, Japanese text lays out (as missing glyphs when no font has them).
     let l = layout(db(), &point("日本語の文字 abc", style(20.0)));
     assert_eq!(l.lines.len(), 1);
     assert!(l.glyphs.iter().all(|g| g.advance.is_finite()));
-    if CRAFT_FONTS.is_empty() {
+    if NODALIA_FONTS.is_empty() {
         assert!(db().families().iter().all(|f| !f.contains("Mincho") && !f.contains("Gothic")), "no Japanese font is bundled");
     }
 }
@@ -2110,7 +2110,7 @@ fn character_alignment_lines_small_characters_up_with_the_largest_em_box() {
 /// Character Alignment on the ICF: a 20 pt character next to a 40 pt one lines its ideographic
 /// character face's top (right, vertical) or bottom (left) up with the big one's, which lies inside
 /// the em box by the face's ICF margins. A face without ideographs has none (the ICF is the em
-/// box). The Japanese faces need craft-fonts (skipped without them).
+/// box). The Japanese faces need nodalia-fonts (skipped without them).
 #[test]
 fn character_alignment_on_the_icf_lines_small_characters_up_with_the_largest_face() {
     use pluma_doc::{CharAlign, TextRun};
@@ -2584,12 +2584,12 @@ fn optical_margin_alignment_hangs_type_on_a_path_at_its_brackets() {
     assert!(near(lay("AVA", Justify::Left, true).glyphs[0].origin.x, 50.0 - 0.1 * lay("AVA", Justify::Left, true).glyphs[0].advance));
 }
 
-/// With craft-fonts and no installed fonts (the web), Thai is set in Noto Sans Thai, not as empty
-/// boxes. Skipped when built without craft-fonts or with a checkout that has no Thai font.
+/// With nodalia-fonts and no installed fonts (the web), Thai is set in Noto Sans Thai, not as empty
+/// boxes. Skipped when built without nodalia-fonts or with a checkout that has no Thai font.
 #[test]
-fn thai_without_installed_fonts_takes_the_craft_fonts_thai_font() {
-    if !crate::CRAFT_FONTS.iter().any(|f| f.is_thai()) {
-        eprintln!("skipping: no Thai font in craft-fonts (set CRAFT_FONTS_DIR to a checkout that has one)");
+fn thai_without_installed_fonts_takes_the_nodalia_fonts_thai_font() {
+    if !crate::NODALIA_FONTS.iter().any(|f| f.is_thai()) {
+        eprintln!("skipping: no Thai font in nodalia-fonts (set NODALIA_FONTS_DIR to a checkout that has one)");
         return;
     }
     let l = layout(db(), &point("ภาษาไทย", style(20.0)));

@@ -1,7 +1,7 @@
 # Development
 
 > **Last updated:** 2026-11-12 · **Change:** Tests canonicalize temporary roots and normalize Windows verbatim prefixes before comparing preset refusal paths or probing a case-variant script folder (#6860); production access checks unchanged.
-> **Last updated:** 2026-11-12 · **Change:** minor (clipboard failure helper follows its Linux/BSD and test callers; previously: Hindi catalog and zero/one plural rule; desktop Devanagari fallback and optional craft-fonts UI face; native review pending).
+> **Last updated:** 2026-11-12 · **Change:** minor (clipboard failure helper follows its Linux/BSD and test callers; previously: Hindi catalog and zero/one plural rule; desktop Devanagari fallback and optional nodalia-fonts UI face; native review pending).
 > **Last updated:** 2026-11-01 · **Change:** Linux: Automatic Linux Display Server opens the window through XWayland when a pen is attached on a Wayland session, so the pen draws (#4967); `PLUMA_NATIVE_WAYLAND=1` keeps Wayland.
 > **Last updated:** 2026-10-31 · **Change:** files opened while the app runs open in its window on Windows and Linux (#4892); `--new-instance`.
 > **Last updated:** 2026-10-29 · **Change:** Linux clipboard: the Flatpak on GNOME copies and pastes text through the core Wayland protocol.
@@ -26,10 +26,10 @@ trunk serve --release              # dev server on http://127.0.0.1:8766
 ```
 
 What the web build needs: `trunk`, the `wasm32-unknown-unknown` target and `cargo`, nothing else (no
-POSIX shell, so it works the same on Windows). Optionally, `CRAFT_FONTS_DIR` set to an absolute
-craft-fonts checkout adds the fonts the site serves beside the wasm: Trunk's `post_build` hook runs
+POSIX shell, so it works the same on Windows). Optionally, `NODALIA_FONTS_DIR` set to an absolute
+nodalia-fonts checkout adds the fonts the site serves beside the wasm: Trunk's `post_build` hook runs
 `cargo xtask web-fonts`, which copies them into `dist/web/fonts/` (it does nothing without
-`CRAFT_FONTS_DIR`, and skips with a warning any listed face an older checkout lacks). See
+`NODALIA_FONTS_DIR`, and skips with a warning any listed face an older checkout lacks). See
 [Arabic fonts and the web build](#arabic-fonts-and-the-web-build).
 
 Any static file server works for `dist/web`, for example `python3 -m http.server 8766` inside that directory. The release `.wasm` is about 17.5 MB, or 7.1 MB gzipped, so serve it with compression.
@@ -137,28 +137,28 @@ The window runs natively on Wayland (eframe's `wayland` feature) and on X11. On 
 - **Pen pressure under X11 and XWayland (#764):** winit 0.30 hands a pen to an X11 window as a mouse, without its pressure. When the window is on X11, XWayland included, the desktop app opens a second X connection (x11rb's `RustConnection`) and reads XInput2 raw events for every device (`apps/pluma/src/tablet.rs`, from Lienzo's `crates/tablet`). A device with an `Abs Pressure` valuator is a pen, unless its XInput type is `TOUCHPAD` or `TOUCHSCREEN`. While a pen is the pointer that moved last, its pressure, scaled from the valuator's range to 0..1, reaches the tools that use pressure: the Paintbrush's pressure-sensitive brushes and the Liquify tools' Use Pressure Pen. The reader also reads `Abs Tilt X` and `Abs Tilt Y` (from a pen that has both) in degrees, scaled to ±60° when the valuator's range does not fit in ±90, and `Abs Rotary Z` (an Art Pen's barrel rotation) as a turn with the middle of the range at 0°; the Paintbrush records them for brushes with Tilt, Bearing and Rotation variation. A pen device whose name or XInput type contains `eraser` (in any case) is the pen's eraser end: while the pointer is over the window, the canvas selects the Eraser tool when the eraser end moves, and it selects the tool used before when the tip moves again (`crates/ui-egui/src/stylus.rs`). The X server needs XInput 2.1 or later; otherwise the log has a `tablet pressure:` warning with the reason, and the pen draws at full pressure.
 - **Pen tilt and rotation on macOS (#764):** with each tablet event's pressure (#852), `apps/pluma/src/mac_tablet.rs` reads its `tilt`, −1..1 on each axis, scaled to ±60° with each axis keeping AppKit's sign (x positive to the right, y positive towards the bottom and the user), and its `rotation`, negated to run clockwise. Until a pen reports a tilt or a rotation other than 0 after it comes near the tablet, that value reads as none, since a pen without one reports 0. The Paintbrush records them as it does under X11.
 
-## Fonts: craft-fonts (optional build input)
+## Fonts: nodalia-fonts (optional build input)
 
 Font files are never committed to this repository. Fonts shared by the Nodalia apps live in
-[storytold/craft-fonts](https://github.com/storytold/craft-fonts). To add
+[getnodalia/foundation (nodalia/fonts)](https://github.com/getnodalia/foundation). To add
 a font, add it there. (The Latin fonts in `assets/fonts/` predate the rule and stay.)
 
-Pluma builds, tests and runs without craft-fonts. To embed its Japanese fonts (BIZ UDPGothic
-for UI text, Shippori Mincho and BIZ UDMincho for document text), point the `CRAFT_FONTS_DIR` build
+Pluma builds, tests and runs without nodalia-fonts. To embed its Japanese fonts (BIZ UDPGothic
+for UI text, Shippori Mincho and BIZ UDMincho for document text), point the `NODALIA_FONTS_DIR` build
 option at a checkout:
 
 ```sh
-git clone https://github.com/storytold/craft-fonts ../craft-fonts
-CRAFT_FONTS_DIR="$PWD/../craft-fonts" cargo run --release -p pluma
-CRAFT_FONTS_DIR="$PWD/../craft-fonts" cargo xtask ci   # also runs the Japanese-glyph tests
+git clone https://github.com/getnodalia/foundation ../nodalia-fonts
+NODALIA_FONTS_DIR="$PWD/../nodalia-fonts" cargo run --release -p pluma
+NODALIA_FONTS_DIR="$PWD/../nodalia-fonts" cargo xtask ci   # also runs the Japanese-glyph tests
 ```
 
 - `crates/text/build.rs` reads the checkout's `fonts/manifest.txt` and embeds every font it lists as
-  `pluma_text::CRAFT_FONTS` (empty without `CRAFT_FONTS_DIR`). Give it an absolute path:
+  `pluma_text::NODALIA_FONTS` (empty without `NODALIA_FONTS_DIR`). Give it an absolute path:
   build scripts run in the crate's directory (a relative path is taken from the workspace root
   as a convenience, but CI and the docs always use absolute paths). Nothing is downloaded, and
-  craft-fonts is never a `Cargo.toml` dependency. A bad path is a build warning, or an error with
-  `CRAFT_FONTS_REQUIRED=1` (release builds).
+  nodalia-fonts is never a `Cargo.toml` dependency. A bad path is a build warning, or an error with
+  `NODALIA_FONTS_REQUIRED=1` (release builds).
 - Web (wasm32) builds embed only BIZ UDPGothic Regular (+4.7 MB of `.wasm`), to stay well under
   static hosts' per-file limits (Cloudflare Pages: 25 MiB). Shippori Mincho, which this repo used to
   embed everywhere, was 8.7 MB, so the web build is still smaller than before.
@@ -169,13 +169,13 @@ CRAFT_FONTS_DIR="$PWD/../craft-fonts" cargo xtask ci   # also runs the Japanese-
   Noto Sans Georgian (when the checkout has it) is the same for Georgian.
   All other supplied faces follow those existing document fallbacks in manifest order, so they
   can also be selected by family name. This does not change which faces the web build embeds
-  or fetches, and no craft-fonts faces are registered when the optional input is absent.
+  or fetches, and no nodalia-fonts faces are registered when the optional input is absent.
 - UI: `theme::install_fonts` adds them at the end of every egui family (BIZ UDPGothic first, then
   Noto Sans Georgian for the Georgian interface), after the UI fonts and before the installed fonts
   `ui_fonts.rs` discovers for other scripts. On the web, Noto Sans Georgian is fetched at startup
   and reaches the UI through `ui_fonts.rs`.
-- Tests that need Japanese or Georgian glyphs skip with a message when built without craft-fonts. The FreeBSD
-  CI job and every release job (`release.yml`) check craft-fonts out at a pinned commit; release
+- Tests that need Japanese or Georgian glyphs skip with a message when built without nodalia-fonts. The FreeBSD
+  CI job and every release job (`release.yml`) check nodalia-fonts out at a pinned commit; release
   packages carry each embedded font's `OFL-<family>.txt`.
 
 ### Leaving out the bundled fonts (embedders)
@@ -186,7 +186,7 @@ feature (3.4 MB of the binary). It is on by default, and `pluma-engine`'s defaul
 features have them. An
 embedder that brings every font itself at run time (`FontDb::add_font`, say a web app serving its
 own font catalogue) depends on the engine with `default-features = false` and doesn't ship them
-twice. Its font database starts without them: on the web and without craft-fonts it starts empty,
+twice. Its font database starts without them: on the web and without nodalia-fonts it starts empty,
 and text has no glyphs until a font is added.
 
 An embedder that also hosts the egui panels depends on `pluma-ui-egui` with
@@ -221,28 +221,28 @@ context's font definitions, so the embedder's own fonts are added after it.
 
 ### Arabic fonts and the web build
 
-Desktop builds load craft-fonts' Arabic families into the document font database (Noto Sans
+Desktop builds load nodalia-fonts' Arabic families into the document font database (Noto Sans
 Arabic first, the fallback for Arabic text; the others are picked by name).
 
 The web build doesn't embed them (wasm size). Instead `crates/text/web-fonts.txt` lists the faces
 it fetches from beside the wasm, `startup` (before the app starts) or `background` (after):
 
 - `crates/text/build.rs` turns the list into `pluma_text::WEB_FONTS` (URL
-  `fonts/<sha16>/<file>` and the SRI hash, from the craft-fonts manifest).
+  `fonts/<sha16>/<file>` and the SRI hash, from the nodalia-fonts manifest).
 - `cargo xtask web-fonts` (`xtask/src/web_fonts.rs`), the Trunk `post_build` hook, copies the files
   there, checking each one's SHA-256. A listed face the checkout lacks is skipped with a warning, as
-  in `build.rs`, so an older craft-fonts just means fewer fonts.
+  in `build.rs`, so an older nodalia-fonts just means fewer fonts.
 - `apps/pluma-web/src/fonts.rs` fetches and registers them, logging `web font …` for any
   that fail.
 
-Try it: `cd apps/pluma-web && CRAFT_FONTS_DIR=$PWD/../../../craft-fonts trunk serve`. To serve
-another craft-fonts face on the web, add a line to `web-fonts.txt`.
+Try it: `cd apps/pluma-web && NODALIA_FONTS_DIR=$PWD/../../../nodalia-fonts trunk serve`. To serve
+another nodalia-fonts face on the web, add a line to `web-fonts.txt`.
 
 ## Localisation
 
 Hindi (`hi`, हिन्दी): complete machine-assisted catalog; every `hi-*` locale resolves here, with
 0 and 1 singular and 2+ plural. Desktop text uses an installed Devanagari font or an embedded
-craft-fonts face tagged `Deva`. The web needs that font supplied separately. Native wording
+nodalia-fonts face tagged `Deva`. The web needs that font supplied separately. Native wording
 review is pending; see [Hindi terminology and checks](localization-hi.md).
 
 Strings in code stay English and are the default lookup keys. `crates/ui-egui/src/i18n` maps them to display
@@ -324,9 +324,9 @@ other `sv-*` locale resolve to it), Georgian (`ka`, complete; `ka-GE` and `ka_GE
 - Not translated on purpose: names that are user data (layers, swatches, fonts, documents), the tab
   title's colour mode, command ids and parameter names inside messages. Not done yet: locale-aware number
   and date formats, right-to-left layout. Chinese and Japanese UI text
-  is drawn with craft-fonts' BIZ UDPGothic when the build embeds it (see Fonts above), else with an installed
-  system font; the glyph test checks Latin and Cyrillic catalogs always and the CJK ones only with craft-fonts.
-  A Traditional Chinese UI font is still to be added to craft-fonts for the web build.
+  is drawn with nodalia-fonts' BIZ UDPGothic when the build embeds it (see Fonts above), else with an installed
+  system font; the glyph test checks Latin and Cyrillic catalogs always and the CJK ones only with nodalia-fonts.
+  A Traditional Chinese UI font is still to be added to nodalia-fonts for the web build.
 
 ## Cursors
 
@@ -573,7 +573,7 @@ Scores and hour estimates are unchanged.
 | 2026-10-21 | minor | M3: highlighted-text Eyedropper sampling preserves ranges and rejects unsupported source/target transparency atomically; regression-tested; scores and estimates unchanged. |
 | 2026-10-21 | minor | Fonts › Leaving out the bundled fonts: pluma-ui-egui's and pluma-mcp's `bundled-fonts` features, and the engine declared without default features. |
 | 2026-10-14 | minor | Document the `bundled-fonts` feature of pluma-text and pluma-engine (Fonts › Leaving out the bundled fonts). |
-| 2026-10-14 | minor | Document registration of every explicitly supplied craft-fonts face after the existing script-specific prefix; empty input and web selection remain unchanged. |
+| 2026-10-14 | minor | Document registration of every explicitly supplied nodalia-fonts face after the existing script-specific prefix; empty input and web selection remain unchanged. |
 | 2026-10-13 | minor | Document pinned PngSuite files, integrity checks and download budgets (#1729). |
 
 > **Tab-drag status (2026-10-22):** updated from upstream, including the Turkish catalog and all three tab-drag translations requested in #3479; Selection-tool reset regression-checked and clipboard evidence scoped to internal state; drag lifecycle, insertion and regression contracts documented; behavior, scores and estimates unchanged.

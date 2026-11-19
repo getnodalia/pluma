@@ -6,9 +6,9 @@
 //! File › File Info's metadata templates are XMP packets of the same properties: [`metadata_template`]
 //! writes one and [`read_template`] reads one back.
 
-use craft_pdf::syntax::Pdf;
-use craft_pdf::syntax::object::{DateTime, Dict, Stream};
-use craft_xml::{Canonical, Doctype, El, Limits, Names, Options};
+use nodalia_pdf::syntax::Pdf;
+use nodalia_pdf::syntax::object::{DateTime, Dict, Stream};
+use nodalia_xml::{Canonical, Doctype, El, Limits, Names, Options};
 
 use crate::import_scan::text_string;
 

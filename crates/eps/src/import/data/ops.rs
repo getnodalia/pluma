@@ -919,12 +919,16 @@ impl Interp<'_> {
             let mask = self.alpha_mask(&alpha, img.w, img.h, xf);
             return self.add_image(blob, img.w, img.h, xf, mask);
         }
-        let Ok(rgba) =
-            craft_image_codecs::Image::from_raw(img.w, img.h, craft_image_codecs::ChannelLayout::Rgba, craft_image_codecs::SampleType::U8, img.rgba)
-        else {
+        let Ok(rgba) = nodalia_image_codecs::Image::from_raw(
+            img.w,
+            img.h,
+            nodalia_image_codecs::ChannelLayout::Rgba,
+            nodalia_image_codecs::SampleType::U8,
+            img.rgba,
+        ) else {
             return Ok(());
         };
-        let Ok(png) = craft_image_codecs::encode(&rgba, craft_image_codecs::Format::Png, &craft_image_codecs::EncodeOptions::default()) else {
+        let Ok(png) = nodalia_image_codecs::encode(&rgba, nodalia_image_codecs::Format::Png, &nodalia_image_codecs::EncodeOptions::default()) else {
             self.out.warn("an image that couldn't be read was left out");
             return Ok(());
         };
@@ -948,10 +952,15 @@ impl Interp<'_> {
         if alpha.iter().all(|v| *v == 255) {
             return None;
         }
-        let raw =
-            craft_image_codecs::Image::from_raw(w, h, craft_image_codecs::ChannelLayout::Gray, craft_image_codecs::SampleType::U8, alpha.to_vec())
-                .ok()?;
-        let png = craft_image_codecs::encode(&raw, craft_image_codecs::Format::Png, &craft_image_codecs::EncodeOptions::default()).ok()?;
+        let raw = nodalia_image_codecs::Image::from_raw(
+            w,
+            h,
+            nodalia_image_codecs::ChannelLayout::Gray,
+            nodalia_image_codecs::SampleType::U8,
+            alpha.to_vec(),
+        )
+        .ok()?;
+        let png = nodalia_image_codecs::encode(&raw, nodalia_image_codecs::Format::Png, &nodalia_image_codecs::EncodeOptions::default()).ok()?;
         let blob = ImageBlob::new("image/png", png);
         let key = blob.content_key();
         self.out.doc.images.entry(key.clone()).or_insert(blob);

@@ -192,7 +192,7 @@ pub fn write(img: &Image, l: &Layout) -> Result<Vec<u8>, String> {
         offsets.push(strips.len());
         match l.compression {
             Compression::None => strips.extend_from_slice(strip),
-            Compression::Lzw => strips.extend(craft_stream_codecs::lzw::encode(strip, true)),
+            Compression::Lzw => strips.extend(nodalia_stream_codecs::lzw::encode(strip, true)),
             Compression::PackBits => strip.chunks(row).for_each(|r| packbits(r, &mut strips)),
         }
         // Strips start on a word boundary.
@@ -282,7 +282,7 @@ fn resolution(ppi: f64) -> Values {
 /// `data` run-length encoded (PackBits: what TIFF's compression 32773 and PostScript's
 /// `RunLengthDecode` read), without an end marker.
 pub fn packbits(data: &[u8], out: &mut Vec<u8>) {
-    craft_stream_codecs::runlength::encode_packbits_into(data, out);
+    nodalia_stream_codecs::runlength::encode_packbits_into(data, out);
 }
 
 /// The TIFF options of a raster export.

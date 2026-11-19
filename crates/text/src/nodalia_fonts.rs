@@ -1,11 +1,11 @@
-//! Fonts from the optional craft-fonts build input (<https://github.com/getnodalia/foundation/tree/vendor/craft-fonts/main>).
+//! Fonts from the optional nodalia-fonts build input (<https://github.com/getnodalia/foundation/tree/nodalia/fonts>).
 //!
-//! Built with `CRAFT_FONTS_DIR=<craft-fonts checkout>`, [`CRAFT_FONTS`] holds every font in its
+//! Built with `NODALIA_FONTS_DIR=<nodalia-fonts checkout>`, [`NODALIA_FONTS`] holds every font in its
 //! manifest (Japanese UI and document fonts, Arabic fonts and Noto Sans Thai); built without it,
 //! it is empty and that text falls back to the installed system fonts. Release builds always set it. See `build.rs`.
 
-/// A font from the optional craft-fonts build input (empty unless built with `CRAFT_FONTS_DIR`).
-pub struct CraftFont {
+/// A font from the optional nodalia-fonts build input (empty unless built with `NODALIA_FONTS_DIR`).
+pub struct NodaliaFont {
     pub family: &'static str,
     pub style: &'static str,
     /// ISO 15924 scripts the font is for, e.g. `"Jpan"`.
@@ -13,8 +13,8 @@ pub struct CraftFont {
     pub bytes: &'static [u8],
 }
 
-/// A craft-fonts face the web (wasm32) build fetches from beside the wasm instead of embedding,
-/// listed in `crates/text/web-fonts.txt` (empty unless built with `CRAFT_FONTS_DIR`). Fetched by
+/// A nodalia-fonts face the web (wasm32) build fetches from beside the wasm instead of embedding,
+/// listed in `crates/text/web-fonts.txt` (empty unless built with `NODALIA_FONTS_DIR`). Fetched by
 /// `apps/pluma-web/src/fonts.rs`; copied into the site by `cargo xtask web-fonts`.
 pub struct WebFont {
     pub family: &'static str,
@@ -24,7 +24,7 @@ pub struct WebFont {
     /// Fetched only when the interface needs a character of one of [`WebFont::scripts`] (see
     /// [`demand_fonts`]). With neither this nor `startup`, fetched in the background.
     pub demand: bool,
-    /// ISO 15924 scripts the face is for (its craft-fonts manifest row), e.g. `"Hang"`.
+    /// ISO 15924 scripts the face is for (its nodalia-fonts manifest row), e.g. `"Hang"`.
     pub scripts: &'static [&'static str],
     /// Site-relative URL, `fonts/<first 16 hex digits of the SHA-256>/<file name>`.
     pub url: &'static str,
@@ -32,9 +32,9 @@ pub struct WebFont {
     pub integrity: &'static str,
 }
 
-include!(concat!(env!("OUT_DIR"), "/craft_fonts.rs"));
+include!(concat!(env!("OUT_DIR"), "/nodalia_fonts.rs"));
 
-impl CraftFont {
+impl NodaliaFont {
     /// Is the font for Japanese text?
     pub fn is_japanese(&self) -> bool {
         self.scripts.contains(&"Jpan")
@@ -65,29 +65,29 @@ impl CraftFont {
     }
 }
 
-/// The craft-fonts faces for Japanese text, best for document text first: Mincho (serif) families,
-/// then the others, regular weights before bold. Empty when built without craft-fonts.
-pub fn japanese_document_fonts() -> Vec<&'static CraftFont> {
-    japanese_document_fonts_from(CRAFT_FONTS)
+/// The nodalia-fonts faces for Japanese text, best for document text first: Mincho (serif) families,
+/// then the others, regular weights before bold. Empty when built without nodalia-fonts.
+pub fn japanese_document_fonts() -> Vec<&'static NodaliaFont> {
+    japanese_document_fonts_from(NODALIA_FONTS)
 }
 
-fn japanese_document_fonts_from(fonts: &[CraftFont]) -> Vec<&CraftFont> {
+fn japanese_document_fonts_from(fonts: &[NodaliaFont]) -> Vec<&NodaliaFont> {
     let mut v: Vec<_> = fonts.iter().filter(|f| f.is_japanese()).collect();
     v.sort_by_key(|f| (!f.is_mincho(), f.is_bold()));
     v
 }
 
-/// The craft-fonts faces the document font database loads: the Japanese ones in
+/// The nodalia-fonts faces the document font database loads: the Japanese ones in
 /// [`japanese_document_fonts`] order, then the Arabic ones in manifest order (Noto Sans Arabic
 /// first: the fallback for Arabic text; the other families are picked by name), then the Thai ones
 /// (Noto Sans Thai: the fallback for Thai text where no Thai font is installed, and on the web),
 /// then the Georgian ones (Noto Sans Georgian, the same for Georgian). Remaining faces follow in manifest order, so every explicitly supplied family can be selected.
-/// Empty when built without craft-fonts.
-pub fn document_fonts() -> Vec<&'static CraftFont> {
-    document_fonts_from(CRAFT_FONTS)
+/// Empty when built without nodalia-fonts.
+pub fn document_fonts() -> Vec<&'static NodaliaFont> {
+    document_fonts_from(NODALIA_FONTS)
 }
 
-fn document_fonts_from(fonts: &[CraftFont]) -> Vec<&CraftFont> {
+fn document_fonts_from(fonts: &[NodaliaFont]) -> Vec<&NodaliaFont> {
     let mut v = japanese_document_fonts_from(fonts);
     v.extend(fonts.iter().filter(|f| f.is_arabic() && !f.is_japanese()));
     v.extend(fonts.iter().filter(|f| f.is_thai() && !f.is_japanese() && !f.is_arabic()));
@@ -96,17 +96,17 @@ fn document_fonts_from(fonts: &[CraftFont]) -> Vec<&CraftFont> {
     v
 }
 
-/// The craft-fonts faces for Georgian UI text (Noto Sans Georgian), in manifest order. The UI fonts
-/// have no Georgian letters. Empty when built without craft-fonts, and on the web, which fetches
+/// The nodalia-fonts faces for Georgian UI text (Noto Sans Georgian), in manifest order. The UI fonts
+/// have no Georgian letters. Empty when built without nodalia-fonts, and on the web, which fetches
 /// the face at startup (`web-fonts.txt`) instead of embedding it.
-pub fn georgian_ui_fonts() -> Vec<&'static CraftFont> {
-    CRAFT_FONTS.iter().filter(|f| f.is_georgian() && !f.is_japanese()).collect()
+pub fn georgian_ui_fonts() -> Vec<&'static NodaliaFont> {
+    NODALIA_FONTS.iter().filter(|f| f.is_georgian() && !f.is_japanese()).collect()
 }
 
-/// The craft-fonts faces for Japanese text, best for UI text first: Gothic (sans) families, then
-/// the others; `bold` puts bold faces before regular ones. Empty when built without craft-fonts.
-pub fn japanese_ui_fonts(bold: bool) -> Vec<&'static CraftFont> {
-    let mut v: Vec<&'static CraftFont> = CRAFT_FONTS.iter().filter(|f| f.is_japanese()).collect();
+/// The nodalia-fonts faces for Japanese text, best for UI text first: Gothic (sans) families, then
+/// the others; `bold` puts bold faces before regular ones. Empty when built without nodalia-fonts.
+pub fn japanese_ui_fonts(bold: bool) -> Vec<&'static NodaliaFont> {
+    let mut v: Vec<&'static NodaliaFont> = NODALIA_FONTS.iter().filter(|f| f.is_japanese()).collect();
     v.sort_by_key(|f| (!f.is_gothic(), f.is_bold() != bold));
     v
 }
@@ -167,12 +167,12 @@ mod tests {
         assert_eq!(demand_fonts(&fonts, "हिन्दी".chars()), [3], "Hindi fetches only the Devanagari face");
         assert_eq!(demand_fonts(&fonts, "हिन्दी 한국어 Layer".chars()), [2, 3], "each once, in list order");
         assert!(demand_fonts(&fonts, "English العربية 日本語".chars()).is_empty(), "other scripts fetch nothing");
-        assert!(demand_fonts(&[], "한국어".chars()).is_empty(), "built without craft-fonts: nothing to fetch");
+        assert!(demand_fonts(&[], "한국어".chars()).is_empty(), "built without nodalia-fonts: nothing to fetch");
     }
 
     #[test]
     fn document_fonts_keep_script_priority_and_include_every_face_once() {
-        let font = |family, style, scripts| CraftFont { family, style, scripts, bytes: &[] };
+        let font = |family, style, scripts| NodaliaFont { family, style, scripts, bytes: &[] };
         let fonts = [
             font("Chinese", "Regular", &["Hans"]),
             font("Thai", "Regular", &["Thai", "Arab"]),
@@ -204,21 +204,21 @@ mod tests {
 
     #[test]
     fn web_fonts_follow_the_list() {
-        if CRAFT_FONTS.is_empty() {
-            eprintln!("skipping: built without craft-fonts (set CRAFT_FONTS_DIR to a craft-fonts checkout)");
+        if NODALIA_FONTS.is_empty() {
+            eprintln!("skipping: built without nodalia-fonts (set NODALIA_FONTS_DIR to a nodalia-fonts checkout)");
             return;
         }
-        // The listed faces this craft-fonts checkout has (an older one lacks some; build.rs leaves
+        // The listed faces this nodalia-fonts checkout has (an older one lacks some; build.rs leaves
         // those out with a warning).
         let listed: Vec<_> = crate::web_fonts_build::parse_list(include_str!("../web-fonts.txt"))
             .unwrap()
             .into_iter()
-            .filter(|l| CRAFT_FONTS.iter().any(|f| f.family == l.family && f.style == l.style))
+            .filter(|l| NODALIA_FONTS.iter().any(|f| f.family == l.family && f.style == l.style))
             .collect();
         assert_eq!(WEB_FONTS.len(), listed.len());
         for (l, w) in listed.iter().zip(WEB_FONTS) {
             assert_eq!((l.family, l.style, l.startup, l.demand), (w.family, w.style, w.startup, w.demand));
-            let face = CRAFT_FONTS.iter().find(|f| f.family == w.family && f.style == w.style);
+            let face = NODALIA_FONTS.iter().find(|f| f.family == w.family && f.style == w.style);
             assert_eq!(face.map(|f| f.scripts), Some(w.scripts), "{} {}: the manifest's scripts", w.family, w.style);
             let (dir, name) = w.url.strip_prefix("fonts/").and_then(|r| r.split_once('/')).unwrap();
             assert!(dir.len() == 16 && dir.bytes().all(|b| b.is_ascii_digit() || (b'a'..=b'f').contains(&b)), "{}", w.url);
@@ -228,13 +228,15 @@ mod tests {
         // The fallbacks the first frame may need: Noto Sans Arabic, Noto Sans Thai and Noto Sans
         // Georgian, where the checkout has them.
         let startup: Vec<_> = WEB_FONTS.iter().filter(|w| w.startup).map(|w| w.family).collect();
-        let expected: Vec<_> =
-            ["Noto Sans Arabic", "Noto Sans Thai", "Noto Sans Georgian"].into_iter().filter(|n| CRAFT_FONTS.iter().any(|f| f.family == *n)).collect();
+        let expected: Vec<_> = ["Noto Sans Arabic", "Noto Sans Thai", "Noto Sans Georgian"]
+            .into_iter()
+            .filter(|n| NODALIA_FONTS.iter().any(|f| f.family == *n))
+            .collect();
         assert_eq!(startup, expected);
         // Korean and Devanagari faces are fetched only on demand, never at startup or in the
         // background queue every session runs.
         let demand: Vec<_> = WEB_FONTS.iter().filter(|w| w.demand).map(|w| w.family).collect();
-        let expected: Vec<_> = ["NanumGothic", "Noto Sans Devanagari"].into_iter().filter(|n| CRAFT_FONTS.iter().any(|f| f.family == *n)).collect();
+        let expected: Vec<_> = ["NanumGothic", "Noto Sans Devanagari"].into_iter().filter(|n| NODALIA_FONTS.iter().any(|f| f.family == *n)).collect();
         assert_eq!(demand, expected);
         assert!(WEB_FONTS.iter().all(|w| !(w.startup && w.demand)));
     }

@@ -1,5 +1,5 @@
 //! Vertical type (bundled fonts: `§` and `×` stand upright like CJK, letters lie on their side;
-//! Japanese text only with craft-fonts' faces, skipped without them).
+//! Japanese text only with nodalia-fonts' faces, skipped without them).
 use crate::*;
 use kurbo::Shape;
 use pluma_doc::{AreaFit, CharStyle, Justify, TextKind, TextRun};
@@ -896,11 +896,11 @@ fn standard_vertical_roman_alignment_keeps_combining_marks_on_their_letter() {
     assert!(x.center().y > q.center().y + 10.0, "the next letter below: {q:?} {x:?}");
 }
 
-/// Issue #260 as reported, with a Japanese face of craft-fonts (whose own digits are proportional).
+/// Issue #260 as reported, with a Japanese face of nodalia-fonts (whose own digits are proportional).
 #[test]
 fn japanese_numbers_keep_their_own_cells_down_the_column() {
-    let Some(face) = crate::craft_fonts::japanese_ui_fonts(false).into_iter().next() else {
-        eprintln!("skipped: built without craft-fonts (set CRAFT_FONTS_DIR to a craft-fonts checkout to run it)");
+    let Some(face) = crate::nodalia_fonts::japanese_ui_fonts(false).into_iter().next() else {
+        eprintln!("skipped: built without nodalia-fonts (set NODALIA_FONTS_DIR to a nodalia-fonts checkout to run it)");
         return;
     };
     let db = FontDb::with_font_dirs(vec![]);
@@ -1660,12 +1660,12 @@ fn kinsoku_shori_type_pushes_a_closing_bracket_in_or_out() {
 /// Kinsoku Shori Type at 200% Vertical Scale in a column of 225 pt: the font's vertical metrics set
 /// each character 40 pt long, and its five gaps close by up to 4 pt each, room for the 15 pt 」
 /// overflows by, so 」 is pushed in; Push Out Only moves 五 to the next column with it. Needs
-/// craft-fonts' Shippori Mincho (skipped without it).
+/// nodalia-fonts' Shippori Mincho (skipped without it).
 #[test]
 fn kinsoku_shori_type_closes_a_column_by_the_em_down_the_column() {
     use pluma_doc::KinsokuShoriType;
     if FontDb::global().face("Shippori Mincho", "Regular").is_none_or(|f| f.family != "Shippori Mincho") {
-        eprintln!("skipped: built without craft-fonts (set CRAFT_FONTS_DIR to a craft-fonts checkout to run it)");
+        eprintln!("skipped: built without nodalia-fonts (set NODALIA_FONTS_DIR to a nodalia-fonts checkout to run it)");
         return;
     }
     let lay = |ty: KinsokuShoriType| {
@@ -1691,7 +1691,7 @@ fn kinsoku_shori_type_closes_a_column_by_the_em_down_the_column() {
 /// its shorter cell. Line-end Punctuation Half Width takes nothing more off the punctuation `vpal`
 /// re-spaced, and trims the punctuation it leaves full height (〘〙 in Shippori Mincho) as before.
 /// Off, the column is as before, and a font without vertical metrics (the bundled Source Sans 3)
-/// keeps today's cells. Needs craft-fonts' Shippori Mincho (skipped without it).
+/// keeps today's cells. Needs nodalia-fonts' Shippori Mincho (skipped without it).
 #[test]
 fn proportional_metrics_set_upright_glyphs_on_their_proportional_heights() {
     use pluma_doc::Mojikumi;
@@ -1707,7 +1707,7 @@ fn proportional_metrics_set_upright_glyphs_on_their_proportional_heights() {
     let (on, off) = (lay("§§", "Source Sans 3", true, Mojikumi::None), lay("§§", "Source Sans 3", false, Mojikumi::None));
     assert!(near(&adv(&on), &adv(&off)) && near(&y0(&on), &y0(&off)), "{:?} {:?}", adv(&on), adv(&off));
     if FontDb::global().face("Shippori Mincho", "Regular").is_none_or(|f| f.family != "Shippori Mincho") {
-        eprintln!("skipped: built without craft-fonts (set CRAFT_FONTS_DIR to a craft-fonts checkout to run it)");
+        eprintln!("skipped: built without nodalia-fonts (set NODALIA_FONTS_DIR to a nodalia-fonts checkout to run it)");
         return;
     }
     let text = "「あ」、ッ漢。";
@@ -1731,7 +1731,7 @@ fn proportional_metrics_set_upright_glyphs_on_their_proportional_heights() {
 
 /// Proportional Metrics turns on the kerning that goes with it (#966): `vkrn` and `vapk` in
 /// vertical type with `vpal`, `apkn` with `palt`, only while the style's kerning is automatic.
-/// Without Proportional Metrics vertical type isn't kerned, as before. Needs craft-fonts' Noto Sans
+/// Without Proportional Metrics vertical type isn't kerned, as before. Needs nodalia-fonts' Noto Sans
 /// CJK SC, which has `vpal` and `vkrn` (skipped without it; it isn't a document font, so it's loaded
 /// here).
 #[test]
@@ -1748,8 +1748,8 @@ fn proportional_metrics_kern_the_glyphs_they_respace() {
     assert!(tags(v.resolve_vertical(&st(true, Some(0.0)), true, true)).contains(&(*b"vkrn", 0)), "manual kerning: none");
     assert!(tags(v.resolve_vertical(&st(true, None), false, false)).contains(&(*b"vkrn", 0)));
 
-    let Some(noto) = crate::CRAFT_FONTS.iter().find(|f| f.family == "Noto Sans CJK SC") else {
-        eprintln!("skipped: built without craft-fonts (set CRAFT_FONTS_DIR to a craft-fonts checkout to run it)");
+    let Some(noto) = crate::NODALIA_FONTS.iter().find(|f| f.family == "Noto Sans CJK SC") else {
+        eprintln!("skipped: built without nodalia-fonts (set NODALIA_FONTS_DIR to a nodalia-fonts checkout to run it)");
         return;
     };
     let db = FontDb::with_font_dirs(vec![]);

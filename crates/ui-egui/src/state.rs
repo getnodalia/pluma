@@ -526,9 +526,9 @@ pub struct UiState {
     pub floating_panels: Vec<FloatingPanels>,
     /// Shared panel membership and placement; older preferences use the legacy dock.
     #[serde(default, skip_serializing_if = "Option::is_none")]
-    pub docking: Option<craft_ui::docking::Layout<String>>,
+    pub docking: Option<nodalia_ui::docking::Layout<String>>,
     #[serde(default, skip_serializing_if = "std::collections::BTreeMap::is_empty")]
-    pub docking_hidden: std::collections::BTreeMap<String, craft_ui::docking::Location<String>>,
+    pub docking_hidden: std::collections::BTreeMap<String, nodalia_ui::docking::Location<String>>,
     /// Tabs closed together by panel shortcuts, kept with their workspace return locations.
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub docking_hidden_groups: Vec<Vec<String>>,
@@ -685,7 +685,7 @@ pub struct UiState {
     /// Keyboard shortcut overrides: command id, `tool:<id>` or `panel:<id>` → chord ("" = none),
     /// stored in the form every earlier version reads.
     #[serde(default, with = "crate::keymap::stored")]
-    pub shortcut_overrides: craft_keymap::Overrides,
+    pub shortcut_overrides: nodalia_keymap::Overrides,
     /// Name of the shortcut set (preset or "Custom").
     #[serde(default = "default_shortcut_set", deserialize_with = "crate::shortcut_editor::deserialize_set_name")]
     pub shortcut_set: String,
@@ -1162,7 +1162,7 @@ impl UiState {
         let unusable: Vec<String> = self
             .shortcut_overrides
             .iter()
-            .filter(|(_, texts)| !texts.iter().all(|t| craft_keymap::Binding::parse(t).is_ok()))
+            .filter(|(_, texts)| !texts.iter().all(|t| nodalia_keymap::Binding::parse(t).is_ok()))
             .map(|(k, _)| k.to_string())
             .collect();
         for k in unusable {
@@ -1416,7 +1416,7 @@ pub(crate) struct PendingScreenshot {
     /// rather than capturing a different document.
     pub(crate) document: Option<(u64, u64)>,
     /// The live one-shot completion slot while the command is outstanding.
-    pub(crate) slot: Option<craft_ui::capture::CaptureSlot>,
+    pub(crate) slot: Option<nodalia_ui::capture::CaptureSlot>,
     /// The geometry and expected image size at issuance.
     pub(crate) issued: Option<CaptureEpoch>,
     /// Fresh slots made after a geometry change (a resize while the capture was in flight).

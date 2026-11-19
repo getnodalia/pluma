@@ -14,7 +14,7 @@ use pluma_geom::{Affine, BezPath, FillRule, PathData, Point, Rect, Vec2};
 
 use crate::aci::nearest_aci;
 use crate::{CAP_HEIGHT, ColorDepth, DxfImage, DxfOptions, DxfOutput, MAX_NEST, Preserve, RasterFormat};
-use craft_dxf::drawing::{Codes, Drawing, EntityStyle, Handle, ImageDef, Layer, LineType, STANDARD_STYLE, fixed};
+use nodalia_dxf::drawing::{Codes, Drawing, EntityStyle, Handle, ImageDef, Layer, LineType, STANDARD_STYLE, fixed};
 
 /// Curves are flattened to within this distance (points) where DXF needs straight segments
 /// (hatch boundaries, R12 polylines).
@@ -1402,21 +1402,21 @@ impl<'a> Scene<'a> {
 
     /// Image `im` as a file in the chosen format, and its size in pixels.
     fn encode_image(&self, im: &ImageObject) -> Result<(DxfImage, (u32, u32)), String> {
-        use craft_image_codecs::{ChannelLayout, EncodeOptions, Format, Image as CodecImage, SampleType};
+        use nodalia_image_codecs::{ChannelLayout, EncodeOptions, Format, Image as CodecImage, SampleType};
         let blob = self.doc.image_blob(im).filter(|b| !b.bytes.is_empty()).ok_or_else(|| "an image has no pixels and was left out".to_string())?;
         // The pixels it converts to (RGBA, 4 bytes each) are read from its header before decoding.
         let (w, h) = pluma_doc::header_size(&blob.bytes).ok_or_else(|| UNDECODED.to_string())?;
         if u64::from(w) * u64::from(h) > MAX_IMAGE_PIXELS {
             return Err("an image is too large for DXF and was left out".to_string());
         }
-        let decoded = craft_image_codecs::decode(&blob.bytes).map_err(|_| UNDECODED.to_string())?;
+        let decoded = nodalia_image_codecs::decode(&blob.bytes).map_err(|_| UNDECODED.to_string())?;
         let size = decoded.dimensions();
         let mut rgba = decoded.to_rgba8();
         let bytes = match self.o.raster {
             RasterFormat::Png => {
                 let img = CodecImage::from_raw(size.0, size.1, ChannelLayout::Rgba, SampleType::U8, rgba)
                     .map_err(|e| format!("an image could not be written: {e}"))?;
-                craft_image_codecs::encode(&img, Format::Png, &EncodeOptions::default())
+                nodalia_image_codecs::encode(&img, Format::Png, &EncodeOptions::default())
             }
             RasterFormat::Jpeg => {
                 // No alpha in JPEG: transparent pixels over white.
@@ -1429,7 +1429,7 @@ impl<'a> Scene<'a> {
                 }
                 let img = CodecImage::from_raw(size.0, size.1, ChannelLayout::Rgb, SampleType::U8, rgb)
                     .map_err(|e| format!("an image could not be written: {e}"))?;
-                craft_image_codecs::encode(&img, Format::Jpeg, &EncodeOptions { jpeg_quality: 90, ..EncodeOptions::default() })
+                nodalia_image_codecs::encode(&img, Format::Jpeg, &EncodeOptions { jpeg_quality: 90, ..EncodeOptions::default() })
             }
         }
         .map_err(|e| format!("an image could not be written: {e}"))?;

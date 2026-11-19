@@ -831,7 +831,7 @@ fn thumbnail(ctx: &egui::Context, library: &str, item: &str, png: &str, px: u32)
         return t;
     }
     let tex = pluma_format::base64_decode(png)
-        .and_then(|png| craft_image_codecs::decode_as(craft_image_codecs::Format::Png, &png).ok())
+        .and_then(|png| nodalia_image_codecs::decode_as(nodalia_image_codecs::Format::Png, &png).ok())
         .and_then(|img| image::RgbaImage::from_raw(img.width(), img.height(), img.to_rgba8()).map(image::DynamicImage::ImageRgba8))
         .map(|img| {
             let rgba = shrunk_thumbnail(img, px);

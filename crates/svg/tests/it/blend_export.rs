@@ -1,8 +1,8 @@
 //! Blend modes and opacity masks in SVG export look as on the canvas: every mode follows the
 //! reference formulas when resvg draws the file, and masks take luminance the canvas's way.
 
-use craft_svg::tree::draw::resvg;
-use craft_svg::tree::usvg::roxmltree;
+use nodalia_svg::tree::draw::resvg;
+use nodalia_svg::tree::usvg::roxmltree;
 use pluma_color::blend::blend_rgb;
 use pluma_color::{BlendMode, Color, Paint};
 use pluma_doc::{Appearance, CharStyle, Document, Node, NodeKind, OpacityMask, TextObject};

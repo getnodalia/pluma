@@ -1,6 +1,6 @@
 # pluma-affinity
 
-The reader is [`craft-affinity`](https://github.com/storytold/craft-libs/tree/main/crates/affinity) in craft-libs; this crate re-exports it under its old name for the corpus tests and fuzz targets. The engine maps its document onto Pluma art (`crates/engine/src/cmd/fileio/affinity`), as described below.
+The reader is [`nodalia-affinity`](https://github.com/getnodalia/foundation/tree/nodalia/libs/crates/affinity) in nodalia-libs; this crate re-exports it under its old name for the corpus tests and fuzz targets. The engine maps its document onto Pluma art (`crates/engine/src/cmd/fileio/affinity`), as described below.
 
 An independent, bounded Rust reader for native Affinity documents: `.af` from Affinity 3 and
 `.afdesign`, `.afphoto` and `.afpub` from Affinity 1 and 2 (container versions 8 to 12). It reads

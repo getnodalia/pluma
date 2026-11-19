@@ -84,7 +84,7 @@ fn a_language_without_a_dictionary_marks_nothing() {
     let mut s = session();
     let t = text(&mut s, 50.0, "qzxvw");
     run(&mut s, "text.setFormat", json!({"ids": [t.0], "language": "German"}));
-    assert_eq!(unknown(&mut s, json!({})), [], "German has no spelling dictionary in craft-proof");
+    assert_eq!(unknown(&mut s, json!({})), [], "German has no spelling dictionary in nodalia-proof");
 }
 
 #[test]
@@ -113,7 +113,7 @@ fn each_paragraph_is_checked_on_its_own_at_the_bytes_of_the_whole_text() {
     assert_eq!(unknown(&mut s, json!({})), [(t.0, at as u64, at as u64 + 5, "qzxvw".to_string())]);
 }
 
-// The custom dictionary is craft-proof's, shared by the whole process, so each test below uses
+// The custom dictionary is nodalia-proof's, shared by the whole process, so each test below uses
 // made-up words of its own: tests running at the same time never see each other's.
 
 /// The words a check of the whole active document lists.
@@ -225,7 +225,7 @@ fn in_dictionary(s: &mut Session, word: &str) -> bool {
 fn a_dictionary_file_that_cant_be_read_whole_is_never_written_over() {
     let _one_at_a_time = dictionary_lock();
     let dir = pluma_testkit::TempDir::new("spelling-unreadable");
-    // A folder where the file should be can't be read as one; a file past what craft-proof reads
+    // A folder where the file should be can't be read as one; a file past what nodalia-proof reads
     // would lose its other words if written back.
     let folder = dir.join("Custom Dictionary.txt");
     std::fs::create_dir_all(&folder).unwrap();

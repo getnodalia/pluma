@@ -396,26 +396,26 @@ fn preview(doc: &Document, art: &Node, frame: Rect) -> Option<Vec<u8>> {
     let inner = |x: u32, y: u32| x > 0 && y > 0 && x + 1 < w && y + 1 < h;
     if rgba.enumerate_pixels().all(|(x, y, p)| p[3] >= 250 || !inner(x, y)) {
         let rgb = image::DynamicImage::ImageRgba8(rgba).to_rgb8();
-        let raw = craft_image_codecs::Image::from_raw(
+        let raw = nodalia_image_codecs::Image::from_raw(
             rgb.width(),
             rgb.height(),
-            craft_image_codecs::ChannelLayout::Rgb,
-            craft_image_codecs::SampleType::U8,
+            nodalia_image_codecs::ChannelLayout::Rgb,
+            nodalia_image_codecs::SampleType::U8,
             rgb.into_raw(),
         )
         .ok()?;
-        let opts = craft_image_codecs::EncodeOptions { jpeg_quality: 80, ..Default::default() };
-        craft_image_codecs::encode(&raw, craft_image_codecs::Format::Jpeg, &opts).ok()
+        let opts = nodalia_image_codecs::EncodeOptions { jpeg_quality: 80, ..Default::default() };
+        nodalia_image_codecs::encode(&raw, nodalia_image_codecs::Format::Jpeg, &opts).ok()
     } else {
-        let raw = craft_image_codecs::Image::from_raw(
+        let raw = nodalia_image_codecs::Image::from_raw(
             rgba.width(),
             rgba.height(),
-            craft_image_codecs::ChannelLayout::Rgba,
-            craft_image_codecs::SampleType::U8,
+            nodalia_image_codecs::ChannelLayout::Rgba,
+            nodalia_image_codecs::SampleType::U8,
             rgba.into_raw(),
         )
         .ok()?;
-        craft_image_codecs::encode(&raw, craft_image_codecs::Format::Png, &craft_image_codecs::EncodeOptions::default()).ok()
+        nodalia_image_codecs::encode(&raw, nodalia_image_codecs::Format::Png, &nodalia_image_codecs::EncodeOptions::default()).ok()
     }
 }
 

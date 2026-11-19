@@ -11,8 +11,8 @@ use std::collections::{BTreeMap, HashMap, HashSet};
 use std::sync::atomic::{AtomicU64, Ordering};
 use std::sync::{Arc, Mutex, OnceLock};
 
-use craft_keymap::{AssignError, Binding, ConflictKind, Keymap, Overrides, Policy, Trigger};
 use egui::{Key, KeyboardShortcut, Modifiers};
+use nodalia_keymap::{AssignError, Binding, ConflictKind, Keymap, Overrides, Policy, Trigger};
 use serde_json::{Value, json};
 
 use crate::keymap::{command_of, effective_with, entry_key, entry_of_stored, keymap_with, stored, vc_chord, vc_format};
@@ -160,7 +160,7 @@ pub fn default_command_shortcut(id: &str) -> Option<&'static str> {
 }
 
 /// Registry default shortcut of a command on platform `p`.
-fn default_command_shortcut_on(id: &str, p: craft_keymap::Platform) -> Option<&'static str> {
+fn default_command_shortcut_on(id: &str, p: nodalia_keymap::Platform) -> Option<&'static str> {
     if let Some(c) = pluma_engine::find_command(id) {
         return c.shortcut;
     }
@@ -169,7 +169,7 @@ fn default_command_shortcut_on(id: &str, p: craft_keymap::Platform) -> Option<&'
 
 /// The default shortcut `sc` of UI command `id` on platform `p` (empty for none). Select Last
 /// Selection Tool has none on macOS, which takes Cmd+` to switch between an app's windows.
-pub(crate) fn ui_command_default(id: &str, sc: &'static str, p: craft_keymap::Platform) -> &'static str {
+pub(crate) fn ui_command_default(id: &str, sc: &'static str, p: nodalia_keymap::Platform) -> &'static str {
     if id == "tool.selectLastSelection" && p.is_mac() { "" } else { sc }
 }
 
@@ -204,7 +204,7 @@ pub fn default_of(key: &str) -> Option<&'static str> {
 }
 
 /// Default shortcut of an entry key on platform `p`.
-pub(crate) fn default_on(key: &str, p: craft_keymap::Platform) -> Option<&'static str> {
+pub(crate) fn default_on(key: &str, p: nodalia_keymap::Platform) -> Option<&'static str> {
     if let Some(t) = key.strip_prefix("tool:") {
         return pluma_tools::tool_info(t).and_then(|t| t.shortcut);
     }
@@ -353,7 +353,7 @@ pub(crate) fn backtick_text() -> Option<String> {
 fn on_layout(text: String, typed: Option<&str>) -> String {
     let Some(typed) = typed else { return text };
     match vc_chord(&text) {
-        Some(c) if c.key == craft_keymap::Key::Backtick && !c.mods.shift => match text.strip_suffix('~') {
+        Some(c) if c.key == nodalia_keymap::Key::Backtick && !c.mods.shift => match text.strip_suffix('~') {
             Some(mods) => format!("{mods}{typed}"),
             None => text,
         },
@@ -2632,7 +2632,7 @@ mod tests {
 
     #[test]
     fn edit_dialog_rows_show_primary_and_function_keys() {
-        for p in [craft_keymap::Platform::Windows, craft_keymap::Platform::Linux, craft_keymap::Platform::Mac] {
+        for p in [nodalia_keymap::Platform::Windows, nodalia_keymap::Platform::Linux, nodalia_keymap::Platform::Mac] {
             let km = crate::keymap::keymap_for(p, &snapshot());
             for (key, primary, alternate) in [("edit.cut", "Cmd+X", "F2"), ("edit.copy", "Cmd+C", "F3"), ("edit.paste", "Cmd+V", "F4")] {
                 let shown = dialog_shortcuts_with(&km, key, None).unwrap();

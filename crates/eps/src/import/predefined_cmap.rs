@@ -3,7 +3,7 @@
 //! others map to CIDs of a character collection, whose CID → Unicode CMap gives the characters.
 //! Used by legacy `.ai` type in composite fonts and by type in CID-keyed fonts found by name.
 
-use craft_pdf::interpret::hayro_cmap::{BfString, CMap, CMapName, load_embedded};
+use nodalia_pdf::interpret::hayro_cmap::{BfString, CMap, CMapName, load_embedded};
 
 /// How a composite font's strings decode.
 #[derive(Debug)]

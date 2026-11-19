@@ -706,7 +706,7 @@ fn escape_that_closes_a_popup_or_ends_a_ruler_origin_drag_keeps_the_rotation() {
         .expect("the angle menu's widget");
     w.click(0.0, egui::PointerButton::Primary, combo.rect.center());
     w.after(0.0, vec![]);
-    assert!(craft_ui::ComboBox::is_open(&w.ctx, combo.id), "the angle menu is open");
+    assert!(nodalia_ui::ComboBox::is_open(&w.ctx, combo.id), "the angle menu is open");
     w.escape(0.2);
     assert!(!egui::Popup::is_any_open(&w.ctx), "Escape closes it");
     assert_eq!(w.rotation(), 30.0, "the Escape that closes the angle menu");

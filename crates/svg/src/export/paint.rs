@@ -13,16 +13,16 @@ fn web_image(b: &ImageBlob) -> std::borrow::Cow<'_, ImageBlob> {
     if matches!(b.mime.as_str(), "image/png" | "image/jpeg" | "image/jpg" | "image/gif" | "image/webp" | "image/svg+xml") {
         return Cow::Borrowed(b);
     }
-    let png = craft_image_codecs::decode(&b.bytes).ok().and_then(|img| {
-        let raw = craft_image_codecs::Image::from_raw(
+    let png = nodalia_image_codecs::decode(&b.bytes).ok().and_then(|img| {
+        let raw = nodalia_image_codecs::Image::from_raw(
             img.width(),
             img.height(),
-            craft_image_codecs::ChannelLayout::Rgba,
-            craft_image_codecs::SampleType::U8,
+            nodalia_image_codecs::ChannelLayout::Rgba,
+            nodalia_image_codecs::SampleType::U8,
             img.to_rgba8(),
         )
         .ok()?;
-        craft_image_codecs::encode(&raw, craft_image_codecs::Format::Png, &craft_image_codecs::EncodeOptions::default()).ok()
+        nodalia_image_codecs::encode(&raw, nodalia_image_codecs::Format::Png, &nodalia_image_codecs::EncodeOptions::default()).ok()
     });
     png.map_or(Cow::Borrowed(b), |png| Cow::Owned(ImageBlob::png(png)))
 }
@@ -103,13 +103,18 @@ impl Writer<'_> {
             for alpha in coverage {
                 rgba.extend_from_slice(&if self.tiny() { [rgb[0], rgb[1], rgb[2], alpha] } else { [255, 255, 255, alpha] });
             }
-            let Ok(pixels) =
-                craft_image_codecs::Image::from_raw(width, height, craft_image_codecs::ChannelLayout::Rgba, craft_image_codecs::SampleType::U8, rgba)
-            else {
+            let Ok(pixels) = nodalia_image_codecs::Image::from_raw(
+                width,
+                height,
+                nodalia_image_codecs::ChannelLayout::Rgba,
+                nodalia_image_codecs::SampleType::U8,
+                rgba,
+            ) else {
                 self.warn(UNDECODED);
                 return;
             };
-            let Ok(png) = craft_image_codecs::encode(&pixels, craft_image_codecs::Format::Png, &craft_image_codecs::EncodeOptions::default()) else {
+            let Ok(png) = nodalia_image_codecs::encode(&pixels, nodalia_image_codecs::Format::Png, &nodalia_image_codecs::EncodeOptions::default())
+            else {
                 self.warn(UNDECODED);
                 return;
             };
@@ -544,16 +549,17 @@ impl Writer<'_> {
                 let (cols, rows) = (along(cover.width()), along(cover.height()));
                 (g.pixels(b, cover, cols, rows, fill, &Color::to_rgb).flatten().collect(), cols, rows)
             };
-            let Ok(img) = craft_image_codecs::Image::from_raw(
+            let Ok(img) = nodalia_image_codecs::Image::from_raw(
                 u32::from(cols),
                 u32::from(rows),
-                craft_image_codecs::ChannelLayout::Rgba,
-                craft_image_codecs::SampleType::U8,
+                nodalia_image_codecs::ChannelLayout::Rgba,
+                nodalia_image_codecs::SampleType::U8,
                 rgba,
             ) else {
                 return;
             };
-            let Ok(png) = craft_image_codecs::encode(&img, craft_image_codecs::Format::Png, &craft_image_codecs::EncodeOptions::default()) else {
+            let Ok(png) = nodalia_image_codecs::encode(&img, nodalia_image_codecs::Format::Png, &nodalia_image_codecs::EncodeOptions::default())
+            else {
                 return;
             };
             self.warn(if freeform {

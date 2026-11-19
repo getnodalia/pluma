@@ -243,7 +243,7 @@ private editing data. Pluma:
   with the font named without the CMap. Its codes are read by the CMap's code space, mapped to CIDs and then to
   Unicode by the character collection's CID-to-Unicode CMap, and codes the CMap does not map are dropped. A `-V`
   CMap is read with its `-H` form's codes, and a 0x0D byte ends a paragraph. The Unicode CMaps `Uni*-UCS2`, `-UTF8`,
-  `-UTF16` and `-UTF32` are read as Unicode. Pluma reads the predefined CMaps that craft-pdf does not carry
+  `-UTF16` and `-UTF32` are read as Unicode. Pluma reads the predefined CMaps that nodalia-pdf does not carry
   (`RKSJ`, `78-RKSJ`, `78ms-RKSJ`, `78-EUC`, `78`, `Add`, `Ext`, `NWP`, `GB`, `CNS1`, `KSC`, `B5` and the Hong Kong
   `-B5` sets other than `HKscs-B5`) with its own choice of the nearest carried CMap, which can give a different
   character for some codes, and decodes `GBT`, `GBT-EUC`, `GBTpc-EUC`, `CNS2` and `KSC-Johab` type byte by byte with

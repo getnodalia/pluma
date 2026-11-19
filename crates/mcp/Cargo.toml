@@ -26,7 +26,7 @@ serde_json = { workspace = true }
 log = { workspace = true }
 
 image = { workspace = true }
-craft-image-codecs = { workspace = true }
+nodalia-image-codecs = { workspace = true }
 
 [dev-dependencies]
 pluma-testkit = { workspace = true }

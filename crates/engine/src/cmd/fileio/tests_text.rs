@@ -68,7 +68,7 @@ fn webp_chunks(file: &[u8]) -> Vec<[u8; 4]> {
 
 /// The size and straight RGBA pixels of image file `file`.
 fn rgba(file: &[u8]) -> (u32, u32, Vec<u8>) {
-    let img = craft_image_codecs::decode(file).unwrap();
+    let img = nodalia_image_codecs::decode(file).unwrap();
     let (w, h) = img.dimensions();
     (w, h, img.to_rgba8())
 }
@@ -170,17 +170,17 @@ fn save_for_office_writes_a_png_at_the_resolution() {
     s.execute("file.new", &json!({"width": 612, "height": 792, "artboards": 2})).unwrap();
     let r = s.execute("document.exportForOffice", &json!({"ppi": 150})).unwrap();
     assert_eq!((r["width"].as_u64(), r["height"].as_u64()), (Some(1275), Some(1650)), "Letter at 150 ppi");
-    let img = craft_image_codecs::decode(&b64(&r))
+    let img = nodalia_image_codecs::decode(&b64(&r))
         .map(|__cimg| {
             let (__w, __h) = __cimg.dimensions();
             match (__cimg.layout(), __cimg.sample_type()) {
-                (craft_image_codecs::ChannelLayout::Gray, craft_image_codecs::SampleType::U8) => {
+                (nodalia_image_codecs::ChannelLayout::Gray, nodalia_image_codecs::SampleType::U8) => {
                     image::DynamicImage::ImageLuma8(image::GrayImage::from_raw(__w, __h, __cimg.into_data()).unwrap())
                 }
-                (craft_image_codecs::ChannelLayout::GrayA, craft_image_codecs::SampleType::U8) => {
+                (nodalia_image_codecs::ChannelLayout::GrayA, nodalia_image_codecs::SampleType::U8) => {
                     image::DynamicImage::ImageLumaA8(image::GrayAlphaImage::from_raw(__w, __h, __cimg.into_data()).unwrap())
                 }
-                (craft_image_codecs::ChannelLayout::Rgb, craft_image_codecs::SampleType::U8) => {
+                (nodalia_image_codecs::ChannelLayout::Rgb, nodalia_image_codecs::SampleType::U8) => {
                     image::DynamicImage::ImageRgb8(image::RgbImage::from_raw(__w, __h, __cimg.into_data()).unwrap())
                 }
                 _ => image::DynamicImage::ImageRgba8(image::RgbaImage::from_raw(__w, __h, __cimg.to_rgba8()).unwrap()),
@@ -193,17 +193,17 @@ fn save_for_office_writes_a_png_at_the_resolution() {
     let r = s.execute("document.exportForOffice", &json!({"ppi": 72, "transparent": true, "artboard": 1})).unwrap();
     assert_eq!((r["width"].as_u64(), r["height"].as_u64()), (Some(612), Some(792)));
     assert_eq!(
-        craft_image_codecs::decode(&b64(&r))
+        nodalia_image_codecs::decode(&b64(&r))
             .map(|__cimg| {
                 let (__w, __h) = __cimg.dimensions();
                 match (__cimg.layout(), __cimg.sample_type()) {
-                    (craft_image_codecs::ChannelLayout::Gray, craft_image_codecs::SampleType::U8) => {
+                    (nodalia_image_codecs::ChannelLayout::Gray, nodalia_image_codecs::SampleType::U8) => {
                         image::DynamicImage::ImageLuma8(image::GrayImage::from_raw(__w, __h, __cimg.into_data()).unwrap())
                     }
-                    (craft_image_codecs::ChannelLayout::GrayA, craft_image_codecs::SampleType::U8) => {
+                    (nodalia_image_codecs::ChannelLayout::GrayA, nodalia_image_codecs::SampleType::U8) => {
                         image::DynamicImage::ImageLumaA8(image::GrayAlphaImage::from_raw(__w, __h, __cimg.into_data()).unwrap())
                     }
-                    (craft_image_codecs::ChannelLayout::Rgb, craft_image_codecs::SampleType::U8) => {
+                    (nodalia_image_codecs::ChannelLayout::Rgb, nodalia_image_codecs::SampleType::U8) => {
                         image::DynamicImage::ImageRgb8(image::RgbImage::from_raw(__w, __h, __cimg.into_data()).unwrap())
                     }
                     _ => image::DynamicImage::ImageRgba8(image::RgbaImage::from_raw(__w, __h, __cimg.to_rgba8()).unwrap()),

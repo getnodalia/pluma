@@ -474,7 +474,7 @@ pub(super) fn artboard_list(app: &PlumaApp, ui: &mut Ui, cur: usize) -> Option<u
     ui.add_enabled_ui(!boards.is_empty(), |ui| {
         ui.set_max_width(FIELD_W);
         ui.name_inputs(tl!("Artboard"), |ui| {
-            craft_ui::ComboBox::from_id_salt("artboard-list")
+            nodalia_ui::ComboBox::from_id_salt("artboard-list")
                 .selected_text(egui::RichText::new(shown).size(11.5))
                 .width(FIELD_W)
                 .wrap_mode(egui::TextWrapMode::Truncate)
