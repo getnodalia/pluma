@@ -99,7 +99,12 @@ pub fn app_bar(app: &mut PlumaApp, ui: &mut Ui) {
     } else {
         app.titlebar_inset.clamp(8.0, f32::from(i8::MAX)) as i8
     };
-    let frame = egui::Frame::NONE.fill(t.app_bar).inner_margin(egui::Margin { left, right: if custom && !controls_left { 0 } else { 14 }, top: 0, bottom: 0 });
+    let frame = egui::Frame::NONE.fill(t.app_bar).inner_margin(egui::Margin {
+        left,
+        right: if custom && !controls_left { 0 } else { 14 },
+        top: 0,
+        bottom: 0,
+    });
     // Nodalia's bar is the window's frame, around the islands: no line under it.
     let frame = if t.nodalia { frame } else { frame.stroke(Stroke::new(1.0, t.border)) };
     let bar = egui::Panel::top("app_bar").exact_size(app_bar_height(ui.ctx())).show_separator_line(!t.nodalia).frame(frame).show(ui, |ui| {

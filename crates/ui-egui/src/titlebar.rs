@@ -132,7 +132,11 @@ pub fn caption_buttons(app: &mut PlumaApp, ui: &mut Ui, bar: Rect) {
             // it. On the right the order is minimize, maximize, close; on the left, close first.
             let slot = if left { 2 - i } else { i };
             let step = NDL_SIZE + NDL_GAP;
-            let centre_x = if left { bar.left() + NDL_EDGE + NDL_SIZE / 2.0 + slot as f32 * step } else { bar.right() - NDL_EDGE - NDL_SIZE / 2.0 - (2 - slot) as f32 * step };
+            let centre_x = if left {
+                bar.left() + NDL_EDGE + NDL_SIZE / 2.0 + slot as f32 * step
+            } else {
+                bar.right() - NDL_EDGE - NDL_SIZE / 2.0 - (2 - slot) as f32 * step
+            };
             let near = if left { slot == 0 } else { slot == 2 };
             let (lo, hi) = match (left, near) {
                 (true, true) => (bar.left(), centre_x + step / 2.0),
