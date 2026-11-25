@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" width="544" height="144" viewBox="0 0 544 144">
+  <sodipodi:namedview>
+    <inkscape:page x="0" y="0" width="252" height="144" inkscape:label="Front"/>
+    <inkscape:page x="292" y="0" width="252" height="144" inkscape:label="Back"/>
+  </sodipodi:namedview>
+  <g id="Front">
+    <rect x="0" y="0" width="252" height="144" fill="#FBF8F1"/>
+    <path d="M252 0 L252 62 A62 62 0 0 1 190 0 Z" fill="#DCE6DD"/>
+    <circle cx="226" cy="24" r="9" fill="#E58E68"/>
+    <path d="M22 50 L22 34 A14 14 0 0 1 50 34 L50 50 Z" fill="#2D5B61"/>
+    <circle cx="36" cy="34" r="4.2" fill="#FBF8F1"/>
+    <text x="22" y="92" font-family="Inter" font-size="14" font-weight="600" letter-spacing="-0.2" fill="#1F2B33">Your Name</text>
+    <text x="22" y="105" font-family="Inter" font-size="7.5" font-weight="500" letter-spacing="1.2" fill="#5C8470">CREATIVE DIRECTOR</text>
+    <line x1="22" y1="116" x2="40" y2="116" stroke="#E58E68" stroke-width="1.2"/>
+    <text x="22" y="129" font-family="Inter" font-size="6.5" fill="#4A5A63">hello@marenstudio.com</text>
+    <text x="230" y="129" text-anchor="end" font-family="Inter" font-size="6.5" fill="#4A5A63">+00 000 000 000</text>
+  </g>
+  <g id="Back">
+    <rect x="292" y="0" width="252" height="144" fill="#2D5B61"/>
+    <path d="M404 82 L404 62 A18 18 0 0 1 440 62 L440 82 Z" fill="#FBF8F1"/>
+    <circle cx="422" cy="62" r="5.4" fill="#2D5B61"/>
+    <text x="418" y="104" text-anchor="middle" font-family="Inter" font-size="8.5" font-weight="500" letter-spacing="3.2" fill="#FBF8F1">MAREN STUDIO</text>
+    <text x="418" y="118" text-anchor="middle" font-family="Inter" font-size="6.5" letter-spacing="0.6" fill="#BFD3C9">marenstudio.com</text>
+  </g>
+</svg>

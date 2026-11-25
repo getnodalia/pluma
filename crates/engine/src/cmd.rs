@@ -36,6 +36,7 @@ pub mod flatten;
 pub mod fontfiles;
 mod fonts;
 pub(crate) mod freeform;
+pub mod gallery;
 pub mod globaledit;
 pub(crate) mod gradient;
 pub mod gradpresets;
@@ -373,6 +374,7 @@ pub fn command_specs() -> &'static [CommandSpec] {
         v.extend(fileio::pdf::specs());
         v.extend(docsetup::specs());
         v.extend(newdoc::specs());
+        v.extend(gallery::specs());
         v.extend(place::specs());
         v.extend(links::specs());
         v.extend(linkfiles::specs());

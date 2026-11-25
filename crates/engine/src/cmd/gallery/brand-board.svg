@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000">
+  <g id="Background">
+    <rect width="1600" height="1000" fill="#FCFAF5"/>
+  </g>
+  <g id="Heading">
+    <text x="80" y="92" font-family="Inter" font-size="16" font-weight="500" letter-spacing="5" fill="#E58E68">BRAND BOARD</text>
+    <text x="80" y="136" font-family="Inter" font-size="40" font-weight="600" letter-spacing="-1" fill="#1F2B33">Maren Studio</text>
+    <text x="1520" y="136" text-anchor="end" font-family="Inter" font-size="16" fill="#6A7A82">Logo, colour and type in one calm page</text>
+  </g>
+  <g id="Logo">
+    <rect x="80" y="180" width="560" height="360" rx="20" fill="#2D5B61"/>
+    <path d="M320 340 L320 288 A40 40 0 0 1 400 288 L400 340 Z" fill="#FBF3E7"/>
+    <circle cx="360" cy="288" r="12" fill="#2D5B61"/>
+    <text x="360" y="402" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" letter-spacing="9" fill="#FBF3E7">MAREN STUDIO</text>
+    <text x="360" y="436" text-anchor="middle" font-family="Inter" font-size="14" letter-spacing="2" fill="#BFD3C9">Design and illustration</text>
+    <rect x="660" y="180" width="200" height="170" rx="20" fill="#F4EBDC"/>
+    <path d="M730 300 L730 276 A30 30 0 0 1 790 276 L790 300 Z" fill="#2D5B61"/>
+    <circle cx="760" cy="276" r="9" fill="#F4EBDC"/>
+    <rect x="660" y="370" width="200" height="170" rx="20" fill="#E58E68"/>
+    <path d="M730 490 L730 466 A30 30 0 0 1 790 466 L790 490 Z" fill="#FBF3E7"/>
+    <circle cx="760" cy="466" r="9" fill="#E58E68"/>
+  </g>
+  <g id="Colour">
+    <rect x="900" y="180" width="190" height="170" rx="20" fill="#1F2B33"/>
+    <text x="922" y="304" font-family="Inter" font-size="20" font-weight="600" fill="#FBF3E7">Ink</text>
+    <text x="922" y="328" font-family="Inter" font-size="14" letter-spacing="1" fill="#FBF3E7" fill-opacity="0.8">#1F2B33</text>
+    <rect x="1115" y="180" width="190" height="170" rx="20" fill="#2D5B61"/>
+    <text x="1137" y="304" font-family="Inter" font-size="20" font-weight="600" fill="#FBF3E7">Teal</text>
+    <text x="1137" y="328" font-family="Inter" font-size="14" letter-spacing="1" fill="#FBF3E7" fill-opacity="0.8">#2D5B61</text>
+    <rect x="1330" y="180" width="190" height="170" rx="20" fill="#9DB8A6"/>
+    <text x="1352" y="304" font-family="Inter" font-size="20" font-weight="600" fill="#1F2B33">Sage</text>
+    <text x="1352" y="328" font-family="Inter" font-size="14" letter-spacing="1" fill="#1F2B33" fill-opacity="0.8">#9DB8A6</text>
+    <rect x="900" y="370" width="190" height="170" rx="20" fill="#F4EBDC" stroke="#E4DACB" stroke-width="1"/>
+    <text x="922" y="494" font-family="Inter" font-size="20" font-weight="600" fill="#1F2B33">Sand</text>
+    <text x="922" y="518" font-family="Inter" font-size="14" letter-spacing="1" fill="#1F2B33" fill-opacity="0.8">#F4EBDC</text>
+    <rect x="1115" y="370" width="190" height="170" rx="20" fill="#EBB48A"/>
+    <text x="1137" y="494" font-family="Inter" font-size="20" font-weight="600" fill="#1F2B33">Apricot</text>
+    <text x="1137" y="518" font-family="Inter" font-size="14" letter-spacing="1" fill="#1F2B33" fill-opacity="0.8">#EBB48A</text>
+    <rect x="1330" y="370" width="190" height="170" rx="20" fill="#E58E68"/>
+    <text x="1352" y="494" font-family="Inter" font-size="20" font-weight="600" fill="#1F2B33">Clay</text>
+    <text x="1352" y="518" font-family="Inter" font-size="14" letter-spacing="1" fill="#1F2B33" fill-opacity="0.8">#E58E68</text>
+  </g>
+  <g id="Type">
+    <rect x="80" y="580" width="440" height="340" rx="20" fill="#F4EBDC"/>
+    <text x="300" y="790" text-anchor="middle" font-family="Inter" font-size="200" font-weight="600" letter-spacing="-6" fill="#1F2B33">Aa</text>
+    <text x="300" y="860" text-anchor="middle" font-family="Inter" font-size="18" font-weight="500" letter-spacing="3" fill="#5C8470">INTER</text>
+    <text x="570" y="640" font-family="Inter" font-size="16" font-weight="500" letter-spacing="3" fill="#E58E68">HEADLINE</text>
+    <text x="570" y="700" font-family="Inter" font-size="52" font-weight="600" letter-spacing="-1.4" fill="#1F2B33">Quiet, beautiful work</text>
+    <text x="570" y="760" font-family="Inter" font-size="16" font-weight="500" letter-spacing="3" fill="#E58E68">BODY</text>
+    <text x="570" y="802" font-family="Inter" font-size="20" fill="#3B4B57">
+      <tspan x="570" dy="0">We make calm, considered design for people who</tspan>
+      <tspan x="570" dy="30">value clarity: identities, illustrations and print.</tspan>
+    </text>
+    <text x="570" y="888" font-family="Inter" font-size="16" fill="#6A7A82">Regular 400  ·  Medium 500  ·  Semibold 600</text>
+  </g>
+  <g id="Shapes">
+    <rect x="1180" y="580" width="340" height="340" rx="20" fill="#DCE6DD"/>
+    <path d="M1250 860 L1250 740 A100 100 0 0 1 1450 740 L1450 860 Z" fill="#9DB8A6"/>
+    <path d="M1290 860 L1290 746 A60 60 0 0 1 1410 746 L1410 860 Z" fill="#2D5B61"/>
+    <circle cx="1350" cy="746" r="22" fill="#E58E68"/>
+  </g>
+</svg>

@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="595" height="842" viewBox="0 0 595 842">
+  <g id="Page">
+    <rect width="595" height="842" fill="#FDFBF7"/>
+  </g>
+  <g id="Header">
+    <path d="M56 78 L56 62 A14 14 0 0 1 84 62 L84 78 Z" fill="#2D5B61"/>
+    <circle cx="70" cy="62" r="4.2" fill="#FDFBF7"/>
+    <text x="98" y="68" font-family="Inter" font-size="11" font-weight="600" letter-spacing="3" fill="#1F2B33">MAREN STUDIO</text>
+    <text x="98" y="82" font-family="Inter" font-size="7.5" letter-spacing="0.8" fill="#6A7A82">Design and illustration</text>
+    <text x="539" y="64" text-anchor="end" font-family="Inter" font-size="8" fill="#4A5A63">12 Garden Street</text>
+    <text x="539" y="77" text-anchor="end" font-family="Inter" font-size="8" fill="#4A5A63">Your City, 00000</text>
+    <line x1="56" y1="110" x2="539" y2="110" stroke="#E4DACB" stroke-width="0.8"/>
+  </g>
+  <g id="Letter">
+    <text x="56" y="168" font-family="Inter" font-size="9" fill="#6A7A82">1 January</text>
+    <text x="56" y="206" font-family="Inter" font-size="9.5" font-weight="500" fill="#1F2B33">
+      <tspan x="56" dy="0">Recipient name</tspan>
+      <tspan x="56" dy="14" font-weight="400" fill="#4A5A63">Company or address</tspan>
+      <tspan x="56" dy="14" font-weight="400" fill="#4A5A63">City, 00000</tspan>
+    </text>
+    <text x="56" y="296" font-family="Inter" font-size="10" font-weight="600" fill="#1F2B33">Subject of your letter</text>
+    <text x="56" y="330" font-family="Inter" font-size="10" fill="#3B4B57">
+      <tspan x="56" dy="0">Dear name,</tspan>
+      <tspan x="56" dy="26">Write your message here. This letterhead keeps the page calm: a quiet header,</tspan>
+      <tspan x="56" dy="16">generous margins and a footer with your details. Replace this text, or delete it</tspan>
+      <tspan x="56" dy="16">and paste your own.</tspan>
+      <tspan x="56" dy="26">Keep paragraphs short and leave a little air between them, so the letter reads</tspan>
+      <tspan x="56" dy="16">easily at a glance.</tspan>
+      <tspan x="56" dy="26">Kind regards,</tspan>
+    </text>
+    <text x="56" y="504" font-family="Inter" font-size="10" font-weight="600" fill="#1F2B33">Your Name</text>
+    <text x="56" y="518" font-family="Inter" font-size="8.5" fill="#6A7A82">Creative Director</text>
+  </g>
+  <g id="Footer">
+    <path d="M0 790 C120 770 220 778 330 790 C430 801 520 790 595 778 L595 842 L0 842 Z" fill="#EEF2EA"/>
+    <path d="M0 812 C130 796 230 804 340 814 C440 823 530 812 595 802 L595 842 L0 842 Z" fill="#D6E2D8"/>
+    <text x="297.5" y="826" text-anchor="middle" font-family="Inter" font-size="8" letter-spacing="0.6" fill="#2D5B61">hello@marenstudio.com   ·   +00 000 000 000   ·   marenstudio.com</text>
+  </g>
+</svg>

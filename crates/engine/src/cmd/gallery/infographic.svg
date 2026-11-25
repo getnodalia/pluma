@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="595" height="842" viewBox="0 0 595 842">
+  <g id="Background">
+    <rect width="595" height="842" fill="#F7F2E9"/>
+  </g>
+  <g id="Heading">
+    <text x="48" y="78" font-family="Inter" font-size="9" font-weight="500" letter-spacing="4" fill="#E58E68">ANNUAL SUMMARY</text>
+    <text x="48" y="122" font-family="Inter" font-size="38" font-weight="600" letter-spacing="-1" fill="#1F2B33">A year in numbers</text>
+    <text x="48" y="146" font-family="Inter" font-size="12" fill="#4A5A63">A calm, clear snapshot of what we made and how it went.</text>
+  </g>
+  <g id="Cards">
+    <rect x="48" y="186" width="246" height="160" rx="14" fill="#FFFFFF"/>
+    <circle cx="102" cy="246" r="30" fill="none" stroke="#EDE5D6" stroke-width="8"/>
+    <path d="M102.00 216.00 A30 30 0 1 1 78.88 226.88" fill="none" stroke="#2D5B61" stroke-width="8" stroke-linecap="round"/>
+    <text x="152" y="258" font-family="Inter" font-size="34" font-weight="600" letter-spacing="-1" fill="#1F2B33">86%</text>
+    <text x="70" y="314" font-family="Inter" font-size="11.5" fill="#4A5A63">Projects delivered on time</text>
+    <rect x="301" y="186" width="246" height="160" rx="14" fill="#FFFFFF"/>
+    <circle cx="355" cy="246" r="30" fill="none" stroke="#EDE5D6" stroke-width="8"/>
+    <path d="M355.00 216.00 A30 30 0 1 1 326.47 255.27" fill="none" stroke="#E58E68" stroke-width="8" stroke-linecap="round"/>
+    <text x="405" y="258" font-family="Inter" font-size="34" font-weight="600" letter-spacing="-1" fill="#1F2B33">42</text>
+    <text x="335" y="314" font-family="Inter" font-size="11.5" fill="#4A5A63">New clients welcomed</text>
+    <rect x="48" y="358" width="246" height="160" rx="14" fill="#FFFFFF"/>
+    <circle cx="102" cy="418" r="30" fill="none" stroke="#EDE5D6" stroke-width="8"/>
+    <path d="M102.00 388.00 A30 30 0 1 1 92.73 446.53" fill="none" stroke="#5C8470" stroke-width="8" stroke-linecap="round"/>
+    <text x="152" y="430" font-family="Inter" font-size="34" font-weight="600" letter-spacing="-1" fill="#1F2B33">128</text>
+    <text x="70" y="486" font-family="Inter" font-size="11.5" fill="#4A5A63">Illustrations published</text>
+    <rect x="301" y="358" width="246" height="160" rx="14" fill="#FFFFFF"/>
+    <circle cx="355" cy="418" r="30" fill="none" stroke="#EDE5D6" stroke-width="8"/>
+    <path d="M355.00 388.00 A30 30 0 1 1 351.24 388.24" fill="none" stroke="#EBB48A" stroke-width="8" stroke-linecap="round"/>
+    <text x="405" y="430" font-family="Inter" font-size="34" font-weight="600" letter-spacing="-1" fill="#1F2B33">4.9</text>
+    <text x="335" y="486" font-family="Inter" font-size="11.5" fill="#4A5A63">Average client rating</text>
+  </g>
+  <g id="Chart">
+    <rect x="48" y="534" width="499" height="236" rx="14" fill="#2D5B61"/>
+    <text x="72" y="570" font-family="Inter" font-size="9" font-weight="500" letter-spacing="3" fill="#EBB48A">PROJECTS PER MONTH</text>
+    <rect x="96" y="683.6" width="34" height="50.4" rx="8" fill="#9DB8A6"/>
+    <text x="113" y="754" text-anchor="middle" font-family="Inter" font-size="9.5" fill="#BFD3C9">Jan</text>
+    <rect x="170" y="658.4" width="34" height="75.6" rx="8" fill="#9DB8A6"/>
+    <text x="187" y="754" text-anchor="middle" font-family="Inter" font-size="9.5" fill="#BFD3C9">Feb</text>
+    <rect x="244" y="675.2" width="34" height="58.8" rx="8" fill="#9DB8A6"/>
+    <text x="261" y="754" text-anchor="middle" font-family="Inter" font-size="9.5" fill="#BFD3C9">Mar</text>
+    <rect x="318" y="641.6" width="34" height="92.4" rx="8" fill="#9DB8A6"/>
+    <text x="335" y="754" text-anchor="middle" font-family="Inter" font-size="9.5" fill="#BFD3C9">Apr</text>
+    <rect x="392" y="650.0" width="34" height="84.0" rx="8" fill="#9DB8A6"/>
+    <text x="409" y="754" text-anchor="middle" font-family="Inter" font-size="9.5" fill="#BFD3C9">May</text>
+    <rect x="466" y="616.4" width="34" height="117.6" rx="8" fill="#EBB48A"/>
+    <text x="483" y="754" text-anchor="middle" font-family="Inter" font-size="9.5" fill="#BFD3C9">Jun</text>
+  </g>
+  <g id="Footer">
+    <text x="48" y="808" font-family="Inter" font-size="9" letter-spacing="2.4" fill="#6A7A82">MAREN STUDIO</text>
+    <text x="547" y="808" text-anchor="end" font-family="Inter" font-size="9" fill="#6A7A82">marenstudio.com</text>
+  </g>
+</svg>

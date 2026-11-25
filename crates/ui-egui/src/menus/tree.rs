@@ -27,6 +27,7 @@ pub fn menu_tree_named(english_names: bool) -> Vec<(&'static str, Vec<Item>)> {
             vec![
                 c("New…", "file.newDialog"),
                 c("New from Template…", "file.newFromTemplate"),
+                c("Template Gallery…", "file.templateGallery"),
                 c("Open…", "file.open"),
                 sub("Open With", crate::dialogs::plugin::open_with_menu()),
                 sub("Open Recent Files", {

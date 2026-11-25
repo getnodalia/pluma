@@ -8296,3 +8296,9 @@ breakText	Glyphs	Glifos
 @msg	Two panels pass through each other.	Dos paneles se atraviesan entre sí.
 @msg	composer must be "singleLine", "everyLine", "standardSingleLine" or "standardEveryLine"	composer debe ser "singleLine", "everyLine", "standardSingleLine" o "standardEveryLine"
 @msg	text.{key} `{v}`: use "{_1}" or "{_2}"	text.{key} `{v}`: use "{_1}" o "{_2}"
+	Template Gallery	Galería de plantillas
+	Template Gallery…	Galería de plantillas…
+	New from Gallery	Nuevo desde la galería
+	Start from a template	Empieza desde una plantilla
+	Browse all templates	Ver todas las plantillas
+	Choose a template first.	Elige primero una plantilla.

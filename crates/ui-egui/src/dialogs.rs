@@ -137,6 +137,7 @@ pub mod symbol_delete;
 pub mod symbol_options;
 pub mod symbolism_options;
 pub mod tate_chu_yoko;
+mod template_gallery;
 mod text_export;
 pub mod text_import;
 mod three_d_classic;
@@ -172,6 +173,7 @@ pub use new_document::{create_without_dialog as new_document_without_dialog, ope
 pub(crate) use new_document::{popup_open as new_document_popup_open, preset_name};
 pub use png_options::open as open_raster_options;
 pub use save_pdf::{open as open_save_pdf, open_preset as open_pdf_preset};
+pub use template_gallery::{card as template_card, open as open_template_gallery};
 pub use tools::open_tool_dialog;
 
 use crate::state::Dialog;
@@ -385,6 +387,7 @@ registry! {
     SvgOptions: [svg_options::KIND] => svg_options::SPEC,
     JavaScriptFiles: [javascript_files::KIND] => javascript_files::SPEC,
     SvgFilter: [svg_filter::KIND] => svg_filter::SPEC,
+    TemplateGallery: [template_gallery::KIND] => template_gallery::SPEC,
     NewDocumentMore: [new_document::MORE] => new_document::MORE_SPEC,
     NewDocumentProfiles: [new_document::PROFILES] => new_document::MORE_SPEC,
     Place: [place::KIND] => place::SPEC,

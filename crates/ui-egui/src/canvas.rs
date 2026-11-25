@@ -22,6 +22,7 @@ mod contour_bar;
 mod cursor;
 mod drag;
 mod fill;
+pub(crate) mod gallery_thumbs;
 mod grid;
 mod home;
 mod home_thumbs;
