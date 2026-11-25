@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720">
+  <defs>
+    <clipPath id="disc"><circle cx="970" cy="360" r="270"/></clipPath>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2D5B61"/>
+      <stop offset="1" stop-color="#244B52"/>
+    </linearGradient>
+    <linearGradient id="dusk" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#F2D3B6"/>
+      <stop offset="1" stop-color="#FAEEDD"/>
+    </linearGradient>
+  </defs>
+  <g id="Background">
+    <rect width="1280" height="720" fill="url(#bg)"/>
+    <circle cx="970" cy="360" r="300" fill="none" stroke="#FBF3E7" stroke-opacity="0.18" stroke-width="2"/>
+  </g>
+  <g id="Artwork">
+    <circle cx="970" cy="360" r="270" fill="url(#dusk)"/>
+    <g clip-path="url(#disc)">
+      <circle cx="970" cy="352" r="86" fill="#E58E68"/>
+      <path d="M680 430 C760 392 840 394 920 420 C1000 446 1070 410 1260 396 L1260 700 L680 700 Z" fill="#B7C7B5"/>
+      <path d="M680 480 C770 444 850 450 930 474 C1010 498 1090 462 1260 452 L1260 700 L680 700 Z" fill="#8FAE9B"/>
+      <path d="M680 540 C780 508 860 516 950 538 C1040 560 1110 530 1260 520 L1260 700 L680 700 Z" fill="#5C8470"/>
+    </g>
+  </g>
+  <g id="Text">
+    <rect x="80" y="130" width="190" height="46" rx="23" fill="#EBB48A"/>
+    <text x="175" y="161" text-anchor="middle" font-family="Inter" font-size="22" font-weight="600" letter-spacing="3" fill="#1F2B33">TUTORIAL</text>
+    <text x="80" y="300" font-family="Inter" font-size="92" font-weight="600" letter-spacing="-2.5" fill="#FBF3E7">
+      <tspan x="80" dy="0">Paint a calm</tspan>
+      <tspan x="80" dy="104">landscape</tspan>
+    </text>
+    <text x="80" y="500" font-family="Inter" font-size="40" fill="#BFD3C9">in just ten minutes</text>
+    <text x="80" y="624" font-family="Inter" font-size="26" font-weight="500" letter-spacing="5" fill="#EBB48A">MAREN STUDIO</text>
+  </g>
+</svg>

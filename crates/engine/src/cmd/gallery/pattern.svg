@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 600 600">
+  <g id="Background">
+    <rect width="600" height="600" fill="#F4EBDC"/>
+  </g>
+  <g id="Pattern">
+    <g fill="#2D5B61">
+      <path d="M41 115 L41 69 A34 34 0 0 1 109 69 L109 115 Z"/>
+      <path d="M341 115 L341 69 A34 34 0 0 1 409 69 L409 115 Z"/>
+      <path d="M191 265 L191 219 A34 34 0 0 1 259 219 L259 265 Z"/>
+      <path d="M491 265 L491 219 A34 34 0 0 1 559 219 L559 265 Z"/>
+      <path d="M41 415 L41 369 A34 34 0 0 1 109 369 L109 415 Z"/>
+      <path d="M341 415 L341 369 A34 34 0 0 1 409 369 L409 415 Z"/>
+      <path d="M191 565 L191 519 A34 34 0 0 1 259 519 L259 565 Z"/>
+      <path d="M491 565 L491 519 A34 34 0 0 1 559 519 L559 565 Z"/>
+    </g>
+    <g fill="#E58E68">
+      <circle cx="75" cy="69" r="10"/>
+      <circle cx="375" cy="69" r="10"/>
+      <circle cx="225" cy="219" r="10"/>
+      <circle cx="525" cy="219" r="10"/>
+      <circle cx="75" cy="369" r="10"/>
+      <circle cx="375" cy="369" r="10"/>
+      <circle cx="225" cy="519" r="10"/>
+      <circle cx="525" cy="519" r="10"/>
+    </g>
+    <g fill="#9DB8A6">
+      <circle cx="225" cy="75" r="36"/>
+      <circle cx="525" cy="75" r="36"/>
+      <circle cx="75" cy="225" r="36"/>
+      <circle cx="375" cy="225" r="36"/>
+      <circle cx="225" cy="375" r="36"/>
+      <circle cx="525" cy="375" r="36"/>
+      <circle cx="75" cy="525" r="36"/>
+      <circle cx="375" cy="525" r="36"/>
+    </g>
+    <g fill="#F4EBDC">
+      <circle cx="225" cy="75" r="14"/>
+      <circle cx="525" cy="75" r="14"/>
+      <circle cx="75" cy="225" r="14"/>
+      <circle cx="375" cy="225" r="14"/>
+      <circle cx="225" cy="375" r="14"/>
+      <circle cx="525" cy="375" r="14"/>
+      <circle cx="75" cy="525" r="14"/>
+      <circle cx="375" cy="525" r="14"/>
+    </g>
+    <g fill="#EBB48A">
+      <circle cx="150" cy="150" r="6"/>
+      <circle cx="300" cy="150" r="6"/>
+      <circle cx="450" cy="150" r="6"/>
+      <circle cx="150" cy="300" r="6"/>
+      <circle cx="300" cy="300" r="6"/>
+      <circle cx="450" cy="300" r="6"/>
+      <circle cx="150" cy="450" r="6"/>
+      <circle cx="300" cy="450" r="6"/>
+      <circle cx="450" cy="450" r="6"/>
+    </g>
+  </g>
+</svg>

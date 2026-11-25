@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1920" viewBox="0 0 1080 1920">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#F0D2B8"/>
+      <stop offset="1" stop-color="#F9ECDD"/>
+    </linearGradient>
+  </defs>
+  <g id="Background">
+    <rect width="1080" height="1920" fill="url(#sky)"/>
+  </g>
+  <g id="Artwork">
+    <circle cx="540" cy="1040" r="210" fill="#E58E68"/>
+    <path d="M0 1140 C180 1070 340 1070 520 1118 C700 1166 860 1090 1080 1080 L1080 1920 L0 1920 Z" fill="#CFDACF"/>
+    <path d="M0 1260 C200 1190 360 1196 560 1250 C760 1304 900 1230 1080 1214 L1080 1920 L0 1920 Z" fill="#9DB8A6"/>
+    <path d="M0 1400 C220 1330 400 1340 600 1390 C800 1440 930 1370 1080 1352 L1080 1920 L0 1920 Z" fill="#5C8470"/>
+    <path d="M0 1560 C240 1500 440 1510 640 1550 C840 1590 960 1540 1080 1520 L1080 1920 L0 1920 Z" fill="#2D5B61"/>
+  </g>
+  <g id="Text">
+    <text x="540" y="250" text-anchor="middle" font-family="Inter" font-size="30" font-weight="500" letter-spacing="10" fill="#7A5A4C">NEW COLLECTION</text>
+    <text x="540" y="420" text-anchor="middle" font-family="Inter" font-size="150" font-weight="600" letter-spacing="-4" fill="#1F2B33">
+      <tspan x="540" dy="0">Soft light,</tspan>
+      <tspan x="540" dy="170">slow days</tspan>
+    </text>
+    <text x="540" y="760" text-anchor="middle" font-family="Inter" font-size="40" fill="#4A5A63">Prints and posters for quiet rooms</text>
+    <rect x="340" y="1716" width="400" height="92" rx="46" fill="#FBF3E7"/>
+    <text x="540" y="1774" text-anchor="middle" font-family="Inter" font-size="32" font-weight="600" letter-spacing="2" fill="#2D5B61">See the collection</text>
+  </g>
+</svg>

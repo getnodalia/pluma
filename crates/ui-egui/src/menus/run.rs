@@ -142,6 +142,10 @@ fn run_ui_part1(app: &mut PlumaApp, id: &str, p: &Value) -> Option<Result<Value,
             crate::dialogs::open_new_document(app);
             Ok(Value::Null)
         }
+        "file.templateGallery" => {
+            crate::dialogs::open_template_gallery(app, s("template").as_deref());
+            Ok(Value::Null)
+        }
         "file.newWithoutDialog" => crate::dialogs::new_document_without_dialog(app),
         "app.home" => {
             app.ui.home = Some(home_key(app));

@@ -124,6 +124,7 @@ Ranked; detail in [docs/roadmap.md](docs/roadmap.md) and [docs/gaps.md](docs/gap
 
 ## Progress log
 
+- 2026-11-19: Template Gallery: File › Template Gallery… and a "Start from a template" row on Home open twelve original templates (poster, event flyer, letterhead, business card, brand board, app icon, seamless pattern, social post and story, video thumbnail, web banner, infographic) as new untitled documents with live text, named layers and artboards, written in Spanish and English and opened in the interface language; the cards wrap to the window's width and scroll. Commands `file.templates`, `file.newFromGallery`, `file.templateGallery`. Scores and estimates unchanged.
 - 2026-11-14: Built-in symbol library Weather Icons: adds a sixth procedural symbol library (Window › Symbol Libraries, the Symbols panel's Symbol Libraries Menu) containing six original vector symbols (Sun, Moon, Cloud, Rain, Thunder, Snow) generated in code without default 9-slice guides (part of Gap 5). Headline numbers unchanged.
 - 2026-11-14: Built-in Tech Circuit brush library: Circuit Trace (chamfered art with 45-degree elbows and terminal pads), Bus Lines (parallel conductor pattern) and Terminal Nodes (repeating solder pads, test points and leads), all original geometry generated in code. Ten built-in brush libraries; G5 remaining estimate 3–13 h (estimated), headline numbers unchanged.
 
@@ -237,6 +238,7 @@ The full earlier record of what landed is kept in [docs/roadmap.md](docs/roadmap
 
 | Date | Change | Summary |
 |---|---|---|
+| 2026-11-19 | minor | Template Gallery: twelve original bilingual templates (`file.templates`, `file.newFromGallery`, `file.templateGallery`), a gallery dialog and a Home row; scores and estimates unchanged |
 | 2026-11-15 | minor | Graphic Styles: built-in Neon & Glow graphic style library (Cyan Neon, Magenta Laser, Amber Tube, Electric Lime, Pulse Violet, Cobalt Phosphor); G5 estimate unchanged (3–13 h). |
 | 2026-11-14 | minor | Tech Circuit adds three original procedural brushes (Circuit Trace, Bus Lines, Terminal Nodes); ten built-in brush libraries. G5 remaining estimate 3–13 h (estimated); parity scores and headline totals unchanged. |
 | 2026-11-14 | minor | Gujarati (#6613): contributor proofreading completed for all 387 additions, with 11 wording corrections; 4,673 reviewed catalog rows. Status/error messages remain partial; web selection requires a bundled Gujarati face. Scores and estimates unchanged. |

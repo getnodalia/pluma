@@ -158,6 +158,12 @@ pub const UI_COMMANDS: &[(&str, &str, &str, &str)] = &[
     ("file.documentSetup", "Document Setup…", "Cmd+Alt+P", "{}"),
     ("file.newDialog", "New…", "Cmd+N", "{} opens the New Document dialog"),
     (
+        "file.templateGallery",
+        "Template Gallery…",
+        "",
+        "{template?: an id from file.templates} opens the Template Gallery, on that template when given (file.newFromGallery makes the document without a dialog)",
+    ),
+    (
         "file.newWithoutDialog",
         "New Without Dialog",
         "Cmd+Alt+N",

@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1080" viewBox="0 0 1080 1080">
+  <g id="Background">
+    <rect width="1080" height="1080" fill="#F4EBDC"/>
+  </g>
+  <g id="Artwork">
+    <path d="M520 1080 L520 760 A280 280 0 0 1 1080 760 L1080 1080 Z" fill="#DCE6DD"/>
+    <path d="M610 1080 L610 780 A190 190 0 0 1 990 780 L990 1080 Z" fill="#9DB8A6"/>
+    <path d="M700 1080 L700 800 A100 100 0 0 1 900 800 L900 1080 Z" fill="#2D5B61"/>
+    <circle cx="800" cy="800" r="36" fill="#E58E68"/>
+  </g>
+  <g id="Text">
+    <g fill="#E58E68">
+      <circle cx="122" cy="168" r="24"/>
+      <path d="M98 168 L146 168 C146 208 130 232 100 244 L92 228 C112 220 120 206 122 192 Z"/>
+      <circle cx="210" cy="168" r="24"/>
+      <path d="M186 168 L234 168 C234 208 218 232 188 244 L180 228 C200 220 208 206 210 192 Z"/>
+    </g>
+    <text x="96" y="388" font-family="Inter" font-size="76" font-weight="600" letter-spacing="-2" fill="#1F2B33">
+      <tspan x="96" dy="0">Make something</tspan>
+      <tspan x="96" dy="94">quiet and beautiful</tspan>
+      <tspan x="96" dy="94">today.</tspan>
+    </text>
+    <line x1="96" y1="668" x2="156" y2="668" stroke="#E58E68" stroke-width="4"/>
+    <text x="96" y="718" font-family="Inter" font-size="30" font-weight="500" fill="#4A5A63">Your Name</text>
+    <text x="96" y="756" font-family="Inter" font-size="24" fill="#6A7A82">Creative Director</text>
+  </g>
+  <g id="Brand">
+    <path d="M96 998 L96 968 A22 22 0 0 1 140 968 L140 998 Z" fill="#2D5B61"/>
+    <circle cx="118" cy="968" r="7" fill="#F4EBDC"/>
+    <text x="158" y="990" font-family="Inter" font-size="22" font-weight="500" letter-spacing="5" fill="#1F2B33">MAREN STUDIO</text>
+  </g>
+</svg>

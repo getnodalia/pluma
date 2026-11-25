@@ -16,6 +16,8 @@ pub(super) fn home(app: &mut PlumaApp, ui: &mut Ui, rect: egui::Rect) {
     let picked = home::view(ui, &look, rect, "Pluma", &mark, &rail, |ui| {
         recent_pick = recent(app, ui, &look);
         ui.add_space(30.0);
+        templates(app, ui, &look);
+        ui.add_space(30.0);
         presets(app, ui, &look);
     });
     match picked {
@@ -103,4 +105,27 @@ fn presets(app: &mut PlumaApp, ui: &mut Ui, look: &nodalia_theme::creator::Look)
             }
         }
     });
+}
+
+/// How many of the Template Gallery's templates the Home screen shows before "Browse all".
+const TEMPLATES_SHOWN: usize = 6;
+
+/// The Template Gallery's first templates, as cards that wrap to the page's width, and a button
+/// that opens the whole gallery.
+fn templates(app: &mut PlumaApp, ui: &mut Ui, look: &nodalia_theme::creator::Look) {
+    home::section_heading(ui, look, tl!("Start from a template"));
+    ui.add_space(12.0);
+    let lang = pluma_engine::cmd::gallery::language(&app.session);
+    ui.horizontal_wrapped(|ui| {
+        ui.spacing_mut().item_spacing = vec2(14.0, 14.0);
+        for t in pluma_engine::cmd::gallery::TEMPLATES.iter().take(TEMPLATES_SHOWN) {
+            if crate::dialogs::template_card(ui, t, lang, false).clicked() {
+                app.run("file.newFromGallery", json!({ "template": t.id })).ok();
+            }
+        }
+    });
+    ui.add_space(12.0);
+    if crate::widgets::flat_button_fit(ui, tl!("Browse all templates"), 0.0).clicked() {
+        app.run("file.templateGallery", json!({})).ok();
+    }
 }
