@@ -71,6 +71,9 @@ rounded islands on the window colour, bold icons, and the suite's own window con
 - **Colour and appearance.** Swatches, gradients and gradient meshes, multiple fills and strokes,
   effects, blend modes and opacity masks.
 - **Structure.** Artboards, layers, groups, symbols, clipping masks and a perspective grid.
+- **Templates.** A gallery of twelve original templates (poster, flyer, letterhead, business card,
+  brand board, app icon, pattern, social posts, web banner and more) from File › Template Gallery
+  or Home, each opening with live text, named layers and artboards.
 - **Files.** Its own `.pluma` documents, SVG, PDF, EPS and Affinity import, and export to SVG, PDF,
   PNG and more.
 - **Updates from the app.** Pluma tells you when a new version is out and installs it for you.
