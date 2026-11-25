@@ -23,7 +23,9 @@ jobs:
       # Same nodalia-fonts commit as the release-*.yml workflows.
       fonts-repository: getnodalia/foundation
       fonts-ref: d4f57e6b31d7c7526b539f7aaaa07312c9908bb8
-      timeout-minutes: 90
+      # Only master saves the build cache, and a cold run on a standard 4 vCPU runner outlasted 90
+      # minutes on master (so no cache was ever saved). Master gets room to finish and save it.
+      timeout-minutes: ${{ github.event_name == 'pull_request' && 90 || 180 }}
       packages: >-
         pkg-config libxkbcommon-dev libwayland-dev libx11-dev libxcb1-dev libxcursor-dev
         libxrandr-dev libxi-dev libfontconfig1-dev libfreetype-dev mesa-vulkan-drivers
