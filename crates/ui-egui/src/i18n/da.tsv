@@ -10205,3 +10205,76 @@ breakText	Glyphs	Glyffer
 @msg	A joint does not close by {gap} pt.	En samling lukker ikke med {gap} pt.
 @msg	Two panels pass through each other.	To paneler går gennem hinanden.
 @msg	composer must be "singleLine", "everyLine", "standardSingleLine" or "standardEveryLine"	composer skal være "singleLine", "everyLine", "standardSingleLine" eller "standardEveryLine"
+	Add to Custom Dictionary	Føj til brugerdefineret ordbog
+	Apply SVG Filter	Anvend SVG-filter
+	Bulgarian	Bulgarsk
+	Cancel Opening	Annuller åbning
+	Change in Custom Dictionary	Ret i brugerdefineret ordbog
+	Check Spelling	Stavekontrol
+	Delete SVG Filter	Slet SVG-filter
+	Delete from Custom Dictionary	Slet fra brugerdefineret ordbog
+	Import SVG Filter…	Importér SVG-filter…
+	Move Type Path Handle	Flyt håndtag til tekststi
+	New SVG Filter	Nyt SVG-filter
+	Nodalia	Nodalia
+	SVG Filter	SVG-filter
+	Select Symbol Instance Part	Markér del af symbolforekomst
+	Spelling Suggestions	Staveforslag
+	Stroke Weight Down	Tyndere stregtykkelse
+	Stroke Weight Up	Tykkere stregtykkelse
+	Edit SVG Filter	Rediger SVG-filter
+	Import SVG Filter	Importér SVG-filter
+	Add to Dictionary	Føj til ordbog
+	Apply Gradient Preset	Anvend gradientforudindstilling
+	Cancel Image Trace	Annuller billedsporing
+	Caps Lock Cursor State	Caps Lock-markørtilstand
+	Catalan	Catalansk
+	Check for Updates…	Søg efter opdateringer…
+	Chinese	Kinesisk
+	Configure Shape	Konfigurér form
+	Croatian	Kroatisk
+	Czech	Tjekkisk
+	Danish	Dansk
+	Delete Gradient Preset	Slet gradientforudindstilling
+	Edit Character Style	Rediger tegnformat
+	Export All Open Documents	Eksportér alle åbne dokumenter
+	Finnish	Finsk
+	German: Swiss	Tysk: Schweiz
+	Gradient Presets	Gradientforudindstillinger
+	Ignore All	Ignorér alle
+	Move Document	Flyt dokument
+	No Suggestions	Ingen forslag
+	Norwegian	Norsk
+	Polish	Polsk
+	Reshape Type Path	Omform tekststi
+	Russian	Russisk
+	Save Gradient Preset	Gem gradientforudindstilling
+	Serbian: Cyrillic	Serbisk: Kyrillisk
+	Serbian: Latin	Serbisk: Latinsk
+	Swedish	Svensk
+	Advanced Character Formats	Avancerede tegnformater
+	Basic Character Formats	Grundlæggende tegnformater
+	Case	Store/små bogstaver
+	Character Color	Tegnfarve
+	Drop an SVG, PDF or Pluma file anywhere to open it.	Slip en SVG-, PDF- eller Pluma-fil hvor som helst for at åbne den.
+	GitHub	GitHub
+	Grid view	Gittervisning
+	Hide Presets	Skjul forudindstillinger
+	Horizontal Scale	Vandret skalering
+	Invalid panel layout; restored the default dock	Ugyldigt panellayout; standarddocken er gendannet
+	List view	Listevisning
+	Main Menu	Hovedmenu
+	On your computer	På din computer
+	OpenType Features	OpenType-funktioner
+	Pluma Updates	Pluma-opdateringer
+	Preparing the image…	Forbereder billedet…
+	Reading the file…	Læser filen…
+	Remove from Recent	Fjern fra seneste
+	Save Gradient Preset…	Gem gradientforudindstilling…
+	Show Presets	Vis forudindstillinger
+	Stylistic Sets	Stilistiske sæt
+	Tracing the colors…	Sporer farverne…
+	Vertical Scale	Lodret skalering
+	Website	Websted
+	Duplicate Effects	Dupliker effekter
+	Remove Effects	Fjern effekter

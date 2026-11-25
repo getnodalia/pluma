@@ -10183,3 +10183,60 @@ swatch	Yellow Green	Verde-amarelado
 @msg	Other blanks not shown: {count}	Outras planificações não exibidas: {count}
 @msg	A joint does not close by {gap} pt.	Uma junção não fecha por {gap} pt.
 @msg	Two panels pass through each other.	Dois painéis se atravessam.
+	Add to Custom Dictionary	Adicionar ao dicionário personalizado
+	Apply SVG Filter	Aplicar filtro SVG
+	Bulgarian	Búlgaro
+	Cancel Opening	Cancelar abertura
+	Change in Custom Dictionary	Alterar no dicionário personalizado
+	Check Spelling	Verificar ortografia
+	Delete SVG Filter	Excluir filtro SVG
+	Delete from Custom Dictionary	Excluir do dicionário personalizado
+	Import SVG Filter…	Importar filtro SVG…
+	Move Type Path Handle	Mover alça do caminho de texto
+	New SVG Filter	Novo filtro SVG
+	Nodalia	Nodalia
+	SVG Filter	Filtro SVG
+	Select Symbol Instance Part	Selecionar parte da instância de símbolo
+	Spelling Suggestions	Sugestões ortográficas
+	Stroke Weight Down	Diminuir espessura do traço
+	Stroke Weight Up	Aumentar espessura do traço
+	Edit SVG Filter	Editar filtro SVG
+	Import SVG Filter	Importar filtro SVG
+	Apply Gradient Preset	Aplicar predefinição de gradiente
+	Cancel Image Trace	Cancelar vetorização da imagem
+	Caps Lock Cursor State	Estado do cursor com Caps Lock
+	Catalan	Catalão
+	Chinese	Chinês
+	Configure Shape	Configurar forma
+	Croatian	Croata
+	Czech	Tcheco
+	Danish	Dinamarquês
+	Delete Gradient Preset	Excluir predefinição de gradiente
+	Edit Character Style	Editar estilo de caractere
+	Export All Open Documents	Exportar todos os documentos abertos
+	Finnish	Finlandês
+	German: Swiss	Alemão: suíço
+	Gradient Presets	Predefinições de gradiente
+	Move Document	Mover documento
+	Norwegian	Norueguês
+	Polish	Polonês
+	Reshape Type Path	Remodelar caminho de texto
+	Russian	Russo
+	Save Gradient Preset	Salvar predefinição de gradiente
+	Serbian: Cyrillic	Sérvio: cirílico
+	Serbian: Latin	Sérvio: latino
+	Swedish	Sueco
+	Drop an SVG, PDF or Pluma file anywhere to open it.	Solte um arquivo SVG, PDF ou Pluma em qualquer lugar para abri-lo.
+	GitHub	GitHub
+	Grid view	Visualização em grade
+	Hide Presets	Ocultar predefinições
+	List view	Visualização em lista
+	Main Menu	Menu principal
+	On your computer	No seu computador
+	Reading the file…	Lendo o arquivo…
+	Remove from Recent	Remover dos recentes
+	Save Gradient Preset…	Salvar predefinição de gradiente…
+	Show Presets	Mostrar predefinições
+	Website	Site
+	Duplicate Effects	Duplicar efeitos
+	Remove Effects	Remover efeitos
