@@ -111,7 +111,7 @@ mod tests {
                 assert!(longer <= SIZE as u32 + 2 && longer + 2 >= SIZE as u32, "{}: {}×{}", t.id, img.width, img.height);
                 // Not an empty page: something is drawn on it.
                 let first = img.pixels.get(..4).map(<[u8]>::to_vec);
-                assert!(img.pixels.chunks_exact(4).any(|p| Some(p) != first.as_deref()), "{} is blank", t.id);
+                assert!(img.pixels.as_chunks::<4>().0.iter().any(|p| Some(p.as_slice()) != first.as_deref()), "{} is blank", t.id);
             }
         }
     }
