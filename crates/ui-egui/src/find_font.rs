@@ -1068,10 +1068,19 @@ mod tests {
         })
     }
 
-    /// Clicks the text `label` through [`app_frame`].
+    /// Clicks the text `label` through [`app_frame`], once the dialog has settled: the window fits
+    /// its rows to the screen over a few frames, and a click aimed before that lands where the
+    /// text was.
     fn app_click(ctx: &egui::Context, app: &mut PlumaApp, label: &str) {
-        app_frame(ctx, app, vec![], label);
-        let at = app_frame(ctx, app, vec![], label).unwrap_or_else(|| panic!("no {label:?} shown"));
+        let mut at = app_frame(ctx, app, vec![], label);
+        for _ in 0..200 {
+            let next = app_frame(ctx, app, vec![], label);
+            if next == at {
+                break;
+            }
+            at = next;
+        }
+        let at = at.unwrap_or_else(|| panic!("no {label:?} shown"));
         let button = |pressed| egui::Event::PointerButton { pos: at, button: egui::PointerButton::Primary, pressed, modifiers: Default::default() };
         app_frame(ctx, app, vec![egui::Event::PointerMoved(at), button(true)], label);
         app_frame(ctx, app, vec![button(false)], label);

@@ -10098,3 +10098,110 @@ breakText	Glyphs	Glyphes
 @msg	A joint does not close by {gap} pt.	Un joint ne se ferme pas, avec un écart de {gap} pt.
 @msg	Two panels pass through each other.	Deux panneaux se traversent.
 @msg	{_1} × {_2} pixels is too large for GIF (at most 65535 pixels a side): lower the resolution	{_1} × {_2} pixels, c’est trop grand pour le GIF (65535 pixels par côté au plus) : réduisez la résolution
+	Add to Custom Dictionary	Ajouter au dictionnaire personnalisé
+	Apply SVG Filter	Appliquer le filtre SVG
+	Bulgarian	Bulgare
+	Cancel Opening	Annuler l’ouverture
+	Change in Custom Dictionary	Modifier dans le dictionnaire personnalisé
+	Check Spelling	Vérifier l’orthographe
+	Delete SVG Filter	Supprimer le filtre SVG
+	Delete from Custom Dictionary	Supprimer du dictionnaire personnalisé
+	Import SVG Filter…	Importer un filtre SVG…
+	Move Type Path Handle	Déplacer la poignée du tracé de texte
+	New SVG Filter	Nouveau filtre SVG
+	Nodalia	Nodalia
+	SVG Filter	Filtre SVG
+	Select Symbol Instance Part	Sélectionner une partie de l’instance de symbole
+	Spelling Suggestions	Suggestions orthographiques
+	Stroke Weight Down	Diminuer l’épaisseur du contour
+	Stroke Weight Up	Augmenter l’épaisseur du contour
+	Edit SVG Filter	Modifier le filtre SVG
+	Import SVG Filter	Importer un filtre SVG
+	Apply Gradient Preset	Appliquer le préréglage de dégradé
+	Cancel Image Trace	Annuler la vectorisation de l’image
+	Caps Lock Cursor State	État du curseur de verrouillage des majuscules
+	Catalan	Catalan
+	Check for Updates…	Rechercher des mises à jour…
+	Chinese	Chinois
+	Configure Shape	Configurer la forme
+	Croatian	Croate
+	Czech	Tchèque
+	Danish	Danois
+	Delete Gradient Preset	Supprimer le préréglage de dégradé
+	Edit Character Style	Modifier le style de caractère
+	Export All Open Documents	Exporter tous les documents ouverts
+	Finnish	Finnois
+	German: Swiss	Allemand : suisse
+	Gradient Presets	Préréglages de dégradé
+	Move Document	Déplacer le document
+	Norwegian	Norvégien
+	Polish	Polonais
+	Reshape Type Path	Remodeler le tracé de texte
+	Russian	Russe
+	Save Gradient Preset	Enregistrer le préréglage de dégradé
+	Serbian: Cyrillic	Serbe : cyrillique
+	Serbian: Latin	Serbe : latin
+	Swedish	Suédois
+	Drop an SVG, PDF or Pluma file anywhere to open it.	Déposez un fichier SVG, PDF ou Pluma n’importe où pour l’ouvrir.
+	GitHub	GitHub
+	Grid view	Affichage en grille
+	Hide Presets	Masquer les préréglages
+	Invalid panel layout; restored the default dock	Disposition des panneaux non valide ; le dock par défaut a été rétabli
+	List view	Affichage en liste
+	Main Menu	Menu principal
+	On your computer	Sur votre ordinateur
+	Pluma Updates	Mises à jour de Pluma
+	Preparing the image…	Préparation de l’image…
+	Reading the file…	Lecture du fichier…
+	Remove from Recent	Retirer des fichiers récents
+	Save Gradient Preset…	Enregistrer le préréglage de dégradé…
+	Show Presets	Afficher les préréglages
+	Tracing the colors…	Vectorisation des couleurs…
+	Website	Site web
+	Duplicate Effects	Dupliquer les effets
+	Remove Effects	Supprimer les effets
+swatch	Amber	Ambre
+swatch	Aqua	Aigue-marine
+swatch	Azure	Azur
+swatch	Black	Noir
+swatch	Blue	Bleu
+swatch	Bright Blue	Bleu vif
+swatch	Bright Green	Vert vif
+swatch	Bright Red	Rouge vif
+swatch	Bright Violet	Violet vif
+swatch	Bright Yellow	Jaune vif
+swatch	Brights	Couleurs vives
+swatch	Brown	Marron
+swatch	Chocolate	Chocolat
+swatch	Coffee	Café
+swatch	Copper	Cuivre
+swatch	Cyan	Cyan
+swatch	Cyan Green	Vert cyan
+swatch	Emerald	Émeraude
+swatch	Espresso	Expresso
+swatch	Grays	Gris
+swatch	Green	Vert
+swatch	Indigo	Indigo
+swatch	Lime	Citron vert
+swatch	Magenta	Magenta
+swatch	Ocean	Océan
+swatch	Orange	Orange
+swatch	Orange Red	Orange rouge
+swatch	Pink	Rose
+swatch	Purple	Pourpre
+swatch	Radial White, Black	Radial blanc, noir
+swatch	Red	Rouge
+swatch	Rose	Rose pâle
+swatch	Rust	Rouille
+swatch	Sand	Sable
+swatch	Sunset	Coucher de soleil
+swatch	Tan	Beige
+swatch	Teal	Sarcelle
+swatch	Violet	Violet
+swatch	Walnut	Noyer
+swatch	White	Blanc
+swatch	White, Black	Blanc, noir
+swatch	Yellow	Jaune
+swatch	Yellow Green	Vert jaune
+swatch	[None]	[Aucun]
+swatch	[Registration]	[Repérage]

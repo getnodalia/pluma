@@ -9802,3 +9802,12 @@ digits	Hindi	Hindi
 @msg	A joint does not close by {gap} pt.	En fog sluter inte med {gap} pt.
 @msg	Two panels pass through each other.	Två paneler går igenom varandra.
 @msg	{w} × {h} pixels is too large for PSD (at most {MAX_SIDE} pixels a side): lower the resolution	{w} × {h} pixlar är för stort för PSD (högst {MAX_SIDE} pixlar per sida): sänk upplösningen
+	Nodalia	Nodalia
+	Drop an SVG, PDF or Pluma file anywhere to open it.	Släpp en SVG-, PDF- eller Pluma-fil var som helst för att öppna den.
+	GitHub	GitHub
+	Grid view	Rutnätsvy
+	List view	Listvy
+	Main Menu	Huvudmeny
+	On your computer	På din dator
+	Remove from Recent	Ta bort från senaste
+	Website	Webbplats

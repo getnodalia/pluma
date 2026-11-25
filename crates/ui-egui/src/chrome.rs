@@ -92,8 +92,19 @@ pub fn app_bar(app: &mut PlumaApp, ui: &mut Ui) {
     let t = Tokens::get(ui.ctx());
     let custom = app.custom_titlebar;
     let system = system_title_bar(app);
-    let left = app.titlebar_inset.clamp(8.0, f32::from(i8::MAX)) as i8;
-    let frame = egui::Frame::NONE.fill(t.app_bar).inner_margin(egui::Margin { left, right: if custom { 0 } else { 14 }, top: 0, bottom: 0 });
+    // Nodalia's controls on the bar's left (macOS keeps its own there): the bar starts after them.
+    let controls_left = t.nodalia && titlebar::side(app) == Some(nodalia_theme::titlebar::Side::Left);
+    let left = if controls_left {
+        (titlebar::NDL_WIDTH + nodalia_theme::titlebar::CONTENT_GAP) as i8
+    } else {
+        app.titlebar_inset.clamp(8.0, f32::from(i8::MAX)) as i8
+    };
+    let frame = egui::Frame::NONE.fill(t.app_bar).inner_margin(egui::Margin {
+        left,
+        right: if custom && !controls_left { 0 } else { 14 },
+        top: 0,
+        bottom: 0,
+    });
     // Nodalia's bar is the window's frame, around the islands: no line under it.
     let frame = if t.nodalia { frame } else { frame.stroke(Stroke::new(1.0, t.border)) };
     let bar = egui::Panel::top("app_bar").exact_size(app_bar_height(ui.ctx())).show_separator_line(!t.nodalia).frame(frame).show(ui, |ui| {
@@ -124,7 +135,7 @@ pub fn app_bar(app: &mut PlumaApp, ui: &mut Ui) {
             // short, the search icon goes first (the palette
             // stays under its shortcut), then the workspace switcher narrows.
             let full = ui.max_rect();
-            let right_edge = if custom { full.right() - titlebar::width(&t) - 10.0 } else { full.right() };
+            let right_edge = if custom && !controls_left { full.right() - titlebar::width(&t) - 10.0 } else { full.right() };
             let right = egui::Rect::from_min_max(egui::pos2(menus_end + 8.0, full.top()), egui::pos2(right_edge, full.bottom()));
             // In Safe Mode, a label that stays in the bar whatever document is open, and opens
             // Help › Safe Mode; the other controls fit in the room it leaves, and the workspace

@@ -8292,3 +8292,110 @@ breakText	Glyphs	Γλύφοι
 @msg	Two panels pass through each other.	Δύο πάνελ διαπερνούν το ένα το άλλο.
 @msg	composer must be "singleLine", "everyLine", "standardSingleLine" or "standardEveryLine"	το composer πρέπει να είναι "singleLine", "everyLine", "standardSingleLine" ή "standardEveryLine"
 @msg	text.{key} `{v}`: use "{_1}" or "{_2}"	text.{key} `{v}`: χρησιμοποιήστε "{_1}" ή "{_2}"
+	Add to Custom Dictionary	Προσθήκη στο προσαρμοσμένο λεξικό
+	Apply SVG Filter	Εφαρμογή φίλτρου SVG
+	Bulgarian	Βουλγαρικά
+	Cancel Opening	Ακύρωση ανοίγματος
+	Change in Custom Dictionary	Αλλαγή στο προσαρμοσμένο λεξικό
+	Check Spelling	Ορθογραφικός έλεγχος
+	Delete SVG Filter	Διαγραφή φίλτρου SVG
+	Delete from Custom Dictionary	Διαγραφή από το προσαρμοσμένο λεξικό
+	Import SVG Filter…	Εισαγωγή φίλτρου SVG…
+	Move Type Path Handle	Μετακίνηση λαβής διαδρομής κειμένου
+	New SVG Filter	Νέο φίλτρο SVG
+	Nodalia	Nodalia
+	SVG Filter	Φίλτρο SVG
+	Select Symbol Instance Part	Επιλογή τμήματος στιγμιότυπου συμβόλου
+	Spelling Suggestions	Ορθογραφικές προτάσεις
+	Stroke Weight Down	Λεπτότερο πάχος περιγράμματος
+	Stroke Weight Up	Παχύτερο πάχος περιγράμματος
+	Edit SVG Filter	Επεξεργασία φίλτρου SVG
+	Import SVG Filter	Εισαγωγή φίλτρου SVG
+	Apply Gradient Preset	Εφαρμογή προεπιλογής διαβάθμισης
+	Cancel Image Trace	Ακύρωση ανίχνευσης εικόνας
+	Caps Lock Cursor State	Κατάσταση δρομέα Caps Lock
+	Catalan	Καταλανικά
+	Check for Updates…	Έλεγχος για ενημερώσεις…
+	Chinese	Κινεζικά
+	Configure Shape	Διαμόρφωση σχήματος
+	Croatian	Κροατικά
+	Czech	Τσεχικά
+	Danish	Δανικά
+	Delete Gradient Preset	Διαγραφή προεπιλογής διαβάθμισης
+	Edit Character Style	Επεξεργασία στιλ χαρακτήρων
+	Export All Open Documents	Εξαγωγή όλων των ανοιχτών εγγράφων
+	Finnish	Φινλανδικά
+	German: Swiss	Γερμανικά: Ελβετία
+	Gradient Presets	Προεπιλογές διαβάθμισης
+	Move Document	Μετακίνηση εγγράφου
+	Norwegian	Νορβηγικά
+	Polish	Πολωνικά
+	Reshape Type Path	Αναμόρφωση διαδρομής κειμένου
+	Russian	Ρωσικά
+	Save Gradient Preset	Αποθήκευση προεπιλογής διαβάθμισης
+	Serbian: Cyrillic	Σερβικά: Κυριλλικό
+	Serbian: Latin	Σερβικά: Λατινικό
+	Swedish	Σουηδικά
+	Drop an SVG, PDF or Pluma file anywhere to open it.	Αποθέστε ένα αρχείο SVG, PDF ή Pluma οπουδήποτε για να το ανοίξετε.
+	GitHub	GitHub
+	Grid view	Προβολή πλέγματος
+	Hide Presets	Απόκρυψη προεπιλογών
+	Invalid panel layout; restored the default dock	Μη έγκυρη διάταξη πάνελ· επαναφέρθηκε η προεπιλεγμένη διάταξη
+	List view	Προβολή λίστας
+	Main Menu	Κύριο μενού
+	On your computer	Στον υπολογιστή σας
+	Pluma Updates	Ενημερώσεις Pluma
+	Preparing the image…	Προετοιμασία εικόνας…
+	Reading the file…	Ανάγνωση αρχείου…
+	Remove from Recent	Αφαίρεση από τα πρόσφατα
+	Save Gradient Preset…	Αποθήκευση προεπιλογής διαβάθμισης…
+	Show Presets	Εμφάνιση προεπιλογών
+	Tracing the colors…	Ανίχνευση χρωμάτων…
+	Website	Ιστότοπος
+	Duplicate Effects	Αντιγραφή εφέ
+	Remove Effects	Αφαίρεση εφέ
+swatch	Amber	Κεχριμπαρί
+swatch	Aqua	Γαλαζοπράσινο
+swatch	Azure	Κυανό του ουρανού
+swatch	Black	Μαύρο
+swatch	Blue	Μπλε
+swatch	Bright Blue	Έντονο μπλε
+swatch	Bright Green	Έντονο πράσινο
+swatch	Bright Red	Έντονο κόκκινο
+swatch	Bright Violet	Έντονο βιολετί
+swatch	Bright Yellow	Έντονο κίτρινο
+swatch	Brights	Έντονα
+swatch	Brown	Καφέ
+swatch	Chocolate	Σοκολατί
+swatch	Coffee	Καφεδί
+swatch	Copper	Χάλκινο
+swatch	Cyan	Κυανό
+swatch	Cyan Green	Κυανοπράσινο
+swatch	Emerald	Σμαραγδί
+swatch	Espresso	Εσπρέσο
+swatch	Grays	Γκρι
+swatch	Green	Πράσινο
+swatch	Indigo	Λουλακί
+swatch	Lime	Λάιμ
+swatch	Magenta	Ματζέντα
+swatch	Ocean	Ωκεανός
+swatch	Orange	Πορτοκαλί
+swatch	Orange Red	Πορτοκαλοκόκκινο
+swatch	Pink	Ροζ
+swatch	Purple	Μωβ
+swatch	Radial White, Black	Ακτινικό λευκό, μαύρο
+swatch	Red	Κόκκινο
+swatch	Rose	Τριανταφυλλί
+swatch	Rust	Σκουριά
+swatch	Sand	Άμμος
+swatch	Sunset	Ηλιοβασίλεμα
+swatch	Tan	Ώχρα
+swatch	Teal	Τιρκουάζ
+swatch	Violet	Βιολετί
+swatch	Walnut	Καρυδί
+swatch	White	Λευκό
+swatch	White, Black	Λευκό, μαύρο
+swatch	Yellow	Κίτρινο
+swatch	Yellow Green	Κιτρινοπράσινο
+swatch	[None]	[Κανένα]
+swatch	[Registration]	[Καταχώριση]

@@ -9715,3 +9715,111 @@ breakText	Glyphs	글리프
 @msg	Other blanks not shown: {count}	표시되지 않은 다른 전개도: {count}
 @msg	A joint does not close by {gap} pt.	이음매가 {gap} pt만큼 닫히지 않습니다.
 @msg	Two panels pass through each other.	두 패널이 서로 관통합니다.
+	Add to Custom Dictionary	사용자 사전에 추가
+	Apply SVG Filter	SVG 필터 적용
+	Bulgarian	불가리아어
+	Cancel Opening	열기 취소
+	Change in Custom Dictionary	사용자 사전에서 변경
+	Check Spelling	맞춤법 검사
+	Delete SVG Filter	SVG 필터 삭제
+	Delete from Custom Dictionary	사용자 사전에서 삭제
+	Import SVG Filter…	SVG 필터 가져오기…
+	Move Type Path Handle	텍스트 패스 핸들 이동
+	New SVG Filter	새 SVG 필터
+	Nodalia	Nodalia
+	SVG Filter	SVG 필터
+	Select Symbol Instance Part	심볼 인스턴스 부분 선택
+	Spelling Suggestions	맞춤법 제안
+	Stroke Weight Down	선 두께 줄이기
+	Stroke Weight Up	선 두께 늘리기
+	Edit SVG Filter	SVG 필터 편집
+	Import SVG Filter	SVG 필터 가져오기
+	Apply Gradient Preset	그레이디언트 프리셋 적용
+	Cancel Image Trace	이미지 추적 취소
+	Caps Lock Cursor State	Caps Lock 커서 상태
+	Catalan	카탈루냐어
+	Check for Updates…	업데이트 확인…
+	Chinese	중국어
+	Configure Shape	도형 설정
+	Croatian	크로아티아어
+	Czech	체코어
+	Danish	덴마크어
+	Delete Gradient Preset	그레이디언트 프리셋 삭제
+	Edit Character Style	문자 스타일 편집
+	Export All Open Documents	열려 있는 모든 문서 내보내기
+	Finnish	핀란드어
+	German: Swiss	독일어: 스위스
+	Gradient Presets	그레이디언트 프리셋
+	Move Document	문서 이동
+	Norwegian	노르웨이어
+	Polish	폴란드어
+	Reshape Type Path	텍스트 패스 모양 변경
+	Russian	러시아어
+	Save Gradient Preset	그레이디언트 프리셋 저장
+	Serbian: Cyrillic	세르비아어: 키릴 문자
+	Serbian: Latin	세르비아어: 라틴 문자
+	Swedish	스웨덴어
+	Drop an SVG, PDF or Pluma file anywhere to open it.	SVG, PDF 또는 Pluma 파일을 아무 곳에나 놓아 여세요.
+	GitHub	GitHub
+	Grid view	그리드 보기
+	Hide Presets	프리셋 숨기기
+	Invalid panel layout; restored the default dock	패널 레이아웃이 올바르지 않아 기본 독을 복원했습니다
+	List view	목록 보기
+	Main Menu	메인 메뉴
+	On your computer	내 컴퓨터
+	Pluma Updates	Pluma 업데이트
+	Preparing the image…	이미지 준비 중…
+	Reading the file…	파일 읽는 중…
+	Remove from Recent	최근 항목에서 제거
+	Save Gradient Preset…	그레이디언트 프리셋 저장…
+	Show Presets	프리셋 표시
+	Tracing the colors…	색상 추적 중…
+	Website	웹사이트
+	Duplicate Effects	효과 복제
+	Remove Effects	효과 제거
+swatch	Amber	황색
+swatch	Aqua	아쿠아
+swatch	Azure	애저
+swatch	Black	검정
+swatch	Blue	파랑
+swatch	Bright Blue	밝은 파랑
+swatch	Bright Green	밝은 녹색
+swatch	Bright Red	밝은 빨강
+swatch	Bright Violet	밝은 보라
+swatch	Bright Yellow	밝은 노랑
+swatch	Brights	밝은 색
+swatch	Brown	갈색
+swatch	Chocolate	초콜릿
+swatch	Coffee	커피
+swatch	Copper	구리
+swatch	Cyan	청록
+swatch	Cyan Green	청록 녹색
+swatch	Emerald	에메랄드
+swatch	Espresso	에스프레소
+swatch	Grays	회색
+swatch	Green	녹색
+swatch	Indigo	남색
+swatch	Lime	라임
+swatch	Magenta	마젠타
+swatch	Ocean	바다색
+swatch	Orange	주황
+swatch	Orange Red	주황 빨강
+swatch	Pink	분홍
+swatch	Purple	보라
+swatch	Radial White, Black	방사형 흰색, 검정
+swatch	Red	빨강
+swatch	Rose	장미색
+swatch	Rust	녹슨 색
+swatch	Sand	모래색
+swatch	Sunset	노을
+swatch	Tan	황갈색
+swatch	Teal	틸
+swatch	Violet	바이올렛
+swatch	Walnut	월넛
+swatch	White	흰색
+swatch	White, Black	흰색, 검정
+swatch	Yellow	노랑
+swatch	Yellow Green	연두
+swatch	[None]	[없음]
+swatch	[Registration]	[등록]
+	Points:	점 수:

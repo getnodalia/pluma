@@ -9769,3 +9769,114 @@ breakText	Glyphs	字符
 @msg	A joint does not close by {gap} pt.	有一處接縫相差 {gap} pt 未閉合。
 @msg	Two panels pass through each other.	兩個面板相互穿插。
 @msg	{what} would print on more than {MAX_TILES} tiles: scale it down	{what} 會列印在超過 {MAX_TILES} 個拼貼上：請縮小
+	Add to Custom Dictionary	加入自訂字典
+	Apply SVG Filter	套用 SVG 濾鏡
+	Bulgarian	保加利亞語
+	Cancel Opening	取消開啟
+	Change in Custom Dictionary	在自訂字典中變更
+	Check Spelling	檢查拼字
+	Delete SVG Filter	刪除 SVG 濾鏡
+	Delete from Custom Dictionary	從自訂字典中刪除
+	Import SVG Filter…	匯入 SVG 濾鏡…
+	Move Type Path Handle	移動路徑文字控點
+	New SVG Filter	新增 SVG 濾鏡
+	Nodalia	Nodalia
+	SVG Filter	SVG 濾鏡
+	Select Symbol Instance Part	選取符號實例的部分
+	Spelling Suggestions	拼字建議
+	Stroke Weight Down	減小筆畫粗細
+	Stroke Weight Up	增大筆畫粗細
+	Edit SVG Filter	編輯 SVG 濾鏡
+	Import SVG Filter	匯入 SVG 濾鏡
+	Add to Dictionary	加入字典
+	Apply Gradient Preset	套用漸層預設集
+	Cancel Image Trace	取消影像描繪
+	Caps Lock Cursor State	大寫鎖定游標狀態
+	Catalan	加泰隆尼亞語
+	Check for Updates…	檢查更新…
+	Chinese	中文
+	Configure Shape	設定形狀
+	Croatian	克羅埃西亞語
+	Czech	捷克語
+	Danish	丹麥語
+	Delete Gradient Preset	刪除漸層預設集
+	Edit Character Style	編輯字元樣式
+	Export All Open Documents	匯出所有開啟的文件
+	Finnish	芬蘭語
+	German: Swiss	德語：瑞士
+	Gradient Presets	漸層預設集
+	Ignore All	全部略過
+	Move Document	移動文件
+	No Suggestions	沒有建議
+	Norwegian	挪威語
+	Polish	波蘭語
+	Reshape Type Path	重塑路徑文字
+	Russian	俄語
+	Save Gradient Preset	儲存漸層預設集
+	Serbian: Cyrillic	塞爾維亞語：西里爾文
+	Serbian: Latin	塞爾維亞語：拉丁文
+	Swedish	瑞典語
+	Drop an SVG, PDF or Pluma file anywhere to open it.	將 SVG、PDF 或 Pluma 檔案拖放到任何位置即可開啟。
+	GitHub	GitHub
+	Grid view	格狀檢視
+	Hide Presets	隱藏預設集
+	Invalid panel layout; restored the default dock	面板配置無效；已還原預設停駐
+	List view	清單檢視
+	Main Menu	主選單
+	On your computer	在此電腦上
+	Pluma Updates	Pluma 更新
+	Preparing the image…	正在準備影像…
+	Reading the file…	正在讀取檔案…
+	Remove from Recent	從最近使用中移除
+	Save Gradient Preset…	儲存漸層預設集…
+	Show Presets	顯示預設集
+	Tracing the colors…	正在描繪顏色…
+	Website	網站
+	Duplicate Effects	複製效果
+	Remove Effects	移除效果
+swatch	Amber	琥珀色
+swatch	Aqua	水色
+swatch	Azure	天藍色
+swatch	Black	黑色
+swatch	Blue	藍色
+swatch	Bright Blue	亮藍色
+swatch	Bright Green	亮綠色
+swatch	Bright Red	亮紅色
+swatch	Bright Violet	亮紫羅蘭色
+swatch	Bright Yellow	亮黃色
+swatch	Brights	亮色
+swatch	Brown	棕色
+swatch	Chocolate	巧克力色
+swatch	Coffee	咖啡色
+swatch	Copper	銅色
+swatch	Cyan	青色
+swatch	Cyan Green	青綠色
+swatch	Emerald	祖母綠
+swatch	Espresso	濃縮咖啡色
+swatch	Grays	灰色
+swatch	Green	綠色
+swatch	Indigo	靛藍色
+swatch	Lime	萊姆色
+swatch	Magenta	洋紅色
+swatch	Ocean	海洋色
+swatch	Orange	橘色
+swatch	Orange Red	橘紅色
+swatch	Pink	粉紅色
+swatch	Purple	紫色
+swatch	Radial White, Black	放射狀白色、黑色
+swatch	Red	紅色
+swatch	Rose	玫瑰色
+swatch	Rust	鏽色
+swatch	Sand	沙色
+swatch	Sunset	日落色
+swatch	Tan	棕褐色
+swatch	Teal	藍綠色
+swatch	Violet	紫羅蘭色
+swatch	Walnut	胡桃色
+swatch	White	白色
+swatch	White, Black	白色、黑色
+swatch	Yellow	黃色
+swatch	Yellow Green	黃綠色
+swatch	[None]	[無]
+swatch	[Registration]	[對位]
+	Points:	點數：

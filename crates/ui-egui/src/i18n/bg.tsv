@@ -7364,3 +7364,121 @@ breakText	Glyphs	Глифи
 @msg	A joint does not close by {gap} pt.	Една връзка не се затваря с {gap} pt.
 @msg	Two panels pass through each other.	Два панела минават един през друг.
 @msg	composer must be "singleLine", "everyLine", "standardSingleLine" or "standardEveryLine"	composer трябва да е "singleLine", "everyLine", "standardSingleLine" или "standardEveryLine"
+	Add to Custom Dictionary	Добавяне към личния речник
+	Apply SVG Filter	Прилагане на SVG филтър
+	Bulgarian	Български
+	Cancel Opening	Отказ от отваряне
+	Change in Custom Dictionary	Промяна в личния речник
+	Check Spelling	Проверка на правописа
+	Delete SVG Filter	Изтриване на SVG филтър
+	Delete from Custom Dictionary	Изтриване от личния речник
+	Import SVG Filter…	Импортиране на SVG филтър…
+	Move Type Path Handle	Преместване на манипулатор на текстов контур
+	New SVG Filter	Нов SVG филтър
+	Nodalia	Nodalia
+	SVG Filter	SVG филтър
+	Select Symbol Instance Part	Избор на част от екземпляр на символ
+	Spelling Suggestions	Предложения за правопис
+	Stroke Weight Down	По-тънък щрих
+	Stroke Weight Up	По-дебел щрих
+	Edit SVG Filter	Редактиране на SVG филтър
+	Import SVG Filter	Импортиране на SVG филтър
+	Add to Dictionary	Добавяне към речника
+	Apply Gradient Preset	Прилагане на предварителна настройка за градиент
+	Cancel Image Trace	Отказ от трасиране на изображение
+	Caps Lock Cursor State	Състояние на курсора при Caps Lock
+	Catalan	Каталонски
+	Check for Updates…	Проверка за актуализации…
+	Chinese	Китайски
+	Configure Shape	Конфигуриране на фигура
+	Croatian	Хърватски
+	Czech	Чешки
+	Danish	Датски
+	Delete Gradient Preset	Изтриване на предварителна настройка за градиент
+	Edit Character Style	Редактиране на стил на знаци
+	Export All Open Documents	Експортиране на всички отворени документи
+	Finnish	Фински
+	German: Swiss	Немски: Швейцария
+	Gradient Presets	Предварителни настройки за градиенти
+	Ignore All	Игнориране на всички
+	Move Document	Преместване на документ
+	No Suggestions	Няма предложения
+	Norwegian	Норвежки
+	Polish	Полски
+	Reshape Type Path	Преоформяне на текстов контур
+	Russian	Руски
+	Save Gradient Preset	Запазване на предварителна настройка за градиент
+	Serbian: Cyrillic	Сръбски: кирилица
+	Serbian: Latin	Сръбски: латиница
+	Swedish	Шведски
+	Advanced Character Formats	Разширени формати на знаци
+	Basic Character Formats	Основни формати на знаци
+	Case	Регистър
+	Character Color	Цвят на знаците
+	Drop an SVG, PDF or Pluma file anywhere to open it.	Пуснете SVG, PDF или Pluma файл където и да е, за да го отворите.
+	GitHub	GitHub
+	Grid view	Изглед мрежа
+	Hide Presets	Скриване на предварителните настройки
+	Horizontal Scale	Хоризонтален мащаб
+	Invalid panel layout; restored the default dock	Невалидно оформление на панелите; възстановена е стандартната докинг подредба
+	List view	Изглед списък
+	Main Menu	Главно меню
+	On your computer	На вашия компютър
+	OpenType Features	Функции на OpenType
+	Pluma Updates	Актуализации на Pluma
+	Preparing the image…	Подготовка на изображението…
+	Reading the file…	Четене на файла…
+	Remove from Recent	Премахване от скорошните
+	Save Gradient Preset…	Запазване на предварителна настройка за градиент…
+	Show Presets	Показване на предварителните настройки
+	Stylistic Sets	Стилистични набори
+	Tracing the colors…	Трасиране на цветовете…
+	Vertical Scale	Вертикален мащаб
+	Website	Уебсайт
+	Duplicate Effects	Дублиране на ефекти
+	Remove Effects	Премахване на ефекти
+swatch	Amber	Кехлибарен
+swatch	Aqua	Аква
+swatch	Azure	Лазурен
+swatch	Black	Черен
+swatch	Blue	Син
+swatch	Bright Blue	Ярко син
+swatch	Bright Green	Ярко зелен
+swatch	Bright Red	Ярко червен
+swatch	Bright Violet	Ярко виолетов
+swatch	Bright Yellow	Ярко жълт
+swatch	Brights	Ярки
+swatch	Brown	Кафяв
+swatch	Chocolate	Шоколадов
+swatch	Coffee	Кафеен
+swatch	Copper	Меден
+swatch	Cyan	Циан
+swatch	Cyan Green	Циан зелен
+swatch	Emerald	Изумруден
+swatch	Espresso	Еспресо
+swatch	Grays	Сиви
+swatch	Green	Зелен
+swatch	Indigo	Индиго
+swatch	Lime	Лайм
+swatch	Magenta	Магента
+swatch	Ocean	Океан
+swatch	Orange	Оранжев
+swatch	Orange Red	Оранжево-червен
+swatch	Pink	Розов
+swatch	Purple	Лилав
+swatch	Radial White, Black	Радиален бяло, черно
+swatch	Red	Червен
+swatch	Rose	Роза
+swatch	Rust	Ръждив
+swatch	Sand	Пясъчен
+swatch	Sunset	Залез
+swatch	Tan	Жълтеникавокафяв
+swatch	Teal	Тюркоазен
+swatch	Violet	Виолетов
+swatch	Walnut	Орехов
+swatch	White	Бял
+swatch	White, Black	Бяло, черно
+swatch	Yellow	Жълт
+swatch	Yellow Green	Жълто-зелен
+swatch	[None]	[Няма]
+swatch	[Registration]	[Регистрация]

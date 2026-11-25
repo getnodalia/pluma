@@ -8296,6 +8296,96 @@ breakText	Glyphs	Glifos
 @msg	Two panels pass through each other.	Dos paneles se atraviesan entre sí.
 @msg	composer must be "singleLine", "everyLine", "standardSingleLine" or "standardEveryLine"	composer debe ser "singleLine", "everyLine", "standardSingleLine" o "standardEveryLine"
 @msg	text.{key} `{v}`: use "{_1}" or "{_2}"	text.{key} `{v}`: use "{_1}" o "{_2}"
+	Add to Custom Dictionary	Añadir al diccionario personalizado
+	Apply SVG Filter	Aplicar filtro SVG
+	Bulgarian	Búlgaro
+	Cancel Opening	Cancelar la apertura
+	Change in Custom Dictionary	Cambiar en el diccionario personalizado
+	Check Spelling	Revisar ortografía
+	Delete SVG Filter	Eliminar filtro SVG
+	Delete from Custom Dictionary	Eliminar del diccionario personalizado
+	Import SVG Filter…	Importar filtro SVG…
+	Move Type Path Handle	Mover tirador del trazado de texto
+	New SVG Filter	Nuevo filtro SVG
+	Nodalia	Nodalia
+	SVG Filter	Filtro SVG
+	Select Symbol Instance Part	Seleccionar parte de la instancia de símbolo
+	Spelling Suggestions	Sugerencias ortográficas
+	Stroke Weight Down	Reducir grosor de trazo
+	Stroke Weight Up	Aumentar grosor de trazo
+	Edit SVG Filter	Editar filtro SVG
+	Import SVG Filter	Importar filtro SVG
+	Apply Gradient Preset	Aplicar ajuste de degradado
+	Cancel Image Trace	Cancelar vectorización de imagen
+	Caps Lock Cursor State	Estado del cursor con Bloq Mayús
+	Catalan	Catalán
+	Check for Updates…	Buscar actualizaciones…
+	Chinese	Chino
+	Configure Shape	Configurar forma
+	Croatian	Croata
+	Czech	Checo
+	Danish	Danés
+	Edit Character Style	Editar estilo de carácter
+	Export All Open Documents	Exportar todos los documentos abiertos
+	Finnish	Finés
+	German: Swiss	Alemán: suizo
+	Gradient Presets	Ajustes de degradado
+	Move Document	Mover documento
+	Norwegian	Noruego
+	Polish	Polaco
+	Reshape Type Path	Remodelar trazado de texto
+	Russian	Ruso
+	Save Gradient Preset	Guardar ajuste de degradado
+	Serbian: Cyrillic	Serbio: cirílico
+	Serbian: Latin	Serbio: latino
+	Swedish	Sueco
+	Duplicate Effects	Duplicar efectos
+	Remove Effects	Quitar efectos
+swatch	Amber	Ámbar
+swatch	Aqua	Aguamarina
+swatch	Azure	Azul celeste
+swatch	Black	Negro
+swatch	Blue	Azul
+swatch	Bright Blue	Azul brillante
+swatch	Bright Green	Verde brillante
+swatch	Bright Red	Rojo brillante
+swatch	Bright Violet	Violeta brillante
+swatch	Bright Yellow	Amarillo brillante
+swatch	Brights	Colores vivos
+swatch	Brown	Marrón
+swatch	Chocolate	Chocolate
+swatch	Coffee	Café
+swatch	Copper	Cobre
+swatch	Cyan	Cian
+swatch	Cyan Green	Verde cian
+swatch	Emerald	Esmeralda
+swatch	Espresso	Café exprés
+swatch	Grays	Grises
+swatch	Green	Verde
+swatch	Indigo	Índigo
+swatch	Lime	Lima
+swatch	Magenta	Magenta
+swatch	Ocean	Océano
+swatch	Orange	Naranja
+swatch	Orange Red	Naranja rojizo
+swatch	Pink	Rosa
+swatch	Purple	Púrpura
+swatch	Radial White, Black	Radial blanco, negro
+swatch	Red	Rojo
+swatch	Rose	Rosado
+swatch	Rust	Óxido
+swatch	Sand	Arena
+swatch	Sunset	Atardecer
+swatch	Tan	Canela
+swatch	Teal	Verde azulado
+swatch	Violet	Violeta
+swatch	Walnut	Nogal
+swatch	White	Blanco
+swatch	White, Black	Blanco, negro
+swatch	Yellow	Amarillo
+swatch	Yellow Green	Verde amarillento
+swatch	[None]	[Ninguno]
+swatch	[Registration]	[Registro]
 	Template Gallery	Galería de plantillas
 	Template Gallery…	Galería de plantillas…
 	New from Gallery	Nuevo desde la galería

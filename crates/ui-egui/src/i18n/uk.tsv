@@ -9727,3 +9727,111 @@ breakText	Glyphs	Гліфи
 @msg	Other blanks not shown: {count}	Інші розгортки не показано: {count}
 @msg	A joint does not close by {gap} pt.	Стик не змикається на {gap} pt.
 @msg	Two panels pass through each other.	Дві панелі проходять одна крізь одну.
+	Add to Custom Dictionary	Додати до власного словника
+	Apply SVG Filter	Застосувати SVG-фільтр
+	Bulgarian	Болгарська
+	Cancel Opening	Скасувати відкриття
+	Change in Custom Dictionary	Змінити у власному словнику
+	Check Spelling	Перевірити правопис
+	Delete SVG Filter	Видалити SVG-фільтр
+	Delete from Custom Dictionary	Видалити з власного словника
+	Import SVG Filter…	Імпортувати SVG-фільтр…
+	Move Type Path Handle	Перемістити маркер контуру тексту
+	New SVG Filter	Новий SVG-фільтр
+	Nodalia	Nodalia
+	SVG Filter	SVG-фільтр
+	Select Symbol Instance Part	Вибрати частину екземпляра символу
+	Spelling Suggestions	Пропозиції правопису
+	Stroke Weight Down	Зменшити товщину штриха
+	Stroke Weight Up	Збільшити товщину штриха
+	Edit SVG Filter	Редагувати SVG-фільтр
+	Import SVG Filter	Імпортувати SVG-фільтр
+	Apply Gradient Preset	Застосувати набір градієнта
+	Cancel Image Trace	Скасувати трасування зображення
+	Caps Lock Cursor State	Стан курсора Caps Lock
+	Catalan	Каталонська
+	Check for Updates…	Перевірити оновлення…
+	Chinese	Китайська
+	Configure Shape	Налаштувати фігуру
+	Croatian	Хорватська
+	Czech	Чеська
+	Danish	Данська
+	Delete Gradient Preset	Видалити набір градієнта
+	Edit Character Style	Редагувати стиль символів
+	Export All Open Documents	Експортувати всі відкриті документи
+	Finnish	Фінська
+	German: Swiss	Німецька: Швейцарія
+	Gradient Presets	Набори градієнтів
+	Move Document	Перемістити документ
+	Norwegian	Норвезька
+	Polish	Польська
+	Reshape Type Path	Змінити форму контуру тексту
+	Russian	Російська
+	Save Gradient Preset	Зберегти набір градієнта
+	Serbian: Cyrillic	Сербська: кирилиця
+	Serbian: Latin	Сербська: латиниця
+	Swedish	Шведська
+	Drop an SVG, PDF or Pluma file anywhere to open it.	Перетягніть файл SVG, PDF або Pluma будь-куди, щоб відкрити його.
+	GitHub	GitHub
+	Grid view	Вигляд сіткою
+	Hide Presets	Приховати набори
+	Invalid panel layout; restored the default dock	Недійсне компонування панелей; відновлено типове розташування
+	List view	Вигляд списком
+	Main Menu	Головне меню
+	On your computer	На вашому комп’ютері
+	Pluma Updates	Оновлення Pluma
+	Preparing the image…	Підготовка зображення…
+	Reading the file…	Читання файлу…
+	Remove from Recent	Вилучити з недавніх
+	Save Gradient Preset…	Зберегти набір градієнта…
+	Show Presets	Показати набори
+	Tracing the colors…	Трасування кольорів…
+	Website	Вебсайт
+	Duplicate Effects	Дублювати ефекти
+	Remove Effects	Вилучити ефекти
+swatch	Amber	Бурштиновий
+swatch	Aqua	Аква
+swatch	Azure	Лазуровий
+swatch	Black	Чорний
+swatch	Blue	Синій
+swatch	Bright Blue	Яскраво-синій
+swatch	Bright Green	Яскраво-зелений
+swatch	Bright Red	Яскраво-червоний
+swatch	Bright Violet	Яскраво-фіолетовий
+swatch	Bright Yellow	Яскраво-жовтий
+swatch	Brights	Яскраві
+swatch	Brown	Коричневий
+swatch	Chocolate	Шоколадний
+swatch	Coffee	Кавовий
+swatch	Copper	Мідний
+swatch	Cyan	Блакитний
+swatch	Cyan Green	Блакитно-зелений
+swatch	Emerald	Смарагдовий
+swatch	Espresso	Еспресо
+swatch	Grays	Сірі
+swatch	Green	Зелений
+swatch	Indigo	Індиго
+swatch	Lime	Лаймовий
+swatch	Magenta	Маджента
+swatch	Ocean	Океан
+swatch	Orange	Помаранчевий
+swatch	Orange Red	Червоно-помаранчевий
+swatch	Pink	Рожевий
+swatch	Purple	Пурпурний
+swatch	Radial White, Black	Радіальний білий, чорний
+swatch	Red	Червоний
+swatch	Rose	Трояндовий
+swatch	Rust	Іржавий
+swatch	Sand	Пісочний
+swatch	Sunset	Захід сонця
+swatch	Tan	Рудуватий
+swatch	Teal	Бірюзовий
+swatch	Violet	Фіалковий
+swatch	Walnut	Горіховий
+swatch	White	Білий
+swatch	White, Black	Білий, чорний
+swatch	Yellow	Жовтий
+swatch	Yellow Green	Жовто-зелений
+swatch	[None]	[Немає]
+swatch	[Registration]	[Реєстрація]
+	Points:	Точки:

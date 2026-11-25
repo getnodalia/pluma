@@ -45,7 +45,7 @@ nodalia-stream-codecs = { git = "https://github.com/getnodalia/foundation", rev 
 nodalia-jxl = { git = "https://github.com/getnodalia/foundation", rev = "91ab24c9fe626e44641f8ba42b2557728b114446" }
 # In-app updates from this app's GitHub releases, with the update windows for egui.
 nodalia-update = { git = "https://github.com/danielmigueltejedor/nodalia-design", rev = "114848a2ff1a7c29c9a5432fb12e955fbe0aeef2", features = ["egui"] }
-nodalia-theme = { git = "https://github.com/danielmigueltejedor/nodalia-design", rev = "6d94e9c17c1767260bcb020f00c71eddd105561f" }
+nodalia-theme = { git = "https://github.com/danielmigueltejedor/nodalia-design", rev = "44bfd0a37e6bd2837c473b4e5607b70e8d169e61" }
 # internal
 pluma-geom = { path = "crates/geom" }
 pluma-color = { path = "crates/color" }
