@@ -1376,24 +1376,24 @@ mod tests {
             let d = load(&serde_json::to_vec(&v).unwrap()).unwrap();
             (d.version, angle(&d))
         };
-        let earlier = ["VectorCraft 0.20.0", "VectorCraft 0.9.12"]; // rebrand: keep
+        let earlier = ["VectorCraft 0.20.0", "VectorCraft 0.9.12"];
         for g in earlier.into_iter().chain(["DrawCraft 0.1.0", "Pluma"]).map(Some).chain([None]) {
             assert_eq!(opened(g), (now, Some(-30.0)), "{g:?}");
         }
-        let clockwise = ["VectorCraft 0.21.0", "VectorCraft 0.21.3", "VectorCraft 1.0.0"]; // rebrand: keep
+        let clockwise = ["VectorCraft 0.21.0", "VectorCraft 0.21.3", "VectorCraft 1.0.0"];
         for g in ["Pluma 0.1.0"].into_iter().chain(clockwise) {
             assert_eq!(opened(Some(g)), (now, Some(30.0)), "{g}");
         }
         // A file may repeat `generator`: the first one names the app.
         let mut v: serde_json::Value = serde_json::from_slice(&current).unwrap();
         v["document"]["version"] = 1.into();
-        v["generator"] = "VectorCraft 0.21.0".into(); // rebrand: keep
+        v["generator"] = "VectorCraft 0.21.0".into();
         let text = serde_json::to_string(&v).unwrap();
-        let first = r#""generator":"VectorCraft 0.21.0""#; // rebrand: keep
+        let first = r#""generator":"VectorCraft 0.21.0""#;
         let twice = text.replacen(first, &format!(r#"{first},"generator":"DrawCraft 0.1.0""#), 1);
         assert_ne!(twice, text);
         assert_eq!(angle(&load(twice.as_bytes()).unwrap()), Some(30.0));
-        v["generator"] = "VectorCraft 0.20.0".into(); // rebrand: keep
+        v["generator"] = "VectorCraft 0.20.0".into();
         let old = load(&serde_json::to_vec(&v).unwrap()).unwrap();
         let again = load(&save(&old, false)).unwrap();
         assert_eq!((again.version, angle(&again)), (now, Some(-30.0)), "saved again, it is the current version");
