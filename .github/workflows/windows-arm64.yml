@@ -27,10 +27,9 @@ permissions:
 
 jobs:
   windows-arm64:
-    # Intentionally tracked at @main (not SHA-pinned) so org-wide CI improvements, security fixes, and build optimizations propagate without PR churn across all craftapp repos.
-    uses: storytold/craft-common-actions/.github/workflows/windows-arm64.yml@main
+    uses: getnodalia/foundation/.github/workflows/windows-arm64.yml@c37ef19e6bc213e3ebf3a281f1bf0f3fd7c5d495 # foundation main
     with:
       app-name: pluma
-      app-dir: Pluma
-      install-relative-path: Programs/Nodalia/Pluma
-      install-scope: perUser
+      cli-name: pluma-cli
+      fonts-repository: getnodalia/foundation
+      fonts-ref: d4f57e6b31d7c7526b539f7aaaa07312c9908bb8 # nodalia/fonts
