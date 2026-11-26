@@ -85,9 +85,11 @@ impl State {
         }
     }
 
-    /// Show [`SLOW`] once the first read has run [`SLOW_SECS`] by `now`.
+    /// Show [`SLOW`] once the first read has run [`SLOW_SECS`] by `now`. The deadline is added up
+    /// rather than the elapsed time subtracted: `(t + 2.0) - t` can come out a hair under 2.0 for a
+    /// large `t`, which made the boundary depend on the clock's value.
     fn mark_slow(&mut self, now: f64) {
-        if !self.loaded && !self.slow && self.reading.is_some() && self.first_read.is_some_and(|t| now - t >= SLOW_SECS) {
+        if !self.loaded && !self.slow && self.reading.is_some() && self.first_read.is_some_and(|t| now >= t + SLOW_SECS) {
             self.slow = true;
             self.revision += 1;
         }
@@ -347,4 +349,22 @@ pub fn run(app: &mut PlumaApp, p: &Value) -> Result<Value, String> {
             refresh(app, ctx.as_ref());
         }
     })
+}
+
+#[cfg(test)]
+mod slow_deadline {
+    use super::*;
+
+    /// `(30.133348393240244 + 2.0) - 30.133348393240244` is `1.9999999999999964`, so a first read
+    /// that started that many seconds into the process was not called slow at exactly its deadline.
+    #[test]
+    fn a_first_read_is_slow_at_exactly_its_deadline_whatever_the_clock_says() {
+        for started in [30.133348393240244, 3.465052180902799, 511.5923638050443, 0.0, 86_400.7] {
+            let mut state = State { reading: Some(std::sync::mpsc::channel::<Listing>().1), first_read: Some(started), ..State::default() };
+            state.mark_slow(started + SLOW_SECS / 2.0);
+            assert!(!state.slow, "slow too early at {started}");
+            state.mark_slow(started + SLOW_SECS);
+            assert!(state.slow, "not slow at its deadline at {started}");
+        }
+    }
 }
