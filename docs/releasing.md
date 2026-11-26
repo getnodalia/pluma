@@ -18,7 +18,7 @@ The sections below describe the packaging scripts. Where they mention a `release
 > **Last updated:** 2026-10-12 · **Change:** minor (RPM runtime capabilities and metadata checks, #1275)
 
 Every push to the `release` branch runs `.github/workflows/release.yml`. The workflow builds
-installers for macOS, Windows, Linux (including Flatpak bundles and a RISC-V tarball) and FreeBSD, plus the web build, and creates or updates a
+installers for macOS, Windows, Linux (including a RISC-V tarball) and FreeBSD, plus the web build, and creates or updates a
 **draft** GitHub Release named `Pluma v<version>`. Nobody sees a draft until a maintainer
 publishes it.
 
@@ -53,15 +53,9 @@ Once the draft is published, the workflow refuses to touch that version again: b
 `version` input (such as `0.4.0-rc.1`) overrides `Cargo.toml` for that run only; each build job
 applies it with `cargo xtask version set` before building. The signing jobs (macOS, Windows) and
 the draft-release job run in the `release` environment, which only the `release` branch can use, so
-pick that branch for a full run. Run on any other branch, it is a dry run: the Linux, Flatpak,
+pick that branch for a full run. Run on any other branch, it is a dry run: the Linux,
 FreeBSD and web jobs build and upload their artifacts, the environment refuses the signing jobs,
 and no draft release is created.
-
-Flatpak permission repairs need one update through the existing host-side installation method.
-After that update, Help > Check for Updates can inspect and update standalone bundles.
-Repository-managed installations continue to use their package manager; launcher-pinned
-versions keep their selected version. Both Flatpak manifests must grant network access,
-the host Flatpak interface, and read-only access to the shared version choices.
 
 ## What gets built
 
@@ -75,7 +69,6 @@ the host Flatpak interface, and read-only access to the shared version choices.
 | Linux aarch64 | `pluma-<v>-linux-aarch64.{AppImage,deb,rpm,tar.gz}` | `ubuntu-22.04-arm` |
 | Linux riscv64 | `pluma-<v>-linux-riscv64.tar.gz` (cross-compiled, glibc >= 2.39; CLI smoke-tested under QEMU) | `ubuntu-24.04` |
 | Linux AppImage updates | `pluma-<v>-linux-{x86_64,aarch64}.AppImage.zsync` | with the AppImages |
-| Flatpak x86_64, aarch64 | `pluma-<v>-linux-{x86_64,aarch64}.flatpak` | `ubuntu-24.04`, `ubuntu-24.04-arm` (repackages the Linux tarball) |
 | FreeBSD 14 x86_64 | `pluma-<v>-freebsd-x86_64.tar.gz` | a FreeBSD 14.3 VM on `ubuntu-latest` |
 | Web | `pluma-web-<v>.zip`, a static site (see [`packaging/web/README.md`](../packaging/web/README.md)) | `ubuntu-latest` |
 
@@ -147,8 +140,7 @@ to the target triple, so host build scripts aren't affected.
   The logic is in `apps/pluma/src/profile.rs`. On the other platforms the marker goes where
   the user sees the app, never inside it: on macOS next to `Pluma.app` (nothing is written
   inside the signed bundle), for an AppImage next to the `.AppImage` file (`$APPIMAGE`; the mounted
-  executable's own folder is read-only). Flatpak isn't supported: `/app` is read-only and the
-  sandbox has no folder "beside the app", so a Flatpak install always uses its own config folder.
+  executable's own folder is read-only).
 - `pluma.wxs` (WiX) is a dual-scope package (per-user by default into
   `%LOCALAPPDATA%\Programs\Nodalia\Pluma`, per-machine into `Program Files\Nodalia\Pluma` (`Program Files (x86)` for the 32-bit build),
   see `packaging/windows/INSTALLATION.md`) with a Start Menu shortcut
@@ -224,15 +216,6 @@ against riscv64 libraries from ports.ubuntu.com (so the floor there is glibc 2.3
 `zsync` package) is installed. [AppImageUpdate](https://github.com/AppImageCommunity/AppImageUpdate)
 and AppImageLauncher then download only the changed blocks from the newest published,
 non-pre-release release. The job checks both are there.
-
-**Flatpak.** The `flatpak` jobs (x86_64 on `ubuntu-24.04`, aarch64 on `ubuntu-24.04-arm`) take the
-Linux job's tarball and repackage it with `packaging/linux/flatpak-bundle.sh` and
-`packaging/linux/flatpak/dev.danielmiguelt.Pluma.bundle.yml` into a single-file bundle
-(`flatpak install --user pluma-<v>-linux-<arch>.flatpak`), then install it and run
-`pluma-cli --version` in the sandbox. No Rust build happens there, so the bundle carries the
-same binaries as the AppImage. `packaging/linux/flatpak/dev.danielmiguelt.Pluma.yml` is the
-from-source manifest for a Flathub submission (its header says how to build it); packaging-lint
-keeps the runtime and sandbox permissions of the two manifests identical.
 
 ### FreeBSD
 

@@ -43,7 +43,7 @@ pub fn written_clockwise(generator: Option<&str>) -> bool {
 }
 
 /// The `generator` prefix of files written before the app was called Pluma.
-const LEGACY_GENERATOR: &str = "VectorCraft "; // rebrand: keep
+const LEGACY_GENERATOR: &str = "VectorCraft ";
 
 /// The angle a Twist effect without a readable one draws with (`pluma-effects` reads a
 /// missing or unreadable `angle` as this).

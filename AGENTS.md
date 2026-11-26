@@ -14,7 +14,7 @@ Engineering rules for every Nodalia repository: [getnodalia/foundation](https://
 
 Pluma is a clean-room, open-source, Rust-native vector illustration app targeting Adobe Illustrator parity (and beyond). It runs natively on macOS, Windows and Linux, and on the web via WASM. Siblings: `../lienzo` (Photoshop-class) and `../papel` (Acrobat-class); same conventions.
 
-Documents are saved as `.pluma`; files saved as `.vectorcraft` or `.drawcraft` before Pluma had its own extension still open (`pluma_format::OLDER_EXTENSIONS`). The `"format": "vectorcraft"` header and the native format's id in the command API are file signatures, which `.github/rebrand.toml` keeps. Everything else says Pluma; `python3 scripts/rebrand.py check` fails on an old name that comes back (mark a line that must keep one with `rebrand: keep`).
+Documents are saved as `.pluma`; files saved as `.vectorcraft` or `.drawcraft` before Pluma had its own extension still open (`pluma_format::OLDER_EXTENSIONS`). The `"format": "vectorcraft"` header and the native format's id in the command API are file signatures. Everything else says Pluma. There is no upstream sync and no rename tooling.
 
 ## Start every session here
 1. Read [`ROADMAP.md`](ROADMAP.md) (stage, numbers by dimension, what's next) and the ranked work list in [`docs/gaps.md`](docs/gaps.md). Unless the user gives you a task, pick work from that list.
