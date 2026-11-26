@@ -175,12 +175,6 @@ pub(crate) fn plain_heading(ui: &mut egui::Ui, text: &str) {
 /// The side of a dialog's close disc.
 const CLOSE_SIZE: f32 = 24.0;
 
-/// A dialog's Nodalia close disc, laid out where `ui` puts it. Says whether it was clicked.
-pub(crate) fn close_button(ui: &mut egui::Ui) -> bool {
-    let (rect, resp) = ui.allocate_exact_size(egui::vec2(CLOSE_SIZE, CLOSE_SIZE), egui::Sense::hover());
-    crate::titlebar::ndl_close_button(ui, rect, resp.id.with("close"))
-}
-
 /// Set for a pass when a dialog's close disc was clicked.
 pub(crate) fn close_clicked_id() -> Id {
     Id::unique("dialog-close-clicked")

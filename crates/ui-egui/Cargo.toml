@@ -79,6 +79,3 @@ pluma-testkit = { workspace = true }
 pluma-text = { workspace = true, features = ["test-fonts"] }
 wat = { workspace = true }
 
-[build-dependencies]
-serde_json = { workspace = true }
-toml = "1"

@@ -153,6 +153,9 @@ pub(crate) fn docked_right(ui: &crate::state::UiState) -> bool {
     ui.toolbar_right && ui.toolbar_pos.is_none()
 }
 
+/// The height of the bar holding a dock column's » « above its island (nodalia-ui's default).
+const ISLAND_BAR: f32 = 14.0;
+
 pub fn show(app: &mut PlumaApp, ui: &mut Ui) {
     let t = Tokens::get(ui.ctx());
     // The user's choice alone: a window too short for the tools scrolls them.
@@ -168,15 +171,18 @@ pub fn show(app: &mut PlumaApp, ui: &mut Ui) {
             let island = t.nodalia && !app.ui.toolbar_right && !app.ui.tools_beside_canvas;
             let (panel, margin) = if island {
                 let g = crate::theme::ISLAND_GAP as i8;
-                (egui::Panel::left("toolbar"), egui::Margin { left: 0, right: g, top: 0, bottom: 0 })
+                (egui::Panel::left("toolbar"), egui::Margin { left: 0, right: g, top: ISLAND_BAR as i8, bottom: 0 })
             } else if app.ui.toolbar_right {
                 (egui::Panel::right("toolbar"), egui::Margin { left: 0, right: 6, top: 6, bottom: 6 })
             } else {
                 (egui::Panel::left("toolbar"), egui::Margin { left: 6, right: 0, top: 6, bottom: 6 })
             };
             let gap = if island { crate::theme::ISLAND_GAP } else { 6.0 };
+            // The dock columns keep their » « bar on the window's colour above the island, so an
+            // island Tools does as well and the two sides' islands start at the same height.
+            let bar = island.then(|| egui::Rect::from_min_size(ui.available_rect_before_wrap().min, vec2(w, ISLAND_BAR)));
             let docked = panel.resizable(false).show_separator_line(!island).exact_size(w + gap).frame(egui::Frame::NONE).show(ui, |ui| {
-                crate::theme::card(ui, &t, margin, |ui| body(app, ui, cols, None));
+                crate::theme::card(ui, &t, margin, |ui| body(app, ui, cols, None, bar));
             });
             if island {
                 // The title bar and tools that scroll under the card's edge would square its corners.
@@ -199,7 +205,7 @@ pub fn show(app: &mut PlumaApp, ui: &mut Ui) {
                 flyout_frame(&t, false).inner_margin(egui::Margin { left: 0, right: 0, top: 0, bottom: 4 }).show(ui, |ui| {
                     ui.set_width(w);
                     ui.set_max_height(screen.bottom() - at.y - 12.0);
-                    body(app, ui, cols, Some(at));
+                    body(app, ui, cols, Some(at), None);
                 });
             });
         }
@@ -229,17 +235,23 @@ pub fn show_custom(app: &mut PlumaApp, ctx: &egui::Context) {
 }
 
 /// The Tools panel's contents, docked or floating at `floating`.
-fn body(app: &mut PlumaApp, ui: &mut Ui, cols: usize, floating: Option<egui::Pos2>) {
+fn body(app: &mut PlumaApp, ui: &mut Ui, cols: usize, floating: Option<egui::Pos2>, bar: Option<egui::Rect>) {
     let t = Tokens::get(ui.ctx());
     let all = slots(app);
-    let bounds = ui.max_rect();
+    let bounds = bar.map_or(ui.max_rect(), |b| ui.max_rect().union(b));
     let editing = app.ui.tools_drawer && app.ui.drawer_toolbar.is_none();
     ui.spacing_mut().item_spacing = vec2(0.0, 0.0);
-    // Title bar with » and a grip strip: a drag on either floats the panel or moves it.
-    let (hdr, hresp) = ui.allocate_exact_size(vec2(ui.available_width(), 14.0), Sense::click_and_drag());
-    // Nodalia: the title bar is the card's own top, under its rounded corners.
+    // Title bar with » and a grip strip: a drag on either floats the panel or moves it. Docked as an
+    // island, the » sits in the bar above the island, on the window's colour.
     let hdr_fill = if t.nodalia { t.panel } else { t.tab_strip };
-    ui.painter().rect_filled(hdr, 0.0, hdr_fill);
+    let (hdr, hresp) = match bar {
+        Some(bar) => (bar, ui.interact(bar, egui::Id::NULL.with("toolbar-bar"), Sense::click_and_drag())),
+        None => ui.allocate_exact_size(vec2(ui.available_width(), 14.0), Sense::click_and_drag()),
+    };
+    // Nodalia: the title bar is the card's own top, under its rounded corners.
+    if bar.is_none() {
+        ui.painter().rect_filled(hdr, 0.0, hdr_fill);
+    }
     icons::paint(
         ui,
         if cols == 2 { "chevrons-left" } else { "chevrons-right" },
