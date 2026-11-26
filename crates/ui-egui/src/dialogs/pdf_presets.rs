@@ -93,10 +93,13 @@ fn body(app: &mut PlumaApp, ui: &mut egui::Ui, d: &mut Dialog) -> bool {
         ui.add_space(18.0);
         ui.vertical(|ui| {
             ui.set_width(340.0);
-            ui.label(egui::RichText::new(&preset.name).color(t.text_strong).strong());
-            if !preset.description.is_empty() {
+            // A built-in preset is named and described in the interface language; a saved one is data.
+            let (name, description) =
+                if builtin { (tl!(&preset.name), tl!(&preset.description)) } else { (preset.name.as_str(), preset.description.as_str()) };
+            ui.label(egui::RichText::new(name).color(t.text_strong).strong());
+            if !description.is_empty() {
                 ui.add_space(4.0);
-                ui.label(egui::RichText::new(&preset.description).color(t.text));
+                ui.label(egui::RichText::new(description).color(t.text));
             }
             ui.add_space(10.0);
             details(ui, &t, preset, builtin);
@@ -123,7 +126,7 @@ fn body(app: &mut PlumaApp, ui: &mut egui::Ui, d: &mut Dialog) -> bool {
 /// what Save PDF can't honour or apply yet.
 fn details(ui: &mut egui::Ui, t: &Tokens, preset: &pluma_pdf::PdfPreset, builtin: bool) {
     let dim = |ui: &mut egui::Ui, text: &str| ui.label(egui::RichText::new(tl!(text)).color(t.text_dim).size(11.5));
-    widgets::dim_label(ui, &crate::i18n::fmt(tl!("Differences from {preset}:"), &[("preset", pdf::DEFAULT_PRESET)]));
+    widgets::dim_label(ui, &crate::i18n::fmt(tl!("Differences from {preset}:"), &[("preset", tl!(pdf::DEFAULT_PRESET))]));
     let base = pluma_pdf::builtin_preset(pdf::DEFAULT_PRESET).map(|p| p.settings).unwrap_or_default();
     let mut changed = pdf::changes(&preset.settings, &base);
     changed.sort_by_key(|c| section_of(c["option"].as_str().unwrap_or_default()));
