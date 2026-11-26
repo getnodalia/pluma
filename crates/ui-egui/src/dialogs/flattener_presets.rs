@@ -114,7 +114,7 @@ fn body(app: &mut PlumaApp, ui: &mut egui::Ui, d: &mut Dialog) -> bool {
             ui.horizontal(|ui| {
                 widgets::dim_label(ui, tl!("Name:"));
                 if builtin {
-                    ui.label(egui::RichText::new(&preset.name).color(t.text_strong));
+                    ui.label(egui::RichText::new(tl!(&preset.name)).color(t.text_strong));
                 } else {
                     renaming = form::text_edit(ui, d, "name", 220.0).has_focus();
                 }
