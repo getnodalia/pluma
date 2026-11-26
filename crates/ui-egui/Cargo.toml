@@ -78,7 +78,3 @@ pluma-testkit = { workspace = true }
 # A variable font built in code (no font file is committed).
 pluma-text = { workspace = true, features = ["test-fonts"] }
 wat = { workspace = true }
-
-[build-dependencies]
-serde_json = { workspace = true }
-toml = "1"

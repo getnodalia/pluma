@@ -4328,6 +4328,11 @@ digits	Malayalam	Malayálam
 	Pluma on GitHub	Pluma en GitHub
 	Vectors	Vectores
 	Version {version} — open-source vector illustration in pure Rust.	Versión {version}: ilustración vectorial de código abierto en Rust puro.
+	Version {version}	Versión {version}
+	Open-source vector illustration in pure Rust.	Ilustración vectorial de código abierto en Rust puro.
+	Part of the Nodalia suite of open creative tools.	Parte de la suite de herramientas creativas abiertas de Nodalia.
+	Open source. No telemetry.	Código abierto. Sin telemetría.
+	Includes work by other open-source authors (see NOTICE).	Incluye trabajo de otros autores de código abierto (véase NOTICE).
 	Version:	Versión:
 	Vertical	Vertical
 	Vertical %	% vertical
