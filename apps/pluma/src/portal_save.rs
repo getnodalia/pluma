@@ -7,7 +7,7 @@
 //! `current_filter`, reads the one picked back, and answers its first extension after the path
 //! ([`pluma_ui_egui::picks::PickAnswer`]); the app gives the name that type's extension.
 //! rfd shows the dialog when the portal can't (no session bus, no file chooser), with zenity as its
-//! own fallback. Lienzo's `portal_save.rs` (storytold/photocraft#6151) makes the same call.
+//! own fallback. Lienzo's `portal_save.rs` (#6151) makes the same call.
 //! rfd also shows the dialog when the portal leaves the bus before it answers.
 //!
 //! The dialog's parent is the window: `x11:<window id>` on X11, and on Wayland (Linux) a handle

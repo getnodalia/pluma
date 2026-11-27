@@ -193,7 +193,7 @@ how much there is only once the run has ended.
 
 A manifest may list what the plug-in may do in `permissions`. `doc.read`, `doc.write` and `state` follow the
 capability model proposed for Lienzo plug-ins
-([storytold/photocraft#662](https://github.com/storytold/photocraft/issues/662)); the other names are Pluma's own:
+(#662); the other names are Pluma's own:
 
 | Permission | Kinds | What it allows |
 |---|---|---|

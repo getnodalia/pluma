@@ -16,7 +16,7 @@ path = "src/main.rs"
 [dependencies]
 pluma-engine = { workspace = true, features = ["bundled-fonts", "heif"] }
 pluma-ui-egui = { workspace = true }
-# The page command API (storytold/craft-libs#413): the request plumbing behind window.pluma.
+# The page command API (#413): the request plumbing behind window.pluma.
 nodalia-web-api = { git = "https://github.com/getnodalia/foundation", rev = "91ab24c9fe626e44641f8ba42b2557728b114446", version = "0.1.0" }
 pluma-format = { workspace = true }
 pluma-text = { workspace = true }

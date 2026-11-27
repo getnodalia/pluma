@@ -1,6 +1,6 @@
 # Revolve
 
-This initial implementation follows the scope agreed in [issue #605](https://github.com/storytold/vectorcraft/issues/605#issuecomment-6070543567).
+This initial implementation follows the scope agreed in issue #605.
 
 Select a path, compound path, type, clipping group, blend, symbol instance, or a group or layer of them, then choose **Effect > 3D and Materials > Revolve**.
 On a group or layer, every visible member sweeps about one axis, as [the help page](https://helpx.adobe.com/illustrator/desktop/special-effects-styles/create-3d-graphics/create-3d-objects.html)

@@ -11,18 +11,14 @@ workflows pinned by commit. SonarCloud was removed; CodeQL and Scorecard remain.
 
 ## Desired state
 
-No workflow, dependency or document depends on storytold; Pluma has its own release workflow; the
+No workflow, dependency or document depends on a repository outside Nodalia; Pluma has its own release workflow; the
 interface follows Foundation's [NDL standard](https://github.com/getnodalia/foundation/blob/main/standards/ndl.md).
 
 ## Inherited dependencies still pending
 
-| Dependency | Where | Replacement | Blocked on |
-|---|---|---|---|
-| `storytold/craft-common-actions` | `.github/workflows/windows-arm64.yml` | Pluma's own release workflows on Foundation's release-tag and release-publish | the CI pull request that follows this one |
+None.
 
-Resolved: craft-fonts is read from getnodalia/foundation's `vendor/craft-fonts/main` branch; the
-`[patch]` for `storytold/winprint.rs` in `Cargo.toml` only names the old home of crates that are
-fetched from getnodalia/foundation.
+Resolved: fonts, translations and the shared libraries come from getnodalia/foundation's vendor branches, and nothing in `Cargo.toml` names another organisation.
 
 ## Technical debt
 

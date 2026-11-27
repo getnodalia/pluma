@@ -462,7 +462,7 @@ mod tests {
     }
 
     /// Appearance (effects) and Pathfinder both lived in the icon column with the same motif
-    /// (storytold/vectorcraft#2681): they stay different icons.
+    /// (#2681): they stay different icons.
     #[test]
     fn appearance_panel_icon_is_not_the_pathfinder_icon() {
         assert_ne!(ndl_name("dc-appearance"), ndl_name("dc-pathfinder"));
