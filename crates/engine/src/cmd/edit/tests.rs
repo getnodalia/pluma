@@ -148,11 +148,22 @@ fn same_as_one_at_a_time(make: impl Fn() -> Session) -> Session {
     a
 }
 
-/// A new document; [`rect`] adds squares to it.
+/// A new document; [`rect`] adds squares to it. Its creation date is fixed: `file.new` stamps the
+/// clock's seconds otherwise, and two documents built a clock second apart are not the same
+/// document, which these tests compare.
 fn new_doc() -> Session {
     let mut s = Session::new();
-    run(&mut s, "file.new", json!({"width": 800, "height": 600}));
+    run(&mut s, "file.new", json!({"width": 800, "height": 600, "created": 1_000_000_000}));
     s
+}
+
+/// Documents built across a change of the clock's second are the same document.
+#[test]
+fn new_documents_do_not_depend_on_the_clock() {
+    let a = new_doc();
+    std::thread::sleep(std::time::Duration::from_millis(1100));
+    let b = new_doc();
+    assert_same(&a, &b, "a second apart");
 }
 
 /// Adds a 10 pt square to the current layer, 20 pt right of the last one.
