@@ -46,7 +46,7 @@ private editing data. Pluma:
   Level 3 interpreter. A `.ai` in PostScript form (versions 3 to 8, and what Rhino and other CAD apps
   write) is its own editing data: it opens through the layers its program has, compared with its page
   when the program runs, from the layers alone when it names its prolog without including it (#1027), and with its art on one
-  layer when it has no layers (Illustrator 3, and image editors' exported paths: storytold/photocraft#6036).
+  layer when it has no layers (Illustrator 3, and image editors' exported paths: #6036).
   A file without layers whose program runs opens through that layer too, compared with its page, so its
   objects keep what only the format records (locks, for example); it opens as its page when the layer can't be used.
   A multi-layer mask (`Mb` … `Md` … `MB`) comes in as a clipping group in each layer it covers, each
@@ -507,7 +507,7 @@ Stop opacity on translated artboards remains outside this regression coverage.
 | 2026-10-18 | minor | DXF circular cubic paths export as native CIRCLE/ARC where stroke semantics permit (R13–2018 for weighted strokes; R12 weighted strokes remain POLYLINE); R12 stroked circles/arcs retain their POLYLINE width, and ClosePath geometry with an implicit closing chord is not promoted to CIRCLE (#1299); scores and hours unchanged |
 | 2026-10-17 | minor | PDF import: text opens where the file draws it (#722): the font's kerning or none as the file followed it, word and character spacing and `TJ` adjustments kept per character as tracking, text rise as baseline shift in its line, vertical glyphs narrower than an em centred on their column, justified text boxes back as area type; fixtures written from ISO 32000-1 §9; scores unchanged |
 | 2026-10-17 | minor | PDF Place and clipboard paste preserve live text; explicit outlines remain supported on Place. Synthetic regressions; scores and hours unchanged. |
-| 2026-10-16 | minor | An Illustrator 3 file without prolog or layers (an image editor's exported paths) opens with its art on one layer instead of being refused (storytold/photocraft#6036); scores unchanged |
+| 2026-10-16 | minor | An Illustrator 3 file without prolog or layers (an image editor's exported paths) opens with its art on one layer instead of being refused (#6036); scores unchanged |
 | 2026-10-16 | minor | EPS editing data: legacy mesh corners, vector opacity masks and compound member paint retained; raster page comparison filters minification without relaxing limits; scores and hours unchanged. Synthetic EPS/parser/minification regressions; user EPS/SVG/JPG kept local. |
 | 2026-10-16 | minor | Batch exporting in Export for Screens (#1935): a file name pattern (document and item names, a counter, the date), folders per format, item or both, Layers and Selection tabs with thumbnails, EPS, AI and Pluma rows, a PDF row with printer's marks, and export presets (built-in Logo Package and Print-Ready PDF, saved ones); scores and hours unchanged (estimated) |
 | 2026-10-16 | minor | `.ai` editing data: a rotated embedded image lands where its raster matrix puts it, not turned 180° around its corner; the legacy version 7 writer and its prolog write and draw rotated images with the same matrix (#2269). Scores unchanged |

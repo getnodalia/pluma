@@ -5,7 +5,7 @@
 //! desktop compositor still reserves that frame for the window surface: the content is drawn
 //! offset by the caption and border while the pointer keeps the un-offset client coordinates, so
 //! it no longer points at what is drawn under it (rust-windowing/winit#2419; Lienzo fixed the
-//! same in storytold/photocraft#2401). [`service`] strips the two styles and has Windows
+//! same in #2401). [`service`] strips the two styles and has Windows
 //! recalculate the frame; winit puts them back whenever it changes the window flags (maximize,
 //! restore, …), so the returned guard runs every frame.
 //!
@@ -16,12 +16,12 @@
 //! that winit pins to the work area (`WM_NCCALCSIZE`) is drawn as a classic title bar (#3242,
 //! #3723). The guard therefore also moves a parked maximize's rect back inside the work area on
 //! every edge, plus its own frame, clear of the taskbar wherever it is, and repaints the window, as
-//! Lienzo does (storytold/photocraft#3308, storytold/photocraft#5237).
+//! Lienzo does (#3308, #5237).
 //!
 //! An auto-hidden taskbar reserves no work area, so that move leaves a maximize covering the whole
 //! monitor. In Lienzo the taskbar then did not show when the pointer reached its edge
-//! (storytold/photocraft#4845). On each edge with an auto-hidden taskbar the guard stops the window
-//! one pixel short of the monitor instead, as Lienzo does (storytold/photocraft#6878).
+//! (#4845). On each edge with an auto-hidden taskbar the guard stops the window
+//! one pixel short of the monitor instead, as Lienzo does (#6878).
 
 /// Run once per frame; a no-op once the window is borderless.
 pub type WindowFrameFn = Box<dyn FnMut()>;

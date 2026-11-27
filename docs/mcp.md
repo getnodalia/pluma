@@ -577,7 +577,7 @@ is here and subscriptions are not.
 
 ### Common command tools
 
-These names match the conventions in [Toma #28](https://github.com/storytold/filmcraft/pull/28).
+These names match the conventions in Toma #28.
 The older names below remain listed because existing workflows use them.
 
 | Tool | Arguments and result |
