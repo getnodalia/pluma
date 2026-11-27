@@ -54,7 +54,7 @@ Documents are saved as `.pluma`; files saved as `.vectorcraft` or `.drawcraft` b
 - **Layering** is enforced by `cargo xtask layers`. Nothing below L6 depends on egui/eframe/winit/rfd.
 - **The UI is thin**: panels read engine state and act through `app.run(id, params)`. Colours come from `theme::Tokens`.
 - **Rust only** (no handwritten JS/TS). **Never break wasm** (`cargo xtask wasm`).
-- **Shared test corpora.** Real-file test oracles (Photoshop-authored PSDs, etc.) live in [`storytold/photocraft-corpus`](https://github.com/storytold/photocraft-corpus). Never commit large binary fixtures to this repo; fetch them pinned by commit and sha256-verified, as Lienzo does with `cargo xtask corpus`.
+- **Shared test corpora.** Real-file test oracles live in [`getnodalia/nodalia-corpus`](https://github.com/getnodalia/nodalia-corpus), each with its provenance and licence. Never commit large binary fixtures to this repo; fetch them pinned by commit and sha256-verified, as Lienzo does with `cargo xtask corpus`.
 - **Quality gates** before every commit: `cargo xtask ci` (fmt, clippy -D warnings including the no-panic lints, tests, layers, wasm). One task id per commit (`M2.1: pen tool`).
 
 ## Running and looking at the app
